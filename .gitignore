@@ -1,0 +1,11 @@
+# Monitoring and Observability specific ignores
+*.db
+*.log
+grafana.ini.bak
+prometheus.yml.bak
+alert.rules.bak
+*.rrd # Munin RRD files
+
+# General ignores
+.DS_Store
+Thumbs.db
