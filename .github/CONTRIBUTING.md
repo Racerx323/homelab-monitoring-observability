@@ -7,7 +7,7 @@
 [pull-requests]: https://github.com/Racerx323/homelab-monitoring-observability/pulls
 [style-guide]: https://google.github.io/styleguide/
 
-First off, thank you for considering contributing to `homelab-docs`. It's people like you that make this project a great tool. Your help is essential to keeping it active and improving it continuously.
+First off, thank you for considering contributing to `homelab-monitoring-observability`. It's people like you that make this project a great tool. Your help is essential to keeping it active and improving it continuously.
 
 ⚠️ **Note**: This project is maintained in my spare time, so your patience and understanding are greatly appreciated.
 
