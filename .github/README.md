@@ -133,8 +133,8 @@ Before you begin, ensure you have the following installed on your system:
     cd homelab-monitoring-observability
     ```
 
-    > [!NOTE]
-    > The clone URL uses a placeholder `your-username`. Remember to replace this with the correct repository owner's username (`Racerx323`) or your own if you have forked it.
+> [!NOTE]
+> The clone URL uses a placeholder `your-username`. Remember to replace this with the correct repository owner's username (`Racerx323`) or your own if you have forked it.
 
 2. **Configure Environment Variables:**
     This project uses a `.env` file to manage sensitive information like passwords and user-specific settings. An example file is provided.
