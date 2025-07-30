@@ -234,8 +234,8 @@ This setup uses Grafana's provisioning feature. To add a new dashboard:
     docker compose restart grafana
     ```
 
-    > [!NOTE]
-    > By default, Grafana scans for new or changed dashboards in the provisioning directory every few minutes, so a restart may not be strictly necessary if you're willing to wait.
+> [!NOTE]
+> By default, Grafana scans for new or changed dashboards in the provisioning directory every few minutes, so a restart may not be strictly necessary if you're willing to wait.
 
 ---
 
