@@ -217,8 +217,8 @@ To monitor a new service (e.g., a web server, a database), you'll typically need
     docker compose kill -s HUP prometheus
     ```
 
-    > [!TIP]
-    > This sends a `HUP` signal to the Prometheus process, causing it to reload its configuration file. Alternatively, you can use the HTTP reload endpoint: `curl -X POST http://<your-docker-host-ip>:9090/-/reload`.
+> [!TIP]
+> This sends a `HUP` signal to the Prometheus process, causing it to reload its configuration file. Alternatively, you can use the HTTP reload endpoint: `curl -X POST http://<your-docker-host-ip>:9090/-/reload`.
 
 #### Adding a New Grafana Dashboard
 
