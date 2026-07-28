@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -u
+
+if [[ "${1:-}" == config ]]; then
+    cat <<'EOF'
+graph_title Caddy HA health
+graph_category caddy
+graph_vlabel state
+graph_info Caddy service, local HTTPS health, VRRP role, and VIP ownership.
+service.label service active
+service.type GAUGE
+https.label local HTTPS
+https.type GAUGE
+master.label VRRP master
+master.type GAUGE
+ipv4_vip.label IPv4 VIP owned
+ipv4_vip.type GAUGE
+ipv6_vip.label IPv6 VIP owned
+ipv6_vip.type GAUGE
+EOF
+    exit 0
+fi
+
+service=0
+https=0
+master=0
+ipv4_vip=0
+ipv6_vip=0
+
+if [[ -r /etc/default/caddy-ha ]]; then
+    # shellcheck disable=SC1091
+    source /etc/default/caddy-ha
+fi
+network_interface=${NETWORK_INTERFACE:-unconfigured}
+
+systemctl is-active --quiet caddy.service && service=1
+curl --insecure --head --fail --silent --max-time 3 \
+    https://localhost >/dev/null 2>&1 && https=1
+[[ -r /run/caddy-ha/vrrp-state ]] &&
+    [[ "$(</run/caddy-ha/vrrp-state)" == MASTER ]] && master=1
+ip -4 address show dev "$network_interface" 2>/dev/null |
+    grep -Fq '10.1.0.56/22' && ipv4_vip=1
+ip -6 address show dev "$network_interface" 2>/dev/null |
+    grep -Fq 'fd36:5aa8:6971:1::56/128' && ipv6_vip=1
+
+printf 'service.value %s\n' "$service"
+printf 'https.value %s\n' "$https"
+printf 'master.value %s\n' "$master"
+printf 'ipv4_vip.value %s\n' "$ipv4_vip"
+printf 'ipv6_vip.value %s\n' "$ipv6_vip"

@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+set -u
+
+metrics_url=${metrics_url:-http://127.0.0.1:2019/metrics}
+
+if [[ "${1:-}" == config ]]; then
+    cat <<'EOF'
+graph_title Caddy HTTP requests
+graph_category caddy
+graph_vlabel requests
+graph_info Caddy request and error counters from the loopback metrics endpoint.
+requests.label requests
+requests.type COUNTER
+requests.min 0
+errors.label errors
+errors.type COUNTER
+errors.min 0
+responses_2xx.label HTTP 2xx
+responses_2xx.type COUNTER
+responses_2xx.min 0
+responses_3xx.label HTTP 3xx
+responses_3xx.type COUNTER
+responses_3xx.min 0
+responses_4xx.label HTTP 4xx
+responses_4xx.type COUNTER
+responses_4xx.min 0
+responses_5xx.label HTTP 5xx
+responses_5xx.type COUNTER
+responses_5xx.min 0
+latency_ms.label mean latency ms
+latency_ms.type GAUGE
+latency_ms.min 0
+EOF
+    exit 0
+fi
+
+metrics=$(curl --fail --silent --max-time 3 "$metrics_url" 2>/dev/null) || {
+    printf '%s\n' \
+        'requests.value U' \
+        'errors.value U' \
+        'responses_2xx.value U' \
+        'responses_3xx.value U' \
+        'responses_4xx.value U' \
+        'responses_5xx.value U' \
+        'latency_ms.value U'
+    exit 0
+}
+
+sum_metric() {
+    local prefix=$1
+    awk -v prefix="$prefix" '
+        index($0, prefix) == 1 && $0 !~ /^#/ {
+            total += $NF
+        }
+        END {
+            printf "%.0f\n", total
+        }
+    ' <<<"$metrics"
+}
+
+requests=$(sum_metric 'caddy_http_requests_total')
+errors=$(sum_metric 'caddy_http_request_errors_total')
+status_count() {
+    local status_class=$1
+    awk '
+        /^caddy_http_requests_total/ && /code="'"$status_class"'[0-9][0-9]"/ {
+            total += $NF
+        }
+        END {
+            printf "%.0f\n", total
+        }
+    ' <<<"$metrics"
+}
+
+responses_2xx=$(status_count 2)
+responses_3xx=$(status_count 3)
+responses_4xx=$(status_count 4)
+responses_5xx=$(status_count 5)
+latency_ms=$(
+    awk '
+        /^caddy_http_request_duration_seconds_sum/ { sum += $NF }
+        /^caddy_http_request_duration_seconds_count/ { count += $NF }
+        END {
+            if (count > 0) {
+                printf "%.3f\n", (sum / count) * 1000
+            } else {
+                print "U"
+            }
+        }
+    ' <<<"$metrics"
+)
+
+printf 'requests.value %s\n' "$requests"
+printf 'errors.value %s\n' "$errors"
+printf 'responses_2xx.value %s\n' "$responses_2xx"
+printf 'responses_3xx.value %s\n' "$responses_3xx"
+printf 'responses_4xx.value %s\n' "$responses_4xx"
+printf 'responses_5xx.value %s\n' "$responses_5xx"
+printf 'latency_ms.value %s\n' "$latency_ms"

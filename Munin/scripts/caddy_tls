@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -u
+
+certificate=${certificate:-/etc/caddy/current/tls/leaf.pem}
+
+if [[ "${1:-}" == config ]]; then
+    cat <<'EOF'
+graph_title Caddy TLS certificate
+graph_category caddy
+graph_vlabel days / state
+graph_info Wildcard certificate lifetime and parse validity.
+days.label days remaining
+days.type GAUGE
+days.warning 30:
+days.critical 14:
+valid.label certificate valid
+valid.type GAUGE
+EOF
+    exit 0
+fi
+
+if [[ ! -r "$certificate" ]] ||
+    ! end_date=$(openssl x509 -in "$certificate" -noout -enddate 2>/dev/null); then
+    printf 'days.value U\nvalid.value 0\n'
+    exit 0
+fi
+
+end_epoch=$(date --date="${end_date#notAfter=}" +%s 2>/dev/null) || {
+    printf 'days.value U\nvalid.value 0\n'
+    exit 0
+}
+now=$(date +%s)
+days=$(((end_epoch - now) / 86400))
+
+printf 'days.value %s\n' "$days"
+if ((days >= 0)); then
+    printf 'valid.value 1\n'
+else
+    printf 'valid.value 0\n'
+fi
