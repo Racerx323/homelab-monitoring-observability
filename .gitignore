@@ -1,15 +1,14 @@
-# Monitoring and Observability specific ignores
-*.db
+# Temporary backups and logs
+*.bak
 *.log
-grafana.ini.bak
-prometheus.yml.bak
-alert.rules.bak
-*.rrd # Munin RRD files
+
+# Munin runtime data
+*.rrd
 
 # General ignores
 .DS_Store
 Thumbs.db
 
-# vexp — repository-local runtime files
+# vexp repository-local runtime files
 /.vexp/*
 !/.vexp/.gitattributes

@@ -1,0 +1,5 @@
+caddy_http_requests_total{handler="subroute",code="200"} 10
+caddy_http_requests_total{handler="subroute",code="404"} 2
+caddy_http_request_errors_total{handler="subroute"} 1
+caddy_http_request_duration_seconds_sum{handler="subroute"} 0.6
+caddy_http_request_duration_seconds_count{handler="subroute"} 12

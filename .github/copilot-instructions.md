@@ -1,28 +1,9 @@
-## vexp context tools <!-- vexp v2.1.7 -->
+# Repository guidance
 
-**MANDATORY: use `run_pipeline` - do NOT grep, glob, or read files manually.**
-vexp returns pre-indexed, graph-ranked context in a single call.
+Follow [AGENTS.md](../AGENTS.md) and the [Munin component guide](../Munin/README.md).
+The repository is a scaffold; Caddy plugins are deferred candidates, not a
+deployed or selected profile. Inventory must explicitly select host profiles.
 
-### Workflow
-1. `run_pipeline` with your task description - ALWAYS FIRST (replaces all other tools)
-2. Make targeted changes based on the context returned
-3. `run_pipeline` again only if you need more context
-
-### Available MCP tools
-- `run_pipeline` - **PRIMARY TOOL**. Runs capsule + impact + memory in 1 call.
-  Auto-detects intent. Includes file content. Example: `run_pipeline({ "task": "fix auth bug" })`
-- `get_skeleton` - compact file structure
-- `index_status` - indexing status
-- `expand_vexp_ref` - expand V-REF placeholders in v2 output
-
-### Agentic search
-- Do NOT use built-in file search, grep, or codebase indexing - always call `run_pipeline` first
-- If you spawn sub-agents or background tasks, pass them the context from `run_pipeline`
-  rather than letting them search the codebase independently
-
-### Smart Features
-Intent auto-detection, hybrid ranking, session memory, auto-expanding budget.
-
-### Multi-Repo
-`run_pipeline` auto-queries all indexed repos. Use `repos: ["alias"]` to scope. Run `index_status` to see aliases.
-<!-- /vexp -->
+For Munin changes, run `bash Munin/tests/validate-scaffold.sh` and the relevant
+pre-commit checks. Do not treat local validation as permission for host or
+master changes.

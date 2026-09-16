@@ -6,6 +6,13 @@ exclude: (?:^|/)(?:\.vexp|\.agents)/
 repos:
   - repo: local
     hooks:
+      - id: munin-scaffold
+        name: Validate Munin candidate profile and plugins
+        entry: bash Munin/tests/validate-scaffold.sh
+        language: system
+        files: ^Munin/
+        pass_filenames: false
+
       - id: shellcheck
         name: ShellCheck
         entry: shellcheck

@@ -4,7 +4,6 @@ set -u
 status_file=${status_file:-/run/caddy-lsyncd/status}
 incoming_root=${incoming_root:-/var/lib/caddy-sync/incoming}
 quarantine_root=${quarantine_root:-/var/lib/caddy-sync/quarantine}
-failure_root=${failure_root:-/run/caddy-ha-notify}
 
 if [[ "${1:-}" == config ]]; then
     cat <<'EOF'
@@ -22,30 +21,14 @@ incoming.label incoming releases
 incoming.type GAUGE
 conflicts.label quarantined conflicts
 conflicts.type GAUGE
-reachable.label peer SSH reachable
-reachable.type GAUGE
 revision_lag.label unactivated complete releases
 revision_lag.type GAUGE
-failures.label recent failure markers
-failures.type GAUGE
 EOF
     exit 0
 fi
 
 service=0
 systemctl is-active --quiet caddy-lsyncd.service && service=1
-
-if [[ -r /etc/default/caddy-ha ]]; then
-    # shellcheck disable=SC1091
-    source /etc/default/caddy-ha
-fi
-peer_ipv4=${PEER_IPV4:-}
-reachable=0
-if [[ -n "$peer_ipv4" ]] &&
-    curl --silent --max-time 2 "telnet://$peer_ipv4:22" \
-        </dev/null >/dev/null 2>&1; then
-    reachable=1
-fi
 
 status_age=U
 if [[ -e "$status_file" ]]; then
@@ -54,8 +37,9 @@ fi
 
 count_directories() {
     local directory=$1
+    local depth=$2
     if [[ -d "$directory" ]]; then
-        find "$directory" -mindepth 1 -maxdepth 2 -type d | wc -l
+        find "$directory" -mindepth "$depth" -maxdepth "$depth" -type d | wc -l
     else
         printf '0\n'
     fi
@@ -63,16 +47,10 @@ count_directories() {
 
 printf 'service.value %s\n' "$service"
 printf 'status_age.value %s\n' "$status_age"
-printf 'incoming.value %s\n' "$(count_directories "$incoming_root")"
-printf 'conflicts.value %s\n' "$(count_directories "$quarantine_root")"
+printf 'incoming.value %s\n' "$(count_directories "$incoming_root" 2)"
+printf 'conflicts.value %s\n' "$(count_directories "$quarantine_root" 1)"
 revision_lag=$(
     find "$incoming_root" -mindepth 3 -maxdepth 3 -name .complete \
         -type f -print 2>/dev/null | wc -l
 )
-failures=$(
-    find "$failure_root" -maxdepth 1 -type f \
-        -name 'lsyncd-failure-*' -mmin -60 -print 2>/dev/null | wc -l
-)
-printf 'reachable.value %s\n' "$reachable"
 printf 'revision_lag.value %s\n' "$revision_lag"
-printf 'failures.value %s\n' "$failures"
