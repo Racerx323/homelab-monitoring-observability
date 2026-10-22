@@ -14,8 +14,25 @@ jobs:
   munin:
     name: Munin scaffold validation
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: homelab-monitoring-observability
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+        with:
+          path: homelab-monitoring-observability
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+        with:
+          repository: Racerx323/homelab-ntp
+          ref: cb67f39925812a37c4ff17f00e83b50d788aee28
+          path: homelab-ntp
+          persist-credentials: false
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+        with:
+          repository: Racerx323/homelab-network
+          ref: 87dd9913073de0d7bc942f9abe23e62994d46a09
+          path: homelab-network
+          persist-credentials: false
       - name: Validate candidate profile and plugins
         run: bash Munin/tests/validate-scaffold.sh
       - name: Apache ACL transaction offline contracts
