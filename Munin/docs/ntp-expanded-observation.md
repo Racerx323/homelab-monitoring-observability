@@ -3,8 +3,11 @@
 Both approved observations executed October 21, 2026 with complete captures,
 controller/SSH exit 0 and unchanged protected continuity. Expanded scheduled
 collection, bounded RRD freshness and all dual-stack graph families are accepted.
-Producer success, source attribution and alert gates remain open; contacts stay
-disabled. Receipts are consumed and cannot replay.
+Those October 21 captures left producer success, source attribution and alerts
+open. Separate October 22 [follow-ups](ntp-source-attribution.md) subsequently
+accepted genuine producer records and canonical IPv4 socket/worker attribution.
+Current master maintenance values and alert gates remain open; contacts stay
+disabled. All these receipts are consumed and cannot replay.
 
 ## Observed outcome
 

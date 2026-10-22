@@ -62,11 +62,34 @@ reconciled the canonical mirrors. The node now selects 29 generic plugins plus
 four NTP readers; final master transport requires all 33. Both source-bound warm
 protocol families and existing HTTPS passed. The subsequent observation accepted
 three expanded scheduled cycles, 280 fresh RRDs and all 120 verified HTTPS checks.
-Independent producer, canonical source-attribution and alert gates remain open.
+The separate October 22 [follow-ups](docs/ntp-source-attribution.md) accepted
+genuine producer records and canonical IPv4 socket/worker source attribution.
+The October 22 master follow-up also accepted fresh maintenance evidence/age
+values. Native [limits/contact qualification](docs/ntp-limits-qualification.md)
+found precision and graph-scope defects; the repository correction now passes
+28 native cases. The guarded reader correction committed and reconciled October
+22 at 11:35:57 CDT. Separate master acceptance passed at 11:54:45: three genuine
+post-commit cycles, twelve fresh health/timing RRDs and ten verified dual-stack
+HTTPS resources including both day graphs. Contact activation v3 later committed
+and reconciled after twelve verified HTTPS checks, enabling only the reviewed
+nine NTP/transport graph origins. Its proof-preserving successor passes sixteen
+native contact cases and 28 limits cases against all seven pinned module hashes.
+
+Both exact controlled test messages have Aaron's downstream confirmations.
+The problem send recorded SMTP 450 despite arrival; recovery submission/status
+passed after the bound problem confirmation. Automatic transport CRITICAL for
+`mail` and subsequent transport OK notifications also arrived and are explicitly
+operator-confirmed. The approved read-only follow-up accepted native mail sample
+1, limits state ok, three genuine scheduled cycles and protected committed-input
+continuity at 15:07:04 CDT. Supplied Apprise logs locate the partial-delivery
+failure at a Pushover connection error; its underlying cause and long-term
+reliability remain unproven. Status timestamps do not identify exact writers. The
+[contact procedure](docs/ntp-contact-reviews.md) distinguishes these outcomes;
+all three execution receipts are consumed and must not be replayed.
 
 The [expanded observations](docs/ntp-expanded-observation.md) executed and accepted
-all selected graph families and three genuine post-expansion cycles. Both
-maintenance records remain absent; alerts stay disabled.
+all selected graph families and three genuine post-expansion cycles. Later
+October 22 follow-ups accepted both real maintenance records before separate contact activation.
 
 Run `bash Munin/tests/validate-scaffold.sh` for local repository validation.
 

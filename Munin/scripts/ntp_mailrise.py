@@ -12,9 +12,9 @@ import tempfile
 import time
 
 STATUS=Path('/var/lib/munin/ntp-alerts/status.json')
-GRAPHS={'cpu','load','memory','uptime','processes','ntp_health','ntp_timing',
-        'ntp_free_bytes','ntp_free_inodes','ntp_storage_read','ntp_stats_bytes',
-        'ntp_stats_growth','ntp_stats_age','ntp_stats_read','ntp_job_evidence','ntp_job_age'}
+# Only explicitly selected NTP limit graphs; generic graphs remain contacts none.
+GRAPHS={'ntp_health','ntp_free_bytes','ntp_free_inodes','ntp_storage_read',
+        'ntp_stats_age','ntp_stats_read','ntp_job_evidence','ntp_job_age'}
 
 
 def message(raw):

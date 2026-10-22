@@ -1,7 +1,11 @@
 # Candidate only. Integrate through the separately approved master operation.
+# Corrected candidate: requires coordinated timing-health deployment and
+# separately approved contact activation. Keep production contacts disabled.
 # One canonical raw-metric series. Protocol verification of both families is
 # collected by ntp_transport_j2 on the existing master-node schedule.
-contact.ntp_mailrise.command /usr/bin/python3 -I -B /usr/local/libexec/munin-ntp-mailrise.py
+# Keep unrelated hosts and graphs from inheriting a newly defined contact.
+contacts none
+contact.ntp_mailrise.command /usr/bin/python3 -I -B /usr/local/libexec/munin-ntp-contact-gate.py
 contact.ntp_mailrise.text ${var:worst}|${var:host}|${var:plugin}|${var:wfields}|${var:cfields}|${var:ufields}
 contact.ntp_mailrise.max_messages 1
 # No always_send: ordinary state transitions/recoveries only in Munin 2.0.73.
@@ -10,8 +14,16 @@ contact.ntp_mailrise.max_messages 1
     address 10.1.0.51
     port 4949
     use_node_name yes
-    contacts ntp_mailrise
+    contacts none
     unknown_limit 0
+    ntp_health.contacts ntp_mailrise
+    ntp_free_bytes.contacts ntp_mailrise
+    ntp_free_inodes.contacts ntp_mailrise
+    ntp_storage_read.contacts ntp_mailrise
+    ntp_stats_age.contacts ntp_mailrise
+    ntp_stats_read.contacts ntp_mailrise
+    ntp_job_evidence.contacts ntp_mailrise
+    ntp_job_age.contacts ntp_mailrise
 
 # Merge these overrides into the existing master section; do not duplicate it.
 [J1-SVMF]

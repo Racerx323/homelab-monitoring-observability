@@ -85,7 +85,7 @@ class MasterTests(unittest.TestCase):
             def __enter__(self):return self
             def __exit__(self,*args):pass
             def send_message(self,msg):return {'notify.failure@mailrise.xyz':(550,b'refused')}
-        with self.assertRaises(RuntimeError):a.deliver(a.message(b'CRITICAL|j2-svntp1|load|||'),SMTP)
+        with self.assertRaises(RuntimeError):a.deliver(a.message(b'CRITICAL|j2-svntp1|ntp_health|||'),SMTP)
         self.assertEqual(calls,[(('127.0.0.1',8025),{'timeout':10})])
         with tempfile.TemporaryDirectory() as tmp:
             directory=Path(tmp);directory.chmod(0o700);path=directory/'status.json'
@@ -99,6 +99,24 @@ class MasterTests(unittest.TestCase):
         text=(ROOT/'master/configs/j2-svntp1.conf.example').read_text()
         self.assertIn('contact.ntp_mailrise.max_messages 1',text)
         self.assertNotIn('command ${',text)
+
+    def test_candidate_contact_scope_is_exact_and_host_default_is_none(self):
+        text=(ROOT/'master/configs/j2-svntp1.conf.example').read_text()
+        self.assertIn('contacts none',text.split('[j2-svntp1]',1)[0].splitlines())
+        node=text.split('[j2-svntp1]',1)[1].split('[J1-SVMF]',1)[0]
+        selected={line.strip().split('.',1)[0] for line in node.splitlines()
+                  if line.strip().endswith('.contacts ntp_mailrise')}
+        self.assertEqual(selected,a.GRAPHS)
+        self.assertIn('    contacts none',node)
+        self.assertNotIn('    contacts ntp_mailrise',node)
+        profile=json.loads((ROOT/'node/profiles/ntp/profile.json').read_text())
+        self.assertEqual(set(profile['alert_graphs']),a.GRAPHS)
+        for graph in ('df','cpu','load','diskstats_iops','diskstats_iops.loop0','loop0',
+                      'ntp_timing','ntp_stats_bytes','ntp_stats_growth'):
+            with self.assertRaises(ValueError):a.message(('CRITICAL|j2-svntp1|'+graph+'||reading|').encode())
+        for graph in selected:
+            self.assertEqual(a.message(('CRITICAL|j2-svntp1|'+graph+'||reading|').encode())['To'],
+                             'notify.failure@mailrise.xyz')
 
 
 if __name__=='__main__':unittest.main()

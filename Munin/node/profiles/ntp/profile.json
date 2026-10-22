@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "status": "expanded profile; assignment and deployment acceptance recorded separately",
+  "status": "expanded selection with timing-health correction candidate; correction not deployed",
   "package_plugins": [
     "acpi",
     "cpu",
@@ -49,7 +49,21 @@
   "minimum_free_inode_percent": 5,
   "selected_offset_limit_seconds": 0.005,
   "selected_jitter_limit_seconds": 0.001,
+  "timing_health_fields": [
+    "selected_offset_ok",
+    "selected_jitter_ok"
+  ],
+  "alert_graphs": [
+    "ntp_free_bytes",
+    "ntp_free_inodes",
+    "ntp_health",
+    "ntp_job_age",
+    "ntp_job_evidence",
+    "ntp_stats_age",
+    "ntp_stats_read",
+    "ntp_storage_read"
+  ],
   "statistics_stale_seconds": 3600,
   "job_success_stale_seconds": 172800,
-  "heartbeat_producers_deployed": false
+  "heartbeat_producers_deployed": true
 }

@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "status": "reader correction and scheduled master-field/graph acceptance passed; production contacts disabled",
+  "production_installed": true,
+  "sealed_deployment_review": true,
+  "production_baseline": {
+    "ntp_metrics_sha256": "2d2c876d2a1e81902285f8f4926281efcf579f082a6f17b5a3dbaaecb31f4849",
+    "master_config_sha256": "eefe2d3f0cfa59f65ee76b06e53e8e4ef911e9f6fa169ff8f6140d9e61c11851",
+    "master_transport_sha256": "bd7208a4668fb19d15eca3528dbaef44ef21501395817391d788c298fa80554a"
+  },
+  "files": {
+    "node/plugins/ntp/ntp_metrics.py": "2414aee1992613f80e7f4eec3c361732e34fc3741d8a022c69f806b2c6c64ecf",
+    "node/profiles/ntp/profile.json": "11543850cb36a17f8c5187f6314f53798efa6a7506f89fcf936e4c5c26056f0b",
+    "scripts/ntp_mailrise.py": "8acfd5a81e9a1b28e06f9f2bcbe53be9add3bb4026962062854fb1a8a7cdaed5",
+    "master/configs/j2-svntp1.conf.example": "3e575d3f9c1a56b53751f762aac820676888d1f9d33ad85fc18711f64e0bc9dc"
+  },
+  "ntp_health_fields_added": [
+    "selected_offset_ok",
+    "selected_jitter_ok"
+  ],
+  "ntp_health_fields_before": 6,
+  "ntp_health_fields_after": 8,
+  "timing_series_units": "seconds; values and names preserved",
+  "native_timing_limit_policy": "evaluate full-precision node health flags with critical 1:1; raw timing graph informational",
+  "plugin_selection_changed": false,
+  "graph_identities_changed": false,
+  "generic_contact_selected": false,
+  "contact_default": "none globally and on j2-svntp1",
+  "node_contact_graphs": [
+    "ntp_free_bytes",
+    "ntp_free_inodes",
+    "ntp_health",
+    "ntp_job_age",
+    "ntp_job_evidence",
+    "ntp_stats_age",
+    "ntp_stats_read",
+    "ntp_storage_read"
+  ],
+  "master_contact_graphs": [
+    "ntp_transport_j2"
+  ],
+  "native_case_count": 28,
+  "native_module_hashes": {
+    "/usr/share/perl5/Munin/Master/Config.pm": "83c052e0f39bcee1d4f389a66a3392f1cdd8d40ebacf35a84f22bd92aee0e220",
+    "/usr/share/perl5/Munin/Common/Config.pm": "2a28f2a9973554c56e8c1dec8a4f6257e5971ffebea62fbbd3436353309854fe",
+    "/usr/share/perl5/Munin/Master/Utils.pm": "6b651c4c1f987300fbe455ac164cd163be8d2c337ec77a99f05dc856f98ebde2",
+    "/usr/share/perl5/Munin/Master/LimitsOld.pm": "ce0f9192f676fe61fba423c0ded9d1b0c0a92c5c6925ee3598a8b38cd2771dae"
+  },
+  "native_capture_sha256": "3e4179a0e7084b28651d4f1eb646d354548ca5ad595b2ea174daf7139772c521",
+  "remaining_gates": [
+    "separate guarded contact activation/restoration review",
+    "separate exact-message problem/recovery delivery approval and acceptance"
+  ],
+  "guarded_update_native_case_count": 17,
+  "sealed_reviews": {
+    "node_operation": "munin-generic-timing-20261022-v2",
+    "node_sha256": "b10cfd3300ae062557a87f2a192cc4dda1d34a49b3d89185df8c48fb07ddefc6",
+    "master_operation": "munin-timing-master-acceptance-20261022-v1",
+    "master_sha256": "1058066c26d23420340148bcf76dd52a45f5f40a5f5e3d0ab1f86c7fa6cc2b16"
+  },
+  "contact_candidate_installed": false,
+  "accepted_reader": {
+    "operation": "munin-generic-timing-20261022-v2",
+    "archive_sha256": "b10cfd3300ae062557a87f2a192cc4dda1d34a49b3d89185df8c48fb07ddefc6",
+    "commit_finished_epoch": 1792686957.4748192,
+    "ntp_metrics_sha256": "2414aee1992613f80e7f4eec3c361732e34fc3741d8a022c69f806b2c6c64ecf",
+    "repository_reconciled": true
+  },
+  "accepted_master": {
+    "archive_sha256": "1058066c26d23420340148bcf76dd52a45f5f40a5f5e3d0ab1f86c7fa6cc2b16",
+    "capture_sha256": "27cad73386994537058ea9613c2c87e9b083610988d0627aaf22caf484f8da2f",
+    "captured_local": "2026-10-22T11:54:45.436121-05:00",
+    "corrected_timing_collection_accepted": true,
+    "three_scheduled_cycles_accepted": true,
+    "rrd_fields_accepted": 12,
+    "https_requests_accepted": 10,
+    "contacts_disabled": true
+  }
+}

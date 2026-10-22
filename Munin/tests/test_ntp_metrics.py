@@ -33,6 +33,33 @@ class MetricsTests(unittest.TestCase):
             self.assertEqual(args.kwargs['timeout'],8)
         with patch.object(m.subprocess,'run',side_effect=OSError):
             d=m.time_metrics();self.assertEqual(d['query_ok'],0);self.assertEqual(d['stratum'],'U')
+            self.assertEqual([d[k] for k in m.TIMING_HEALTH_FIELDS],['U','U'])
+
+    def test_timing_health_uses_full_precision_and_inclusive_boundaries(self):
+        for offset, jitter, offset_ok, jitter_ok in (
+                ('5','1',1,1),('-5','0',1,1),('5.000001','1.000001',0,0),
+                ('-5.000001','4',0,0),('4.999999','0.999999',1,1)):
+            raw=SAMPLE.replace('-0.125 0.015',offset+' '+jitter)
+            d=m.parse_ntpq(raw)
+            self.assertEqual(d['selected_offset_ok'],offset_ok)
+            self.assertEqual(d['selected_jitter_ok'],jitter_ok)
+            self.assertEqual(d['selected_offset'],float(offset)/1000)
+            self.assertEqual(d['selected_jitter'],float(jitter)/1000)
+
+    def test_timing_plots_keep_seconds_and_health_config_fetch_fields_agree(self):
+        configuration=m.config('health')
+        for name in m.TIMING_HEALTH_FIELDS:
+            self.assertIn(name+'.critical 1:1',configuration)
+        self.assertIn('graph_vlabel seconds',configuration)
+        self.assertNotIn('selected_offset.critical -0.005:0.005',configuration)
+        self.assertNotIn('selected_jitter.critical 0:0.001',configuration)
+        with patch.object(m,'time_metrics',return_value=m.parse_ntpq(SAMPLE)):
+            output=m.fetch('health')
+        self.assertIn('selected_offset_ok.value 1',output)
+        self.assertIn('selected_jitter_ok.value 1',output)
+        self.assertIn('selected_offset.value -0.000125',output)
+        jitter=next(line.split()[1] for line in output if line.startswith('selected_jitter.value '))
+        self.assertAlmostEqual(float(jitter),.000015)
 
     def test_observed_shm2_pps_system_peer_and_negative_identities(self):
         raw=(ROOT/'tests/fixtures/ntpq-shm2-selected.txt').read_text()
@@ -86,7 +113,7 @@ class MetricsTests(unittest.TestCase):
         self.assertEqual(d['root_plugins'],['ntp_statistics','ntp_jobs'])
         for name in d['custom_plugins']:
             self.assertTrue((ROOT/'node/plugins/ntp'/name).is_file());self.assertIn('['+name+']',settings)
-        self.assertFalse(d['heartbeat_producers_deployed'])
+        self.assertEqual(d['timing_health_fields'],list(m.TIMING_HEALTH_FIELDS))
         for kind in ('health','storage','statistics','jobs'):
             self.assertTrue(m.config(kind));self.assertTrue(all('\n' not in line for line in m.config(kind)))
         with self.assertRaises(SystemExit):m.main('storage',['/etc/shadow'])

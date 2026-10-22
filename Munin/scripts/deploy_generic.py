@@ -71,6 +71,50 @@ def transaction(files):
 
 def review(s):
     w = s['worker']
+    if w['role'] == 'timing':
+        return f"""# Guarded NTP timing-health reader correction
+
+Operation `{s['operation_id']}`; expires epoch {s['expires_epoch']}.
+Approve deployment.tar's exact SHA-256 in sealing.json. Execute frozen runner.py
+with this directory/hash once, with at least 900 seconds before expiry.
+Node ama@10.1.0.51 (strict alias 10.1.0.137); companion master pi@10.1.3.83
+(strict alias svmf.local.theama.co). This approval includes both fixed targets:
+the node mutation and source-bound master protocol/HTTPS acceptance only.
+
+Replace only /usr/local/munin/lib/plugins/ntp_metrics.py, root:root 0644,
+single-link atomic publication against the accepted old hash. Retain private
+before bytes/metadata. Briefly stop/start only enabled munin-node, pinning its
+package unit/drop-ins/startup permit. Keep exactly the existing 33 plugin links,
+all settings, ordinary plugin state, generic readers, NTP/GPS and main master
+configuration unchanged. No package, controller/network, timer/schedule or
+contact change. The contact helper/example are not installed or activated.
+
+Before mutation require root/host/boot, protected service/file baselines,
+listeners, exact selection, both master-origin protocol families and six
+verified existing HTTPS continuity requests. After publication require the same
+33 plugins, full-precision selected_offset_ok/selected_jitter_ok=1, critical 1:1,
+unchanged raw seconds graph and no misleading native seconds critical ranges.
+Perform two complete source-bound warm fetches with a genuine 305-second gap;
+all ordinary fields numeric except the separately allowed missing job ages.
+Each family has a 25-second total budget. Recheck six HTTPS requests before
+commit; existing graph continuity does not accept new RRD/graph freshness.
+
+Use the existing detached worker, fsynced inode intents, operation lock and
+independent 600-second systemd recovery timer. Known acceptance failure restores
+only matching authored bytes/inodes and starts the original node. Controller or
+worker loss leaves the independent guard armed; never replay. Foreign target,
+link, settings or protected drift is preserved with recovery held; the original
+service state may require a new inspected recovery review. Keep backups/proofs
+and all RRDs. Commit disarms the guard only after acceptance. All executable
+inputs are frozen repository sources covered by current native qualification.
+
+One fsynced local receipt before contact; private bounded captures. Normal
+SSH/sudo/service logs, real plugin state writes during polling, and ordinary
+HTTPS CGI/cache writes are possible. No maintenance job or message is invoked.
+Contacts remain disabled. A separate master read-only review accepts genuine
+scheduled corrected fields and fresh graphs after this stage commits. Exact
+contact activation and problem/recovery delivery remain later approvals.
+"""
     node = w['role'] == 'node'
     return f"""# Coordinated generic expansion — {w['role']}
 
@@ -151,27 +195,37 @@ def unpack(raw, digest, reserve=0):
         raise ValueError('member digest mismatch')
     s = json.loads(files['spec.json'])
     w = s['worker']
-    if (not re.fullmatch(r'munin-generic-(compatible|node|expanded)-[0-9]{8}-v[0-9]+', s['operation_id'])
-            or w['operation_id'] != s['operation_id'] or w['role'] not in ('compatible', 'node', 'expanded')
+    if (not re.fullmatch(r'munin-generic-(compatible|node|expanded|timing)-[0-9]{8}-v[0-9]+', s['operation_id'])
+            or w['operation_id'] != s['operation_id'] or w['role'] not in ('compatible', 'node', 'expanded', 'timing')
             or not s['prepared_epoch'] <= time.time() < s['expires_epoch']-reserve
             or not 0 < s['expires_epoch']-s['prepared_epoch'] <= 86400
             or s['recovery_seconds'] != (20 if w.get('fixture') else 600)
             or files['review.md'] != review(s).encode()
             or sha(files['qualification.json']) != s['qualification_sha256']):
         raise ValueError('update scope/expiry/review mismatch')
-    candidate = files['settings-after'] if w['role'] == 'node' else files['compatible.py' if w['role'] == 'compatible' else 'expanded.py']
+    candidate = files['settings-after'] if w['role'] in ('node', 'timing') else files['compatible.py' if w['role'] == 'compatible' else 'expanded.py']
     if base64.b64decode(w['candidate'], validate=True) != candidate:
         raise ValueError('candidate binding mismatch')
     if not w.get('fixture'):
-        node = w['role'] == 'node'
+        node = w['role'] in ('node', 'timing')
+        timing = w['role'] == 'timing'
         expected = ('10.1.0.51', 'ama', '10.1.0.137', 'j2-svntp1') if node else ('10.1.3.83', 'pi', 'svmf.local.theama.co', 'J1-SVMF')
         if tuple(s[k] if k != 'hostname' else w[k] for k in ('endpoint', 'user', 'host_key_alias', 'hostname')) != expected:
             raise ValueError('fixed target scope')
-        if (w['target'] != ('/etc/munin/plugin-conf.d/ntp' if node else '/usr/local/munin/lib/plugins/ntp_transport_j2')
+        expected_target = '/usr/local/munin/lib/plugins/ntp_metrics.py' if timing else '/etc/munin/plugin-conf.d/ntp' if node else '/usr/local/munin/lib/plugins/ntp_transport_j2'
+        if (w['target'] != expected_target
                 or w['mode'] != (0o644 if node else 0o755) or w['transport_expected'] != {'v4': '1', 'v6': '1', 'mail': 'U'}
-                or len(s['old_plugins']) != 9 or len(s['new_plugins']) != 33
-                or len(w['additions']) != (24 if node else 0)):
+                or len(s['old_plugins']) != (33 if timing else 9) or len(s['new_plugins']) != 33
+                or len(w['additions']) != (24 if node and not timing else 0)):
             raise ValueError('fixed production selection/change boundary')
+        if timing:
+            compile(candidate, 'timing-reader.py', 'exec')
+            if (s['old_plugins'] != s['new_plugins'] or s.get('contacts_disabled') is not True
+                    or w['before_sha256'] != sha(files['settings-before'])
+                    or sha(files['compatible.py']) != sha(files['expanded.py'])
+                    or s['mirrors'] != [{'path': '/home/aaron/code/homelab-monitoring-observability/Munin/node/plugins/ntp/ntp_metrics.py',
+                                         'before': 'settings-after', 'after': 'settings-after'}]):
+                raise ValueError('timing correction scope mismatch')
         if w['role'] == 'compatible':
             expected_proof = '/var/lib/munin-ntp-master/munin-master-commissioning-20261021-v1/proof-ntp_transport_j2'
             if (w.get('before_nlink') != 2 or w.get('before_proof') != expected_proof
@@ -180,8 +234,9 @@ def unpack(raw, digest, reserve=0):
         elif w.get('before_nlink', 1) != 1 or 'before_proof' in w:
             raise ValueError('single-link successor baseline required')
         qualification = json.loads(files['qualification.json'])
+        artifacts = [('compatible.py', 'expanded.py'), ('expanded.py', 'expanded.py'), ('settings-after', 'timing-reader')] if timing else [(n, n) for n in ('compatible.py', 'expanded.py', 'settings-after')]
         if (not qualification.get('passed') or any(qualification['sources'].get(n) != sha(files[n]) for n in SOURCES)
-                or any(qualification['artifacts'].get(n) != sha(files[n]) for n in ('compatible.py', 'expanded.py', 'settings-after'))):
+                or any(qualification['artifacts'].get(key) != sha(files[name]) for name, key in artifacts)):
             raise ValueError('current executable inputs lack qualification')
     return s, files
 
@@ -213,7 +268,7 @@ def locked_worker(directory, digest, action):
     return transaction(files).locked_worker(directory, digest, action)
 
 
-def prerequisite_program(files, inspection, prerequisite, master, names=None, seed=False):
+def prerequisite_program(files, inspection, prerequisite, master, names=None, seed=False, timing=False):
     """Root checks continuity/state; native protocol code itself runs as munin."""
     program = b'import types,json,os,base64\n'
     for key, name in (('helper.py', 'h'), ('observer.py', 'o'), ('base.py', 'b')):
@@ -227,7 +282,7 @@ def prerequisite_program(files, inspection, prerequisite, master, names=None, se
         for key, name in (('fields.py', 'f'), ('probe.py', 'p')):
             inner += name.encode()+b'ns={"__name__":"module","__file__":"/sealed/Munin/scripts/module.py"}\nexec('+repr(files[key]).encode()+b','+name.encode()+b'ns)\n'+name.encode()+b'=types.SimpleNamespace(**'+name.encode()+b'ns)\n'
         endpoints = [(2, '10.1.0.51', '10.1.3.83'), (10, 'fd36:5aa8:6971:1::51', 'fd36:5aa8:6971:1::83')]
-        inner += b'print(json.dumps(p.both('+repr(endpoints).encode()+b','+repr(names).encode()+b',f.fields,'+repr(seed).encode()+b')))\n'
+        inner += b'print(json.dumps(p.both('+repr(endpoints).encode()+b','+repr(names).encode()+b',f.fields,'+repr(seed).encode()+b',timing='+repr(timing).encode()+b')))\n'
         program += (b'row=h.bounded(["/usr/sbin/runuser","-u","munin","--","/usr/bin/python3","-I","-B","-"],timeout=60,limit=2097152,payload='
                     +repr(inner).encode()+b')\nassert row.get("returncode")==0 and not row.get("error") and not row["stderr"],"native probe process failed"\nresult=json.loads(row["stdout"])\n')
     else:
@@ -283,7 +338,7 @@ def execute(args):
         if label == 'after' and s['worker']['role'] == 'compatible':
             inspection['files']['/usr/local/munin/lib/plugins/ntp_transport_j2'] = sha(files['compatible.py'])
         program = prerequisite_program(files, inspection, s.get('master_prerequisite') if s['worker']['role'] == 'node' else None,
-                                       True, names, seed)
+                                       True, names, seed, s['worker']['role'] == 'timing' and label in ('seed', 'after'))
         value = contact(s['master_target'], program, 'protocol-'+label, 100)
         if not value.get('complete'):
             raise ValueError('known protocol acceptance failure: '+label)
@@ -315,7 +370,7 @@ def execute(args):
     if applied.get('phase') != 'prepared':
         return result
     try:
-        if s['worker']['role'] == 'node':
+        if s['worker']['role'] in ('node', 'timing'):
             result['seed'] = master_probe('seed', s['new_plugins'], True)
             save()
             due = time.monotonic()+305
@@ -335,6 +390,7 @@ def execute(args):
         raise
     try:
         result['commit'] = remote('commit')
+        result['commit_finished_epoch'] = time.time()
     except Exception as error:
         result.update(error=str(error), recovery='commit uncertain; inspect, do not replay')
         save()
@@ -352,6 +408,77 @@ def execute(args):
     result['accepted'] = result['committed'] and result['repository_reconciled']
     save()
     return result
+
+
+def observation(directory, flag):
+    raw = private(directory/'inspection.tar')
+    files = archive_files(raw)
+    result = json.loads(private(directory/'result.json'))
+    capture_raw = private(directory/'stdout.txt')
+    capture = json.loads(capture_raw)
+    outcome = json.loads(private(directory/'outcome.json'))
+    spec = json.loads(files['spec.json'])
+    if (not outcome.get(flag) or outcome.get('archive_sha256') != sha(raw)
+            or outcome.get('capture_sha256') != sha(capture_raw)
+            or result.get('bundle_sha256') != sha(raw) or result.get('returncode') != 0
+            or not result.get('capture_complete') or not capture.get('capture_complete')
+            or capture.get('spec_sha256') != sha(files['spec.json']) or capture['before'] != capture['after']):
+        raise ValueError('accepted immutable observation required')
+    return spec, files
+
+
+def seal_timing(args):
+    files = {name: path.read_bytes() for name, path in SOURCES.items()}
+    common = module(files['data-utils.py'], 'data')
+    ns, node = observation(args.node_inventory, 'genuine_success_records_accepted')
+    ms, master = observation(args.master_inventory, 'maintenance_consumption_accepted')
+    _, previous, _, _, _ = common.expanded_stage(args.previous, 'node')
+    original, _, _ = common.accepted(args.node_baseline, 'node_runtime_accepted')
+    before = original['profile/node/plugins/ntp/ntp_metrics.py']
+    target = '/usr/local/munin/lib/plugins/ntp_metrics.py'
+    if ns['kind'] != 'node' or ms['kind'] != 'master' or sha(before) != ns['files'][target]:
+        raise ValueError('timing baseline mismatch')
+    transport = (ROOT/'master/plugins/ntp_transport_j2.expanded.candidate').read_bytes()
+    if sha(transport) != ms['files']['/usr/local/munin/lib/plugins/ntp_transport_j2']:
+        raise ValueError('accepted expanded transport required')
+    files.update({'known_hosts': b'\n'.join(sorted(set((node['known_hosts']+b'\n'+master['known_hosts']).splitlines())))+b'\n',
+                  'ca.pem': master['ca.pem'], 'compatible.py': transport, 'expanded.py': transport,
+                  'transport-before': transport, 'settings-before': before,
+                  'settings-after': (ROOT/'node/plugins/ntp/ntp_metrics.py').read_bytes(),
+                  'profile-before.json': (ROOT/'node/profiles/ntp/profile.json').read_bytes(),
+                  'profile-after.json': (ROOT/'node/profiles/ntp/profile.json').read_bytes(),
+                  'qualification.json': private(args.qualification)})
+    pins = dict(ns['files'])
+    pins.pop(target)
+    layout = previous['worker']['node_unit_layout']
+    for path in (layout['FragmentPath'], layout['DropInPaths']):
+        if pins.get(path) != previous['worker']['protected'].get(path):
+            raise ValueError('accepted startup unit provenance changed')
+    names = sorted(ns['enabled_links'])
+    now = int(time.time())
+    worker = {'operation_id': args.output.name, 'role': 'timing', 'target': target, 'mode': 0o644,
+              'hostname': ns['hostname'], 'boot_id': ns['boot_id'], 'units': ns['units'], 'protected': pins,
+              'plugins_before': ns['enabled_links'], 'additions': {}, 'source_hashes': {},
+              'before_sha256': sha(before), 'candidate': base64.b64encode(files['settings-after']).decode(),
+              'transport_expected': {'v4': '1', 'v6': '1', 'mail': 'U'},
+              'listen_addresses': ['10.1.0.51', 'fd36:5aa8:6971:1::51'],
+              'node_unit_layout': layout, 'fixture': False}
+    spec = {'operation_id': args.output.name, 'prepared_epoch': now, 'expires_epoch': now+86400,
+            'recovery_seconds': 600, 'worker': worker, 'old_plugins': names, 'new_plugins': names,
+            'endpoint': ns['endpoint'], 'user': ns['user'], 'host_key_alias': ns['host_key_alias'],
+            'master_inspection': ms, 'node_inspection': ns,
+            'master_target': {k: ms[k] for k in ('endpoint', 'user', 'host_key_alias')},
+            'node_target': {k: ns[k] for k in ('endpoint', 'user', 'host_key_alias')},
+            'qualification_sha256': sha(files['qualification.json']), 'contacts_disabled': True,
+            'addresses': ['10.1.3.83', 'fd36:5aa8:6971:1::83'], 'leaf_sha256': ms['leaf_sha256'],
+            'paths': ['/', '/static/style-new.css', '/munin-cgi/munin-cgi-graph/J1-SVMF/J1-SVMF/apache_accesses-day.png'],
+            'mirrors': [{'path': str(ROOT/'node/plugins/ntp/ntp_metrics.py'), 'before': 'settings-after', 'after': 'settings-after'}]}
+    tx = transaction(files)
+    tx.review, tx.MEMBERS = review, MEMBERS
+    digest = tx.write_archive(args.output, spec, files)
+    # Enforce the production scope/qualification checks before presenting approval.
+    unpack(private(args.output/'deployment.tar'), digest)
+    return {'sha256': digest, 'target_contact': False, 'role': 'timing', 'expires_epoch': spec['expires_epoch']}
 
 
 def seal(args):
@@ -501,6 +628,9 @@ def main():
         q.add_argument('--'+name, type=Path, required=True)
     q.add_argument('--previous', type=Path)
     q.add_argument('--transport-metadata', type=Path)
+    q = sub.add_parser('seal-timing')
+    for name in ('node-inventory', 'master-inventory', 'previous', 'node-baseline', 'qualification', 'output'):
+        q.add_argument('--'+name, type=Path, required=True)
     for action in ('check', 'execute', 'inspect', 'root'):
         q = sub.add_parser(action)
         q.add_argument('--directory', type=Path, required=True)
@@ -508,7 +638,9 @@ def main():
         if action == 'root':
             q.add_argument('--action', dest='root_action', choices=('apply', 'commit', 'recover', 'inspect'), required=True)
     args = parser.parse_args()
-    if args.action == 'seal':
+    if args.action == 'seal-timing':
+        result = seal_timing(args)
+    elif args.action == 'seal':
         result = seal(args)
     elif args.action == 'root':
         result = locked_worker(args.directory, args.sha256, args.root_action)

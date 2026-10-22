@@ -1,5 +1,32 @@
 # NTP node profile
 
+## Timing-health correction
+
+The approved reader correction committed and reconciled on October 22 at
+11:35:57 CDT. The repository reader matches that accepted deployment. The 33-plugin
+selection remains unchanged. `ntp_health` gains `selected_offset_ok` and
+`selected_jitter_ok`, computed before native rounding, with inclusive ±5 ms
+offset and 0–1 ms jitter boundaries. They are GAUGE values 1/0, or `U` when the
+query cannot be interpreted. Their native critical range is `1:1`.
+
+The four existing timing series retain their names, values and seconds units;
+misleading native critical directives are removed from that graph. This adds
+two health RRD fields and no plugin or graph identity. Existing historical RRDs
+must be preserved. The [candidate manifest](timing-health.candidate-manifest.json)
+records source hashes and the pre-correction baseline separately.
+
+The master contact candidate defaults globally and at the NTP host to
+`contacts none`, selecting only eight explicit NTP limit graphs and the master
+transport graph. Generic metrics remain collected without inheriting this
+contact. The helper accepts exactly those origins. See the
+[native correction qualification](../../../docs/ntp-limits-qualification.md).
+Guarded reader deployment and separate scheduled fresh-field/graph acceptance
+passed October 22. All twelve RRDs and both day graphs passed after three genuine
+post-commit cycles. Production contacts stay disabled; contact activation and exact-message
+delivery tests remain later, separately approved stages.
+
+## Previously accepted expanded selection
+
 [profile.json](profile.json) selects 29 package plugins and four custom NTP
 readers. Inventory selects this profile for j2-svntp1. The approved coordinated
 v2 deployment committed and reconciled this profile and its settings mirror;
@@ -77,12 +104,11 @@ completed_epoch. It must be atomically written only after the actual job succeed
 The candidate staleness ceiling is 48 hours. Missing, malformed or inaccessible
 records produce evidence=0 and age=U; future-dated records are rejected.
 
-**The installed jobs do not yet produce these records.** A separate NTP-owned
-maintenance/reporting stage must add post-success recording while preserving
-locking, quiet scans and failure-mail behavior. Do not fabricate records, infer
-rule execution from global logrotate success, or infer a needrestart run from
-mail delivery. Keep this dependency in OBS-01/OBS-03/OBS-07 until accepted.
-This profile exposes the existing evidence gap instead of reporting it healthy.
+Producer installation and the October 22 genuine records/master consumption
+are accepted; the profile metadata now reflects that state. Preserve locking,
+quiet scans and failure-mail behavior. Do not fabricate records, infer rule
+execution from global logrotate success, or infer a needrestart run from mail
+delivery. Continued recurrence and delivered failure mail remain separate gates.
 
 ## Qualification and installation
 

@@ -10,8 +10,8 @@ and retained native RRD metadata.
 ## Observed selection
 
 Both address families expose the same 33 generic top-level reference graphs,
-matching the native reference RRD inventory. j2-svntp1 currently enables five
-generic plugins and the four custom NTP readers. Its 16 top-level graphs comprise
+matching the native reference RRD inventory. At inventory time, j2-svntp1 enabled
+five generic plugins and the four custom NTP readers. Its 16 top-level graphs comprised
 five generic and eleven NTP multigraphs. Generic parity maps to **29 package
 plugin instances: 24 additions**, retaining the four NTP readers. The resulting
 candidate has 33 plugin instances before any explicit capability dispositions.

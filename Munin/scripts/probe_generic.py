@@ -6,7 +6,7 @@ import socket
 import time
 
 
-def probe(endpoint, names, validate_fields, seed=False, connect=socket.socket):
+def probe(endpoint, names, validate_fields, seed=False, connect=socket.socket, timing=False):
     family, target, source = endpoint
     started = time.monotonic()
     deadline = started+25
@@ -70,6 +70,16 @@ def probe(endpoint, names, validate_fields, seed=False, connect=socket.socket):
                 if name == 'ntp_health':
                     if any(field+'.value 1' not in fetch.splitlines() for field in ('query_ok', 'synced', 'pps_selected')):
                         raise ValueError('NTP health lost')
+                    if timing:
+                        for field in ('selected_offset_ok', 'selected_jitter_ok'):
+                            if (field+'.value 1' not in fetch.splitlines()
+                                    or field+'.critical 1:1' not in config.splitlines()):
+                                raise ValueError('corrected timing health missing or unhealthy')
+                        if ('selected_offset.critical -0.005:0.005' in config.splitlines()
+                                or 'selected_jitter.critical 0:0.001' in config.splitlines()
+                                or 'graph_vlabel seconds' not in config.splitlines()):
+                            raise ValueError('raw timing graph contract changed')
+                        record['timing_health_corrected'] = True
                 records[name] = record
             send('quit')
     if time.monotonic() > deadline:
@@ -78,10 +88,10 @@ def probe(endpoint, names, validate_fields, seed=False, connect=socket.socket):
             'seed_only': seed, 'plugins': records, 'complete': True}
 
 
-def both(endpoints, names, validate_fields, seed=False):
+def both(endpoints, names, validate_fields, seed=False, timing=False):
     def run(endpoint):
         try:
-            return probe(endpoint, names, validate_fields, seed)
+            return probe(endpoint, names, validate_fields, seed, timing=timing)
         except Exception as error:
             return {'source': endpoint[2], 'target': endpoint[1], 'complete': False, 'error': str(error)}
     with ThreadPoolExecutor(max_workers=2) as pool:

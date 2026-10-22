@@ -36,7 +36,7 @@ def make_worker(base, _qualifier):
 
         def continuity(self):
             self.identity()
-            if self.spec['role'] == 'node':
+            if self.spec['role'] in ('node', 'timing'):
                 raw = self.ctl('show', 'munin-node.service', '--property=FragmentPath,DropInPaths')
                 layout = dict(line.split('=', 1) for line in raw.splitlines())
                 expected = self.spec['node_unit_layout']
@@ -52,7 +52,7 @@ def make_worker(base, _qualifier):
             if self.state.get('phase') in ('prepared', 'committed'):
                 if not self.file_matches(self.target, base.sha(self.candidate), self.state['after_identity']):
                     raise ValueError('authored target changed')
-                self.links_valid(self.spec['role'] == 'node')
+                self.links_valid(self.spec['role'] in ('node', 'timing'))
                 if self.settings_inventory() != self.state['settings_before']:
                     raise ValueError('unrelated settings changed')
 
@@ -164,14 +164,14 @@ def make_worker(base, _qualifier):
                 raise ValueError('inspected baseline inode changed')
             if self.unit()['ActiveState'] != 'active' or self.unit()['SubState'] != 'running':
                 raise ValueError('existing node must be running')
-            if self.spec['role'] != 'node':
+            if self.spec['role'] not in ('node', 'timing'):
                 self.state['plugins_before'] = self.inventory()
                 if self.state['plugins_before'].get('ntp_transport_j2') != ['link', str(self.target)]:
                     raise ValueError('master transport link changed')
             self.links_valid(False)
             self.state.update(before_identity=self.fid(m), node_before=self.unit(),
                               settings_before=self.settings_inventory())
-            if self.spec['role'] == 'node' and self.ctl('is-enabled', 'munin-node.service').strip() != 'enabled':
+            if self.spec['role'] in ('node', 'timing') and self.ctl('is-enabled', 'munin-node.service').strip() != 'enabled':
                 raise ValueError('node is not persistently enabled')
             for name, target in self.spec['additions'].items():
                 if os.path.lexists(Path('/etc/munin/plugins')/name):
@@ -194,18 +194,18 @@ def make_worker(base, _qualifier):
         def validate(self):
             self.continuity()
             self.retained_proof()
-            self.links_valid(self.spec['role'] == 'node')
+            self.links_valid(self.spec['role'] in ('node', 'timing'))
             if self.settings_inventory() != self.state['settings_before']:
                 raise ValueError('unrelated settings changed')
             if not self.file_matches(self.target, base.sha(self.candidate), self.state['after_identity']):
                 raise ValueError('authored target changed')
             if self.unit()['ActiveState'] != 'active' or self.unit()['SubState'] != 'running':
                 raise ValueError('node is not running')
-            if self.spec['role'] != 'node' and self.unit() != self.state['node_before']:
+            if self.spec['role'] not in ('node', 'timing') and self.unit() != self.state['node_before']:
                 raise ValueError('master node identity changed')
 
         def local_check(self):
-            if self.spec['role'] == 'node':
+            if self.spec['role'] in ('node', 'timing'):
                 # Warm source-bound TCP fetches, not a CLI state copy, are checked
                 # by the controller before commit. Verify active serving here.
                 raw = self.command(['/usr/bin/ss', '-H', '-lnt', 'sport = :4949'])
@@ -228,13 +228,13 @@ def make_worker(base, _qualifier):
             base.atomic(self.root/'before', before)
             self.state.update(phase='backup', installed_epoch=time.time())
             self.save()
-            if self.spec['role'] == 'node':
+            if self.spec['role'] in ('node', 'timing'):
                 self.state['stop_intent'] = True
                 self.save()
                 self.ctl('stop', 'munin-node.service')
                 self.add_links()
             self.publish(self.candidate, 'after_identity', self.spec['before_sha256'], self.state['before_identity'])
-            if self.spec['role'] == 'node':
+            if self.spec['role'] in ('node', 'timing'):
                 self.ctl('start', 'munin-node.service')
             self.validate()
             self.local_check()
@@ -252,7 +252,7 @@ def make_worker(base, _qualifier):
 
         def recover(self):
             self.identity()
-            if self.state.get('phase') == 'committed':
+            if self.state.get('phase') in ('committed', 'restored'):
                 return self.state
             errors = []
             try:
@@ -273,7 +273,7 @@ def make_worker(base, _qualifier):
                         raise ValueError('foreign link preserved: '+name)
                 self.state['phase'] = 'restoring'
                 self.save()
-                if self.spec['role'] == 'node' and self.state.get('stop_intent'):
+                if self.spec['role'] in ('node', 'timing') and self.state.get('stop_intent'):
                     self.ctl('stop', 'munin-node.service')
                 if not restored:
                     self.publish(before, 'restore_identity', base.sha(self.candidate), self.state['after_identity'])
@@ -296,11 +296,11 @@ def make_worker(base, _qualifier):
                 self.links_valid(False)
                 if self.settings_inventory() != self.state['settings_before']:
                     raise ValueError('unrelated settings changed during recovery')
-                if self.spec['role'] == 'node' and self.state.get('stop_intent'):
+                if self.spec['role'] in ('node', 'timing') and self.state.get('stop_intent'):
                     self.ctl('start', 'munin-node.service')
                 if self.unit()['ActiveState'] != 'active' or self.unit()['SubState'] != 'running':
                     raise ValueError('original node not running')
-                if self.spec['role'] != 'node':
+                if self.spec['role'] not in ('node', 'timing'):
                     self.local_check()
                 self.continuity()
             except Exception as error:

@@ -13,6 +13,7 @@ JOB_PATHS={'retention':Path('/var/lib/ntpstats-retention/last-success.json'),
            'reporting':Path('/var/lib/needrestart-reporting/last-success.json')}
 TIME_FIELDS=('query_ok','synced','pps_selected','reach','stratum','leap',
              'system_offset','system_jitter','selected_offset','selected_jitter')
+TIMING_HEALTH_FIELDS=('selected_offset_ok','selected_jitter_ok')
 
 
 def finite(value):
@@ -42,6 +43,10 @@ def parse_ntpq(text):
             'system_offset':finite(values['offset'])/1000,'system_jitter':finite(values['sys_jitter'])/1000,
             'selected_offset':finite(peer[8])/1000,'selected_jitter':finite(peer[9])/1000}
     if result['system_jitter']<0 or result['selected_jitter']<0:raise ValueError('negative jitter')
+    # Native Munin 2.0.73 rounds values to two decimals before limits evaluation.
+    # Evaluate timing policy here, retaining full-precision seconds for plotting.
+    result['selected_offset_ok']=int(abs(result['selected_offset'])<=0.005)
+    result['selected_jitter_ok']=int(result['selected_jitter']<=0.001)
     return result
 
 
@@ -53,7 +58,7 @@ def time_metrics():
         if p.returncode or len(p.stdout)>65536:raise ValueError('query failure')
         return parse_ntpq(p.stdout)
     except (OSError,ValueError,subprocess.SubprocessError):
-        return dict.fromkeys(TIME_FIELDS,'U')|{'query_ok':0}
+        return dict.fromkeys(TIME_FIELDS+TIMING_HEALTH_FIELDS,'U')|{'query_ok':0}
 
 
 def storage_metrics(paths=('/', '/var/log/ntpstats'),statvfs=os.statvfs):
@@ -126,9 +131,10 @@ def config(kind):
     if kind=='health':
         status=[('query_ok','Query succeeded','1:1','GAUGE'),('synced','Synchronized','1:1','GAUGE'),
                 ('pps_selected','PPS selected','1:1','GAUGE'),('reach','Selected reach','1:255','GAUGE'),
-                ('stratum','Stratum','1:15','GAUGE'),('leap','Leap state','0:2','GAUGE')]
-        offset=[(name,name.replace('_',' '),'-0.005:0.005' if name=='selected_offset' else
-                 '0:0.001' if name=='selected_jitter' else None,'GAUGE') for name in TIME_FIELDS[6:]]
+                ('stratum','Stratum','1:15','GAUGE'),('leap','Leap state','0:2','GAUGE'),
+                ('selected_offset_ok','Selected offset within 5 ms','1:1','GAUGE'),
+                ('selected_jitter_ok','Selected jitter within 1 ms','1:1','GAUGE')]
+        offset=[(name,name.replace('_',' '),None,'GAUGE') for name in TIME_FIELDS[6:]]
         return graph('ntp_health','NTP source health','state',status)+graph('ntp_timing','NTP timing','seconds',offset)
     if kind=='storage':
         return (graph('ntp_free_bytes','NTP filesystems available bytes','bytes',[(n+'_bytes',n+' available','10737418240:','GAUGE') for n in ('root','stats')])+
@@ -150,7 +156,7 @@ def values(name,fields):return ['multigraph '+name]+[key+'.value '+str(value) fo
 
 def fetch(kind):
     if kind=='health':
-        d=time_metrics();return values('ntp_health',{k:d[k] for k in TIME_FIELDS[:6]})+values('ntp_timing',{k:d[k] for k in TIME_FIELDS[6:]})
+        d=time_metrics();return values('ntp_health',{k:d[k] for k in TIME_FIELDS[:6]+TIMING_HEALTH_FIELDS})+values('ntp_timing',{k:d[k] for k in TIME_FIELDS[6:]})
     if kind=='storage':
         d=storage_metrics();return sum((values(name,{k:v for k,v in d.items() if k.endswith(suffix)}) for name,suffix in
                                      (('ntp_free_bytes','_bytes'),('ntp_free_inodes','_inodes'),('ntp_storage_read','_ok'))),[])

@@ -1,9 +1,26 @@
 # j2 polling and alert design
 
-Prepared October 21, 2026 for native Munin 2.0.73-1 on svmf. This resolves the
-polling/contact design; it does not activate it. The
-[master acceptance review](../docs/ntp-master-acceptance-review.md) owns the live
-mutation and acceptance gate. Node/producer prerequisites remain separate.
+The timing correction and native acceptance passed October 22. Contact
+activation v3 is now committed and reconciled after twelve verified HTTPS checks.
+Only eight explicit j2 NTP graphs and J1-SVMF transport select the gated contact;
+global/host defaults remain none. The proof-preserving successor passed sixteen
+native contact cases and 28 native limits cases against seven pinned modules.
+
+The exact problem test received SMTP 450 and recorded failure, although Aaron
+confirmed its downstream arrival. After that bound confirmation, the approved
+recovery test submitted successfully; Aaron confirmed its arrival too. Preserve
+submission status separately from downstream confirmation. All three stages are
+consumed; no replay or unreviewed post-commit restoration is authorized.
+
+Aaron supplied the automatic transport CRITICAL notification for `mail`, then
+the transport OK notification with no warning, critical or unknown fields.
+Both downstream receipts are confirmed. A separately approved read-only capture
+at 15:07:04 CDT accepted native mail sample 1 at 15:05:13, limits state ok, three
+genuine scheduled cycles and protected committed-input continuity. Status lacks
+message identity, so its timestamp cannot establish an exact writer. Supplied
+Apprise logs identify initial Pushover connection failure with partial delivery;
+the underlying connection cause and long-term reliability remain unproven. The [contact procedure](../docs/ntp-contact-reviews.md) records these
+outcomes and the guarded first-send/restoration boundaries.
 
 ## Collection and identity
 
@@ -46,7 +63,7 @@ is the operator. Preserve these explicit health meanings:
 | --- | --- |
 | Query, synchronization, PPS selection, collection status | State differs from 1 |
 | Selected reach / stratum / leap | Outside 1–255 / 1–15 / 0–2 respectively |
-| Selected offset / jitter | Outside ±0.005 seconds / above 0.001 seconds |
+| Selected offset / jitter | Full-precision node health flags differ from 1 for outside ±0.005 seconds / above 0.001 seconds; unknown input remains U |
 | Available filesystem bytes / inodes | Below 10 GiB / below 5 percent |
 | Active loopstats/peerstats/clockstats freshness | Older than 3600 seconds |
 | Protostats | Collection must work; quiet event log has no periodic age limit |
@@ -70,8 +87,20 @@ existing operational checks. This design adds no independent watchdog.
 
 ## Contact and delivery failure
 
-The [candidate contact](configs/j2-svntp1.conf.example) invokes a fixed command
-with no shell-expanded alert values. Six bounded ASCII fields go through stdin:
+Contact scope is explicit: `ntp_health`, `ntp_free_bytes`, `ntp_free_inodes`,
+`ntp_storage_read`, `ntp_stats_age`, `ntp_stats_read`, `ntp_job_evidence` and
+`ntp_job_age` on j2-svntp1, plus `ntp_transport_j2` on J1-SVMF. Global and
+j2 host defaults remain `contacts none`; only these graph overrides select the
+future contact. This also prevents unrelated hosts from implicitly inheriting
+a newly defined global contact. The helper uses the same closed graph set.
+Generic and nested graphs remain collected without this contact. Broader generic
+alerting requires a separate scope change and graph-identity qualification.
+
+The [candidate contact](configs/j2-svntp1.conf.example) invokes the fixed gate
+command, which validates the committed marker and current input hashes before
+calling the helper. The gate holds a shared lock through submission/status;
+commit and controlled sends use its exclusive lock. No alert values are expanded
+through a shell. Six bounded ASCII fields go through stdin:
 severity, host, graph, warning fields, critical fields and unknown fields. The
 [helper](../scripts/ntp_mailrise.py) validates the fixed hosts/graph set and rejects
 headers, extra separators and arbitrary arguments. `max_messages 1` is required:

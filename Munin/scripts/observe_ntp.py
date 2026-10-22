@@ -5,6 +5,7 @@ import hashlib
 import json
 import math
 import os
+import pwd
 from pathlib import Path
 import re
 import socket
@@ -406,22 +407,293 @@ def transport_metadata(spec):
                           'gid': info.st_gid, 'inode': info.st_ino, 'device': info.st_dev}}
 
 
-def collect(spec):
+def contact_metadata(spec):
+    paths = {'main': Path('/etc/munin/munin.conf'),
+             'predecessor_proof': Path('/var/lib/munin-ntp-master/munin-master-commissioning-20261021-v1/config-proof')}
+    result = {}
+    for label, path in paths.items():
+        try:
+            _, meta = read(path, 262144)
+        except FileNotFoundError:
+            result[label] = {'path': str(path), 'missing': True}
+            continue
+        row = {'path': str(path), 'metadata': meta,
+               'matches': {k: meta[k] == v for k, v in spec['contact_expected'].items()}}
+        result[label] = row
+    a = result['main'].get('metadata', {})
+    b = result['predecessor_proof'].get('metadata', {})
+    result['same_inode_as_predecessor_proof'] = bool(a and b and (a['device'], a['inode']) == (b['device'], b['inode']))
+    presence = {}
+    for path in ('/usr/local/libexec/munin-ntp-mailrise.py', '/usr/local/libexec/munin-ntp-contact-gate.py',
+                 '/var/lib/munin-ntp-contact-control', '/var/lib/munin/ntp-alerts',
+                 '/usr/local/libexec', '/var/lib/munin'):
+        p = Path(path)
+        if any(parent.is_symlink() for parent in p.parents):
+            raise ValueError('indirect contact metadata ancestor')
+        try:
+            m = p.lstat()
+        except FileNotFoundError:
+            presence[path] = {'missing': True}
+            continue
+        presence[path] = {'uid': m.st_uid, 'gid': m.st_gid, 'mode': stat.S_IMODE(m.st_mode),
+                          'nlink': m.st_nlink, 'inode': m.st_ino, 'device': m.st_dev,
+                          'is_directory': stat.S_ISDIR(m.st_mode), 'is_symlink': stat.S_ISLNK(m.st_mode)}
+    result['presence'] = presence
+    return result
+
+
+def contact_status():
+    identity = pwd.getpwnam('munin')
+    try:
+        raw, meta = read('/var/lib/munin/ntp-alerts/status.json', 4096)
+        data = json.loads(raw)
+        if (meta['uid'] != identity.pw_uid or meta['gid'] != identity.pw_gid
+                or meta['mode'] != 0o600 or meta['nlink'] != 1
+                or set(data) != {'schema', 'submission_ok', 'attempt_epoch'}
+                or data['schema'] != 1 or type(data['submission_ok']) is not bool
+                or type(data['attempt_epoch']) not in (int, float) or not math.isfinite(data['attempt_epoch'])):
+            raise ValueError('invalid private submission-status contract')
+        return {'metadata': meta, 'value': data,
+                'sender_attribution_available': False, 'downstream_delivery_proven': False}
+    except (OSError, ValueError, TypeError) as error:
+        return {'finding': str(error)}
+
+
+def contact_observation(spec, now):
+    def selected_json(path, keys):
+        try:
+            raw, meta = read(path, 65536)
+            data = json.loads(raw)
+            return {'metadata': meta, 'value': {k: data.get(k) for k in keys}}
+        except (OSError, ValueError, TypeError) as error:
+            return {'finding': str(error)}
+
+    def native_state(path, mode):
+        try:
+            raw, meta = read(path, 1048576)
+            identity = pwd.getpwnam('munin')
+            if (meta['uid'] != identity.pw_uid or meta['mode'] & 0o022 or meta['nlink'] != 1):
+                raise ValueError('unsafe native state metadata')
+            # Decode the bounded snapshot in memory as munin; never call limits,
+            # update, a plugin, or any contact command. Export only selected data.
+            code = r'''
+use strict; use warnings; use Storable qw(fd_retrieve); use JSON::PP;
+use Munin::Master::Utils;
+binmode STDIN; my $d=fd_retrieve(\*STDIN); my %out;
+if ($ARGV[0] eq 'limits') {
+ my $n=munin_get_node($d,['J1-SVMF','J1-SVMF','ntp_transport_j2','mail']);
+ if (ref($n) eq 'HASH') { for my $k (qw(state)) {
+  $out{$k}=$n->{$k} if exists($n->{$k}) && !ref($n->{$k});
+ }}
+} else {
+ my $v=$d->{value}; die 'native value map missing' unless ref($v) eq 'HASH';
+ for my $k (keys %$v) {
+  next unless $k =~ m{\A(?:/var/lib/munin/J1-SVMF/)?J1-SVMF-ntp_transport_j2-mail-g\.rrd:\d+\z};
+  my $c=$v->{$k}{current}; next unless ref($c) eq 'ARRAY' && @$c==2 && !grep {ref($_)} @$c;
+  $out{$k}=$c; die 'selected native sample bound' if keys(%out)>4;
+ }
+}
+print encode_json(\%out);
+'''
+            row = h.bounded(['/usr/sbin/runuser', '-u', 'munin', '--', '/usr/bin/perl', '-e', code, mode],
+                            timeout=20, limit=16384, payload=raw)
+            if row.get('returncode') != 0 or row.get('error'):
+                raise ValueError('bounded native snapshot decoder failed')
+            return {'metadata': meta, 'selected': json.loads(row['stdout'])}
+        except (OSError, ValueError, TypeError) as error:
+            return {'finding': str(error)}
+
+    result = {'status_before': contact_status(),
+              'committed_state': selected_json(spec['contact_state_path'],
+                  ('phase', 'accepted', 'enable_pending', 'enabled_epoch', 'spec_sha256')),
+              'suppression': selected_json('/var/lib/munin/ntp-alerts/suppressed.json',
+                  ('schema', 'suppressed_epoch', 'reason'))}
+    if [n for n in listing('/etc/munin/munin-conf.d') if not n.startswith('.') and not n.endswith('~')]:
+        raise ValueError('unexpected effective include')
+    result['collection'] = master(spec, now)
+    result['limits_state'] = native_state('/var/lib/munin/limits.storable', 'limits')
+    result['sample_state'] = native_state('/var/lib/munin/state-J1-SVMF-J1-SVMF.storable', 'sample')
+    try:
+        raw, meta = read('/var/log/munin/munin-limits.log', 262144, tail=True)
+        events = []
+        for line in raw.decode('utf-8', errors='replace').splitlines():
+            categories = [name for name, pattern in (
+                ('smtp_450', r'\b450\b'), ('send_failure', r'failed to send notification'),
+                ('transport', r'ntp_transport_j2'), ('mail', r'\bmail\b'),
+                ('error', r'\b(?:error|fatal|critical)\b')) if re.search(pattern, line, re.I)]
+            if categories:
+                events.append({'timestamp_prefix': line[:32] if re.match(r'^\d{4}[-/]', line) else None,
+                               'categories': categories, 'line_sha256': hashlib.sha256(line.encode()).hexdigest()})
+        result['limits_log'] = {'metadata': meta, 'classified_events': events[-200:],
+                                'raw_log_or_message_content_exported': False}
+    except (OSError, ValueError) as error:
+        result['limits_log'] = {'finding': str(error)}
+    result['status_after'] = contact_status()
+    result['status_changed_during_capture'] = result['status_before'] != result['status_after']
+    result['effective_includes_empty'] = not [n for n in listing('/etc/munin/munin-conf.d')
+                                             if not n.startswith('.') and not n.endswith('~')]
+    if not result['effective_includes_empty']:
+        raise ValueError('effective include appeared during capture')
+    result['mailrise_backend_cause_accepted'] = False
+    return result
+
+
+def canonical_sockets(raw):
+    """Select established canonical-endpoint sockets; ownership distinguishes probes."""
+    rows = []
+    for line in raw.decode('ascii').splitlines()[1:]:
+        fields = line.split()
+        if len(fields) < 10:
+            raise ValueError('incomplete proc TCP row')
+        if fields[2] != '3300010A:1355' or fields[3] != '01':
+            continue
+        address, port = fields[1].split(':')
+        address = socket.inet_ntoa(bytes.fromhex(address)[::-1])
+        rows.append({'source': address, 'source_port': int(port, 16),
+                     'destination': '10.1.0.51', 'destination_port': 4949,
+                     'uid': int(fields[7]), 'inode': int(fields[9])})
+    return rows
+
+
+def process_identity(pid):
+    """Export fixed command classifications, never arbitrary process arguments."""
+    base = Path('/proc')/str(pid)
+    before = (base/'stat').read_text()
+    fields = before[before.rindex(')')+2:].split()
+    raw, _ = read(base/'cmdline', 4096)
+    tokens = raw.replace(b'\x00', b' ').decode(errors='replace').split()
+    tags = [name for name in ('munin-update', 'munin-cron', 'ntp_transport_j2')
+            if any(re.fullmatch(r'(?:[^\s]*/)?'+name, token) for token in tokens)]
+    if (base/'stat').read_text().split(') ', 1)[1].split()[19] != fields[19]:
+        raise ValueError('process identity changed')
+    return {'pid': int(pid), 'ppid': int(fields[1]), 'start_ticks': int(fields[19]),
+            'uid': base.stat().st_uid, 'command_tags': tags}
+
+
+def socket_owners(inodes, uid):
+    owners = []
+    entries = list(Path('/proc').iterdir())
+    if len(entries) > 8192:
+        raise ValueError('process directory bound')
+    for base in entries:
+        if not base.name.isdecimal():
+            continue
+        try:
+            if base.stat().st_uid != uid:
+                continue
+            descriptors = list((base/'fd').iterdir())
+            if len(descriptors) > 256:
+                raise ValueError('process descriptor bound')
+            matched = set()
+            for descriptor in descriptors:
+                try:
+                    target = os.readlink(descriptor)
+                except FileNotFoundError:
+                    continue
+                if target in inodes:
+                    matched.add(target)
+            if not matched:
+                continue
+            identity = process_identity(base.name)
+            ancestors, parent = [], identity['ppid']
+            for _ in range(6):
+                if parent <= 1:
+                    break
+                ancestor = process_identity(parent)
+                ancestors.append(ancestor)
+                parent = ancestor['ppid']
+            if process_identity(base.name) != identity:
+                continue
+            owners.append({'identity': identity, 'ancestors': ancestors,
+                           'sockets': sorted(matched)})
+        except (FileNotFoundError, ProcessLookupError):
+            continue  # A naturally exiting worker is a sampling miss.
+    return owners
+
+
+def source_attribution(spec):
+    uid = pwd.getpwnam('munin').pw_uid
+    tcp_path = '/proc/'+str(os.getpid())+'/net/tcp'
+    started, deadline = time.time(), time.monotonic()+360
+    observations, seen, scans = [], set(), 0
+    while time.monotonic() < deadline and scans < 360:
+        scans += 1
+        raw, _ = read(tcp_path, 524288)
+        sockets = [row for row in canonical_sockets(raw) if row['uid'] == uid]
+        if sockets:
+            owners = socket_owners({'socket:['+str(row['inode'])+']' for row in sockets}, uid)
+            # Re-read the socket table after PID/FD inspection to reject vanished/reused sockets.
+            current, _ = read(tcp_path, 524288)
+            stable = canonical_sockets(current)
+            for row in sockets:
+                selected = [owner for owner in owners
+                            if 'socket:['+str(row['inode'])+']' in owner['sockets']]
+                key = (row['inode'], tuple((o['identity']['pid'], o['identity']['start_ticks']) for o in selected))
+                if row in stable and key not in seen:
+                    seen.add(key)
+                    observations.append({'epoch': time.time(), 'socket': row, 'owners': selected,
+                                         'expected_source': row['source'] == '10.1.3.83'})
+                    if len(observations) > 128:
+                        raise ValueError('socket evidence bound')
+        time.sleep(min(1, max(0, deadline-time.monotonic())))
+    raw, meta = read('/var/log/munin/munin-update.log', 1048576, tail=True)
+    events = [event for event in log_events(raw) if started-60 <= event['epoch'] <= time.time()]
+    cron = [epoch for epoch, message in journal('cron.service', started-60)
+            if re.search(r'\(munin\) CMD \([^\n]*?/usr/bin/munin-cron(?:[\s;)]|$)', message)]
+    return {'started_epoch': started, 'finished_epoch': time.time(), 'scans': scans,
+            'connections': observations, 'events': events, 'cron_epochs': cron, 'update_log': meta,
+            'source_address_attribution_accepted': False, 'evidence_review_required': True,
+            'finding': 'Correlate socket owners and ancestry with native scheduled events; sampling misses remain inconclusive.'}
+
+
+def collect(spec, context=None):
     wall_start, monotonic_start = time.time(), time.monotonic()
     result = {'operation_id': spec['operation_id'], 'spec_sha256': h.sha(h.encoded(spec)),
               'capture_complete': False, 'kind': spec['kind'], 'captured_epoch': time.time(),
               'timezone': time.strftime('%z %Z'), 'target_mutation': False}
     try:
         result['before'] = continuity(spec)
-        if spec.get('purpose') == 'transport-metadata':
+        if spec.get('purpose') == 'source-attribution':
+            result['observations'] = source_attribution(spec)
+        elif spec.get('purpose') == 'transport-metadata':
             result['observations'] = transport_metadata(spec)
+        elif spec.get('purpose') == 'contact-metadata':
+            result['observations'] = contact_metadata(spec)
+        elif spec.get('purpose') == 'contact-observation':
+            result['observations'] = contact_observation(spec, time.time())
         elif spec.get('purpose') == 'generic-profile':
             result['observations'] = generic_node() if spec['kind'] == 'node' else generic_master(time.time())
+        elif spec.get('purpose') == 'maintenance-observation':
+            def effective_includes():
+                return [name for name in listing('/etc/munin/munin-conf.d')
+                        if not name.startswith('.') and not name.endswith('~')]
+            if effective_includes():
+                raise ValueError('unexpected native include; contacts-disabled scope not established')
+            result['observations'] = master(spec, time.time())
+            if effective_includes():
+                raise ValueError('native include appeared during capture')
+            result['observations']['effective_includes_empty'] = True
+        elif spec.get('purpose') == 'timing-observation':
+            if (not context or context.get('node_archive_sha256') != spec['correction_prerequisite']['archive_sha256']
+                    or type(context.get('commit_finished_epoch')) not in (int, float)
+                    or not spec['correction_prerequisite'].get('prepared_epoch', 0) < context['commit_finished_epoch'] <= time.time()):
+                raise ValueError('committed correction context required')
+            effective = [n for n in listing('/etc/munin/munin-conf.d')
+                         if not n.startswith('.') and not n.endswith('~')]
+            if effective:
+                raise ValueError('unexpected effective include')
+            result['runtime_context_sha256'] = h.sha(h.encoded(context))
+            result['observations'] = master(dict(spec, collection_after_epoch=context['commit_finished_epoch']), time.time())
+            if [n for n in listing('/etc/munin/munin-conf.d') if not n.startswith('.') and not n.endswith('~')]:
+                raise ValueError('effective includes changed')
+            result['observations']['effective_includes_empty'] = True
         else:
             result['observations'] = node(spec, time.time()) if spec['kind'] == 'node' else master(spec, time.time())
         result['after'] = continuity(spec)
         if spec.get('purpose') == 'transport-metadata' and result['observations'] != transport_metadata(spec):
             raise ValueError('transport metadata changed during observation')
+        if spec.get('purpose') == 'contact-metadata' and result['observations'] != contact_metadata(spec):
+            raise ValueError('contact metadata changed during observation')
         if result['before'] != result['after']:
             raise ValueError('service identity changed during observation')
         result['clock_delta_seconds'] = (time.time()-wall_start)-(time.monotonic()-monotonic_start)

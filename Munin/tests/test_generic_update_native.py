@@ -87,7 +87,9 @@ def main():
         return
     case = sys.argv[1]
     assert case in ('node-success', 'node-recover', 'node-worker-loss', 'node-foreign-link',
-                    'master-success', 'master-controller-loss', 'master-foreign-file', 'master-foreign-proof', 'preflight-drift')
+                    'master-success', 'master-controller-loss', 'master-foreign-file', 'master-foreign-proof', 'preflight-drift',
+                    'timing-success', 'timing-recover', 'timing-worker-loss', 'timing-controller-loss',
+                    'timing-foreign-file', 'timing-foreign-link', 'timing-foreign-settings', 'timing-preflight-drift')
     for filename in sys.argv[2:]:
         run(['dpkg-deb', '-x', filename, '/'])
     import pwd
@@ -114,8 +116,9 @@ def main():
                 base.node_config('j2-svntp1', ['127.0.0.1', '::1'], ['127.0.0.1', '::1']), 0o644)
     for name in ('cpu', 'load'):
         os.symlink('/usr/share/munin/plugins/'+name, Path('/etc/munin/plugins')/name)
-    node = case.startswith('node') or case == 'preflight-drift'
-    role = 'node' if node else 'expanded'
+    timing = case.startswith('timing')
+    node = case.startswith('node') or case == 'preflight-drift' or timing
+    role = 'timing' if timing else 'node' if node else 'expanded'
     before_settings = b'[cpu]\nuser munin\ngroup munin\n[load]\nuser munin\ngroup munin\n'
     base.atomic(Path('/etc/munin/plugin-conf.d/ntp'), before_settings, 0o644)
     before_source = (ROOT/'master/plugins/ntp_transport_j2.compatible.candidate').read_bytes()
@@ -135,13 +138,18 @@ def main():
     before = before_settings if node else before_source
     after = before_settings+b'[diskstats]\nuser munin\ngroup munin\n' if node else after_source
     target = '/etc/munin/plugin-conf.d/ntp' if node else '/usr/local/munin/lib/plugins/ntp_transport_j2'
+    if timing:
+        before=b'# original native transaction reader\n'
+        after=(ROOT/'node/plugins/ntp/ntp_metrics.py').read_bytes()
+        target='/usr/local/munin/lib/plugins/ntp_metrics.py'
+        base.atomic(Path(target), before, 0o644)
     now = int(time.time())
     specimen = {'operation_id': operation, 'role': role, 'target': target, 'mode': 0o644 if node else 0o755,
         'hostname': socket.gethostname(), 'boot_id': Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
         'units': {'systemd-journald.service': unit('systemd-journald.service')},
         'protected': {'/etc/munin/munin-node.conf': base.sha(Path('/etc/munin/munin-node.conf').read_bytes())},
         'plugins_before': {'cpu': ['link', '/usr/share/munin/plugins/cpu'], 'load': ['link', '/usr/share/munin/plugins/load']} if node else None,
-        'additions': {'diskstats': '/usr/share/munin/plugins/diskstats'} if node else {},
+        'additions': {'diskstats': '/usr/share/munin/plugins/diskstats'} if node and not timing else {},
         'source_hashes': {'/usr/share/munin/plugins/diskstats': base.sha(Path('/usr/share/munin/plugins/diskstats').read_bytes())},
         'before_sha256': base.sha(before), 'candidate': base64.b64encode(after).decode(),
         'transport_expected': {'v4': '0', 'v6': '0', 'mail': 'U'}, 'listen_addresses': ['127.0.0.1', '::1'], 'fixture': True}
@@ -151,7 +159,7 @@ def main():
     else:
         info = Path(target).stat()
         specimen.update(before_nlink=2, before_proof=str(proof), baseline_identity=[info.st_dev, info.st_ino])
-    if case == 'preflight-drift':
+    if case in ('preflight-drift', 'timing-preflight-drift'):
         specimen['before_sha256'] = '0'*64
     spec = {'operation_id': operation, 'prepared_epoch': now, 'expires_epoch': now+3600,
             'recovery_seconds': 20, 'worker': specimen, 'endpoint': 'local', 'user': 'local', 'host_key_alias': 'local',
@@ -166,7 +174,7 @@ def main():
     tx.review, tx.MEMBERS = d.review, d.MEMBERS
     digest = tx.write_archive(output, spec, files)
     archive = (output/'deployment.tar').read_bytes()
-    if case == 'node-worker-loss':
+    if case in ('node-worker-loss', 'timing-worker-loss'):
         # Actual worker publication, injected SIGKILL, then the unmodified real
         # independent timer/restorer. No fake state or successful result.
         stage = d.STAGES/operation
@@ -184,7 +192,7 @@ def main():
         assert Path(target).read_bytes() == after
     else:
         result = d.root_launch(archive, digest)
-        if case == 'preflight-drift':
+        if case in ('preflight-drift', 'timing-preflight-drift'):
             assert result['phase'] == 'preflight-failed'
             assert Path(target).read_bytes() == before
             assert unit('munin-node.service') == before_unit
@@ -196,21 +204,21 @@ def main():
             assert unit('munin-node.service') == before_unit
             assert 'Native publication marker' in frame('config ntp_transport_j2')
         else:
-            assert set(frame('list j2-svntp1').split()) == {'cpu', 'load', 'diskstats'}
-        if case in ('node-success', 'master-success'):
+            assert set(frame('list j2-svntp1').split()) == ({'cpu', 'load'} if timing else {'cpu', 'load', 'diskstats'})
+        if case in ('node-success', 'master-success', 'timing-success'):
             result = d.locked_worker(d.STAGES/operation, digest, 'commit')
             assert result['phase'] == 'committed', result
             # A delayed guard cannot undo a committed transaction.
             assert d.locked_worker(d.STAGES/operation, digest, 'recover')['phase'] == 'committed'
-        elif case == 'node-recover':
+        elif case in ('node-recover', 'timing-recover'):
             assert d.locked_worker(d.STAGES/operation, digest, 'recover')['phase'] == 'restored'
-        elif case == 'node-foreign-link':
-            path = Path('/etc/munin/plugins/diskstats')
+        elif case in ('node-foreign-link', 'timing-foreign-link'):
+            path = Path('/etc/munin/plugins/cpu' if timing else '/etc/munin/plugins/diskstats')
             path.unlink()
-            os.symlink('/usr/share/munin/plugins/cpu', path)
+            os.symlink('/usr/share/munin/plugins/load' if timing else '/usr/share/munin/plugins/cpu', path)
             result = d.locked_worker(d.STAGES/operation, digest, 'recover')
             assert result['phase'] == 'recovery-held'
-            assert os.readlink(path) == '/usr/share/munin/plugins/cpu'
+            assert os.readlink(path) == ('/usr/share/munin/plugins/load' if timing else '/usr/share/munin/plugins/cpu')
             assert Path(target).read_bytes() == after
         elif case == 'master-foreign-proof':
             proof.write_bytes(before_source+b'\n# foreign proof\n')
@@ -218,12 +226,19 @@ def main():
             assert result['phase'] == 'recovery-held'
             assert proof.read_bytes().endswith(b'# foreign proof\n')
             assert Path(target).read_bytes() == after
-        elif case == 'master-foreign-file':
-            base.atomic(Path(target), after+b'\n# foreign change\n', 0o755)
+        elif case in ('master-foreign-file', 'timing-foreign-file'):
+            base.atomic(Path(target), after+b'\n# foreign change\n', 0o644 if timing else 0o755)
             result = d.locked_worker(d.STAGES/operation, digest, 'recover')
             assert result['phase'] == 'recovery-held'
             assert Path(target).read_bytes().endswith(b'# foreign change\n')
-    if case in ('node-worker-loss', 'master-controller-loss'):
+        elif case == 'timing-foreign-settings':
+            settings=Path('/etc/munin/plugin-conf.d/ntp')
+            settings.write_bytes(before_settings+b'# foreign settings\n')
+            result=d.locked_worker(d.STAGES/operation, digest, 'recover')
+            assert result['phase']=='recovery-held'
+            assert settings.read_bytes().endswith(b'# foreign settings\n')
+            assert Path(target).read_bytes()==after
+    if case in ('node-worker-loss', 'master-controller-loss', 'timing-worker-loss', 'timing-controller-loss'):
         deadline = time.monotonic()+45
         state = d.STAGES/operation/'transaction/state.json'
         while time.monotonic() < deadline:
@@ -237,9 +252,12 @@ def main():
         assert unit('munin-node.service')['ActiveState'] == 'active'
         if node:
             assert set(frame('list j2-svntp1').split()) == {'cpu', 'load'}
-    if case == 'node-recover':
+    if case in ('node-recover', 'timing-recover'):
         assert Path(target).read_bytes() == before
         assert set(frame('list j2-svntp1').split()) == {'cpu', 'load'}
+        stable=unit('munin-node.service')
+        assert d.locked_worker(d.STAGES/operation,digest,'recover')['phase']=='restored'
+        assert unit('munin-node.service')==stable
     if not node:
         assert proof.read_bytes() == before_source+(b'\n# foreign proof\n' if case == 'master-foreign-proof' else b'')
         assert proof.stat().st_nlink == 1

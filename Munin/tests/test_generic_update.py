@@ -65,6 +65,23 @@ def transcript(cold=False, health='1', names=('diskstats', 'ntp_health')):
 
 
 class UpdateTests(unittest.TestCase):
+    def test_timing_acceptance_requires_corrected_healthy_fields_and_seconds_plot(self):
+        path=ROOT/'node/plugins/ntp/ntp_metrics.py'
+        spec=importlib.util.spec_from_file_location('timing',path)
+        metrics=importlib.util.module_from_spec(spec);spec.loader.exec_module(metrics)
+        config='\n'.join(metrics.config('health'))+'\n'
+        values='\n'.join(metrics.values('ntp_health',dict.fromkeys(metrics.TIME_FIELDS[:6]+metrics.TIMING_HEALTH_FIELDS,1))
+                         +metrics.values('ntp_timing',dict.fromkeys(metrics.TIME_FIELDS[6:],0)))+'\n'
+        raw=('# munin node at j2-svntp1\ncap multigraph\nntp_health\n'+config+'.\n'+values+'.\n').encode()
+        endpoint=(2,'10.1.0.51','10.1.3.83')
+        row=p.probe(endpoint,['ntp_health'],q.fields,connect=lambda *a:Protocol(raw),timing=True)
+        self.assertTrue(row['plugins']['ntp_health']['timing_health_corrected'])
+        for bad in (raw.replace(b'selected_offset_ok.value 1',b'selected_offset_ok.value 0'),
+                    raw.replace(b'selected_jitter_ok.critical 1:1',b'selected_jitter_ok.critical 0:1'),
+                    raw.replace(b'graph_vlabel seconds',b'graph_vlabel milliseconds')):
+            with self.assertRaises(ValueError):
+                p.probe(endpoint,['ntp_health'],q.fields,connect=lambda *a:Protocol(bad),timing=True)
+
     def test_bound_sources_full_health_and_cold_exception(self):
         endpoint = (2, '10.1.0.51', '10.1.3.83')
         names = ['diskstats', 'ntp_health']

@@ -2,15 +2,18 @@
 
 The operator requires j2-svntp1 to expose every applicable generic system
 statistic provided by j2-svpi4mf, alongside all four NTP-specific readers.
-The accepted NTP profile currently selects only cpu, load, memory, uptime and
-processes as generic package plugins. That initial selection is not the complete
-generic baseline now required. Preserve the accepted runtime while preparing
-the expanded selection as a separately reviewed change.
+The accepted expanded profile selects 29 generic package plugin instances plus
+four NTP readers. Dependency/NFS/privilege/runtime qualification, coordinated
+deployment and expanded scheduled RRD/graph observations are complete; the
+canonical profile and settings mirror that deployment. The original five-plugin
+baseline is historical, not the current accepted selection.
 
-The approved comparisons are complete. The
-[observed mapping and qualification requirements](ntp-generic-comparison.md)
-identify a 29-generic-plugin candidate plus the four NTP readers. The accepted
-profile remains unchanged; NFS capability and other live qualification remain open.
+The [observed comparison](ntp-generic-comparison.md) retains the initial inventory
+and mapping rationale; [deployment](ntp-generic-deployment.md) and
+[expanded observations](ntp-expanded-observation.md) retain acceptance. Broader
+client/access coverage, source persistence and sustained operation follow the
+[NTP observation contract](../../../homelab-ntp/ntpsec/docs/PRODUCTION-OBSERVATION-CONTRACT.md#coverage-and-persistence-reconciliation).
+Preserve accepted device mappings rather than rediscovering parity from stale RRDs.
 
 ## Establish the actual baseline
 

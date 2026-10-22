@@ -13,10 +13,13 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 WORKSPACE = ROOT.parent.parent
 CASES = ('node-success', 'node-recover', 'node-worker-loss', 'node-foreign-link',
-         'preflight-drift', 'master-success', 'master-controller-loss', 'master-foreign-file', 'master-foreign-proof')
+         'preflight-drift', 'master-success', 'master-controller-loss', 'master-foreign-file', 'master-foreign-proof', 'timing-success', 'timing-recover', 'timing-worker-loss',
+         'timing-controller-loss', 'timing-foreign-file', 'timing-foreign-link',
+         'timing-foreign-settings', 'timing-preflight-drift')
 ARTIFACTS = {'compatible.py': ROOT/'master/plugins/ntp_transport_j2.compatible.candidate',
              'expanded.py': ROOT/'master/plugins/ntp_transport_j2.expanded.candidate',
-             'settings-after': ROOT/'node/plugin-conf.d/ntp-expanded.candidate.conf'}
+             'settings-after': ROOT/'node/plugin-conf.d/ntp-expanded.candidate.conf',
+             'timing-reader': ROOT/'node/plugins/ntp/ntp_metrics.py'}
 
 
 def hashes(paths):
@@ -48,7 +51,7 @@ def main():
     def run(case):
         directory = args.evidence/case
         directory.mkdir(mode=0o700)
-        node = case.startswith('node') or case == 'preflight-drift'
+        node = case.startswith(('node','timing')) or case == 'preflight-drift'
         image = 'localhost/munin-ntp-install-validation:trixie' if node else 'localhost/munin-master-validation:bookworm'
         identity = subprocess.check_output(['podman', 'image', 'inspect', image, '--format', '{{.Id}}'], text=True).strip()
         name = 'munin-generic-'+case+'-'+str(int(time.time()))
