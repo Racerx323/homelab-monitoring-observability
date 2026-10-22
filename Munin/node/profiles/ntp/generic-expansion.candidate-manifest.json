@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "status": "expanded 33-plugin deployment and three scheduled cycles/all graphs accepted; producer/source-attribution/alert gates open",
+  "operation_id": "munin-generic-qualification-20261021-v2",
+  "qualification_archive_sha256": "0b6ede70c96112324d92c8f069186e8cd5687f9453b729a0aed7dd3957e04cc7",
+  "qualification_capture_sha256": "8c15172be73fd657d8e7e3a58d02bdf692a15945ea8384739abed103e2368fba",
+  "production_transport_baseline_sha256": "078bc5af0c233b4f3815a72dedfe2bc369ef2fd27b18019320e1d201847b8713",
+  "old_plugins": [
+    "cpu",
+    "load",
+    "memory",
+    "ntp_health",
+    "ntp_jobs",
+    "ntp_statistics",
+    "ntp_storage",
+    "processes",
+    "uptime"
+  ],
+  "expanded_plugins": [
+    "acpi",
+    "cpu",
+    "cpuspeed",
+    "df",
+    "df_inode",
+    "diskstats",
+    "entropy",
+    "forks",
+    "fw_packets",
+    "if_err_eth0",
+    "if_err_wlan0",
+    "if_eth0",
+    "if_wlan0",
+    "interrupts",
+    "irqstats",
+    "load",
+    "memory",
+    "netstat",
+    "nfs4_client",
+    "nfs_client",
+    "ntp_health",
+    "ntp_jobs",
+    "ntp_statistics",
+    "ntp_storage",
+    "open_files",
+    "open_inodes",
+    "proc_pri",
+    "processes",
+    "swap",
+    "threads",
+    "uptime",
+    "users",
+    "vmstat"
+  ],
+  "production_installed": true,
+  "files": {
+    "master/plugins/ntp_transport_j2.compatible.candidate": "cf14fb8cc07f579497982d9aeaba1d258362234103d413180a506097547cea5e",
+    "master/plugins/ntp_transport_j2.expanded.candidate": "bd7208a4668fb19d15eca3528dbaef44ef21501395817391d788c298fa80554a",
+    "node/plugin-conf.d/ntp-expanded.candidate.conf": "8e36c901ff5264046a02d3810e88097f4250558c0985f77decae206369bb5588",
+    "node/profiles/ntp/generic-parity.candidate.json": "195fd2290a766a42c66721a4b5cee2d175aac3bae6eaa3f857783b9f8d95c7c5"
+  },
+  "guarded_qualification_sha256": "794ff494b5119f76d3852f21fa88d8735569e1b1b8803542294ad4081f189a9f",
+  "sealed_stages": {
+    "compatible": {
+      "operation_id": "munin-generic-compatible-20261021-v2",
+      "sha256": "32e325090f214a8e9e9c0514757c8dea251b8084388704229e2a09abb2f0afae",
+      "executed": true,
+      "accepted": true,
+      "committed": true,
+      "repository_reconciled": true
+    },
+    "node": {
+      "operation_id": "munin-generic-node-20261021-v2",
+      "sha256": "656f0a268837e9afd2ed955e6885b7a6be1d109f16c4e11448714575c2510fe1",
+      "executed": true,
+      "accepted": true,
+      "committed": true,
+      "repository_reconciled": true
+    },
+    "expanded": {
+      "operation_id": "munin-generic-expanded-20261021-v2",
+      "sha256": "6fc2cb91aafde40a8fd401574d0581126c1c87fcd11d77443b2650150945c7e7",
+      "executed": true,
+      "accepted": true,
+      "committed": true,
+      "repository_reconciled": true
+    }
+  },
+  "superseded_stages": {
+    "compatible": {
+      "operation_id": "munin-generic-compatible-20261021-v1",
+      "sha256": "22e2b071fd8903945f47ed9382c6d6c344fec92657d129c8baecc536ee4967e3",
+      "executed": true,
+      "accepted": false,
+      "phase": "preflight-failed"
+    },
+    "node": {
+      "operation_id": "munin-generic-node-20261021-v1",
+      "sha256": "0f7a7cf5f147e82cc39f792815ac4b2b1e3b008a52771f3366993d3d8ea5a27b",
+      "executed": false
+    },
+    "expanded": {
+      "operation_id": "munin-generic-expanded-20261021-v1",
+      "sha256": "a93a932600caecd160126c9f58e762a64688abf6cfe86eb5548ec8462521cda7",
+      "executed": false
+    }
+  },
+  "transport_metadata_archive_sha256": "f959d393c243b0eca752a901532b28ea97da5149fea785f03ced93971d06ae4c",
+  "production_transport_current_sha256": "bd7208a4668fb19d15eca3528dbaef44ef21501395817391d788c298fa80554a",
+  "expanded_observation_reviews": {
+    "node": {
+      "operation_id": "munin-expanded-node-observation-20261021-v1",
+      "sha256": "03a3ec57d4c59c37e9d7aef0fa90efbef93b3ddcde7333eaec5c69f8b0715a17",
+      "executed": true,
+      "capture_accepted": true,
+      "expanded_selection_accepted": true,
+      "producer_success_accepted": false
+    },
+    "master": {
+      "operation_id": "munin-expanded-master-observation-20261021-v1",
+      "sha256": "cd65556b29b5902920c014c21b7043ee40241b8e3a992ba811b7b23f5b9ff34d",
+      "executed": true,
+      "capture_accepted": true,
+      "expanded_three_cycles_accepted": true,
+      "expanded_rrd_freshness_accepted": true,
+      "expanded_graph_serving_accepted": true,
+      "canonical_source_attribution_accepted": false,
+      "delivery_accepted": false
+    }
+  }
+}

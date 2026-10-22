@@ -13,13 +13,23 @@ repos:
         files: ^Munin/
         pass_filenames: false
 
+      - id: apache-acl-offline
+        name: Apache sealed ACL transaction offline contracts
+        entry: python3 -I -B Apache2/tests/test_deploy_acl.py
+        language: system
+        files: ^(?:Apache2/|\.pre-commit-config\.yaml$)
+        pass_filenames: false
+
+      # Historical upstream reference; keep its source bytes unchanged.
       - id: shellcheck
+        exclude: ^Munin/node/plugins/unbound/unbound_munin_original$
         name: ShellCheck
         entry: shellcheck
         language: system
         types: [shell]
 
       - id: shfmt
+        exclude: ^Munin/node/plugins/unbound/unbound_munin_original$
         name: shfmt
         entry: shfmt -d -i 4 -ci
         language: system

@@ -1,0 +1,12 @@
+# plugin configuration file for unbound_munin_ plugin on munin-node
+# file location: /etc/munin/plugin-conf.d/unbound
+# Used for apt repository install of unbound
+
+
+[unbound*]
+user root
+env.statefile /var/munin/plugin-state/unbound-state
+env.unbound_conf /etc/unbound/unbound.conf
+env.unbound_control /sbin/unbound-control
+env.spoof_warn 1000
+env.spoof_crit 100000

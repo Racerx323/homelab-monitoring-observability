@@ -49,4 +49,15 @@ failed_output=$(metrics_url=file:///nonexistent/munin-metrics.prom \
 grep -Fxq 'requests.value U' <<<"$failed_output"
 grep -Fxq 'latency_ms.value U' <<<"$failed_output"
 
-printf 'Munin scaffold validation passed\n'
+python3 -I -B "$munin_root/tests/test_ntp_metrics.py"
+python3 -I -B "$munin_root/tests/test_ntp_installer.py"
+python3 -I -B "$munin_root/tests/test_ntp_master.py"
+python3 -I -B "$munin_root/tests/test_master_qualification.py"
+python3 -I -B "$munin_root/tests/test_master_baseline.py"
+python3 -I -B "$munin_root/tests/test_master_deployment.py"
+python3 -I -B "$munin_root/tests/test_ntp_observation.py"
+python3 -I -B "$munin_root/tests/test_generic_qualification.py"
+python3 -I -B "$munin_root/tests/test_generic_transport.py"
+python3 -I -B "$munin_root/tests/test_generic_update.py"
+python3 -I -B "$munin_root/tests/test_ntp_resume.py"
+printf 'Munin scaffold and NTP candidate validation passed\n'

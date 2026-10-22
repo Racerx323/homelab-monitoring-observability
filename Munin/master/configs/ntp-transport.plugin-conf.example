@@ -1,0 +1,5 @@
+# Install root-owned and unwritable by munin. No root privilege or environment inputs.
+[ntp_transport_j2]
+user munin
+group munin
+timeout 60

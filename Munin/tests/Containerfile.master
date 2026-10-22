@@ -1,0 +1,8 @@
+# Record the local base image ID in the qualification invocation.
+FROM localhost/svmf-apache-acl:bookworm
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    munin=2.0.73-1 munin-node=2.0.73-1 munin-plugins-core=2.0.73-1 \
+    curl libwww-perl libio-socket-inet6-perl rrdcached libcgi-fast-perl \
+    && rm -rf /var/lib/apt/lists/*
+STOPSIGNAL SIGRTMIN+3
+CMD ["/sbin/init"]

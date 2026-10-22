@@ -1,0 +1,6 @@
+# Munin-node apache plugin configuration file
+# file location: /etc/munin/plugin-conf.d/apache
+
+# For Apache:
+[apache*]
+env.url http://localhost/server-status?auto

@@ -1,0 +1,19 @@
+# Candidate only. Integrate through the separately approved master operation.
+# One canonical raw-metric series. Protocol verification of both families is
+# collected by ntp_transport_j2 on the existing master-node schedule.
+contact.ntp_mailrise.command /usr/bin/python3 -I -B /usr/local/libexec/munin-ntp-mailrise.py
+contact.ntp_mailrise.text ${var:worst}|${var:host}|${var:plugin}|${var:wfields}|${var:cfields}|${var:ufields}
+contact.ntp_mailrise.max_messages 1
+# No always_send: ordinary state transitions/recoveries only in Munin 2.0.73.
+
+[j2-svntp1]
+    address 10.1.0.51
+    port 4949
+    use_node_name yes
+    contacts ntp_mailrise
+    unknown_limit 0
+
+# Merge these overrides into the existing master section; do not duplicate it.
+[J1-SVMF]
+    ntp_transport_j2.contacts ntp_mailrise
+    ntp_transport_j2.unknown_limit 0

@@ -1,0 +1,7 @@
+FROM localhost/ntp-leap-timer-validation:trixie
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    adduser netbase perl libnet-server-perl liblist-moreutils-perl \
+    libio-socket-inet6-perl procps iproute2 \
+    && rm -rf /var/lib/apt/lists/*
+STOPSIGNAL SIGRTMIN+3
+CMD ["/sbin/init"]

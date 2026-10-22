@@ -1,0 +1,4 @@
+leap=00, stratum=1, offset=0.007758, sys_jitter=0.003451
+     remote           refid      st t when poll reach   delay   offset   jitter
+===============================================================================
+*SHM(2)          .PPS.            0 l   33   64  377   0.0000   0.0078   0.0035
