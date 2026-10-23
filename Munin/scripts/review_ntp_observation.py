@@ -51,7 +51,8 @@ GROWTH_FIELDS = {'ntp_free_bytes': {'root_bytes': 'g', 'stats_bytes': 'g'},
     'ntp_stats_read': {'ok': 'g'},
     'ntp_job_evidence': {'retention_evidence': 'g', 'reporting_evidence': 'g'},
     'ntp_job_age': {'retention_age': 'g', 'reporting_age': 'g'}}
-GROWTH_CHECKPOINTS = {'+6h': 21600, '+24h': 86400}
+GROWTH_CHECKPOINTS = {'+6h': 21600, '+24h': 86400, '+48h': 172800}
+GROWTH_PREVIOUS = {'+24h': '+6h', '+48h': '+24h'}
 GROWTH_STAGES = {'timing': 'munin-generic-timing-20261022-v2',
                  'producers': 'munin-producer-followup-20261022-v1',
                  'mail': 'munin-contact-mail-observation-20261022-v1'}
@@ -257,11 +258,15 @@ Compare retained inode metadata with t0 locally after capture; retain shrinkage,
 reclamation, new files, races and quiet event-driven streams as findings. No
 sustained-growth or budget acceptance is automatic. This is no approval for
 another checkpoint, reminder, retry, scheduler change, notification or further access.
-For +24h, checkpoint_scope.previous also pins the accepted late +6h node/master
-proofs and operator-confirmed overnight Munin restart disposition. The +6h
-snapshots were late; do not relabel them punctual or reset t0. Compare endpoint
-metadata with both t0 and the late sample locally after capture; new/completed
+Daily/closing checkpoints also pin the preceding accepted node/master pair and
+its chained operator-confirmed overnight Munin restart disposition. Earlier
+samples were late; do not relabel them punctual or reset t0. Compare endpoint
+metadata with t0 and the previous sample locally after capture; new/completed
 files, removals and ordinary rollover must remain distinct from gross growth.
+For +48h, review both daily intervals and the full elapsed window before
+calculating the 31-day budget. Retain cadence/endpoint gaps, quiet protostats
+and unknown non-statistics filesystem reserves. Capture success automatically
+accepts neither sustained growth, storage budget nor overall host readiness.
 """
     if s.get('purpose') in ('growth-t0', 'growth-checkpoint'):
         common = f"""# Read-only OBS-02 t0 {s['kind']} baseline
@@ -765,7 +770,7 @@ def unpack(raw, digest, *, historical=False):
             proof_keys = {'directory', 'archive_sha256', 'capture_sha256', 'receipt_sha256',
                           'result_sha256', 'outcome_sha256'}
             checkpoint_keys = {'label', 'offset_seconds', 'node_t0_epoch', 'not_before_epoch', 't0'}
-            if checkpoint['label'] == '+24h':
+            if checkpoint['label'] in GROWTH_PREVIOUS:
                 checkpoint_keys.add('previous')
             proofs = list(checkpoint.get('t0', {}).values())
             if checkpoint.get('previous'):
@@ -783,7 +788,7 @@ def unpack(raw, digest, *, historical=False):
                     or checkpoint['not_before_epoch'] != checkpoint['node_t0_epoch']+checkpoint['offset_seconds']
                     or not checkpoint['not_before_epoch'] < s['expires_epoch']-900
                     or set(checkpoint['t0']) != {'node', 'master'}
-                    or checkpoint['label'] == '+24h' and not checkpoint.get('previous')
+                    or checkpoint['label'] in GROWTH_PREVIOUS and not checkpoint.get('previous')
                     or any(set(proof) != proof_keys or not Path(proof['directory']).is_absolute()
                            or any(not re.fullmatch('[a-f0-9]{64}', proof[k]) for k in proof_keys-{'directory'})
                            for proof in proofs)):
@@ -1311,9 +1316,11 @@ def accepted_t0(directory, kind):
     return accepted_growth(directory, kind)
 
 
-def previous_checkpoint(node, master, epoch, t0):
-    node_ref, ns, node_epoch = accepted_growth(node, 'node', '+6h')
-    master_ref, ms, master_epoch = accepted_growth(master, 'master', '+6h')
+def previous_checkpoint(node, master, epoch, t0, label='+6h'):
+    if label not in ('+6h', '+24h'):
+        raise ValueError('closed preceding growth checkpoint required')
+    node_ref, ns, node_epoch = accepted_growth(node, 'node', label)
+    master_ref, ms, master_epoch = accepted_growth(master, 'master', label)
     paired = json.loads(private(master/'runtime-context.json'))
     if (node_epoch != epoch or master_epoch != epoch
             or ns['contract_sha256'] != ms['contract_sha256']
@@ -1324,9 +1331,17 @@ def previous_checkpoint(node, master, epoch, t0):
             or paired.get('node_receipt_sha256') != node_ref['receipt_sha256']
             or paired.get('node_outcome_sha256') != node_ref['outcome_sha256']):
         raise ValueError('exact accepted late checkpoint pair required')
-    disposition_sha256 = sha(private(node/'restart-disposition.json'))
-    if json.loads(private(master/'outcome.json')).get('operator_restart_disposition_sha256') != disposition_sha256:
-        raise ValueError('reviewed overnight restart disposition changed')
+    if label == '+6h':
+        disposition_sha256 = sha(private(node/'restart-disposition.json'))
+        if json.loads(private(master/'outcome.json')).get('operator_restart_disposition_sha256') != disposition_sha256:
+            raise ValueError('reviewed overnight restart disposition changed')
+    else:
+        previous = ns['checkpoint_scope']['previous']
+        verified = previous_checkpoint(Path(previous['node']['directory']),
+                                       Path(previous['master']['directory']), epoch, t0, '+6h')
+        if verified != previous:
+            raise ValueError('preceding daily checkpoint historical chain changed')
+        disposition_sha256 = verified['restart_disposition_sha256']
     return {'node': node_ref, 'master': master_ref,
             'restart_disposition_sha256': disposition_sha256}
 
@@ -1362,15 +1377,16 @@ def seal_growth_t0(args):
                 or paired.get('node_receipt_sha256') != node_ref['receipt_sha256']
                 or paired.get('node_outcome_sha256') != node_ref['outcome_sha256']):
             raise ValueError('master t0 must bind this exact reviewed node t0 proof')
-        label = '+24h' if args.action == 'seal-growth-24h' else '+6h'
+        label = '+'+args.action.removeprefix('seal-growth-')
         offset = GROWTH_CHECKPOINTS[label]
         spec.update(purpose='growth-checkpoint', checkpoint_scope={
             'label': label, 'offset_seconds': offset, 'node_t0_epoch': epoch,
             'not_before_epoch': epoch+offset, 't0': {'node': node_ref, 'master': master_ref}})
-        if label == '+24h':
+        if label in GROWTH_PREVIOUS:
+            previous_label = GROWTH_PREVIOUS[label]
             previous = previous_checkpoint(args.previous_node, args.previous_master, epoch,
-                                           spec['checkpoint_scope']['t0'])
-            _, prior_spec, _ = accepted_growth(args.previous_node, 'node', '+6h')
+                                           spec['checkpoint_scope']['t0'], previous_label)
+            _, prior_spec, _ = accepted_growth(args.previous_node, 'node', previous_label)
             if prior_spec['contract_sha256'] != spec['contract_sha256']:
                 raise ValueError('same contract required across growth observations')
             spec['checkpoint_scope']['previous'] = previous
@@ -1492,7 +1508,8 @@ def execute(directory, digest):
         if 'previous' in checkpoint:
             previous = checkpoint['previous']
             current = previous_checkpoint(Path(previous['node']['directory']),
-                                          Path(previous['master']['directory']), checkpoint['node_t0_epoch'], checkpoint['t0'])
+                                          Path(previous['master']['directory']), checkpoint['node_t0_epoch'], checkpoint['t0'],
+                                          GROWTH_PREVIOUS[checkpoint['label']])
             if current != previous:
                 raise ValueError('accepted late checkpoint proof changed before target contact')
     if spec.get('purpose') in ('growth-t0', 'growth-checkpoint'):
@@ -1610,14 +1627,14 @@ def main():
     q.add_argument('--kind', choices=TARGETS, required=True)
     q.add_argument('--output', type=Path, required=True)
     q.add_argument('--node-t0', type=Path)
-    for stage in ('6h', '24h'):
+    for stage in ('6h', '24h', '48h'):
         q = sub.add_parser('seal-growth-'+stage)
         q.add_argument('--kind', choices=TARGETS, required=True)
         q.add_argument('--output', type=Path, required=True)
         q.add_argument('--checkpoint-node', type=Path, required=True)
         q.add_argument('--checkpoint-master', type=Path, required=True)
         q.add_argument('--node-t0', type=Path)
-        if stage == '24h':
+        if stage in ('24h', '48h'):
             q.add_argument('--previous-node', type=Path, required=True)
             q.add_argument('--previous-master', type=Path, required=True)
     for action in ('check', 'execute'):
@@ -1631,7 +1648,7 @@ def main():
         result = seal_contact_metadata(args)
     elif args.action == 'seal-contact-observation':
         result = seal_contact_observation(args)
-    elif args.action in ('seal-growth-t0', 'seal-growth-6h', 'seal-growth-24h'):
+    elif args.action in ('seal-growth-t0', 'seal-growth-6h', 'seal-growth-24h', 'seal-growth-48h'):
         result = seal_growth_t0(args)
     elif args.action == 'check':
         prepare(args.directory, args.sha256)

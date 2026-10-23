@@ -60,14 +60,14 @@ def scope():
 class GrowthTests(unittest.TestCase):
     def checkpoint_scope(self, label='+6h'):
         spec = scope()
-        epoch = time.time()-3600
+        epoch = time.time()-(30*3600 if label == '+48h' else 3600)
         proof = {'directory': '/local-only', **dict.fromkeys(
             ('archive_sha256', 'capture_sha256', 'receipt_sha256', 'result_sha256', 'outcome_sha256'), 'a'*64)}
         spec.update(purpose='growth-checkpoint', expires_epoch=spec['prepared_epoch']+86400,
                     checkpoint_scope={'label': label, 'offset_seconds': r.GROWTH_CHECKPOINTS[label],
                         'node_t0_epoch': epoch, 'not_before_epoch': epoch+r.GROWTH_CHECKPOINTS[label],
                         't0': {'node': proof, 'master': proof}})
-        if label == '+24h':
+        if label in r.GROWTH_PREVIOUS:
             spec['checkpoint_scope']['previous'] = {
                 'node': proof, 'master': proof, 'restart_disposition_sha256': 'c'*64}
         return spec
@@ -243,6 +243,90 @@ class GrowthTests(unittest.TestCase):
                 r.execute(Path(tmp), 'a'*64)
             module.assert_not_called()
             self.assertFalse((Path(tmp)/'execution.json').exists())
+
+    def test_closing_scope_binds_48h_and_previous_pair(self):
+        spec = self.checkpoint_scope('+48h')
+        raw, files = archive(spec)
+        self.assertEqual(r.unpack(raw, r.sha(raw))[0], spec)
+        compile(r.payload(spec, files), '<closing-checkpoint>', 'exec')
+        for change in ('offset', 'missing-previous', 'missing-t0'):
+            bad = json.loads(json.dumps(spec))
+            if change == 'offset':
+                bad['checkpoint_scope']['offset_seconds'] = 86400
+            elif change == 'missing-previous':
+                del bad['checkpoint_scope']['previous']
+            else:
+                del bad['checkpoint_scope']['t0']['master']
+            raw, _ = archive(bad)
+            with self.assertRaises(ValueError):
+                r.unpack(raw, r.sha(raw))
+
+    def test_closing_early_and_master_acceptance_guards(self):
+        for kind in ('node', 'master'):
+            spec = dict(self.checkpoint_scope('+48h'), kind=kind)
+            with tempfile.TemporaryDirectory() as tmp, \
+                    patch.object(r, 'prepare', return_value=(spec, {})), \
+                    patch.object(r, 'accepted_t0') as proof, patch.object(r, 'module') as module:
+                with self.assertRaisesRegex(ValueError, 'not due'):
+                    r.execute(Path(tmp), 'a'*64)
+                module.assert_not_called()
+                proof.assert_not_called()
+                self.assertFalse((Path(tmp)/'execution.json').exists())
+            with patch.object(g, 'h', types.SimpleNamespace(sha=r.sha, encoded=r.encoded)), \
+                    patch.object(g, 'observer') as observer:
+                capture = g.collect(spec)
+                self.assertFalse(capture['capture_complete'])
+                self.assertIn('+48h checkpoint is not due', capture['error'])
+                observer.continuity.assert_not_called()
+        spec = dict(self.checkpoint_scope('+48h'), kind='master')
+        spec['checkpoint_scope']['not_before_epoch'] = time.time()-1
+        def retained(directory, role):
+            return spec['checkpoint_scope']['t0'][role], {}, spec['checkpoint_scope']['node_t0_epoch']
+        with tempfile.TemporaryDirectory() as tmp, \
+                patch.object(r, 'prepare', return_value=(spec, {})), \
+                patch.object(r, 'accepted_t0', side_effect=retained), \
+                patch.object(r, 'previous_checkpoint', return_value=spec['checkpoint_scope']['previous']), \
+                patch.object(r, 'growth_baselines', return_value=(spec['growth_provenance'], {})), \
+                patch.object(r, 'node_t0_context', side_effect=ValueError('closing node not accepted')), \
+                patch.object(r, 'module') as module:
+            with self.assertRaisesRegex(ValueError, 'closing node not accepted'):
+                r.execute(Path(tmp), 'a'*64)
+            module.assert_not_called()
+            self.assertFalse((Path(tmp)/'execution.json').exists())
+
+    def test_previous_daily_proof_checks_the_full_earlier_chain(self):
+        epoch = time.time()-100000
+        t0 = {'node': 'original', 'master': 'original'}
+        def proof(directory, token):
+            return {'directory': str(directory), **dict.fromkeys(
+                ('archive_sha256', 'capture_sha256', 'receipt_sha256', 'result_sha256', 'outcome_sha256'), token*64)}
+        node6, master6, node24, master24 = map(Path, ('/prior6/node', '/prior6/master', '/prior24/node', '/prior24/master'))
+        n6, m6, n24, m24 = proof(node6, 'a'), proof(master6, 'b'), proof(node24, 'c'), proof(master24, 'd')
+        note = b'operator-confirmed overnight restart'
+        previous = {'node': n6, 'master': m6, 'restart_disposition_sha256': r.sha(note)}
+        six = {'contract_sha256': 'e'*64, 'checkpoint_scope': {'t0': t0}}
+        daily = {'contract_sha256': 'e'*64, 'checkpoint_scope': {'t0': t0, 'previous': previous}}
+        proofs = {node6: (n6, six, epoch), master6: (m6, six, epoch),
+                  node24: (n24, daily, epoch), master24: (m24, daily, epoch)}
+        def context(node):
+            return r.encoded({'node_archive_sha256': node['archive_sha256'],
+                              'node_capture_sha256': node['capture_sha256'],
+                              'node_receipt_sha256': node['receipt_sha256'],
+                              'node_outcome_sha256': node['outcome_sha256']})
+        data = {master6/'runtime-context.json': context(n6), master24/'runtime-context.json': context(n24),
+                node6/'restart-disposition.json': note,
+                master6/'outcome.json': r.encoded({'operator_restart_disposition_sha256': r.sha(note)})}
+        def accepted(directory, kind, label):
+            expected = '+6h' if directory in (node6, master6) else '+24h'
+            self.assertEqual(label, expected)
+            return proofs[directory]
+        with patch.object(r, 'accepted_growth', side_effect=accepted), \
+                patch.object(r, 'private', side_effect=lambda path: data[path]):
+            result = r.previous_checkpoint(node24, master24, epoch, t0, '+24h')
+            self.assertEqual(result, {'node': n24, 'master': m24, 'restart_disposition_sha256': r.sha(note)})
+            data[master6/'runtime-context.json'] = context(dict(n6, outcome_sha256='f'*64))
+            with self.assertRaisesRegex(ValueError, 'exact accepted late checkpoint pair'):
+                r.previous_checkpoint(node24, master24, epoch, t0, '+24h')
 
     def test_expired_accepted_proof_remains_data_and_never_becomes_executable(self):
         spec = scope()
