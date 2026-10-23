@@ -58,15 +58,18 @@ def scope():
 
 
 class GrowthTests(unittest.TestCase):
-    def checkpoint_scope(self):
+    def checkpoint_scope(self, label='+6h'):
         spec = scope()
         epoch = time.time()-3600
         proof = {'directory': '/local-only', **dict.fromkeys(
             ('archive_sha256', 'capture_sha256', 'receipt_sha256', 'result_sha256', 'outcome_sha256'), 'a'*64)}
         spec.update(purpose='growth-checkpoint', expires_epoch=spec['prepared_epoch']+86400,
-                    checkpoint_scope={'label': '+6h', 'offset_seconds': 21600,
-                        'node_t0_epoch': epoch, 'not_before_epoch': epoch+21600,
+                    checkpoint_scope={'label': label, 'offset_seconds': r.GROWTH_CHECKPOINTS[label],
+                        'node_t0_epoch': epoch, 'not_before_epoch': epoch+r.GROWTH_CHECKPOINTS[label],
                         't0': {'node': proof, 'master': proof}})
+        if label == '+24h':
+            spec['checkpoint_scope']['previous'] = {
+                'node': proof, 'master': proof, 'restart_disposition_sha256': 'c'*64}
         return spec
 
     def test_checkpoint_archive_closes_timing_proofs_and_payload(self):
@@ -137,9 +140,9 @@ class GrowthTests(unittest.TestCase):
             self.assertFalse((Path(tmp)/'execution.json').exists())
 
     def test_checkpoint_master_requires_exact_reviewed_due_node_capture(self):
-        spec = self.checkpoint_scope()
-        spec['checkpoint_scope']['node_t0_epoch'] = time.time()-22000
-        spec['checkpoint_scope']['not_before_epoch'] = spec['checkpoint_scope']['node_t0_epoch']+21600
+        spec = self.checkpoint_scope('+24h')
+        spec['checkpoint_scope']['node_t0_epoch'] = time.time()-90000
+        spec['checkpoint_scope']['not_before_epoch'] = spec['checkpoint_scope']['node_t0_epoch']+86400
         raw, _ = archive(spec)
         with tempfile.TemporaryDirectory() as tmp:
             directory = Path(tmp)
@@ -170,6 +173,130 @@ class GrowthTests(unittest.TestCase):
                 (directory/'outcome.json').write_bytes(r.encoded(bad))
                 with self.assertRaises(ValueError):
                     r.node_t0_context(master)
+
+    def test_daily_scope_requires_exact_offset_and_previous_pair(self):
+        spec = self.checkpoint_scope('+24h')
+        raw, files = archive(spec)
+        self.assertEqual(r.unpack(raw, r.sha(raw))[0], spec)
+        compile(r.payload(spec, files), '<daily-checkpoint>', 'exec')
+        for change in ('offset', 'missing-previous', 'restart-hash', 'previous-extra'):
+            bad = json.loads(json.dumps(spec))
+            cp = bad['checkpoint_scope']
+            if change == 'offset':
+                cp['offset_seconds'] = 21600
+            elif change == 'missing-previous':
+                del cp['previous']
+            elif change == 'restart-hash':
+                cp['previous']['restart_disposition_sha256'] = 'unbound'
+            else:
+                cp['previous']['node']['unreviewed'] = True
+            raw, _ = archive(bad)
+            with self.assertRaises(ValueError):
+                r.unpack(raw, r.sha(raw))
+
+    def test_daily_early_guard_on_both_controller_roles_and_target(self):
+        for kind in ('node', 'master'):
+            spec = dict(self.checkpoint_scope('+24h'), kind=kind)
+            with tempfile.TemporaryDirectory() as tmp, \
+                    patch.object(r, 'prepare', return_value=(spec, {})), \
+                    patch.object(r, 'module') as module, patch.object(r, 'accepted_t0') as proof:
+                with self.assertRaisesRegex(ValueError, 'not due'):
+                    r.execute(Path(tmp), 'a'*64)
+                module.assert_not_called()
+                proof.assert_not_called()
+                self.assertFalse((Path(tmp)/'execution.json').exists())
+            with patch.object(g, 'h', types.SimpleNamespace(sha=r.sha, encoded=r.encoded)), \
+                    patch.object(g, 'observer') as observer:
+                capture = g.collect(spec)
+                self.assertFalse(capture['capture_complete'])
+                self.assertIn('+24h checkpoint is not due', capture['error'])
+                observer.continuity.assert_not_called()
+
+    def test_changed_daily_previous_proof_blocks_before_receipt_or_transport(self):
+        spec = self.checkpoint_scope('+24h')
+        spec['checkpoint_scope']['not_before_epoch'] = time.time()-1
+        def retained(directory, role):
+            return spec['checkpoint_scope']['t0'][role], {}, spec['checkpoint_scope']['node_t0_epoch']
+        with tempfile.TemporaryDirectory() as tmp, \
+                patch.object(r, 'prepare', return_value=(spec, {})), \
+                patch.object(r, 'accepted_t0', side_effect=retained), \
+                patch.object(r, 'previous_checkpoint', return_value={}), \
+                patch.object(r, 'module') as module:
+            with self.assertRaisesRegex(ValueError, 'late checkpoint proof changed'):
+                r.execute(Path(tmp), 'a'*64)
+            module.assert_not_called()
+            self.assertFalse((Path(tmp)/'execution.json').exists())
+
+    def test_daily_master_missing_acceptance_blocks_before_receipt_or_transport(self):
+        spec = dict(self.checkpoint_scope('+24h'), kind='master')
+        spec['checkpoint_scope']['not_before_epoch'] = time.time()-1
+        def retained(directory, role):
+            return spec['checkpoint_scope']['t0'][role], {}, spec['checkpoint_scope']['node_t0_epoch']
+        with tempfile.TemporaryDirectory() as tmp, \
+                patch.object(r, 'prepare', return_value=(spec, {})), \
+                patch.object(r, 'accepted_t0', side_effect=retained), \
+                patch.object(r, 'previous_checkpoint', return_value=spec['checkpoint_scope']['previous']), \
+                patch.object(r, 'growth_baselines', return_value=(spec['growth_provenance'], {})), \
+                patch.object(r, 'node_t0_context', side_effect=ValueError('daily node not accepted')), \
+                patch.object(r, 'module') as module:
+            with self.assertRaisesRegex(ValueError, 'daily node not accepted'):
+                r.execute(Path(tmp), 'a'*64)
+            module.assert_not_called()
+            self.assertFalse((Path(tmp)/'execution.json').exists())
+
+    def test_expired_accepted_proof_remains_data_and_never_becomes_executable(self):
+        spec = scope()
+        raw, files = archive(spec)
+        captured = spec['prepared_epoch']+1
+        epoch = captured+0.1
+        capture = {'capture_complete': True, 'target_mutation': False, 'captured_epoch': captured,
+                   'spec_sha256': r.sha(r.encoded(spec)), 'before': {'pid': 'stable'},
+                   'after': {'pid': 'stable'}, 'observations': {'statistics_before': {'started_epoch': epoch}}}
+        receipt = {'sha256': r.sha(raw), 'epoch': captured-0.5}
+        outcome = {'growth_t0_node_accepted': True, 'node_t0_epoch': epoch,
+                   'archive_sha256': r.sha(raw), 'capture_sha256': r.sha(r.encoded(capture)),
+                   'execution_receipt_sha256': r.sha(r.encoded(receipt))}
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            def write(name, value):
+                (directory/name).write_bytes(value)
+                (directory/name).chmod(0o600)
+            for name, value in files.items():
+                write(name, value)
+            write('inspection.tar', raw)
+            write('stdout.txt', r.encoded(capture))
+            write('execution.json', r.encoded(receipt))
+            write('outcome.json', r.encoded(outcome))
+            write('result.json', r.encoded({'bundle_sha256': r.sha(raw), 'returncode': 0, 'capture_complete': True}))
+            with patch.object(r.time, 'time', return_value=spec['expires_epoch']+100):
+                self.assertEqual(r.accepted_t0(directory, 'node')[2], epoch)
+                with self.assertRaises(ValueError):
+                    r.prepare(directory, r.sha(raw))
+                with patch.object(r, 'module') as module:
+                    with self.assertRaises(ValueError):
+                        r.execute(directory, r.sha(raw))
+                    module.assert_not_called()
+                bad_receipt = dict(receipt, epoch=spec['expires_epoch'])
+                write('execution.json', r.encoded(bad_receipt))
+                bad_outcome = dict(outcome, execution_receipt_sha256=r.sha(r.encoded(bad_receipt)))
+                write('outcome.json', r.encoded(bad_outcome))
+                with self.assertRaisesRegex(ValueError, 'accepted growth'):
+                    r.accepted_t0(directory, 'node')
+                write('execution.json', r.encoded(receipt))
+                write('outcome.json', r.encoded(dict(outcome, growth_t0_node_accepted=False)))
+                with self.assertRaises(ValueError):
+                    r.accepted_t0(directory, 'node')
+
+    def test_historical_mode_still_rejects_corruption_and_scope_expansion(self):
+        spec = scope()
+        raw, _ = archive(spec)
+        with patch.object(r.time, 'time', return_value=spec['expires_epoch']+100):
+            with self.assertRaises(ValueError):
+                r.unpack(raw+b'changed', r.sha(raw), historical=True)
+            bad = dict(spec, unreviewed_path='/etc/shadow')
+            raw, _ = archive(bad)
+            with self.assertRaises(ValueError):
+                r.unpack(raw, r.sha(raw), historical=True)
 
     def test_real_mount_inventory_uses_direct_collector_pid_path(self):
         o = load(ROOT/'scripts/observe_ntp.py')

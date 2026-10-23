@@ -51,6 +51,7 @@ GROWTH_FIELDS = {'ntp_free_bytes': {'root_bytes': 'g', 'stats_bytes': 'g'},
     'ntp_stats_read': {'ok': 'g'},
     'ntp_job_evidence': {'retention_evidence': 'g', 'reporting_evidence': 'g'},
     'ntp_job_age': {'retention_age': 'g', 'reporting_age': 'g'}}
+GROWTH_CHECKPOINTS = {'+6h': 21600, '+24h': 86400}
 GROWTH_STAGES = {'timing': 'munin-generic-timing-20261022-v2',
                  'producers': 'munin-producer-followup-20261022-v1',
                  'mail': 'munin-contact-mail-observation-20261022-v1'}
@@ -222,14 +223,15 @@ def expand_observation(spec, node_directory, master_directory, native_directory)
 def review(s):
     if s.get('purpose') == 'growth-checkpoint':
         checkpoint = s['checkpoint_scope']
+        label = checkpoint['label']
         base = review(dict(s, purpose='growth-t0'))
         for old, new in (
-                ('OBS-02 t0', 'OBS-02 +6h'), ('This is one t0 snapshot', 'This is one +6h snapshot'),
+                ('OBS-02 t0', 'OBS-02 '+label), ('This is one t0 snapshot', 'This is one '+label+' snapshot'),
                 ('Capture completeness alone accepts neither t0 nor',
                  'Capture completeness alone accepts neither this checkpoint nor'),
                 ('growth_t0_node_accepted', 'growth_checkpoint_node_accepted'),
                 ('as node_t0_epoch', 'as checkpoint_node_epoch'),
-                ('First require accepted node t0 archive', 'First require accepted +6h node archive'),
+                ('First require accepted node t0 archive', 'First require accepted '+label+' node archive'),
                 ('bind its actual t0\nepoch', 'bind its actual checkpoint\nepoch'),
                 ('Existing pre-t0 samples are explicitly labelled.',
                  'Existing samples remain timestamped; report those predating this checkpoint.'),
@@ -242,18 +244,24 @@ Earliest execution: {datetime.fromtimestamp(checkpoint['not_before_epoch'], time
 the remote collector independently checks before observations.
 Latest controller start (15-minute expiry reserve):
 {datetime.fromtimestamp(s['expires_epoch']-900, timezone.utc).isoformat()}.
-The archive expiry is bounded by both pinned t0 archives. Early execution
+This new archive has its own execution expiry; historical proof expiry is not
+extended. Expired archives remain ineligible for execution. Early execution
 fails immediately, without sleeping or consuming the one-use receipt.
 Both accepted t0 node/master archives, captures, receipts, results and reviewed
 outcomes are pinned in checkpoint_scope.t0. Changed/missing proofs block access.
-The master additionally requires reviewed acceptance of this exact +6h node
+The master additionally requires reviewed acceptance of this exact {label} node
 archive, its first snapshot epoch and complete protected continuity before SSH.
 Review node growth_checkpoint_node_accepted and checkpoint_node_epoch separately;
 record actual elapsed time and lateness, never infer punctuality from this label.
 Compare retained inode metadata with t0 locally after capture; retain shrinkage,
 reclamation, new files, races and quiet event-driven streams as findings. No
 sustained-growth or budget acceptance is automatic. This is no approval for
-+24h/+48h, reminder, retry, scheduler change, notification or further access.
+another checkpoint, reminder, retry, scheduler change, notification or further access.
+For +24h, checkpoint_scope.previous also pins the accepted late +6h node/master
+proofs and operator-confirmed overnight Munin restart disposition. The +6h
+snapshots were late; do not relabel them punctual or reset t0. Compare endpoint
+metadata with both t0 and the late sample locally after capture; new/completed
+files, removals and ordinary rollover must remain distinct from gross growth.
 """
     if s.get('purpose') in ('growth-t0', 'growth-checkpoint'):
         common = f"""# Read-only OBS-02 t0 {s['kind']} baseline
@@ -732,7 +740,7 @@ ntpviz individually open unless their actual evidence is reviewed and accepted.
 """
 
 
-def unpack(raw, digest):
+def unpack(raw, digest, *, historical=False):
     if len(raw) > 8388608 or sha(raw) != digest:
         raise ValueError('approved archive hash/size mismatch')
     with tarfile.open(fileobj=io.BytesIO(raw)) as archive:
@@ -756,18 +764,30 @@ def unpack(raw, digest):
             checkpoint = s['checkpoint_scope']
             proof_keys = {'directory', 'archive_sha256', 'capture_sha256', 'receipt_sha256',
                           'result_sha256', 'outcome_sha256'}
-            if (set(checkpoint) != {'label', 'offset_seconds', 'node_t0_epoch', 'not_before_epoch', 't0'}
-                    or checkpoint['label'] != '+6h' or checkpoint['offset_seconds'] != 21600
+            checkpoint_keys = {'label', 'offset_seconds', 'node_t0_epoch', 'not_before_epoch', 't0'}
+            if checkpoint['label'] == '+24h':
+                checkpoint_keys.add('previous')
+            proofs = list(checkpoint.get('t0', {}).values())
+            if checkpoint.get('previous'):
+                previous = checkpoint['previous']
+                if (set(previous) != {'node', 'master', 'restart_disposition_sha256'}
+                        or not re.fullmatch('[a-f0-9]{64}', previous['restart_disposition_sha256'])):
+                    raise ValueError('closed previous checkpoint proof scope required')
+                proofs += [previous['node'], previous['master']]
+            if (set(checkpoint) != checkpoint_keys
+                    or checkpoint['label'] not in GROWTH_CHECKPOINTS
+                    or checkpoint['offset_seconds'] != GROWTH_CHECKPOINTS[checkpoint['label']]
                     or type(checkpoint['node_t0_epoch']) not in (int, float)
                     or not math.isfinite(checkpoint['node_t0_epoch'])
                     or not 0 < checkpoint['node_t0_epoch'] <= s['prepared_epoch']
-                    or checkpoint['not_before_epoch'] != checkpoint['node_t0_epoch']+21600
+                    or checkpoint['not_before_epoch'] != checkpoint['node_t0_epoch']+checkpoint['offset_seconds']
                     or not checkpoint['not_before_epoch'] < s['expires_epoch']-900
                     or set(checkpoint['t0']) != {'node', 'master'}
+                    or checkpoint['label'] == '+24h' and not checkpoint.get('previous')
                     or any(set(proof) != proof_keys or not Path(proof['directory']).is_absolute()
                            or any(not re.fullmatch('[a-f0-9]{64}', proof[k]) for k in proof_keys-{'directory'})
-                           for proof in checkpoint['t0'].values())):
-                raise ValueError('closed +6h timing and t0 proof scope required')
+                           for proof in proofs)):
+                raise ValueError('closed checkpoint timing and historical proof scope required')
         if (set(s) != common | extra or s.get('growth_policy') != GROWTH_POLICY
                 or s.get('contract_sha256') != sha(files['contract.md'])
                 or s.get('baseline_files_sha256') != sha(encoded(s['files']))
@@ -881,8 +901,9 @@ def unpack(raw, digest):
             or s['kind'] not in TARGETS or tuple(s[k] for k in ('endpoint', 'user', 'host_key_alias', 'hostname')) != TARGETS[s['kind']]
             or not re.fullmatch(r'munin-[a-z0-9-]{1,55}', s['operation_id'])
             or not 0 < s['expires_epoch']-s['prepared_epoch'] <= 86400
-            or not s['prepared_epoch'] <= time.time() < s['expires_epoch']-900
-            or files['review.md'] != review(s).encode()):
+            or historical and s.get('purpose') not in ('growth-t0', 'growth-checkpoint')
+            or not historical and not s['prepared_epoch'] <= time.time() < s['expires_epoch']-900
+            or not historical and files['review.md'] != review(s).encode()):
         raise ValueError('scope/expiry/review binding mismatch')
     return s, files
 
@@ -1232,20 +1253,28 @@ def growth_baselines(parent):
     return records, stages
 
 
-def accepted_t0(directory, kind):
-    """Validate retained t0 evidence locally; never import archived executables."""
+def accepted_growth(directory, kind, label='t0'):
+    """Read immutable accepted proof as data; archive expiry never grants execution."""
     names = {'archive_sha256': 'inspection.tar', 'capture_sha256': 'stdout.txt',
              'receipt_sha256': 'execution.json', 'result_sha256': 'result.json',
              'outcome_sha256': 'outcome.json'}
     raw = {key: private(directory/name) for key, name in names.items()}
     proof = {'directory': str(directory.absolute()), **{key: sha(value) for key, value in raw.items()}}
-    spec, _ = unpack(raw['archive_sha256'], proof['archive_sha256'])
+    spec, _ = unpack(raw['archive_sha256'], proof['archive_sha256'], historical=True)
     capture, receipt, result, outcome = (json.loads(raw[key]) for key in
         ('capture_sha256', 'receipt_sha256', 'result_sha256', 'outcome_sha256'))
     epoch = outcome.get('node_t0_epoch')
-    if (spec['purpose'] != 'growth-t0' or spec['kind'] != kind
-            or outcome.get('growth_t0_'+kind+'_accepted') is not True
+    flag = 'growth_t0_' if label == 't0' else 'growth_checkpoint_'
+    expected_purpose = 'growth-t0' if label == 't0' else 'growth-checkpoint'
+    started = receipt.get('epoch')
+    captured = capture.get('captured_epoch')
+    if (spec['purpose'] != expected_purpose or spec['kind'] != kind
+            or label != 't0' and spec['checkpoint_scope']['label'] != label
+            or outcome.get(flag+kind+'_accepted') is not True
             or type(epoch) not in (int, float) or not math.isfinite(epoch) or not 0 < epoch <= time.time()
+            or type(started) not in (int, float) or type(captured) not in (int, float)
+            or not spec['prepared_epoch'] <= started < spec['expires_epoch']-900
+            or not started <= captured < spec['expires_epoch']
             or receipt.get('sha256') != proof['archive_sha256']
             or result.get('bundle_sha256') != proof['archive_sha256']
             or result.get('returncode') != 0 or result.get('capture_complete') is not True
@@ -1253,18 +1282,53 @@ def accepted_t0(directory, kind):
             or capture.get('spec_sha256') != sha(encoded(spec)) or capture.get('before') != capture.get('after')
             or any(outcome.get(key) != proof[key] for key in ('archive_sha256', 'capture_sha256'))
             or outcome.get('execution_receipt_sha256') != proof['receipt_sha256']):
-        raise ValueError('exact reviewed accepted t0 '+kind+' evidence required')
+        raise ValueError('exact reviewed accepted growth '+kind+' evidence required')
     if kind == 'node':
-        if epoch != capture['observations']['statistics_before']['started_epoch']:
-            raise ValueError('actual node t0 epoch required')
+        sample_epoch = capture['observations']['statistics_before']['started_epoch']
+        key = 'node_t0_epoch' if label == 't0' else 'checkpoint_node_epoch'
+        if (outcome.get(key) != sample_epoch
+                or not captured <= sample_epoch < spec['expires_epoch']):
+            raise ValueError('actual accepted node snapshot epoch required')
+        if label != 't0' and (spec['checkpoint_scope']['node_t0_epoch'] != epoch
+                or sample_epoch < spec['checkpoint_scope']['not_before_epoch']):
+            raise ValueError('historical checkpoint must preserve t0 and its due time')
     else:
         context_raw = private(directory/'runtime-context.json')
         context = json.loads(context_raw)
         if (capture.get('runtime_context_sha256') != sha(context_raw)
                 or context.get('node_t0_epoch') != epoch
                 or context.get('node_archive_sha256') != spec['node_t0_prerequisite']['archive_sha256']):
-            raise ValueError('exact accepted t0 pair context required')
+            raise ValueError('exact accepted growth pair context required')
+        if label != 't0' and (spec['checkpoint_scope']['node_t0_epoch'] != epoch
+                or outcome.get('checkpoint_node_epoch') != context.get('checkpoint_node_epoch')
+                or type(context.get('checkpoint_node_epoch')) not in (int, float)
+                or not spec['checkpoint_scope']['not_before_epoch'] <= context['checkpoint_node_epoch'] <= captured):
+            raise ValueError('accepted checkpoint master must preserve the due node epoch')
     return proof, spec, epoch
+
+
+def accepted_t0(directory, kind):
+    return accepted_growth(directory, kind)
+
+
+def previous_checkpoint(node, master, epoch, t0):
+    node_ref, ns, node_epoch = accepted_growth(node, 'node', '+6h')
+    master_ref, ms, master_epoch = accepted_growth(master, 'master', '+6h')
+    paired = json.loads(private(master/'runtime-context.json'))
+    if (node_epoch != epoch or master_epoch != epoch
+            or ns['contract_sha256'] != ms['contract_sha256']
+            or ns['checkpoint_scope'] != ms['checkpoint_scope']
+            or ns['checkpoint_scope']['t0'] != t0
+            or paired.get('node_archive_sha256') != node_ref['archive_sha256']
+            or paired.get('node_capture_sha256') != node_ref['capture_sha256']
+            or paired.get('node_receipt_sha256') != node_ref['receipt_sha256']
+            or paired.get('node_outcome_sha256') != node_ref['outcome_sha256']):
+        raise ValueError('exact accepted late checkpoint pair required')
+    disposition_sha256 = sha(private(node/'restart-disposition.json'))
+    if json.loads(private(master/'outcome.json')).get('operator_restart_disposition_sha256') != disposition_sha256:
+        raise ValueError('reviewed overnight restart disposition changed')
+    return {'node': node_ref, 'master': master_ref,
+            'restart_disposition_sha256': disposition_sha256}
 
 
 def seal_growth_t0(args):
@@ -1298,10 +1362,18 @@ def seal_growth_t0(args):
                 or paired.get('node_receipt_sha256') != node_ref['receipt_sha256']
                 or paired.get('node_outcome_sha256') != node_ref['outcome_sha256']):
             raise ValueError('master t0 must bind this exact reviewed node t0 proof')
-        spec['expires_epoch'] = min(spec['expires_epoch'], node_spec['expires_epoch'], master_spec['expires_epoch'])
+        label = '+24h' if args.action == 'seal-growth-24h' else '+6h'
+        offset = GROWTH_CHECKPOINTS[label]
         spec.update(purpose='growth-checkpoint', checkpoint_scope={
-            'label': '+6h', 'offset_seconds': 21600, 'node_t0_epoch': epoch,
-            'not_before_epoch': epoch+21600, 't0': {'node': node_ref, 'master': master_ref}})
+            'label': label, 'offset_seconds': offset, 'node_t0_epoch': epoch,
+            'not_before_epoch': epoch+offset, 't0': {'node': node_ref, 'master': master_ref}})
+        if label == '+24h':
+            previous = previous_checkpoint(args.previous_node, args.previous_master, epoch,
+                                           spec['checkpoint_scope']['t0'])
+            _, prior_spec, _ = accepted_growth(args.previous_node, 'node', '+6h')
+            if prior_spec['contract_sha256'] != spec['contract_sha256']:
+                raise ValueError('same contract required across growth observations')
+            spec['checkpoint_scope']['previous'] = previous
     if kind == 'node':
         protected = dict(worker['protected'])
         protected[worker['target']] = sha(base64.b64decode(worker['candidate'], validate=True))
@@ -1412,11 +1484,17 @@ def execute(directory, digest):
     if spec.get('purpose') == 'growth-checkpoint':
         checkpoint = spec['checkpoint_scope']
         if time.time() < checkpoint['not_before_epoch']:
-            raise ValueError('+6h checkpoint is not due; no receipt consumed or target contact')
+            raise ValueError(checkpoint['label']+' checkpoint is not due; no receipt consumed or target contact')
         for role, expected in checkpoint['t0'].items():
             proof, _, epoch = accepted_t0(Path(expected['directory']), role)
             if proof != expected or epoch != checkpoint['node_t0_epoch']:
                 raise ValueError('accepted t0 proof changed before checkpoint access')
+        if 'previous' in checkpoint:
+            previous = checkpoint['previous']
+            current = previous_checkpoint(Path(previous['node']['directory']),
+                                          Path(previous['master']['directory']), checkpoint['node_t0_epoch'], checkpoint['t0'])
+            if current != previous:
+                raise ValueError('accepted late checkpoint proof changed before target contact')
     if spec.get('purpose') in ('growth-t0', 'growth-checkpoint'):
         current, _ = growth_baselines(directory.parent)
         if current != spec['growth_provenance']:
@@ -1532,12 +1610,16 @@ def main():
     q.add_argument('--kind', choices=TARGETS, required=True)
     q.add_argument('--output', type=Path, required=True)
     q.add_argument('--node-t0', type=Path)
-    q = sub.add_parser('seal-growth-6h')
-    q.add_argument('--kind', choices=TARGETS, required=True)
-    q.add_argument('--output', type=Path, required=True)
-    q.add_argument('--checkpoint-node', type=Path, required=True)
-    q.add_argument('--checkpoint-master', type=Path, required=True)
-    q.add_argument('--node-t0', type=Path)
+    for stage in ('6h', '24h'):
+        q = sub.add_parser('seal-growth-'+stage)
+        q.add_argument('--kind', choices=TARGETS, required=True)
+        q.add_argument('--output', type=Path, required=True)
+        q.add_argument('--checkpoint-node', type=Path, required=True)
+        q.add_argument('--checkpoint-master', type=Path, required=True)
+        q.add_argument('--node-t0', type=Path)
+        if stage == '24h':
+            q.add_argument('--previous-node', type=Path, required=True)
+            q.add_argument('--previous-master', type=Path, required=True)
     for action in ('check', 'execute'):
         q = sub.add_parser(action)
         q.add_argument('--directory', type=Path, required=True)
@@ -1549,7 +1631,7 @@ def main():
         result = seal_contact_metadata(args)
     elif args.action == 'seal-contact-observation':
         result = seal_contact_observation(args)
-    elif args.action in ('seal-growth-t0', 'seal-growth-6h'):
+    elif args.action in ('seal-growth-t0', 'seal-growth-6h', 'seal-growth-24h'):
         result = seal_growth_t0(args)
     elif args.action == 'check':
         prepare(args.directory, args.sha256)

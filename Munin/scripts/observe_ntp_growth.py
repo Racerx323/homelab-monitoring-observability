@@ -114,7 +114,7 @@ def collect(spec, context=None):
         checkpoint = spec.get('checkpoint_scope')
         if checkpoint:
             if time.time() < checkpoint['not_before_epoch']:
-                raise ValueError('+6h checkpoint is not due on target')
+                raise ValueError(checkpoint['label']+' checkpoint is not due on target')
             result.update(node_t0_epoch=checkpoint['node_t0_epoch'],
                           actual_elapsed_seconds=wall-checkpoint['node_t0_epoch'],
                           lateness_seconds=wall-checkpoint['not_before_epoch'])
