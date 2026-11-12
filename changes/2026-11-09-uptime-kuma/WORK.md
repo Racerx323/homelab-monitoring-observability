@@ -9,9 +9,9 @@
 - Next action: Reconcile the separately owned DNS candidate and its conditional
   approval/expiry before proposing DNS progression. W-106 private and passive
   application acceptance passed: both nodes and combined verification accepted.
-  This observation approval is consumed. Aaron separately authorized repository
-  commit/push; publication qualification is in progress under W-116. No DNS or
-  further live work is authorized. W-020/W-076 and documentation/closeout remain open; W-096 is
+  This observation approval is consumed. W-116 source publication is complete:
+  four owner repositories are pushed and remote-verified, with green validation
+  and CodeQL runs. No DNS or further live work is authorized. W-020/W-076 and documentation/closeout remain open; W-096 is
   deferred. Session 34421 exited 0 and is retired. No execution sessions are active.
 
 ## Tasks and findings
@@ -169,7 +169,7 @@
 | W-114 | Passive Node A acceptance stops at final journalctl read. | AC-004, AC-008 | Resolved | Reconcile final journal command behavior from retained/local evidence; distinguish bounded read failure causes without disclosing raw journal content, and qualify before any separately approved retry. | Remote observer returned failure command-exit:journalctl:expected=0:observed=1. Collector discarded command stderr, so cause is unknown. Node A HTTP/identity/cycle evidence retained; journal acceptance unknown, Node B not contacted. No health failure or clean journal may be inferred from this exit status. Local journalctl 252 reproduced the same empty exit 1 with show-cursor; removing the unused final output-cursor flag yields successful empty output. Corrected full native observer and invalid-cursor rejection pass; bounded command diagnostics are retained. Historical cause remains unproven; live acceptance is still pending. |
 
 | W-115 | Prepare observation-only continuation after W-114. | AC-004, AC-008 | Resolved | Bind corrected observer, accepted private receipt and fresh attempt/evidence identity; qualify and seal without repeating login or live observation. | Candidate proxy-observation-review-c9vdnab_ passes frozen-source tests, receipt verification, syntax and secret scan. Observer matches the full successful native journal/systemd/Caddy qualification. Four consumed attempts preserved; no live approval or execution. |
-| W-116 | Publish reviewed pending changes and reconcile reported CI failures. | Repository publication; AC-010 | In progress | Validate and secret-scan intended sources, commit/push to verified owner repositories and verify remote refs; preserve private evidence and deployment boundaries. | Aaron requested commit and push of all changes. Four owner repositories contain pending work. Latest server-config Caddy/Nautobot jobs passed; baseline secret scanning flags the exact archived runner SHA-256, independently verified and narrowly excepted. The older Nautobot failure is superseded by later passes. CodeQL startup failure has no jobs/annotations; the October 12 Webmin run has no available logs. No live change or retry is included. |
+| W-116 | Publish reviewed pending changes and reconcile reported CI failures. | Repository publication; AC-010 | Resolved | Validate and secret-scan intended sources, commit/push to verified owner repositories and verify remote refs; preserve private evidence and deployment boundaries. | Aaron requested commit and push of all changes. Four owner repositories contain pending work. Latest server-config Caddy/Nautobot jobs passed; baseline secret scanning flags the exact archived runner SHA-256, independently verified and narrowly excepted. The older Nautobot failure is superseded by later passes. CodeQL startup failure has no jobs/annotations; the October 12 Webmin run has no available logs. All four source commits are pushed and remote-verified; their Repository validation and CodeQL runs passed. Private evidence and the empty oom scratch file remain excluded. No live change or retry is included. |
 
 ## Execution record
 
@@ -4927,3 +4927,26 @@ passed Repository validation and CodeQL. Server-config commit
 `3a27837f2a7dce023fc77154aff65aae7863106c` is pushed and remote-verified; its
 CI is running. Monitoring publication is in progress. DNS activation remains
 separately governed and pending.
+
+### Source publication accepted — November 11
+
+All reviewed source changes are published and remote-verified:
+
+| Repository | Published source commit | Repository validation | CodeQL |
+| --- | --- | --- | --- |
+| homelab-server-configs | 3a27837f2a7dce023fc77154aff65aae7863106c | 43124149510: success | 43124148826: success |
+| homelab-monitoring-observability | 406349aa5d3bb4725416ebb5812ab5eeeb8e9c9f | 43124324323: success | 43124323435: success |
+| homelab-dns | b1bdd9077e4621db82cdecf65c59635c340e0ee6 | 43123734307: success | 43123733191: success |
+| homelab-network | 0ab74630cb38afb7fd6bbaf77210f9260519c7ed | 43123731133: success | 43123730083: success |
+
+W-116 is resolved. The later documentation-only commit records these outcomes;
+its source ancestor is identified above. Server validation includes successful
+Caddy, baseline and Nautobot/Restic jobs; the prior secret-scan failure is fixed.
+The new CodeQL run passed, without establishing the historical startup failure's
+cause. The old upstream Webmin run remains unverified because its logs are
+unavailable; no upstream code or workflow was changed.
+
+Private evidence and the empty `homelab-server-configs/oom` scratch file were not
+committed. Temporary qualification worktrees were removed. Publication does not
+activate DNS or close the remaining project findings. W-020/W-076 and permanent
+documentation/closeout remain open; W-096 is deferred. No live host action occurred.
