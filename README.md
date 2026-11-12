@@ -1,8 +1,9 @@
 # Homelab monitoring and observability
 
-This repository is the configuration owner for the fleet Munin deployment. It is
-currently a scaffold, not an installable monitoring stack. There is no Compose
-deployment, Prometheus, Grafana, or Alertmanager configuration here.
+This repository owns fleet Munin configuration and the
+[Uptime Kuma application](uptime-kuma/README.md). Munin profiles remain candidates
+unless their component records state live acceptance. Uptime Kuma service foundation
+and guarded backend are accepted; the Caddy route and private HTTPS application acceptance are accepted; DNS remains pending. There is no Prometheus, Grafana, or Alertmanager configuration here.
 
 The [Munin component](Munin/README.md) contains node plugin source, plugin
 settings, candidate profiles, and the master-configuration contract. The

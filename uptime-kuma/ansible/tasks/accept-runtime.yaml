@@ -1,0 +1,76 @@
+---
+- name: Wait for actual application and resource observations
+  ansible.builtin.script:
+    cmd: '{{ playbook_dir }}/../scripts/observe-runtime.py --data-directory {{ application.data_directory }} --port
+      {{ application.port }} --connection-uuid {{ network_prerequisite.connection_uuid }}'
+    executable: /usr/bin/python3
+  register: kuma_runtime_observation
+  changed_when: false
+  retries: 60
+  delay: 3
+  until: kuma_runtime_observation.rc == 0
+- name: Accept only observed native bootstrap properties
+  ansible.builtin.assert:
+    that:
+      - (kuma_runtime_observation.stdout | from_json).unit.ActiveState == 'active'
+      - (kuma_runtime_observation.stdout | from_json).unit.SubState == 'running'
+      - (kuma_runtime_observation.stdout | from_json).unit.NRestarts | int == 0
+      - (kuma_runtime_observation.stdout | from_json).architecture == host.architecture
+      - (kuma_runtime_observation.stdout | from_json).image_id == application.local_image_id
+      - (kuma_runtime_observation.stdout | from_json).release == application.release
+      - (kuma_runtime_observation.stdout | from_json).uid == application.uid
+      - (kuma_runtime_observation.stdout | from_json).read_only_root
+      - (kuma_runtime_observation.stdout | from_json).limits['memory.max'] | int == resources.memory_max | human_to_bytes
+      - (kuma_runtime_observation.stdout | from_json).limits['memory.high'] | int == resources.memory_high | human_to_bytes
+      - (kuma_runtime_observation.stdout | from_json).limits['memory.swap.max'] == '0'
+      - (kuma_runtime_observation.stdout | from_json).limits['pids.max'] | int == resources.tasks_max
+      - ((kuma_runtime_observation.stdout | from_json).limits['cpu.max'].split()[0] | int) / ((kuma_runtime_observation.stdout
+        | from_json).limits['cpu.max'].split()[1] | int) == (resources.cpu_quota | regex_replace('%', '') | int)
+        / 100
+      - (kuma_runtime_observation.stdout | from_json).filesystem.fstype == 'ext4'
+      - (kuma_runtime_observation.stdout | from_json).http['127.0.0.1'] == 200
+      - (kuma_runtime_observation.stdout | from_json).http['[::1]'] == 200
+      - (kuma_runtime_observation.stdout | from_json).loopback_proxy.socket.ActiveState == 'active'
+      - (kuma_runtime_observation.stdout | from_json).loopback_proxy.service.ActiveState == 'active'
+      - (kuma_runtime_observation.stdout | from_json).loopback_proxy.service.MemoryMax == '16777216'
+      - (kuma_runtime_observation.stdout | from_json).loopback_proxy.service.MemorySwapMax == '0'
+      - (kuma_runtime_observation.stdout | from_json).loopback_proxy.socket.Listen == '[::1]:3001 (Stream)'
+      - (kuma_runtime_observation.stdout | from_json).networks == ['uptime-kuma']
+      - (kuma_runtime_observation.stdout | from_json).port_bindings.keys() | list == ['3001/tcp']
+      - ((kuma_runtime_observation.stdout | from_json).port_bindings['3001/tcp'] | map(attribute='HostIp') | list
+        | sort) == (kuma_expected_bind_ips | sort)
+      - ((kuma_runtime_observation.stdout | from_json).mounts | selectattr('Destination', 'equalto', '/app/data')
+        | selectattr('Source', 'equalto', application.data_directory) | selectattr('RW', 'equalto', true) | list
+        | length) == 1
+      - ((kuma_runtime_observation.stdout | from_json).counts.active_users >= 1) if require_administrator else ((kuma_runtime_observation.stdout
+        | from_json).counts.user == 0)
+      - (kuma_runtime_observation.stdout | from_json).counts.monitor == 0
+      - (kuma_runtime_observation.stdout | from_json).counts.notification == 0
+      - not (kuma_runtime_observation.stdout | from_json).authentication_disabled
+      - (kuma_runtime_observation.stdout | from_json).memory_events.oom_kill == 0
+      - (kuma_runtime_observation.stdout | from_json).limits['memory.current'] | int < resources.memory_max | human_to_bytes
+      - (kuma_runtime_observation.stdout | from_json).radio | selectattr('type', 'in', ['wlan', 'bluetooth']) |
+        rejectattr('soft', 'equalto', 'blocked') | list | length == 0
+      - (kuma_runtime_observation.stdout | from_json).network.methods == ['auto', 'auto']
+      - (kuma_runtime_observation.stdout | from_json).network.persistent_ipv6 == network_prerequisite.permanent_ula
+      - (network_prerequisite.connection_uuid + ':eth0') in (kuma_runtime_observation.stdout | from_json).network.active_connections
+      - host.ipv4 in ((kuma_runtime_observation.stdout | from_json).network.addresses | map(attribute='local') |
+        list)
+      - host.permanent_ula in ((kuma_runtime_observation.stdout | from_json).network.addresses | map(attribute='local')
+        | list)
+      - ((kuma_runtime_observation.stdout | from_json).network.addresses | selectattr('family', 'equalto', 'inet6')
+        | selectattr('local', 'match', '^[23]') | list | length) > 0
+      - (kuma_runtime_observation.stdout | from_json).network.ipv4_default | length > 0
+      - (kuma_runtime_observation.stdout | from_json).network.ipv6_default | length > 0
+  vars:
+    kuma_expected_bind_ips: '{{ [''127.0.0.1''] + ([host.ipv4, host.permanent_ula] if expose_backend else
+      []) }}'
+- name: Retain grouped native runtime observations without credentials
+  ansible.builtin.copy:
+    content: '{{ kuma_runtime_observation.stdout }}
+
+      '
+    dest: '{{ operation_evidence_directory }}/runtime-{{ runtime_observation_label | default("checkpoint") }}.json'
+    mode: '0600'
+  delegate_to: localhost
+  become: false

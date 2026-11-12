@@ -1,0 +1,12 @@
+# Owned Uptime Kuma guard. Replace only this table; never flush the host ruleset.
+destroy table inet uptime_kuma
+table inet uptime_kuma {
+    chain backend_prerouting {
+        type filter hook prerouting priority -310; policy accept;
+        iifname "lo" accept
+        ip daddr {{ host.ipv4 }} tcp dport {{ application.port }} ip saddr { {{ proxy.backend_ipv4_sources | join(', ') }} } accept
+        ip6 daddr {{ host.permanent_ula }} tcp dport {{ application.port }} ip6 saddr { {{ proxy.backend_ipv6_sources | join(', ') }} } accept
+        meta nfproto ipv4 fib daddr type local tcp dport {{ application.port }} counter drop comment "deny-v4"
+        meta nfproto ipv6 fib daddr type local tcp dport {{ application.port }} counter drop comment "deny-v6"
+    }
+}

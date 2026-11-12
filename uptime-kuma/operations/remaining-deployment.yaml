@@ -1,0 +1,238 @@
+operation:
+  id: uptime-kuma-backend-completion-20261111
+  status: locally_qualified_not_authorized
+  scope: Contained backend completion preserving both predecessors and accepted backup; no reboot or account setup; guarded
+    startup, fresh backup/restore, backend and daily owner notifications
+  later_stages_not_authorized:
+    - DNS deployment
+    - Caddy release/reload or failover
+    - Uptime Kuma monitors and notifications
+    - Synthetic email or alert tests
+    - Repository publication
+  kind: continuation
+network_prerequisite:
+  interface: eth0
+  connection_uuid: 52669ec8-8270-3562-8af6-986b5f8f0c83
+  ipv4: 10.1.3.75
+  permanent_ula: fd36:5aa8:6971:1::75/64
+  checkpoint_timeout_seconds: 180
+memory_controller:
+  status: preparing_not_authorized
+  target_hostname: j2-svpi3bmf
+  target_ipv4: 10.1.3.75
+  target_user: ama
+  boot_path: /boot/firmware/cmdline.txt
+  original_sha256: afc1a322fea71433d1edf4d6bbd2f70f80eeedbf27e0ad96d03bfe84bca4ebbd
+  proposed_sha256: 24049b9d90b98d65fa033093789fe8d3351c12f2f59e79a200a5e8e9af814c70
+  original_mode: '0755'
+  backup_directory: /var/lib/uptime-kuma-maintenance/memory-controller
+  append_token: cgroup_enable=memory
+  reboot_timeout_seconds: 240
+  physical_recovery: Device, microSD and console KVM available; operator confirmed November 9, 2026.
+  expected_kernel: 6.18.60+rpt-rpi-v8
+backup:
+  node_directory: /var/backups/uptime-kuma/backend-completion-20261111
+  restore_work_root: /var/lib/uptime-kuma-maintenance/remaining-deployment/restore
+  controller_directory: /home/aaron/.local/state/uptime-kuma/backups/backend-completion-20261111
+operation_evidence_directory: /home/aaron/code/.local-evidence/uptime-kuma/backend-completion-20261111-nin6u10h/execution
+memory_evidence_directory: '{{ operation_evidence_directory }}'
+proxy_probe_targets:
+  - pi@10.1.0.53
+  - pi@10.1.0.54
+controller:
+  ansible_core_version: 2.21.3
+  interactive_terminal_required: false
+foundation:
+  timezone: America/Chicago
+  qualification_status: qualified
+  host_components:
+    - needrestart
+    - webmin
+    - msmtp
+    - watchdog
+  mail_default_account: apprise
+  mail_default_transport: mailrise
+  smtp_host: mailrise.local.theama.co
+  smtp_port: 8025
+  notification_authority: homelab-notification/apprise-api
+  install_notification_servers: false
+  activate_uptime_kuma_notifications: false
+  work_directory: /var/lib/uptime-kuma-maintenance/foundation
+  package_baseline_sha256: 8d0ed832c61e32f10c37bfe1d93ad096cd63cc8093ea8d937f7c0f22492fde33
+  watchdog_vendor_sha256: dad1960f1b097c080722e718f56bcdfa900b1617d7d846078486cd4ef337958a
+  needrestart_vendor_sha256: a0ff6f13987c8216f52a2de64fea08073463ac02df8db3a28e5ad858bc6a371b
+  webmin_profile: ssh-loopback
+  needrestart_profile: rpi-v8-list-only
+  notification_job_memory_max: 96M
+  watchdog_backend: adopt_existing_vendor_systemd
+installation:
+  packages:
+    - aardvark-dns=1.14.0-3
+    - conmon=2.1.12-4
+    - crun=1.21-1
+    - golang-github-containers-common=0.62.2+ds1-2
+    - golang-github-containers-image=5.34.2-1
+    - libauthen-pam-perl=0.16-6+b4
+    - libgsasl18=2.2.2-1.1+deb13u2
+    - libgssglue1=0.9-1.1
+    - libidn12=1.43-1
+    - libintl-perl=1.35-1
+    - libio-pty-perl=1:1.20-1+b3
+    - libmodule-find-perl=0.17-1
+    - libnet-ssleay-perl=1.94-3
+    - libntlm0=1.8-4
+    - libproc-processtable-perl=0.636-1+b3
+    - libsecret-1-0=0.21.7-1
+    - libsecret-common=0.21.7-1
+    - libsocket6-perl=0.29-3+b4
+    - libsort-naturally-perl=1.03-4
+    - libsubid5=1:4.17.4-2
+    - libterm-readkey-perl=2.38-2+b4
+    - libyajl2=2.1.0-5+b2
+    - msmtp=1.8.28-3
+    - msmtp-mta=1.8.28-3
+    - needrestart=3.11-1
+    - netavark=1.14.0-2
+    - perl-openssl-defaults=7+b2
+    - podman=5.4.2+ds1-2+b2
+    - webmin=2.670
+  new_package_count: 29
+fleet_server_root: '{{ playbook_dir }}/../../../homelab-server-configs'
+fleet_mail_root: '{{ playbook_dir }}/../../../homelab-dns'
+preserve_accepted_prerequisites: true
+preserve_installed_foundation: true
+continuation:
+  webmin_guard_sha256: 2cf5ef73617a668b7f39bd8f75da0694735c9dfefa763661de3bd08a61c9071b
+  diagnostic_bundle_sha256: acb5903be2e86410ea99299b61be78900681498c16cceaffbabafc4199cb5119
+  predecessor_bundle_sha256: 7c64d7047d55b5aeade840412a3595a7f91ca775bd14ff584a8b68e8dd28b28b
+  predecessor_outcome: administrator_and_restore_accepted_proxy_gate_failed_recovery_rate_limited_independently_contained
+  accepted_boot_id: d8ea7780-d747-458e-b5fd-d6eda6cfa009
+remaining_deployment: true
+diagnostic:
+  id: uptime-kuma-network-correction-20261110
+  ansible_core_version: 2.21.3
+  hostname: j2-svpi3bmf
+  ipv4: 10.1.3.75
+  ssh_user: ama
+  architecture: aarch64
+  boot_id: d8ea7780-d747-458e-b5fd-d6eda6cfa009
+  podman_version: podman version 5.4.2
+  netavark_version: 1.14.0-2
+  image_id: sha256:315dfadc88ca9be7ba59515578363871bda93f7989a8e406f162acf36c9b0037
+  image_architecture: arm64
+  require_webmin_contained: true
+  files:
+    - path: /etc/containers/systemd/uptime-kuma.network
+      mode: '0644'
+      sha256: b1dad6d7bd20dbb6eba736a793a537518e8cf611aa7410483c3823baa5d337eb
+    - path: /etc/systemd/system/uptime-kuma-firewall.service
+      mode: '0644'
+      sha256: cd060420dd793ca21b7845f748a4e722c8404542a1c6499e41237d700861ede7
+    - path: /etc/uptime-kuma/ingress.nft
+      mode: '0600'
+      sha256: 85764cb6bfaa4126a3280895f6041a4d961323f2fb8aac7872d697f1d586c281
+    - path: /etc/containers/containers.conf.d/80-uptime-kuma.conf
+      mode: '0644'
+      sha256: b3d932c411868f7418d0f381d4b92ec295cd7be63a91b7624a453ff8765edc1f
+    - path: /usr/local/libexec/uptime-kuma/check-network.py
+      mode: '0755'
+      sha256: 7764afb574f2c057fef35eaa2edb0b99384dadbf2db7e062763a6ec724c5fee5
+    - path: /etc/systemd/system/uptime-kuma.service.d/50-network-diagnostic-guard.conf
+      mode: '0644'
+      sha256: 853436a45f9661182ade34d394dc4d40230298e7d4fa599e6bfe9bfab9f111e5
+    - path: /etc/systemd/system/uptime-kuma-network.service.d/50-network-diagnostic-guard.conf
+      mode: '0644'
+      sha256: 853436a45f9661182ade34d394dc4d40230298e7d4fa599e6bfe9bfab9f111e5
+    - path: /etc/containers/systemd/uptime-kuma.container
+      mode: '0644'
+      sha256: 95cf9e93ec48e05e776a7b6e7ea89cc81835059d3d05d0714147ce9175ccaa50
+    - path: /etc/systemd/system/uptime-kuma-loopback.socket
+      mode: '0644'
+      sha256: aacfc07aeb58dd65842a4db24ea3725941253a957e05b4f474c09d79b9b85b68
+    - path: /etc/systemd/system/uptime-kuma-loopback.service
+      mode: '0644'
+      sha256: 2cd0f2470039697acdf148d8a3198fd553b5c111fcd23af4c47e5a92a90b7bd5
+    - path: /etc/systemd/system/uptime-kuma-loopback.socket.d/50-network-diagnostic-guard.conf
+      mode: '0644'
+      sha256: 853436a45f9661182ade34d394dc4d40230298e7d4fa599e6bfe9bfab9f111e5
+    - path: /etc/systemd/system/uptime-kuma-loopback.service.d/50-network-diagnostic-guard.conf
+      mode: '0644'
+      sha256: 853436a45f9661182ade34d394dc4d40230298e7d4fa599e6bfe9bfab9f111e5
+    - path: /usr/local/libexec/uptime-kuma/startup-permit.py
+      mode: '0755'
+      sha256: d4970f624f65a0a332dda9849675f3f7f4ef4e58e160e3498e464dba881568d4
+    - path: /usr/local/libexec/fleet/observe-needrestart.py
+      mode: '0755'
+      sha256: 1d333f83b8f1be274972b9d323327c5cbfca61a27b7c3daa9f4f8002040830ab
+    - path: /etc/systemd/system/uptime-kuma-startup-permit.service
+      mode: '0644'
+      sha256: 730c73284d8a15acc7db45895bfa39b0279099fb88b51642c0bc8afd80da9ae9
+    - path: /etc/systemd/system/uptime-kuma-deployment-containment.service
+      mode: '0644'
+      sha256: 11f49d28beec07e5dc1251a250b6883fe84bc4e591fc20012f152c8b2fec9470
+    - path: /etc/systemd/system/uptime-kuma-deployment-containment.timer
+      mode: '0644'
+      sha256: d34326e2ec9aed1ca25665d37b3736357c07f3ea4cbc856caa7f25514dbe7358
+    - path: /etc/systemd/system/uptime-kuma.service.d/60-startup-authority.conf
+      mode: '0644'
+      sha256: 365cf8b8af7e55f2e22a78a7ba1bc5b234fb167c9832992b69808f49c5c16b7d
+    - path: /etc/systemd/system/uptime-kuma-network.service.d/60-startup-authority.conf
+      mode: '0644'
+      sha256: 365cf8b8af7e55f2e22a78a7ba1bc5b234fb167c9832992b69808f49c5c16b7d
+    - path: /etc/systemd/system/uptime-kuma-loopback.socket.d/60-startup-authority.conf
+      mode: '0644'
+      sha256: 365cf8b8af7e55f2e22a78a7ba1bc5b234fb167c9832992b69808f49c5c16b7d
+    - path: /etc/systemd/system/uptime-kuma-loopback.service.d/60-startup-authority.conf
+      mode: '0644'
+      sha256: 365cf8b8af7e55f2e22a78a7ba1bc5b234fb167c9832992b69808f49c5c16b7d
+    - path: /etc/systemd/system/webmin.service.d/60-startup-authority.conf
+      mode: '0644'
+      sha256: 365cf8b8af7e55f2e22a78a7ba1bc5b234fb167c9832992b69808f49c5c16b7d
+    - path: /var/backups/uptime-kuma/administrator-completion-20261110/data.tar
+      mode: '0600'
+      sha256: e8d953730b3a5bbaa6fc1c3d4b7efee1d841b3cac8a660b219375e6aca275ead
+  network:
+    name: uptime-kuma
+    driver: bridge
+    network_interface: podman1
+    ipv6_enabled: true
+    subnets:
+      - subnet: 10.89.0.0/24
+        gateway: 10.89.0.1
+      - subnet: fd1e:eecd:b4a1:44b::/64
+        gateway: fd1e:eecd:b4a1:44b::1
+  absent_paths:
+    - /etc/systemd/system/uptime-kuma-network.service
+    - /etc/webmin/.installation-accepted
+    - /usr/sbin/policy-rc.d
+    - /etc/cron.d/needrestart_check
+    - /run/uptime-kuma-network-diagnostic/permit
+    - /run/systemd/system/uptime-kuma.service.d/50-network-diagnostic-timing.conf
+    - /run/systemd/system/uptime-kuma-network.service.d/50-network-diagnostic-timing.conf
+    - /etc/systemd/system/uptime-kuma.service
+    - /etc/systemd/system/uptime-kuma-network.service
+    - /var/lib/uptime-kuma-maintenance/remaining-deployment/accepted
+    - /var/lib/uptime-kuma-maintenance/remaining-deployment/state.new
+    - /var/lib/uptime-kuma-maintenance/remaining-deployment/completion-state.json
+  work_directory: /var/lib/uptime-kuma-maintenance/remaining-deployment
+  evidence_directory: /home/aaron/code/.local-evidence/uptime-kuma/backend-completion-20261111-nin6u10h/execution
+  correction: false
+  minimum_available_kib: 638976
+  resume_contained: true
+  contained_state:
+    status: contained
+    armed_at: 1794374286
+    deadline: 1794376686
+    boot_id: d8ea7780-d747-458e-b5fd-d6eda6cfa009
+    reboot_count: 1
+    predecessor_sha256: 504b5e9f8218e9b47d5570d81d8a5bb942eaf638f4a814ba9cef5d4a204709bc
+    contained_at: 1794374575
+  resume_successor: true
+  previous_state_sha256: 504b5e9f8218e9b47d5570d81d8a5bb942eaf638f4a814ba9cef5d4a204709bc
+resume_contained: true
+resume_successor: true
+preserved_backup:
+  node_path: /var/backups/uptime-kuma/administrator-completion-20261110/data.tar
+  controller_path: /home/aaron/.local/state/uptime-kuma/backups/administrator-completion-20261110/data.tar
+  sha256: e8d953730b3a5bbaa6fc1c3d4b7efee1d841b3cac8a660b219375e6aca275ead
+  size: 307200

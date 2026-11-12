@@ -1,0 +1,305 @@
+---
+- name: Correct the Pi memory-controller prerequisite
+  hosts: uptime_kuma
+  gather_facts: false
+  become: true
+  any_errors_fatal: true
+  vars_files:
+    - ../operations/initial-deployment.yaml
+  vars:
+    memory_original_input: '{{ memory_payload_directory }}/original-cmdline.txt'
+    memory_proposed_input: '{{ memory_payload_directory }}/proposed-cmdline.txt'
+  tasks:
+    - name: Require bounded execution inputs
+      ansible.builtin.assert:
+        that:
+          - not ansible_check_mode
+          - memory_payload_directory is defined
+          - memory_evidence_directory is defined
+          - inventory_hostname == memory_controller.target_hostname
+          - ansible_host == memory_controller.target_ipv4
+          - ansible_user == memory_controller.target_user
+        fail_msg: This phase needs its sealed inputs and a dedicated private evidence directory.
+    - name: Verify platform and resources before any boot mutation
+      ansible.builtin.import_tasks: tasks/preflight-host.yaml
+    - name: Verify the expanded host baseline before any prerequisite change
+      ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/preflight.yaml'
+    - name: Read target identity
+      ansible.builtin.command:
+        argv:
+          - /usr/bin/hostname
+      register: memory_hostname
+      changed_when: false
+    - name: Read the original boot ID
+      ansible.builtin.command:
+        argv:
+          - /usr/bin/cat
+          - /proc/sys/kernel/random/boot_id
+      register: memory_boot_id_before
+      changed_when: false
+    - name: Read the original boot identity
+      ansible.builtin.stat:
+        path: '{{ memory_controller.boot_path }}'
+        follow: false
+        checksum_algorithm: sha256
+        get_mime: false
+      register: memory_boot_before
+    - name: Refuse identity or boot-file drift
+      ansible.builtin.assert:
+        that:
+          - memory_hostname.stdout == memory_controller.target_hostname
+          - memory_boot_before.stat.isreg | default(false)
+          - not (memory_boot_before.stat.islnk | default(true))
+          - memory_boot_before.stat.uid == 0
+          - memory_boot_before.stat.gid == 0
+          - memory_boot_before.stat.mode == memory_controller.original_mode
+          - memory_boot_before.stat.checksum == memory_controller.original_sha256
+    - name: Verify both controller-side boot inputs
+      ansible.builtin.stat:
+        path: '{{ item.path }}'
+        follow: false
+        checksum_algorithm: sha256
+        get_mime: false
+      delegate_to: localhost
+      become: false
+      loop:
+        - path: '{{ memory_original_input }}'
+          expected_sha256: '{{ memory_controller.original_sha256 }}'
+        - path: '{{ memory_proposed_input }}'
+          expected_sha256: '{{ memory_controller.proposed_sha256 }}'
+      register: memory_inputs
+    - name: Refuse unsafe or altered controller inputs
+      ansible.builtin.assert:
+        that:
+          - item.stat.isreg | default(false)
+          - not (item.stat.islnk | default(true))
+          - item.stat.mode == '0600'
+          - item.stat.checksum == item.item.expected_sha256
+      loop: '{{ memory_inputs.results }}'
+      loop_control:
+        label: '{{ item.item.path }}'
+    - name: Check the firmware filesystem
+      ansible.builtin.command:
+        argv:
+          - /usr/bin/findmnt
+          - --noheadings
+          - --output
+          - FSTYPE
+          - --target
+          - /boot/firmware
+      register: memory_firmware_type
+      changed_when: false
+    - name: Observe available cgroup controllers
+      ansible.builtin.command:
+        argv:
+          - /usr/bin/cat
+          - /sys/fs/cgroup/cgroup.controllers
+      register: memory_controllers_before
+      changed_when: false
+    - name: Require the reviewed prerequisite state
+      ansible.builtin.assert:
+        that:
+          - memory_firmware_type.stdout | trim == 'vfat'
+          - '''memory'' not in memory_controllers_before.stdout.split()'
+    - name: Inspect the private controller evidence directory
+      ansible.builtin.stat:
+        path: '{{ memory_evidence_directory }}'
+        follow: false
+      delegate_to: localhost
+      become: false
+      register: memory_evidence_stat
+    - name: Resolve the controller evidence path
+      ansible.builtin.command:
+        argv:
+          - /usr/bin/realpath
+          - --canonicalize-existing
+          - '{{ memory_evidence_directory }}'
+      delegate_to: localhost
+      become: false
+      changed_when: false
+      register: memory_evidence_realpath
+    - name: Require a protected real controller evidence directory
+      ansible.builtin.assert:
+        that:
+          - memory_evidence_stat.stat.isdir | default(false)
+          - not (memory_evidence_stat.stat.islnk | default(true))
+          - memory_evidence_stat.stat.mode == '0700'
+          - memory_evidence_directory.startswith('/home/aaron/code/.local-evidence/uptime-kuma/')
+          - memory_evidence_realpath.stdout == memory_evidence_directory
+    - name: Ensure the fetched recovery-copy path is unused
+      ansible.builtin.stat:
+        path: '{{ memory_evidence_directory }}/original-cmdline.txt'
+        follow: false
+      delegate_to: localhost
+      become: false
+      register: memory_recovery_copy_before
+    - name: Refuse to overwrite an earlier recovery copy
+      ansible.builtin.assert:
+        that: not memory_recovery_copy_before.stat.exists
+    - name: Ensure the operation backup directory is unused
+      ansible.builtin.stat:
+        path: '{{ memory_controller.backup_directory }}'
+        follow: false
+      register: memory_backup_before
+    - name: Refuse reuse of a previous operation's backup
+      ansible.builtin.assert:
+        that: not memory_backup_before.stat.exists
+    - name: Preserve boot state and perform the reviewed correction
+      block:
+        - name: Create the private on-node backup directory
+          ansible.builtin.file:
+            path: '{{ memory_controller.backup_directory }}'
+            state: directory
+            owner: root
+            group: root
+            mode: '0700'
+        - name: Preserve original bytes on the node
+          ansible.builtin.copy:
+            src: '{{ memory_controller.boot_path }}'
+            dest: '{{ memory_controller.backup_directory }}/original-cmdline.txt'
+            remote_src: true
+            owner: root
+            group: root
+            mode: '0600'
+        - name: Fetch the original to the protected controller evidence store
+          ansible.builtin.fetch:
+            src: '{{ memory_controller.backup_directory }}/original-cmdline.txt'
+            dest: '{{ memory_evidence_directory }}/original-cmdline.txt'
+            flat: true
+            validate_checksum: true
+        - name: Verify the independently fetched original
+          ansible.builtin.stat:
+            path: '{{ memory_evidence_directory }}/original-cmdline.txt'
+            checksum_algorithm: sha256
+          delegate_to: localhost
+          become: false
+          register: memory_offnode_original
+        - name: Restrict the off-node recovery copy
+          ansible.builtin.file:
+            path: '{{ memory_evidence_directory }}/original-cmdline.txt'
+            mode: '0600'
+          delegate_to: localhost
+          become: false
+        - name: Require a matching off-node recovery copy
+          ansible.builtin.assert:
+            that: memory_offnode_original.stat.checksum == memory_controller.original_sha256
+        - name: Install only the reviewed boot-file bytes
+          ansible.builtin.copy:
+            src: '{{ memory_proposed_input }}'
+            dest: '{{ memory_controller.boot_path }}'
+            owner: root
+            group: root
+            mode: '{{ memory_controller.original_mode }}'
+        - name: Reboot once and wait for the same management target
+          ansible.builtin.reboot:
+            reboot_timeout: '{{ memory_controller.reboot_timeout_seconds }}'
+            connect_timeout: 8
+            post_reboot_delay: 10
+        - name: Read the actual post-boot controllers
+          ansible.builtin.command:
+            argv:
+              - /usr/bin/cat
+              - /sys/fs/cgroup/cgroup.controllers
+          register: memory_controllers_after
+          changed_when: false
+        - name: Read the actual new boot ID
+          ansible.builtin.command:
+            argv:
+              - /usr/bin/cat
+              - /proc/sys/kernel/random/boot_id
+          register: memory_boot_id_after
+          changed_when: false
+        - name: Read the actual post-boot command line
+          ansible.builtin.command:
+            argv:
+              - /usr/bin/cat
+              - /proc/cmdline
+          register: memory_cmdline_after
+          changed_when: false
+        - name: Verify the stored post-boot file independently
+          ansible.builtin.stat:
+            path: '{{ memory_controller.boot_path }}'
+            checksum_algorithm: sha256
+          register: memory_boot_after
+        - name: Read actual radio state after the prerequisite reboot
+          ansible.builtin.command:
+            argv:
+              - /usr/sbin/rfkill
+              - --json
+          register: memory_radio_after
+          changed_when: false
+        - name: Retain grouped boot and radio observations
+          ansible.builtin.copy:
+            content: '{{ {''controllers_before'': memory_controllers_before.stdout, ''controllers_after'': memory_controllers_after.stdout,
+              ''boot_id_before'': memory_boot_id_before.stdout, ''boot_id_after'': memory_boot_id_after.stdout,
+              ''stored_boot_sha256'': memory_boot_after.stat.checksum, ''radio_after'': memory_radio_after.stdout
+              | from_json} | to_nice_json }}
+
+              '
+            dest: '{{ operation_evidence_directory }}/memory-controller.json'
+            mode: '0600'
+          delegate_to: localhost
+          become: false
+        - name: Accept the memory-controller prerequisite
+          ansible.builtin.assert:
+            that:
+              - '''memory'' in memory_controllers_after.stdout.split()'
+              - memory_controllers_after.stdout.split() | sort == (memory_controllers_before.stdout.split() + ['memory'])
+                | unique | sort
+              - memory_controller.append_token in memory_cmdline_after.stdout.split()
+              - memory_boot_after.stat.checksum == memory_controller.proposed_sha256
+              - memory_boot_id_after.stdout != memory_boot_id_before.stdout
+              - (memory_radio_after.stdout | from_json).rfkilldevices | selectattr('type', 'in', ['wlan', 'bluetooth'])
+                | rejectattr('soft', 'equalto', 'blocked') | list | length == 0
+      rescue:
+        - name: Read the surviving boot identity before recovery
+          ansible.builtin.stat:
+            path: '{{ memory_controller.boot_path }}'
+            follow: false
+            checksum_algorithm: sha256
+          register: memory_failure_boot
+        - name: Stop rather than overwrite an unexpected boot file
+          ansible.builtin.assert:
+            that:
+              - memory_failure_boot.stat.isreg | default(false)
+              - not (memory_failure_boot.stat.islnk | default(true))
+              - memory_failure_boot.stat.checksum in [memory_controller.original_sha256, memory_controller.proposed_sha256]
+            fail_msg: Manual intervention required; the boot file differs from both approved identities.
+        - name: Restore the approved original if this phase changed the boot file
+          ansible.builtin.copy:
+            src: '{{ memory_original_input }}'
+            dest: '{{ memory_controller.boot_path }}'
+            owner: root
+            group: root
+            mode: '{{ memory_controller.original_mode }}'
+          when: memory_failure_boot.stat.checksum == memory_controller.proposed_sha256
+          register: memory_restore
+        - name: Reboot the restored configuration when required
+          ansible.builtin.reboot:
+            reboot_timeout: '{{ memory_controller.reboot_timeout_seconds }}'
+            connect_timeout: 8
+          when: memory_restore.changed | default(false)
+        - name: Verify the restored boot bytes
+          ansible.builtin.stat:
+            path: '{{ memory_controller.boot_path }}'
+            checksum_algorithm: sha256
+          register: memory_restored_boot
+        - name: Require the original boot identity after recovery
+          ansible.builtin.assert:
+            that: memory_restored_boot.stat.checksum == memory_controller.original_sha256
+        - name: Read actual controllers after recovery
+          ansible.builtin.command:
+            argv:
+              - /usr/bin/cat
+              - /sys/fs/cgroup/cgroup.controllers
+          register: memory_controllers_recovered
+          changed_when: false
+        - name: Require the original controller baseline after recovery
+          ansible.builtin.assert:
+            that: memory_controllers_recovered.stdout.split() | sort == memory_controllers_before.stdout.split()
+              | sort
+        - name: Preserve the failed outcome after recovery
+          ansible.builtin.fail:
+            msg: Memory-controller correction failed. Original boot bytes and controller baseline verified; on-node/off-node
+              backups remain. Do not replay this operation for a clean receipt. An unreachable host requires physical
+              console/microSD recovery instead.

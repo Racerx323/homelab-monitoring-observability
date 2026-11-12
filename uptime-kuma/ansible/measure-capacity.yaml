@@ -1,0 +1,195 @@
+---
+- name: Verify the sealed measurement before target contact
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  vars_files: [../operations/capacity-measurement.yaml]
+  tasks:
+    - ansible.builtin.import_tasks: tasks/controller-preflight.yaml
+  tags: [controller-preflight]
+- name: Measure observer differences and one bounded scan with applications stopped
+  hosts: uptime_kuma
+  gather_facts: false
+  become: true
+  any_errors_fatal: true
+  vars_files: [../operations/capacity-measurement.yaml]
+  vars:
+    capacity_units: [uptime-kuma.service, uptime-kuma-network.service, uptime-kuma-loopback.socket,
+                     uptime-kuma-loopback.service, webmin.service]
+  tasks:
+    - name: Read exact target and installed scanner identity
+      ansible.builtin.command:
+        argv: '{{ item }}'
+      loop:
+        - [hostname]
+        - [uname, -m]
+        - [uname, -r]
+        - [cat, /proc/sys/kernel/random/boot_id]
+        - [dpkg-query, --show, '--showformat=${Version}', needrestart]
+      register: capacity_identity
+      changed_when: false
+    - name: Require the reviewed Pi and installed scanner
+      ansible.builtin.assert:
+        that:
+          - inventory_hostname == capacity.hostname
+          - ansible_host == capacity.address
+          - ansible_user == 'ama'
+          - capacity_identity.results | map(attribute='stdout') | list == capacity.identity
+    - name: Read application states without starting or clearing failures
+      ansible.builtin.command:
+        argv: '{{ ["systemctl", "show", "--property=Id,ActiveState,SubState,MainPID"] + capacity_units }}'
+      register: capacity_before
+      changed_when: false
+    - name: Require all application units stopped
+      ansible.builtin.assert:
+        that:
+          - capacity_before.stdout_lines | select('match', '^MainPID=') | unique | list == ['MainPID=0']
+          - capacity_before.stdout_lines | select('match', '^ActiveState=') | difference(['ActiveState=inactive', 'ActiveState=failed']) | length == 0
+          - capacity_before.stdout_lines | select('match', '^Id=') | length == 5
+          - capacity_before.stdout_lines | select('match', '^ActiveState=') | length == 5
+    - name: Verify the owner scan configuration has not changed
+      ansible.builtin.stat:
+        path: '{{ item.path }}'
+        checksum_algorithm: sha256
+        follow: false
+        get_mime: false
+      loop: '{{ capacity.scan_files }}'
+      register: capacity_scan_files
+    - name: Require the reviewed list-only scan files
+      ansible.builtin.assert:
+        that:
+          - item.stat.isreg | default(false)
+          - not (item.stat.islnk | default(true))
+          - item.stat.uid == 0
+          - item.stat.gid == 0
+          - item.stat.checksum == item.item.sha256
+      loop: '{{ capacity_scan_files.results }}'
+    - name: Require measurement unit names to be unused
+      ansible.builtin.command:
+        argv: [systemctl, show, '--property=LoadState', '{{ item }}']
+      loop: [needrestart-capacity-measurement.service, kuma-capacity-observer.service]
+      register: capacity_existing_units
+      changed_when: false
+    - name: Refuse an existing measurement rather than adopting or replaying it
+      ansible.builtin.assert:
+        that: item.stdout == 'LoadState=not-found'
+      loop: '{{ capacity_existing_units.results }}'
+    - name: Compare the lightweight and Ansible observers three times
+      ansible.builtin.include_tasks: tasks/measure-observer.yaml
+      loop: [1, 2, 3]
+      loop_control:
+        loop_var: capacity_pair
+    - name: Require the isolated measurement budget without changing deployment admission
+      ansible.builtin.assert:
+        that:
+          - capacity_raw_after.stdout_lines[0] | int >= 229376
+          - capacity_python_command.stdout | int >= 229376
+        fail_msg: Need 224 MiB for scan 96, observer 32 and reserve 96; this is not the 624 MiB startup gate.
+    - name: Allocate a private volatile directory for this measurement
+      ansible.builtin.tempfile:
+        state: directory
+        path: /run
+        prefix: kuma-capacity-
+      register: capacity_directory
+    - name: Measure and always retain receipts before removing owned temporary inputs
+      block:
+        - name: Stage the reviewed owner observer in the private volatile directory
+          ansible.builtin.copy:
+            src: '{{ fleet_server_root }}/foundation/scripts/observe-needrestart.py'
+            dest: '{{ capacity_directory.path }}/observe-needrestart.py'
+            owner: root
+            group: root
+            mode: '0400'
+        - name: Run the observer with a native lifetime and independent memory cap
+          ansible.builtin.command:
+            argv:
+              - systemd-run
+              - --wait
+              - --pipe
+              - --collect
+              - --unit=kuma-capacity-observer
+              - --property=RuntimeMaxSec=120s
+              - --property=TimeoutStopSec=5s
+              - --property=KillMode=control-group
+              - --property=MemoryMax=32M
+              - --property=MemorySwapMax=0
+              - --property=LimitFSIZE=1M
+              - /usr/bin/python3
+              - -I
+              - -B
+              - '{{ capacity_directory.path }}/observe-needrestart.py'
+              - '{{ capacity_directory.path }}'
+          register: capacity_observation
+          failed_when: false
+          changed_when: true
+        - name: Preserve the native observer outcome even on failure
+          ansible.builtin.copy:
+            content: '{{ capacity_observation | to_nice_json }}'
+            dest: '{{ operation_evidence_directory }}/observer-command.json'
+            mode: '0600'
+          delegate_to: localhost
+          become: false
+      always:
+        - name: Stop only the two measurement units after the bounded attempt
+          ansible.builtin.command:
+            argv: [systemctl, stop, '{{ item }}']
+          loop: [needrestart-capacity-measurement.service, kuma-capacity-observer.service]
+          failed_when: false
+          changed_when: true
+        - name: Read terminal measurement unit states
+          ansible.builtin.command:
+            argv: [systemctl, show, '--property=Id,LoadState,ActiveState,SubState,MainPID', '{{ item }}']
+          loop: [needrestart-capacity-measurement.service, kuma-capacity-observer.service]
+          register: capacity_terminal_units
+          changed_when: false
+        - name: Preserve cleanup evidence
+          ansible.builtin.copy:
+            content: '{{ capacity_terminal_units | to_nice_json }}'
+            dest: '{{ operation_evidence_directory }}/measurement-cleanup.json'
+            mode: '0600'
+          delegate_to: localhost
+          become: false
+        - name: Identify receipts that exist after success or failure
+          ansible.builtin.stat:
+            path: '{{ capacity_directory.path }}/{{ item }}'
+          loop: [observation.json, scan.stdout, scan.stderr]
+          register: capacity_receipts
+        - name: Retain every existing receipt on the protected controller
+          ansible.builtin.fetch:
+            src: '{{ item.stat.path }}'
+            dest: '{{ operation_evidence_directory }}/{{ item.item }}'
+            flat: true
+          loop: '{{ capacity_receipts.results }}'
+          when: item.stat.exists
+        - name: Require measurement processes stopped before directory cleanup
+          ansible.builtin.assert:
+            that:
+              - "'MainPID=0' in item.stdout_lines"
+              - "'ActiveState=inactive' in item.stdout_lines or 'ActiveState=failed' in item.stdout_lines"
+          loop: '{{ capacity_terminal_units.results }}'
+        - name: Remove only this operation's protected volatile directory
+          ansible.builtin.file:
+            path: '{{ capacity_directory.path }}'
+            state: absent
+    - name: Independently re-read application state after measurement
+      ansible.builtin.command:
+        argv: '{{ ["systemctl", "show", "--property=Id,ActiveState,SubState,MainPID"] + capacity_units }}'
+      register: capacity_after
+      changed_when: false
+    - name: Preserve application state comparison
+      ansible.builtin.copy:
+        content: '{{ {"before": capacity_before.stdout, "after": capacity_after.stdout} | to_nice_json }}'
+        dest: '{{ operation_evidence_directory }}/application-states.json'
+        mode: '0600'
+      delegate_to: localhost
+      become: false
+    - name: Require successful scan observation and unchanged stopped applications
+      ansible.builtin.assert:
+        that:
+          - capacity_after.stdout == capacity_before.stdout
+          - capacity_observation.rc == 0
+          - (lookup('file', operation_evidence_directory + '/observation.json') | from_json).accepted
+          - "('NEEDRESTART-KCUR: ' + capacity.identity[2]) in lookup('file', operation_evidence_directory + '/scan.stdout')"
+          - "'NEEDRESTART-KSTA: ' in lookup('file', operation_evidence_directory + '/scan.stdout')"
+          - "'NEEDRESTART-KSTA: 0' not in lookup('file', operation_evidence_directory + '/scan.stdout')"

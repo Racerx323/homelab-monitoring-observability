@@ -1,0 +1,56 @@
+diagnostic:
+  id: uptime-kuma-network-diagnostic-20261110
+  ansible_core_version: 2.21.3
+  hostname: j2-svpi3bmf
+  ipv4: 10.1.3.75
+  ssh_user: ama
+  architecture: aarch64
+  boot_id: f694a945-f345-4516-9349-480654ec9161
+  podman_version: podman version 5.4.2
+  netavark_version: 1.14.0-2
+  image_id: sha256:315dfadc88ca9be7ba59515578363871bda93f7989a8e406f162acf36c9b0037
+  image_architecture: arm64
+  require_webmin_contained: true
+  files:
+    - path: /etc/containers/systemd/uptime-kuma.container
+      mode: '0644'
+      sha256: 37cb3e3df0be5e6fddc8b0ee47633479bdfca619f476194a1901c81b93a2eace
+    - path: /etc/containers/systemd/uptime-kuma.network
+      mode: '0644'
+      sha256: b1dad6d7bd20dbb6eba736a793a537518e8cf611aa7410483c3823baa5d337eb
+    - path: /etc/systemd/system/uptime-kuma-firewall.service
+      mode: '0644'
+      sha256: cd060420dd793ca21b7845f748a4e722c8404542a1c6499e41237d700861ede7
+    - path: /etc/uptime-kuma/ingress.nft
+      mode: '0600'
+      sha256: 85764cb6bfaa4126a3280895f6041a4d961323f2fb8aac7872d697f1d586c281
+    - path: /etc/containers/containers.conf.d/80-uptime-kuma.conf
+      mode: '0644'
+      sha256: b3d932c411868f7418d0f381d4b92ec295cd7be63a91b7624a453ff8765edc1f
+    - path: /usr/local/libexec/uptime-kuma/check-network.py
+      mode: '0755'
+      sha256: 7764afb574f2c057fef35eaa2edb0b99384dadbf2db7e062763a6ec724c5fee5
+  network:
+    name: uptime-kuma
+    driver: bridge
+    network_interface: podman1
+    ipv6_enabled: true
+    subnets:
+      - subnet: 10.89.0.0/24
+        gateway: 10.89.0.1
+      - subnet: fd1e:eecd:b4a1:44b::/64
+        gateway: fd1e:eecd:b4a1:44b::1
+  absent_paths:
+    - /etc/systemd/system/uptime-kuma.service.d
+    - /etc/systemd/system/uptime-kuma-network.service.d
+    - /run/systemd/system/uptime-kuma.service.d
+    - /run/systemd/system/uptime-kuma-network.service.d
+    - /etc/systemd/system/uptime-kuma.service
+    - /etc/systemd/system/uptime-kuma-network.service
+    - /run/uptime-kuma-network-diagnostic
+    - /var/lib/uptime-kuma-maintenance/network-diagnostic
+    - /etc/webmin/.installation-accepted
+    - /usr/sbin/policy-rc.d
+    - /etc/cron.d/needrestart_check
+  work_directory: /var/lib/uptime-kuma-maintenance/network-diagnostic
+  evidence_directory: /home/aaron/code/.local-evidence/uptime-kuma/kuma-network-diagnostic-20261110-385lrsk0/execution

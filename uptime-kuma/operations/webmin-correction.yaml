@@ -1,0 +1,21 @@
+operation:
+  id: uptime-kuma-webmin-correction-20261110
+  status: locally_qualified_not_authorized
+  scope: Correct installed Webmin dashboard collection; remaining runtime installation, one startup reboot, private administration, backup/restore,
+    guarded backend and daily operational notifications; accepted boot/address prerequisites verified read-only
+  later_stages_not_authorized:
+    - DNS deployment
+    - Caddy release/reload or failover
+    - Uptime Kuma monitors and notifications
+    - Synthetic email or alert tests
+    - Repository publication
+  kind: continuation
+preserve_accepted_prerequisites: true
+preserve_installed_foundation: true
+continuation:
+  webmin_guard_sha256: 2cf5ef73617a668b7f39bd8f75da0694735c9dfefa763661de3bd08a61c9071b
+  diagnostic_bundle_sha256: acb5903be2e86410ea99299b61be78900681498c16cceaffbabafc4199cb5119
+  predecessor_bundle_sha256: deec2aeac744977fc8d4fbfd427c3e46aaf30dfbacd49f8e0dc3e713c4195324
+  predecessor_outcome: packages_installed_webmin_http_acceptance_failed
+  accepted_boot_id: f694a945-f345-4516-9349-480654ec9161
+operation_evidence_directory: /home/aaron/code/.local-evidence/uptime-kuma/webmin-correction-20261110-zm7ga2ct/execution

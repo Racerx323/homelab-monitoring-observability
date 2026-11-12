@@ -1,0 +1,18 @@
+operation:
+  id: uptime-kuma-foundation-continuation-20261110
+  status: locally_qualified_not_authorized
+  scope: Remaining Pi foundation/runtime installation, one startup reboot, private administration, backup/restore,
+    guarded backend and daily operational notifications; accepted boot/address prerequisites verified read-only
+  later_stages_not_authorized:
+    - DNS deployment
+    - Caddy release/reload or failover
+    - Uptime Kuma monitors and notifications
+    - Synthetic email or alert tests
+    - Repository publication
+  kind: continuation
+preserve_accepted_prerequisites: true
+continuation:
+  predecessor_bundle_sha256: a3cc3fa6f6574e9aebf54505d690529c91987d64c6cfa75fea68be7b9595ed2b
+  predecessor_outcome: partial_failure_before_package_installation
+  accepted_boot_id: f694a945-f345-4516-9349-480654ec9161
+operation_evidence_directory: /home/aaron/code/.local-evidence/uptime-kuma/continuation-20261110-7o422m2f/execution

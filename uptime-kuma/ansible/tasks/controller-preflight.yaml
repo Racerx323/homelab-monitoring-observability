@@ -1,0 +1,52 @@
+---
+- name: Refuse execution until the expanded fleet foundation is qualified
+  ansible.builtin.assert:
+    that:
+      - foundation.qualification_status == 'qualified'
+      - operation.status != 'scope_revision_pending'
+    fail_msg: The prior Pi-only bundle is withdrawn. Qualify the expanded foundation and seal a replacement
+      before execution.
+- name: Require the qualified controller engine
+  ansible.builtin.assert:
+    that: ansible_version.full == controller.ansible_core_version
+- name: Reject undeclared files or symlinks in the frozen input graph
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/python3
+      - -c
+      - "import pathlib,sys\nroot=pathlib.Path(sys.argv[1]).resolve()\nexpected={line.split('  ',1)[1] for line\
+        \ in (root/'INPUTS.sha256').read_text().splitlines()}\nactual=set()\nfor path in root.rglob('*'):\n\
+        \ if path.is_symlink():raise SystemExit('symlink in frozen input graph')\n if path.is_file() and path.name!='INPUTS.sha256':actual.add(str(path.relative_to(root)))\n\
+        if actual!=expected:raise SystemExit('frozen input file set differs')\n"
+      - '{{ playbook_dir }}/../../../..'
+  changed_when: false
+- name: Verify every declared bundle input
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/sha256sum
+      - --check
+      - --status
+      - INPUTS.sha256
+    chdir: '{{ playbook_dir }}/../../../..'
+  changed_when: false
+- name: Require the selected operation and prerequisite mode to match the frozen bundle
+  ansible.builtin.assert:
+    that:
+      - operation.id == frozen_bundle.operation
+      - (preserve_accepted_prerequisites | default(false)) ==
+        (frozen_bundle.preserve_accepted_prerequisites | default(false))
+      - (preserve_installed_foundation | default(false)) ==
+        (frozen_bundle.preserve_installed_foundation | default(false))
+  vars:
+    frozen_bundle: '{{ lookup("ansible.builtin.file", playbook_dir + "/../../../../bundle.json") | from_json }}'
+- name: Verify the prepared private evidence location
+  ansible.builtin.stat:
+    path: '{{ operation_evidence_directory }}'
+    follow: false
+  register: kuma_controller_evidence
+- name: Require a protected evidence directory
+  ansible.builtin.assert:
+    that:
+      - kuma_controller_evidence.stat.isdir | default(false)
+      - not (kuma_controller_evidence.stat.islnk | default(true))
+      - kuma_controller_evidence.stat.mode == '0700'

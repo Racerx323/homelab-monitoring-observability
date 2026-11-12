@@ -1,0 +1,28 @@
+- name: Verify the frozen controller inputs before contacting a deployment target
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  vars_files:
+    - ../operations/initial-deployment.yaml
+  tasks:
+    - ansible.builtin.import_tasks: tasks/controller-preflight.yaml
+  tags:
+    - controller-preflight
+- ansible.builtin.import_playbook: memory-controller.yaml
+  when: not (preserve_accepted_prerequisites | default(false))
+- ansible.builtin.import_playbook: network-prerequisite.yaml
+  when: not (preserve_accepted_prerequisites | default(false))
+- ansible.builtin.import_playbook: accepted-prerequisites.yaml
+  when: preserve_accepted_prerequisites | default(false)
+- ansible.builtin.import_playbook: install-bootstrap.yaml
+- name: Verify boot persistence and complete contained administration
+  hosts: uptime_kuma
+  gather_facts: false
+  become: true
+  any_errors_fatal: true
+  vars_files:
+    - ../manifests/deployment.yaml
+    - ../operations/initial-deployment.yaml
+  tasks:
+    - ansible.builtin.import_tasks: tasks/complete-deployment.yaml

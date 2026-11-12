@@ -1,0 +1,13 @@
+[Unit]
+Description=Uptime Kuma backend ingress guard
+Before=uptime-kuma.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/nft -f /etc/uptime-kuma/ingress.nft
+ExecReload=/usr/sbin/nft -f /etc/uptime-kuma/ingress.nft
+ExecStop=/usr/sbin/nft delete table inet uptime_kuma
+
+[Install]
+WantedBy=multi-user.target

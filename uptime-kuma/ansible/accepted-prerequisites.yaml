@@ -1,0 +1,94 @@
+---
+- name: Verify accepted prerequisites without changing boot or addressing
+  hosts: uptime_kuma
+  gather_facts: false
+  become: true
+  any_errors_fatal: true
+  vars_files:
+    - '{{ kuma_operation_file | default("../operations/initial-deployment.yaml") }}'
+  tasks:
+    - name: Require the bounded continuation identity
+      ansible.builtin.assert:
+        that:
+          - not ansible_check_mode
+          - preserve_accepted_prerequisites
+          - operation.kind == 'continuation'
+          - continuation.predecessor_bundle_sha256 is match('^[0-9a-f]{64}$')
+          - continuation.accepted_boot_id is match('^[0-9a-f-]{36}$')
+          - inventory_hostname == memory_controller.target_hostname
+          - ansible_host == memory_controller.target_ipv4
+          - ansible_user == memory_controller.target_user
+    - name: Verify platform and resources before continuing installation
+      ansible.builtin.import_tasks: tasks/preflight-host.yaml
+    - name: Verify the original foundation is still absent and unchanged
+      ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/preflight.yaml'
+      when: not (preserve_installed_foundation | default(false))
+    - name: Verify the installed stopped foundation before correction
+      ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/installed-preflight.yaml'
+      when: preserve_installed_foundation | default(false)
+    - name: Read accepted boot and radio state
+      ansible.builtin.command:
+        argv: '{{ item }}'
+      loop:
+        - [/usr/bin/hostname]
+        - [/usr/bin/cat, /proc/sys/kernel/random/boot_id]
+        - [/usr/bin/cat, /sys/fs/cgroup/cgroup.controllers]
+        - [/usr/bin/cat, /proc/cmdline]
+        - [/usr/sbin/rfkill, --json, --output, 'ID,TYPE,SOFT,HARD']
+      register: kuma_continuation_boot
+      changed_when: false
+    - name: Read the accepted stored boot-file identity
+      ansible.builtin.stat:
+        path: '{{ memory_controller.boot_path }}'
+        follow: false
+        checksum_algorithm: sha256
+        get_mime: false
+      register: kuma_continuation_boot_file
+    - name: Require the accepted boot state and disabled radios
+      ansible.builtin.assert:
+        that:
+          - kuma_continuation_boot.results[0].stdout == memory_controller.target_hostname
+          - kuma_continuation_boot.results[1].stdout == continuation.accepted_boot_id
+          - "'memory' in kuma_continuation_boot.results[2].stdout.split()"
+          - memory_controller.append_token in kuma_continuation_boot.results[3].stdout.split()
+          - kuma_continuation_boot_file.stat.isreg | default(false)
+          - not (kuma_continuation_boot_file.stat.islnk | default(true))
+          - kuma_continuation_boot_file.stat.uid == 0
+          - kuma_continuation_boot_file.stat.gid == 0
+          - kuma_continuation_boot_file.stat.mode == memory_controller.original_mode
+          - kuma_continuation_boot_file.stat.checksum == memory_controller.proposed_sha256
+          - (kuma_continuation_boot.results[4].stdout | from_json).rfkilldevices | length == 2
+          - ((kuma_continuation_boot.results[4].stdout | from_json).rfkilldevices | map(attribute='type')
+            | list | sort) == ['bluetooth', 'wlan']
+          - ((kuma_continuation_boot.results[4].stdout | from_json).rfkilldevices | map(attribute='soft')
+            | list | unique) == ['blocked']
+    - name: Read accepted addressing and routing without a checkpoint or reapply
+      ansible.builtin.command:
+        argv: '{{ item }}'
+      loop:
+        - [nmcli, --terse, --fields, 'UUID,DEVICE', connection, show, --active]
+        - [nmcli, --get-values, 'ipv4.method,ipv6.method', connection, show,
+           '{{ network_prerequisite.connection_uuid }}']
+        - [nmcli, --escape, 'no', --get-values, ipv6.addresses, connection, show,
+           '{{ network_prerequisite.connection_uuid }}']
+        - [ip, --json, address, show, dev, '{{ network_prerequisite.interface }}']
+        - [ip, -6, --json, route, show, default]
+      register: kuma_continuation_network
+      changed_when: false
+    - name: Require accepted permanent addressing and preserved automatic routing
+      ansible.builtin.assert:
+        that:
+          - (network_prerequisite.connection_uuid + ':' + network_prerequisite.interface) in
+            kuma_continuation_network.results[0].stdout_lines
+          - kuma_continuation_network.results[1].stdout_lines == ['auto', 'auto']
+          - kuma_continuation_network.results[2].stdout | trim == network_prerequisite.permanent_ula
+          - network_prerequisite.ipv4 in ((kuma_continuation_network.results[3].stdout | from_json)[0].addr_info
+            | selectattr('family', 'equalto', 'inet') | map(attribute='local') | list)
+          - network_prerequisite.permanent_ula.split('/')[0] in
+            ((kuma_continuation_network.results[3].stdout | from_json)[0].addr_info
+            | selectattr('family', 'equalto', 'inet6') | rejectattr('tentative', 'defined')
+            | rejectattr('dadfailed', 'defined') | map(attribute='local') | list)
+          - (kuma_continuation_network.results[4].stdout | from_json
+            | selectattr('dev', 'equalto', network_prerequisite.interface) | list | length) > 0
+  tags:
+    - continuation-preflight

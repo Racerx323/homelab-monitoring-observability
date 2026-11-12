@@ -1,0 +1,130 @@
+---
+- name: Verify the sealed remaining deployment before target contact
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  vars_files: [../operations/remaining-deployment.yaml]
+  tasks:
+    - ansible.builtin.import_tasks: tasks/controller-preflight.yaml
+    - name: Require the sealed installed-runtime continuation mode
+      ansible.builtin.assert:
+        that:
+          - remaining_deployment
+          - preserve_accepted_prerequisites
+          - preserve_installed_foundation
+          - operation.status == 'locally_qualified_not_authorized'
+          - (lookup('file', playbook_dir + '/../../../../bundle.json') | from_json).remaining_deployment
+          - (resume_contained | default(false)) == (diagnostic.resume_contained | default(false))
+          - (resume_contained | default(false)) == ((lookup('file', playbook_dir + '/../../../../bundle.json') | from_json).resume_contained | default(false))
+          - (resume_successor | default(false)) == (diagnostic.resume_successor | default(false))
+          - (resume_successor | default(false)) == ((lookup('file', playbook_dir + '/../../../../bundle.json') | from_json).resume_successor | default(false))
+          - not (resume_successor | default(false)) or (resume_contained | default(false))
+    - name: Refuse backup destination reuse
+      ansible.builtin.assert:
+        that:
+          - backup.node_directory + "/data.tar" != preserved_backup.node_path
+          - backup.controller_directory + "/data.tar" != preserved_backup.controller_path
+      when: resume_successor | default(false)
+    - name: Preserve the accepted off-node backup before any target contact
+      ansible.builtin.command:
+        argv:
+          - /usr/bin/python3
+          - -c
+          - |
+            import hashlib,pathlib,stat,sys
+            p=pathlib.Path(sys.argv[1]); info=p.lstat()
+            assert not any(x.is_symlink() for x in (p,*p.parents))
+            assert stat.S_ISREG(info.st_mode) and stat.S_IMODE(info.st_mode)==0o600
+            assert info.st_size==int(sys.argv[3])
+            assert hashlib.sha256(p.read_bytes()).hexdigest()==sys.argv[2]
+            print('Accepted off-node backup identity verified; archive not extracted')
+          - '{{ preserved_backup.controller_path }}'
+          - '{{ preserved_backup.sha256 }}'
+          - '{{ preserved_backup.size | string }}'
+      changed_when: false
+      when: resume_successor | default(false)
+  tags: [controller-preflight]
+- ansible.builtin.import_playbook: accepted-prerequisites.yaml
+  vars:
+    kuma_operation_file: ../operations/remaining-deployment.yaml
+- name: Complete the installed services under persistent bounded containment
+  hosts: uptime_kuma
+  gather_facts: false
+  become: true
+  any_errors_fatal: true
+  vars_files:
+    - ../manifests/deployment.yaml
+    - ../operations/remaining-deployment.yaml
+  tasks:
+    - name: Verify accepted corrected sources, reviewed data and stopped installed runtime
+      ansible.builtin.script:
+        cmd: '{{ playbook_dir }}/../scripts/diagnose-network.py --preflight-json {{ diagnostic | to_json | quote }}'
+        executable: /usr/bin/python3
+      register: kuma_remaining_preflight
+      changed_when: false
+    - name: Preserve the read-only installed-runtime preflight
+      ansible.builtin.copy:
+        content: '{{ kuma_remaining_preflight.stdout | from_json | to_nice_json }}'
+        dest: '{{ operation_evidence_directory }}/runtime-preflight.json'
+        mode: '0600'
+      delegate_to: localhost
+      become: false
+    - ansible.builtin.import_tasks: tasks/contain-loopback.yaml
+    - name: Complete one bounded continuation with native failure containment
+      block:
+        - ansible.builtin.import_tasks: tasks/arm-remaining-deployment.yaml
+        - name: Apply and start the accepted fleet Webmin profiles through their owner
+          ansible.builtin.import_tasks: '{{ fleet_server_root }}/Webmin/ansible/configure.yaml'
+        - name: Start the installed corrected application
+          ansible.builtin.systemd_service:
+            name: uptime-kuma.service
+            state: started
+        - ansible.builtin.import_tasks: tasks/accept-runtime.yaml
+          vars:
+            expose_backend: false
+            require_administrator: "{{ resume_contained | default(false) }}"
+            runtime_observation_label: remaining-started
+        - name: Verify the combined installed foundation before the planned reboot
+          ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/accept.yaml'
+          vars:
+            foundation_observation_label: remaining-started
+        - ansible.builtin.import_tasks: tasks/accept-combined.yaml
+          vars:
+            foundation_observation_label: remaining-started
+        - ansible.builtin.import_tasks: tasks/complete-deployment.yaml
+        - name: Verify the deadline before permanent acceptance
+          ansible.builtin.command:
+            argv: [/usr/bin/python3, /usr/local/libexec/uptime-kuma/startup-permit.py, check]
+          changed_when: false
+        - name: Commit accepted startup only after every remaining service gate passed
+          ansible.builtin.command:
+            argv: [/usr/bin/python3, /usr/local/libexec/uptime-kuma/startup-permit.py, accept]
+          register: kuma_remaining_acceptance
+          changed_when: true
+        - name: Cancel the pending-deployment timer after permanent acceptance
+          ansible.builtin.systemd_service:
+            name: uptime-kuma-deployment-containment.timer
+            state: stopped
+            enabled: false
+        - ansible.builtin.import_tasks: tasks/verify-startup-authority.yaml
+        - name: Retain the accepted startup receipt
+          ansible.builtin.copy:
+            content: '{{ kuma_remaining_acceptance.stdout }}'
+            dest: '{{ operation_evidence_directory }}/startup-acceptance.json'
+            mode: '0600'
+          delegate_to: localhost
+          become: false
+      rescue:
+        - name: Request owned containment without reverting data or accepted prerequisites
+          ansible.builtin.command:
+            argv: [/usr/bin/python3, /usr/local/libexec/uptime-kuma/startup-permit.py, contain]
+          register: kuma_remaining_containment
+          failed_when: false
+          changed_when: true
+        - ansible.builtin.import_tasks: tasks/verify-remaining-containment.yaml
+        - name: Keep the failed attempt and consumed authority explicit
+          ansible.builtin.fail:
+            msg: Remaining deployment failed. Services are contained; data, packages and source definitions remain.
+              Preserve receipts and do not replay. If unreachable, persistent containment remains armed and physical
+              recovery may be required. DNS/Caddy and publication remain outside this operation.

@@ -1,0 +1,97 @@
+---
+- name: Stop only the verified predecessor deadline before renewing authority
+  ansible.builtin.systemd_service:
+    name: '{{ item }}'
+    state: stopped
+  loop: [uptime-kuma-deployment-containment.timer, uptime-kuma-deployment-containment.service]
+  when: resume_contained | default(false)
+- name: Create the private continuation state directory
+  ansible.builtin.file:
+    path: /var/lib/uptime-kuma-maintenance/remaining-deployment
+    state: directory
+    owner: root
+    group: root
+    mode: '0700'
+- name: Install the guarded startup helper
+  ansible.builtin.copy:
+    src: '{{ playbook_dir }}/../scripts/startup-permit.py'
+    dest: /usr/local/libexec/uptime-kuma/startup-permit.py
+    owner: root
+    group: root
+    mode: '0755'
+- name: Arm one forty-minute continuation without replay
+  ansible.builtin.command:
+    argv: >-
+      {{ ['/usr/bin/python3', '/usr/local/libexec/uptime-kuma/startup-permit.py'] +
+         (['resume-successor', (kuma_remaining_preflight.stdout | from_json).contained_predecessor.state_sha256,
+            (kuma_remaining_preflight.stdout | from_json).contained_predecessor.previous_state_sha256]
+          if resume_successor | default(false) else
+          ['resume', (kuma_remaining_preflight.stdout | from_json).contained_predecessor.state_sha256]
+          if resume_contained | default(false) else ['arm']) }}
+  register: kuma_remaining_arm
+  changed_when: true
+- name: Retain the native-clock deadline for unit rendering
+  ansible.builtin.set_fact:
+    kuma_remaining_state: '{{ kuma_remaining_arm.stdout | from_json }}'
+- name: Install native startup and persistent containment units
+  ansible.builtin.template:
+    src: '{{ item }}.j2'
+    dest: '/etc/systemd/system/{{ item }}'
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - uptime-kuma-startup-permit.service
+    - uptime-kuma-deployment-containment.service
+    - uptime-kuma-deployment-containment.timer
+- name: Require startup authority in addition to every preserved guard
+  ansible.builtin.copy:
+    content: |
+      [Unit]
+      Requires=uptime-kuma-startup-permit.service
+      After=uptime-kuma-startup-permit.service
+    dest: '/etc/systemd/system/{{ item }}.d/60-startup-authority.conf'
+    owner: root
+    group: root
+    mode: '0644'
+  loop: [uptime-kuma.service, uptime-kuma-network.service, uptime-kuma-loopback.socket, uptime-kuma-loopback.service, webmin.service]
+- name: Reload the full native dependency graph
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+- name: Verify all generated and ordinary fragments together
+  ansible.builtin.command:
+    argv:
+      - systemd-analyze
+      - verify
+      - /run/systemd/generator/uptime-kuma.service
+      - /run/systemd/generator/uptime-kuma-network.service
+      - /etc/systemd/system/uptime-kuma-loopback.socket
+      - /etc/systemd/system/uptime-kuma-loopback.service
+      - /etc/systemd/system/uptime-kuma-startup-permit.service
+      - /etc/systemd/system/uptime-kuma-deployment-containment.service
+      - /etc/systemd/system/uptime-kuma-deployment-containment.timer
+      - webmin.service
+  changed_when: false
+- name: Enable persistent containment before any application permit
+  ansible.builtin.systemd_service:
+    name: uptime-kuma-deployment-containment.timer
+    enabled: true
+    state: started
+- name: Verify effective pending deadline and boot enablement
+  ansible.builtin.command:
+    argv: [systemctl, show, uptime-kuma-deployment-containment.timer, '--property=ActiveState,UnitFileState,NextElapseUSecRealtime']
+  register: kuma_remaining_timer
+  changed_when: false
+  failed_when: >-
+    'ActiveState=active' not in kuma_remaining_timer.stdout_lines or
+    'UnitFileState=enabled' not in kuma_remaining_timer.stdout_lines or
+    not (kuma_remaining_timer.stdout is search('NextElapseUSecRealtime=.+')) or
+    'NextElapseUSecRealtime=0' in kuma_remaining_timer.stdout_lines or
+    'NextElapseUSecRealtime=n/a' in kuma_remaining_timer.stdout_lines
+- name: Retain the armed deadline before starting services
+  ansible.builtin.copy:
+    content: '{{ kuma_remaining_arm.stdout }}'
+    dest: '{{ operation_evidence_directory }}/startup-armed.json'
+    mode: '0600'
+  delegate_to: localhost
+  become: false

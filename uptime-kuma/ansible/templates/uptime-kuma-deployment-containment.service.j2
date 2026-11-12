@@ -1,0 +1,9 @@
+[Unit]
+Description=Contain unfinished Kuma deployment
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/libexec/uptime-kuma/startup-permit.py expire
+TimeoutStartSec=180s
+TimeoutStopSec=120s
+ExecStopPost=/bin/sh -c 'if test ! -f /var/lib/uptime-kuma-maintenance/remaining-deployment/accepted; then umask 077; touch /var/lib/uptime-kuma-maintenance/remaining-deployment/contained; rm -f /run/uptime-kuma-network-diagnostic/permit /etc/webmin/.installation-accepted /etc/cron.d/needrestart_check; systemctl disable --now webmin.service; systemctl stop uptime-kuma.service uptime-kuma-network.service uptime-kuma-loopback.socket uptime-kuma-loopback.service; fi'

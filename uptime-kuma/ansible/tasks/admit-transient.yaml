@@ -1,0 +1,25 @@
+---
+- name: Read fresh host and finite-parent headroom for the transient workload
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/python3
+      - -I
+      - -B
+      - /usr/local/libexec/fleet/observe-needrestart.py
+      - --admit-mib
+      - '{{ kuma_transient_required_mib | string }}'
+  register: kuma_transient_admission
+  changed_when: false
+  failed_when: false
+- name: Preserve transient admission evidence before assertion
+  ansible.builtin.copy:
+    content: '{{ kuma_transient_admission | to_nice_json }}'
+    dest: '{{ operation_evidence_directory }}/admission-{{ kuma_transient_label }}.json'
+    mode: '0600'
+  delegate_to: localhost
+  become: false
+- name: Require the full transient allowance and host reserve
+  ansible.builtin.assert:
+    that:
+      - kuma_transient_admission.rc == 0
+      - (kuma_transient_admission.stdout | from_json).accepted

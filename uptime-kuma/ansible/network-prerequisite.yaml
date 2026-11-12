@@ -1,0 +1,18 @@
+---
+- name: Apply the Uptime Kuma address prerequisite through its network owner
+  hosts: uptime_kuma
+  gather_facts: false
+  become: true
+  any_errors_fatal: true
+  vars_files:
+    - ../operations/initial-deployment.yaml
+  tasks:
+    - name: Refuse unintended transport targets
+      ansible.builtin.assert:
+        that:
+          - not ansible_check_mode
+          - inventory_hostname == memory_controller.target_hostname
+          - ansible_host == memory_controller.target_ipv4
+          - ansible_user == memory_controller.target_user
+    - name: Use the network owner's bounded address operation
+      ansible.builtin.import_tasks: ../../../homelab-network/host-network/uptime-kuma/ansible/permanent-ula.yaml

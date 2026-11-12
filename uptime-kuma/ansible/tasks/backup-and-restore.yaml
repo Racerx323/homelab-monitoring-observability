@@ -1,0 +1,153 @@
+---
+- name: Observe the source before stopping it
+  ansible.builtin.import_tasks: accept-runtime.yaml
+  vars:
+    expose_backend: false
+    require_administrator: true
+    runtime_observation_label: before-consistent-backup
+- name: Require unused backup destinations
+  ansible.builtin.stat:
+    path: '{{ backup.node_directory }}'
+    follow: false
+  register: kuma_backup_destination
+- name: Refuse overwriting an earlier node backup
+  ansible.builtin.assert:
+    that: not kuma_backup_destination.stat.exists
+- name: Check the off-node destination without privilege escalation
+  ansible.builtin.stat:
+    path: '{{ backup.controller_directory }}'
+    follow: false
+  delegate_to: localhost
+  become: false
+  register: kuma_backup_controller_destination
+- name: Refuse overwriting an earlier off-node backup
+  ansible.builtin.assert:
+    that: not kuma_backup_controller_destination.stat.exists
+- name: Create protected node backup and restore locations
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: directory
+    owner: root
+    group: root
+    mode: '0700'
+  loop:
+    - '{{ backup.node_directory }}'
+    - '{{ backup.restore_work_root }}'
+- name: Create the protected off-node operational backup directory
+  ansible.builtin.file:
+    path: '{{ backup.controller_directory }}'
+    state: directory
+    mode: '0700'
+  delegate_to: localhost
+  become: false
+- name: Confirm that the off-node destination resolves to the intended real path
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/realpath
+      - --canonicalize-existing
+      - '{{ backup.controller_directory }}'
+  delegate_to: localhost
+  become: false
+  register: kuma_backup_realpath
+  changed_when: false
+- name: Reject an unexpected backup destination
+  ansible.builtin.assert:
+    that: kuma_backup_realpath.stdout == backup.controller_directory
+- name: Produce and open the actual stopped-data backup
+  block:
+    - name: Stop the source service for a consistent complete archive
+      ansible.builtin.systemd_service:
+        name: uptime-kuma.service
+        state: stopped
+    - name: Require the source cgroup to be stopped
+      ansible.builtin.command:
+        argv:
+          - systemctl
+          - show
+          - uptime-kuma.service
+          - --property=ActiveState
+          - --value
+      register: kuma_backup_stopped
+      changed_when: false
+      failed_when: kuma_backup_stopped.stdout != 'inactive'
+    - name: Archive the entire data tree without copying an open SQLite database
+      ansible.builtin.command:
+        argv:
+          - tar
+          - --numeric-owner
+          - --acls
+          - --xattrs
+          - --directory=/var/lib/uptime-kuma
+          - --create
+          - --file={{ backup.node_directory }}/data.tar
+          - data
+      changed_when: true
+    - name: Restrict archive permissions before transfer
+      ansible.builtin.file:
+        path: '{{ backup.node_directory }}/data.tar'
+        mode: '0600'
+    - name: Capture the actual archive identity
+      ansible.builtin.stat:
+        path: '{{ backup.node_directory }}/data.tar'
+        checksum_algorithm: sha256
+        get_mime: false
+      register: kuma_backup_archive
+    - name: Fetch the operational backup outside Git and evidence logs
+      ansible.builtin.fetch:
+        src: '{{ backup.node_directory }}/data.tar'
+        dest: '{{ backup.controller_directory }}/data.tar'
+        flat: true
+        validate_checksum: true
+      no_log: true
+    - name: Restrict off-node archive permissions
+      ansible.builtin.file:
+        path: '{{ backup.controller_directory }}/data.tar'
+        mode: '0600'
+      delegate_to: localhost
+      become: false
+    - name: Independently verify the fetched backup identity
+      ansible.builtin.stat:
+        path: '{{ backup.controller_directory }}/data.tar'
+        checksum_algorithm: sha256
+        get_mime: false
+      delegate_to: localhost
+      become: false
+      register: kuma_backup_fetched
+    - name: Require matching source and off-node archive bytes
+      ansible.builtin.assert:
+        that: kuma_backup_fetched.stat.checksum == kuma_backup_archive.stat.checksum
+    - name: Admit the isolated restore after the source has stopped
+      ansible.builtin.import_tasks: admit-transient.yaml
+      vars:
+        kuma_transient_label: restore
+        kuma_transient_required_mib: 416
+    - name: Open the actual archive in a resource-bounded isolated instance
+      ansible.builtin.script:
+        cmd: '{{ playbook_dir }}/../scripts/check-restore.py --image {{ application.local_image_id }} --archive
+          {{ backup.node_directory }}/data.tar --archive-sha256 {{ kuma_backup_archive.stat.checksum }} --work-root
+          {{ backup.restore_work_root }} --expected-active-users {{ (kuma_runtime_observation.stdout | from_json).counts.active_users
+          }} --expected-release {{ application.release }} --memory {{ resources.memory_max | lower }} --timezone
+          {{ application.timezone }}'
+        executable: /usr/bin/python3
+      register: kuma_restore_result
+      changed_when: true
+    - name: Require successful restore and cleanup
+      ansible.builtin.assert:
+        that: (kuma_restore_result.stdout | from_json).verdict == 'passed'
+    - name: Fetch only the non-secret restore receipt
+      ansible.builtin.fetch:
+        src: '{{ (kuma_restore_result.stdout | from_json).receipt }}'
+        dest: '{{ operation_evidence_directory }}/restore-receipt.json'
+        flat: true
+        validate_checksum: true
+  always:
+    - name: Restore source availability even if backup or restore qualification failed
+      ansible.builtin.systemd_service:
+        name: uptime-kuma.service
+        state: started
+    - name: Independently verify restarted source state and administrator persistence
+      ansible.builtin.import_tasks: accept-runtime.yaml
+      vars:
+        expose_backend: false
+        require_administrator: true
+        runtime_observation_label: source-after-restore-check

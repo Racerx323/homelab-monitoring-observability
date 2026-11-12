@@ -1,8 +1,16 @@
 # Repository instructions
 
-This repository owns fleet Munin configuration. Read `README.md` and
-`Munin/README.md` before changing Munin artifacts. It is a scaffold; no current
-profile is accepted for live deployment.
+This repository owns fleet Munin configuration and Uptime Kuma. Read `README.md`
+and the relevant component README before changing artifacts. Read
+`Munin/README.md` for Munin and `uptime-kuma/README.md` for Uptime Kuma.
+Candidate definitions do not establish accepted live state.
+
+Uptime Kuma uses its existing change plan and ledger. Reuse fleet foundation
+configuration from its owning components; do not move those components here or
+create competing copies. Its live installer retains exact-bundle authorization
+for preflight, changes, acceptance and recovery. Local preparation does not
+authorize live execution. The following plugin/profile instructions apply to
+Munin artifacts.
 
 - Inventory explicitly selects host profiles; this repository defines their
   node plugins, settings, and master entries. Do not infer selection from a

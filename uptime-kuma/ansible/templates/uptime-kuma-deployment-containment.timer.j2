@@ -1,0 +1,14 @@
+[Unit]
+Description=Bound remaining Kuma deployment across controller loss and reboot
+
+ConditionPathExists=!/var/lib/uptime-kuma-maintenance/remaining-deployment/accepted
+
+[Timer]
+OnCalendar=@{{ kuma_remaining_state.deadline }}
+OnActiveSec=40min
+Persistent=true
+AccuracySec=1s
+Unit=uptime-kuma-deployment-containment.service
+
+[Install]
+WantedBy=timers.target

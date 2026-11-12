@@ -1,0 +1,415 @@
+---
+- name: Verify the frozen Kuma diagnostic before target contact
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  vars_files:
+    - ../manifests/deployment.yaml
+    - '{{ kuma_operation_file | default("../operations/network-diagnostic.yaml") }}'
+  tasks:
+    - name: Require the selected operation and qualified native engine
+      ansible.builtin.assert:
+        that:
+          - not ansible_check_mode
+          - ansible_version.full == diagnostic.ansible_core_version
+          - diagnostic.id == (lookup('file', playbook_dir + '/../../../../bundle.json') | from_json).operation
+    - name: Reject undeclared inputs and symlinks
+      ansible.builtin.command:
+        argv:
+          - /usr/bin/python3
+          - -c
+          - "import pathlib,sys; r=pathlib.Path(sys.argv[1]).resolve(); paths=list(r.rglob('*')); expected={x.split('  ',1)[1] for x in (r/'INPUTS.sha256').read_text().splitlines()}; assert not any(p.is_symlink() for p in paths); assert {str(p.relative_to(r)) for p in paths if p.is_file() and p.name!='INPUTS.sha256'}==expected"
+          - '{{ playbook_dir }}/../../../..'
+      changed_when: false
+    - name: Verify all frozen file identities
+      ansible.builtin.command:
+        argv: [/usr/bin/sha256sum, --check, --status, INPUTS.sha256]
+        chdir: '{{ playbook_dir }}/../../../..'
+      changed_when: false
+    - name: Read the protected controller evidence directory
+      ansible.builtin.stat:
+        path: '{{ diagnostic.evidence_directory }}'
+        follow: false
+      register: kuma_diag_evidence
+    - name: Require private controller evidence storage
+      ansible.builtin.assert:
+        that:
+          - kuma_diag_evidence.stat.isdir | default(false)
+          - not (kuma_diag_evidence.stat.islnk | default(true))
+          - kuma_diag_evidence.stat.mode == '0700'
+  tags: [controller-preflight]
+- name: Diagnose the existing Kuma network paths and contain future startup
+  hosts: kuma_network_diagnostic
+  gather_facts: false
+  become: true
+  any_errors_fatal: true
+  vars_files:
+    - ../manifests/deployment.yaml
+    - '{{ kuma_operation_file | default("../operations/network-diagnostic.yaml") }}'
+  vars:
+    kuma_diag_permit_content: |
+      {{ diagnostic.id }}
+    kuma_diag_guard: |
+      [Unit]
+      ConditionPathExists=/run/uptime-kuma-network-diagnostic/permit
+    kuma_diag_timing: |
+      [Service]
+      Restart=no
+      TimeoutStartSec=60s
+      TimeoutStopSec=20s
+      RuntimeMaxSec=240s
+    kuma_diag_network_timing: |
+      [Service]
+      TimeoutStartSec=30s
+      TimeoutStopSec=20s
+  tasks:
+    - name: Require the selected diagnostic target without check-mode mutation
+      ansible.builtin.assert:
+        that:
+          - not ansible_check_mode
+          - inventory_hostname == diagnostic.hostname
+          - ansible_host == diagnostic.ipv4
+          - ansible_user == diagnostic.ssh_user
+      tags: [diagnostic-preflight]
+    - name: Verify actual identity, stopped residue, source hashes, data and resource budget
+      ansible.builtin.script:
+        cmd: '{{ playbook_dir }}/../scripts/diagnose-network.py --preflight-json {{ diagnostic | to_json | quote }}'
+        executable: /usr/bin/python3
+      changed_when: false
+      register: kuma_diag_preflight
+      tags: [diagnostic-preflight]
+    - name: Preserve grouped read-only preflight
+      ansible.builtin.copy:
+        content: '{{ kuma_diag_preflight.stdout | from_json | to_nice_json }}'
+        dest: '{{ diagnostic.evidence_directory }}/preflight.json'
+        mode: '0600'
+      delegate_to: localhost
+      become: false
+      tags: [diagnostic-preflight]
+    - name: Run one bounded native diagnostic with unconditional containment
+      block:
+        - name: Create protected observer staging and ephemeral permit directories
+          ansible.builtin.file:
+            path: '{{ item }}'
+            state: directory
+            owner: root
+            group: root
+            mode: '0700'
+          loop:
+            - '{{ diagnostic.work_directory }}'
+            - /run/uptime-kuma-network-diagnostic
+        - name: Stage the exact observer
+          ansible.builtin.copy:
+            src: '{{ playbook_dir }}/../scripts/diagnose-network.py'
+            dest: '{{ diagnostic.work_directory }}/observer.py'
+            owner: root
+            group: root
+            mode: '0600'
+        - name: Install the reviewed local loopback transport correction
+          ansible.builtin.include_tasks: tasks/correct-loopback.yaml
+          when: diagnostic.correction | default(false)
+        - name: Create persistent guard and runtime timing directories
+          ansible.builtin.file:
+            path: '{{ item }}'
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
+          loop:
+            - /etc/systemd/system/uptime-kuma.service.d
+            - /etc/systemd/system/uptime-kuma-network.service.d
+            - /run/systemd/system/uptime-kuma.service.d
+            - /run/systemd/system/uptime-kuma-network.service.d
+        - name: Gate both original generated units on the ephemeral permit
+          ansible.builtin.copy:
+            content: '{{ kuma_diag_guard }}'
+            dest: '/etc/systemd/system/{{ item }}.d/50-network-diagnostic-guard.conf'
+            owner: root
+            group: root
+            mode: '0644'
+          loop: [uptime-kuma.service, uptime-kuma-network.service]
+        - name: Bound only this diagnostic startup and shutdown without changing resource caps
+          ansible.builtin.copy:
+            content: '{{ item.content }}'
+            dest: '/run/systemd/system/{{ item.unit }}.d/50-network-diagnostic-timing.conf'
+            owner: root
+            group: root
+            mode: '0644'
+          loop:
+            - unit: uptime-kuma.service
+              content: '{{ kuma_diag_timing }}'
+            - unit: uptime-kuma-network.service
+              content: '{{ kuma_diag_network_timing }}'
+        - name: Reload and validate the guarded native units
+          ansible.builtin.systemd_service:
+            daemon_reload: true
+        - name: Require native unit syntax acceptance
+          ansible.builtin.command:
+            argv: [systemd-analyze, verify, /run/systemd/generator/uptime-kuma.service, /run/systemd/generator/uptime-kuma-network.service]
+          changed_when: false
+        - name: Require effective unnegated permit conditions through structured PID1 data
+          ansible.builtin.command:
+            argv:
+              - /usr/bin/python3
+              - -c
+              - |
+                import json,subprocess
+                conditions={}
+                for unit,obj in [('uptime-kuma.service','uptime_2dkuma_2eservice'),('uptime-kuma-network.service','uptime_2dkuma_2dnetwork_2eservice')]:
+                    value=json.loads(subprocess.check_output(['busctl','--json=short','get-property','org.freedesktop.systemd1','/org/freedesktop/systemd1/unit/'+obj,'org.freedesktop.systemd1.Unit','Conditions'],text=True))
+                    assert value['type']=='a(sbbsi)'
+                    rows=value['data']
+                    assert any(row[:4]==['ConditionPathExists',False,False,'/run/uptime-kuma-network-diagnostic/permit'] for row in rows), 'effective guard missing'
+                    conditions[unit]=rows
+                print(json.dumps(conditions))
+          changed_when: false
+          register: kuma_diag_conditions
+        - name: Validate native loopback transport units before arming startup
+          ansible.builtin.command:
+            argv: [systemd-analyze, verify, /run/systemd/generator/uptime-kuma.service, /run/systemd/generator/uptime-kuma-network.service, /etc/systemd/system/uptime-kuma-loopback.socket, /etc/systemd/system/uptime-kuma-loopback.service]
+          changed_when: false
+          when: diagnostic.correction | default(false)
+        - name: Read actual effective diagnostic controls before arming startup
+          ansible.builtin.command:
+            argv: [systemctl, show, uptime-kuma.service, '--property=Conditions,DropInPaths,Restart,RuntimeMaxUSec,TimeoutStopUSec,MemoryHigh,MemoryMax,MemorySwapMax']
+          changed_when: false
+          register: kuma_diag_effective
+        - name: Require native guard, no restarts, finite runtime and unchanged memory caps
+          ansible.builtin.assert:
+            that:
+              - "'Restart=no' in kuma_diag_effective.stdout_lines"
+              - "'RuntimeMaxUSec=4min' in kuma_diag_effective.stdout_lines"
+              - "'TimeoutStopUSec=20s' in kuma_diag_effective.stdout_lines"
+              - "'MemoryHigh=268435456' in kuma_diag_effective.stdout_lines"
+              - "'MemoryMax=335544320' in kuma_diag_effective.stdout_lines"
+              - "'MemorySwapMax=0' in kuma_diag_effective.stdout_lines"
+        - name: Arm independent native containment before issuing a permit
+          ansible.builtin.command:
+            argv:
+              - systemd-run
+              - --collect
+              - --unit=uptime-kuma-network-diagnostic-containment
+              - --on-active=300s
+              - --timer-property=AccuracySec=1s
+              - --property=Type=oneshot
+              - --property=TimeoutStartSec=5s
+              - --property=TimeoutStopSec=50s
+              - '--property=ExecStopPost=/usr/bin/systemctl stop uptime-kuma.service uptime-kuma-network.service{{ " uptime-kuma-loopback.socket uptime-kuma-loopback.service" if diagnostic.correction | default(false) else "" }}'
+              - /usr/bin/rm
+              - -f
+              - --
+              - /run/uptime-kuma-network-diagnostic/permit
+          changed_when: true
+        - name: Independently read the native containment deadline
+          ansible.builtin.command:
+            argv: [systemctl, show, uptime-kuma-network-diagnostic-containment.timer, '--property=ActiveState,NextElapseUSecMonotonic']
+          changed_when: false
+          register: kuma_diag_timer
+        - name: Refuse service start without an armed deadline
+          ansible.builtin.assert:
+            that:
+              - "'ActiveState=active' in kuma_diag_timer.stdout_lines"
+              - "'NextElapseUSecMonotonic=0' not in kuma_diag_timer.stdout_lines"
+              - kuma_diag_timer.stdout is search('NextElapseUSecMonotonic=.+')
+        - name: Create this operation's ephemeral start permit
+          ansible.builtin.copy:
+            content: '{{ kuma_diag_permit_content }}'
+            dest: /run/uptime-kuma-network-diagnostic/permit
+            owner: root
+            group: root
+            mode: '0600'
+        - name: Issue one start for the unchanged generated application
+          ansible.builtin.command:
+            argv: [systemctl, start, uptime-kuma.service]
+          changed_when: true
+          failed_when: false
+          register: kuma_diag_start
+        - name: Collect per-family path, NAT, route, resource and startup-event evidence before stopping
+          ansible.builtin.command:
+            argv:
+              - systemd-run
+              - --wait
+              - --collect
+              - --pipe
+              - --unit=uptime-kuma-network-diagnostic-observer
+              - --property=RuntimeMaxSec=165s
+              - --property=TimeoutStopSec=5s
+              - --property=MemoryMax=96M
+              - --property=MemorySwapMax=0
+              - --property=CPUQuota=20%
+              - /usr/bin/python3
+              - '{{ diagnostic.work_directory }}/observer.py'
+              - --output
+              - '{{ diagnostic.work_directory }}/observation.json'
+          changed_when: false
+          failed_when: false
+          register: kuma_diag_observation
+        - name: Fetch the Pi-side checkpoint receipt before containment
+          ansible.builtin.fetch:
+            src: '{{ diagnostic.work_directory }}/observation.json'
+            dest: '{{ diagnostic.evidence_directory }}/observation.json'
+            flat: true
+          failed_when: false
+          register: kuma_diag_fetch
+        - name: Preserve execution status separately from measured HTTP results
+          ansible.builtin.copy:
+            content: '{{ {"start_rc": kuma_diag_start.rc, "observer_rc": kuma_diag_observation.rc, "observer_summary": kuma_diag_observation.stderr, "receipt_fetched": kuma_diag_fetch.dest is defined} | to_nice_json }}'
+            dest: '{{ diagnostic.evidence_directory }}/collection-status.json'
+            mode: '0600'
+          delegate_to: localhost
+          become: false
+      always:
+        - name: Inspect permit ownership before removal
+          ansible.builtin.stat:
+            path: /run/uptime-kuma-network-diagnostic/permit
+            follow: false
+            checksum_algorithm: sha256
+            get_mime: false
+          register: kuma_diag_permit
+        - name: Remove only the matching owned permit
+          ansible.builtin.file:
+            path: /run/uptime-kuma-network-diagnostic/permit
+            state: absent
+          when:
+            - kuma_diag_permit.stat.exists
+            - kuma_diag_permit.stat.isreg | default(false)
+            - not (kuma_diag_permit.stat.islnk | default(true))
+            - kuma_diag_permit.stat.uid == 0
+            - kuma_diag_permit.stat.checksum == (kuma_diag_permit_content | hash('sha256'))
+        - name: Request native stop without removing data, image, definitions or guard
+          ansible.builtin.command:
+            argv: '{{ ["systemctl", "stop", "uptime-kuma.service", "uptime-kuma-network.service"] + (["uptime-kuma-loopback.socket", "uptime-kuma-loopback.service"] if diagnostic.correction | default(false) else []) }}'
+          changed_when: true
+          failed_when: false
+        - name: Verify the additional loopback transport is contained
+          ansible.builtin.include_tasks: tasks/contain-loopback.yaml
+          when: diagnostic.correction | default(false)
+        - name: Independently verify stopped generated units, absent listeners and permit, and persistent guards
+          ansible.builtin.command:
+            argv:
+              - /usr/bin/python3
+              - -c
+              - |
+                import hashlib,json,subprocess,pathlib
+                units={}
+                for name in ['uptime-kuma.service','uptime-kuma-network.service']:
+                    row=dict(line.split('=',1) for line in subprocess.check_output(['systemctl','show',name,'--property=MainPID,ActiveState'],text=True).splitlines())
+                    assert row['MainPID']=='0' and row['ActiveState'] in ['inactive','failed'], 'unit not contained'
+                    path=pathlib.Path('/etc/systemd/system')/(name+'.d/50-network-diagnostic-guard.conf')
+                    assert not path.is_symlink() and path.is_file() and path.stat().st_uid==0 and (path.stat().st_mode & 0o777)==0o644
+                    assert path.read_bytes()==b'[Unit]\nConditionPathExists=/run/uptime-kuma-network-diagnostic/permit\n'
+                    units[name]=row
+                for flag in ['-lnt','-lnu']:
+                    assert not subprocess.check_output(['ss','-H',flag,'( sport = :3001 or sport = :10000 )'],text=True).strip(), 'listener remains'
+                assert not pathlib.Path('/run/uptime-kuma-network-diagnostic/permit').exists(), 'permit remains'
+                assert json.loads(subprocess.check_output(['podman','ps','-a','--format','json'],text=True))==[], 'container remains'
+                print(json.dumps({'units':units,'permit_absent':True,'listeners_absent':True,'persistent_guards_verified':True,'containers_absent':True}))
+          changed_when: false
+          register: kuma_diag_containment
+        - name: Preserve independently verified containment
+          ansible.builtin.copy:
+            content: '{{ kuma_diag_containment.stdout | from_json | to_nice_json }}'
+            dest: '{{ diagnostic.evidence_directory }}/containment.json'
+            mode: '0600'
+          delegate_to: localhost
+          become: false
+        - name: Cancel only the diagnostic fallback after actual containment
+          ansible.builtin.command:
+            argv: [systemctl, stop, uptime-kuma-network-diagnostic-containment.timer, uptime-kuma-network-diagnostic-containment.service]
+          changed_when: true
+          failed_when: false
+        - name: Read final fallback state independently
+          ansible.builtin.command:
+            argv: [systemctl, show, '{{ item }}', --property=ActiveState, --value]
+          loop: [uptime-kuma-network-diagnostic-containment.timer, uptime-kuma-network-diagnostic-containment.service]
+          changed_when: false
+          failed_when: false
+          register: kuma_diag_timer_after
+        - name: Require no armed fallback after containment
+          ansible.builtin.assert:
+            that: item.stdout in ['', 'inactive', 'failed']
+          loop: '{{ kuma_diag_timer_after.results }}'
+        - name: Inspect runtime overrides before removing them
+          ansible.builtin.stat:
+            path: '/run/systemd/system/{{ item.unit }}.d/50-network-diagnostic-timing.conf'
+            follow: false
+            checksum_algorithm: sha256
+            get_mime: false
+          loop:
+            - unit: uptime-kuma.service
+              content: '{{ kuma_diag_timing }}'
+            - unit: uptime-kuma-network.service
+              content: '{{ kuma_diag_network_timing }}'
+          register: kuma_diag_runtime
+        - name: Refuse removal of replaced runtime controls
+          ansible.builtin.assert:
+            that:
+              - not item.stat.exists or (item.stat.isreg | default(false) and not (item.stat.islnk | default(true)) and item.stat.uid == 0 and item.stat.checksum == (item.item.content | hash('sha256')))
+          loop: '{{ kuma_diag_runtime.results }}'
+        - name: Remove only unchanged owned runtime overrides after stop
+          ansible.builtin.file:
+            path: '{{ item.stat.path }}'
+            state: absent
+          when:
+            - item.stat.exists
+            - item.stat.isreg | default(false)
+            - not (item.stat.islnk | default(true))
+            - item.stat.uid == 0
+            - item.stat.checksum == (item.item.content | hash('sha256'))
+          loop: '{{ kuma_diag_runtime.results }}'
+        - name: Reload the original runtime settings while retaining persistent start guards
+          ansible.builtin.systemd_service:
+            daemon_reload: true
+        - name: Check the stopped database without reading private application rows
+          ansible.builtin.script:
+            cmd: '{{ playbook_dir }}/../scripts/diagnose-network.py --database /var/lib/uptime-kuma/data/kuma.db'
+            executable: /usr/bin/python3
+          changed_when: false
+          register: kuma_diag_data
+        - name: Require preserved empty service-only data and integrity
+          ansible.builtin.assert:
+            that:
+              - (kuma_diag_data.stdout | from_json).quick_check == 'ok'
+              - "(kuma_diag_data.stdout | from_json).counts == {'user': 0, 'monitor': 0, 'notification': 0}"
+        - name: Independently require original timing after runtime override removal
+          ansible.builtin.command:
+            argv:
+              - /usr/bin/python3
+              - -c
+              - |
+                import json,subprocess,sys
+                expected=json.loads(sys.argv[1]); actual={}
+                for unit in expected:
+                    actual[unit]=dict(line.split('=',1) for line in subprocess.check_output(['systemctl','show',unit,'--property=Restart,RuntimeMaxUSec,TimeoutStartUSec,TimeoutStopUSec'],text=True).splitlines())
+                assert actual==expected, 'runtime policy not restored'
+                print(json.dumps(actual))
+              - '{{ (kuma_diag_preflight.stdout | from_json).original_timing | to_json }}'
+          changed_when: false
+          register: kuma_diag_restored
+        - name: Complete the grouped containment and data receipt
+          ansible.builtin.copy:
+            content: '{{ {"containment": kuma_diag_containment.stdout | from_json, "data": kuma_diag_data.stdout | from_json, "restored_timing": kuma_diag_restored.stdout | from_json} | to_nice_json }}'
+            dest: '{{ diagnostic.evidence_directory }}/containment.json'
+            mode: '0600'
+          delegate_to: localhost
+          become: false
+    - name: Require a complete retained diagnostic without accepting service readiness
+      ansible.builtin.assert:
+        that:
+          - kuma_diag_observation.rc == 0
+          - (lookup('file', diagnostic.evidence_directory + '/observation.json') | from_json).completed
+          - (lookup('file', diagnostic.evidence_directory + '/observation.json') | from_json).requests | length == 12
+
+    - name: Require corrected HTTP paths after startup without claiming full installation acceptance
+      ansible.builtin.assert:
+        that:
+          - kuma_correction_receipt.requests | selectattr('round', 'equalto', 1) | selectattr('status', 'defined') | map(attribute='status') | list == [302, 302, 302, 302, 302, 302]
+          - kuma_correction_receipt.snapshots[-1].loopback_proxy.service.MemoryMax == '16777216'
+          - kuma_correction_receipt.snapshots[-1].loopback_proxy.service.MemorySwapMax == '0'
+          - kuma_correction_receipt.snapshots[-1].loopback_proxy.service.ActiveState == 'active'
+          - kuma_correction_receipt.snapshots[-1].loopback_proxy.socket.ActiveState == 'active'
+          - kuma_correction_receipt.snapshots[-1].container.port_bindings['3001/tcp'] | map(attribute='HostIp') | list == ['127.0.0.1']
+      vars:
+        kuma_correction_receipt: '{{ lookup("file", diagnostic.evidence_directory + "/observation.json") | from_json }}'
+      when: diagnostic.correction | default(false)

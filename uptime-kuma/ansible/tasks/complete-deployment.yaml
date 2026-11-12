@@ -1,0 +1,220 @@
+---
+- name: Reboot the installed foundation to verify actual startup
+  ansible.builtin.reboot:
+    reboot_timeout: 240
+    connect_timeout: 8
+    post_reboot_delay: 10
+  when: not (resume_contained | default(false))
+- name: Verify the actual loopback service after boot
+  ansible.builtin.import_tasks: tasks/accept-runtime.yaml
+  vars:
+    expose_backend: false
+    require_administrator: false
+    runtime_observation_label: bootstrap-after-reboot
+  when: not (resume_contained | default(false))
+- name: Verify the adopted foundation after the actual reboot
+  ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/accept.yaml'
+  vars:
+    foundation_observation_label: foundation-after-reboot
+  when: not (resume_contained | default(false))
+- ansible.builtin.import_tasks: accept-combined.yaml
+  vars:
+    foundation_observation_label: foundation-after-reboot
+  when: (remaining_deployment | default(false)) and not (resume_contained | default(false))
+- name: Let the operator create and verify the first administrator privately
+  ansible.builtin.pause:
+    prompt: The loopback service is ready. In your own terminal run ssh -N -L 127.0.0.1:13001:127.0.0.1:3001
+      ama@10.1.3.75 and open http://127.0.0.1:13001/. Create the first administrator, log out and log back in,
+      and leave monitors/notifications empty. Also forward local port 11000 to Pi loopback port 10000 and verify
+      Webmin login as ama. Never enter a password here or in chat. Type ready after verifying login.
+    echo: false
+  when: not (remaining_deployment | default(false))
+- name: Await private login verification without collecting credentials
+  ansible.builtin.wait_for:
+    path: /run/uptime-kuma-network-diagnostic/operator-ready
+    state: present
+    timeout: 900
+    sleep: 5
+  when: (remaining_deployment | default(false)) and not (resume_contained | default(false))
+- name: Require the operator acknowledgement contents
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/python3
+      - -c
+      - |
+        import pathlib,stat
+        p=pathlib.Path('/run/uptime-kuma-network-diagnostic/operator-ready')
+        s=p.lstat()
+        assert stat.S_ISREG(s.st_mode) and s.st_uid==0 and stat.S_IMODE(s.st_mode)==0o600
+        assert s.st_size<=100
+        assert p.read_text().strip()=='Kuma and Webmin login verified; monitors and alerts empty'
+        print('ready')
+  register: kuma_operator_ready
+  no_log: true
+  changed_when: false
+  failed_when: kuma_operator_ready.stdout != 'ready'
+  when: (remaining_deployment | default(false)) and not (resume_contained | default(false))
+- name: Independently require a claimed, authenticated application configuration
+  ansible.builtin.import_tasks: tasks/accept-runtime.yaml
+  vars:
+    expose_backend: false
+    require_administrator: true
+    runtime_observation_label: administrator-claimed
+- name: Qualify the actual administrator-bearing backup and recover source availability
+  ansible.builtin.import_tasks: tasks/backup-and-restore.yaml
+- name: Promote only the claimed service to the approved proxy sources
+  block:
+    - name: Render the reviewed source-restricted backend bindings
+      ansible.builtin.template:
+        src: uptime-kuma.container.j2
+        dest: /etc/containers/systemd/uptime-kuma.container
+        owner: root
+        group: root
+        mode: '0644'
+      vars:
+        expose_backend: true
+    - name: Restart through the native service manager
+      ansible.builtin.systemd_service:
+        name: uptime-kuma.service
+        daemon_reload: true
+        state: restarted
+    - name: Independently verify actual promoted ports and preserved state
+      ansible.builtin.import_tasks: tasks/accept-runtime.yaml
+      vars:
+        expose_backend: true
+        require_administrator: true
+        runtime_observation_label: backend-promoted
+    - name: Check both backend address families from each approved proxy
+      ansible.builtin.command:
+        argv:
+          - ssh
+          - -T
+          - -o
+          - BatchMode=yes
+          - -o
+          - StrictHostKeyChecking=yes
+          - -o
+          - UserKnownHostsFile={{ playbook_dir }}/../payload/known_hosts
+          - -o
+          - GlobalKnownHostsFile=/dev/null
+          - -o
+          - ConnectTimeout=8
+          - '{{ item }}'
+          - cd / && /bin/bash -s -- {{ host.ipv4 | quote }} {{ host.permanent_ula | quote }} {{ application.port
+            | string | quote }}
+        stdin: '{{ lookup(''ansible.builtin.file'', playbook_dir + ''/../scripts/probe-backend.sh'', rstrip=false)
+          }}'
+        stdin_add_newline: false
+      loop: '{{ proxy_probe_targets }}'
+      delegate_to: localhost
+      become: false
+      register: kuma_proxy_probes
+      changed_when: false
+    - name: Require actual successful responses and admitted source identities
+      ansible.builtin.assert:
+        that:
+          - item.stdout_lines | length == 2
+          - (item.stdout_lines[0] | from_json).family == "ipv4"
+          - (item.stdout_lines[1] | from_json).family == "ipv6"
+          - (item.stdout_lines[0] | from_json).path == "/dashboard"
+          - (item.stdout_lines[1] | from_json).path == "/dashboard"
+          - (item.stdout_lines[0] | from_json).backend == host.ipv4
+          - (item.stdout_lines[1] | from_json).backend == host.permanent_ula
+          - (item.stdout_lines[0] | from_json).status == 200
+          - (item.stdout_lines[1] | from_json).status == 200
+          - (item.stdout_lines[0] | from_json).source in proxy.backend_ipv4_sources
+          - (item.stdout_lines[1] | from_json).source in proxy.backend_ipv6_sources
+      loop: '{{ kuma_proxy_probes.results }}'
+      loop_control:
+        label: '{{ item.item }}'
+    - name: Admit the bounded ingress client before starting it
+      ansible.builtin.import_tasks: admit-transient.yaml
+      vars:
+        kuma_transient_label: ingress
+        kuma_transient_required_mib: 160
+    - name: Verify actual denial and preserved management reachability from an unapproved source
+      ansible.builtin.script:
+        cmd: '{{ playbook_dir }}/../scripts/check-ingress.py --image {{ application.local_image_id }} --ipv4
+          {{ host.ipv4 }} --ipv6 {{ host.permanent_ula }} --port {{ application.port }}'
+        executable: /usr/bin/python3
+      register: kuma_ingress_probe
+      changed_when: false
+    - name: Require independent packet-counter and client observations
+      ansible.builtin.assert:
+        that:
+          - (kuma_ingress_probe.stdout | from_json).accepted
+          - (kuma_ingress_probe.stdout | from_json).container_removed
+    - name: Retain the non-secret ingress observations on the controller
+      ansible.builtin.copy:
+        content: '{{ kuma_ingress_probe.stdout }}
+
+          '
+        dest: '{{ operation_evidence_directory }}/ingress.json'
+        mode: '0600'
+      delegate_to: localhost
+      become: false
+  rescue:
+    - name: Contain the failed promotion before attempting recovery
+      ansible.builtin.systemd_service:
+        name: uptime-kuma.service
+        state: stopped
+    - name: Restore the reviewed loopback-only definition
+      ansible.builtin.template:
+        src: uptime-kuma.container.j2
+        dest: /etc/containers/systemd/uptime-kuma.container
+        owner: root
+        group: root
+        mode: '0644'
+      vars:
+        expose_backend: false
+    - name: Reload restored definitions without starting a contained continuation
+      ansible.builtin.systemd_service:
+        daemon_reload: true
+      when: remaining_deployment | default(false)
+    - name: Stop the continuation after restoring its loopback definition
+      ansible.builtin.fail:
+        msg: Backend promotion failed; the loopback definition is restored but no recovery start is attempted.
+          The remaining-deployment outer rescue must revoke permits and independently verify stopped containment.
+          Preserve data and failure evidence; do not reset rate limits or replay.
+      when: remaining_deployment | default(false)
+    - name: Restart the contained service
+      ansible.builtin.systemd_service:
+        name: uptime-kuma.service
+        daemon_reload: true
+        state: started
+    - name: Verify actual loopback recovery and preserved administrator data
+      ansible.builtin.import_tasks: tasks/accept-runtime.yaml
+      vars:
+        expose_backend: false
+        require_administrator: true
+        runtime_observation_label: promotion-recovered
+    - name: Preserve the failed promotion outcome after containment
+      ansible.builtin.fail:
+        msg: Backend promotion failed; loopback recovery was independently checked. Preserve the failed observations
+          and backups. Do not replay this operation for a clean receipt. DNS and Caddy deployment remain unauthorized.
+- name: Recheck the combined foundation after guarded application promotion
+  ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/accept.yaml'
+  vars:
+    foundation_observation_label: foundation-after-promotion
+- ansible.builtin.import_tasks: accept-combined.yaml
+  vars:
+    foundation_observation_label: foundation-after-promotion
+  when: remaining_deployment | default(false)
+- name: Require time remaining before activating normal operational notifications
+  ansible.builtin.command:
+    argv: [/usr/bin/python3, /usr/local/libexec/uptime-kuma/startup-permit.py, check]
+  changed_when: false
+  when: remaining_deployment | default(false)
+- name: Enable the fleet notification schedule only after combined acceptance
+  block:
+    - name: Install the bounded owner schedule
+      ansible.builtin.import_tasks: '{{ fleet_server_root }}/Needrestart/ansible/enable-schedule.yaml'
+  rescue:
+    - name: Remove the incomplete schedule
+      ansible.builtin.file:
+        path: /etc/cron.d/needrestart_check
+        state: absent
+    - name: Preserve a failed schedule activation outcome
+      ansible.builtin.fail:
+        msg: Service foundation remains installed; needrestart schedule was removed after failed activation.
+          Inspect retained outcome before any new operation.

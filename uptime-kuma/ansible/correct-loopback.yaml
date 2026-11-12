@@ -1,0 +1,4 @@
+---
+- ansible.builtin.import_playbook: diagnose-network.yaml
+  vars:
+    kuma_operation_file: ../operations/network-correction.yaml

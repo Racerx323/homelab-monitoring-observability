@@ -1,0 +1,26 @@
+---
+- name: Independently verify stopped and guarded socket and proxy
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/python3
+      - -c
+      - |
+        import pathlib,subprocess,json
+        result={}
+        for unit in ['uptime-kuma-loopback.socket','uptime-kuma-loopback.service']:
+            d=dict(x.split('=',1) for x in subprocess.check_output(['systemctl','show',unit,'--property=ActiveState,MainPID'],text=True).splitlines())
+            assert d['ActiveState'] in ['inactive','failed'] and d.get('MainPID','0')=='0'
+            p=pathlib.Path('/etc/systemd/system')/(unit+'.d/50-network-diagnostic-guard.conf')
+            assert not p.is_symlink() and p.is_file() and p.stat().st_uid==0 and p.stat().st_mode & 0o777==0o644
+            assert p.read_bytes()==b'[Unit]\nConditionPathExists=/run/uptime-kuma-network-diagnostic/permit\n'
+            result[unit]=d
+        print(json.dumps(result))
+  changed_when: false
+  register: kuma_loopback_containment
+- name: Preserve the extra containment receipt separately
+  ansible.builtin.copy:
+    content: '{{ kuma_loopback_containment.stdout }}'
+    dest: '{{ diagnostic.evidence_directory }}/loopback-containment.json'
+    mode: '0600'
+  delegate_to: localhost
+  become: false

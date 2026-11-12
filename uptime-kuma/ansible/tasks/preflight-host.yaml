@@ -1,0 +1,67 @@
+---
+- name: Read selected platform and memory facts
+  ansible.builtin.setup:
+    gather_subset:
+      - '!all'
+      - hardware
+    filter:
+      - ansible_architecture
+      - ansible_distribution
+      - ansible_distribution_major_version
+      - ansible_memtotal_mb
+      - ansible_kernel
+  register: kuma_platform
+- name: Read the board identity
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/cat
+      - /proc/device-tree/model
+  register: kuma_board
+  changed_when: false
+- name: Read available memory
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/awk
+      - /^MemAvailable:/ {print $2}
+      - /proc/meminfo
+  register: kuma_available_memory
+  changed_when: false
+- name: Read root storage headroom
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/df
+      - --output=avail
+      - -B1
+      - /
+  register: kuma_available_storage
+  changed_when: false
+- name: Retain admission readings before evaluating the resource gate
+  ansible.builtin.copy:
+    content: >-
+      {{ {'target': inventory_hostname,
+          'memory_available_kib_raw': kuma_available_memory.stdout,
+          'minimum_available_kib': 638976,
+          'memory_total_mib': kuma_platform.ansible_facts.ansible_memtotal_mb,
+          'root_available_bytes_raw': kuma_available_storage.stdout_lines[-1],
+          'minimum_root_available_bytes': 4294967296} | to_nice_json }}
+    dest: '{{ operation_evidence_directory }}/admission-resources.json'
+    mode: '0600'
+  delegate_to: localhost
+  become: false
+- name: Require the reviewed platform and installation headroom
+  ansible.builtin.assert:
+    that:
+      - kuma_platform.ansible_facts.ansible_architecture == 'aarch64'
+      - kuma_platform.ansible_facts.ansible_distribution == 'Debian'
+      - kuma_platform.ansible_facts.ansible_distribution_major_version == '13'
+      - kuma_platform.ansible_facts.ansible_memtotal_mb >= 850
+      - kuma_platform.ansible_facts.ansible_memtotal_mb <= 1024
+      - kuma_board.stdout.startswith('Raspberry Pi 3 Model B Plus')
+      - kuma_available_memory.stdout is match('^[0-9]+$')
+      - kuma_available_memory.stdout | int >= 638976
+      - kuma_available_storage.stdout_lines[-1] | int >= 4294967296
+      - kuma_platform.ansible_facts.ansible_kernel == memory_controller.expected_kernel
+    fail_msg: >-
+      Platform/resource admission failed. MemAvailable={{ kuma_available_memory.stdout }} KiB;
+      required=638976 KiB (624 MiB). Root available={{ kuma_available_storage.stdout_lines[-1] }} bytes;
+      required=4294967296 bytes. Exact readings retained in admission-resources.json before this assertion.

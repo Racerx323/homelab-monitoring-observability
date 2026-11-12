@@ -1,0 +1,25 @@
+[Unit]
+Description=Uptime Kuma local IPv6 to IPv4 transport
+Requires=uptime-kuma-loopback.socket
+After=uptime-kuma-loopback.socket uptime-kuma.service
+BindsTo=uptime-kuma.service
+PartOf=uptime-kuma.service
+
+[Service]
+ExecStart=/usr/lib/systemd/systemd-socket-proxyd 127.0.0.1:{{ application.port }}
+DynamicUser=yes
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6
+CapabilityBoundingSet=
+MemoryMax=16M
+MemorySwapMax=0
+CPUQuota=10%
+TasksMax=16
+Restart=no
+TimeoutStartSec=10s
+TimeoutStopSec=5s

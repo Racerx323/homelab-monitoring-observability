@@ -1,0 +1,46 @@
+[Unit]
+Description=Uptime Kuma availability service
+Wants=uptime-kuma-loopback.socket
+After=uptime-kuma-loopback.socket
+Requires=uptime-kuma-firewall.service
+After=uptime-kuma-firewall.service
+BindsTo=uptime-kuma-firewall.service
+StartLimitIntervalSec=300
+StartLimitBurst=3
+
+[Container]
+Image={{ application.local_image_id }}
+ContainerName=uptime-kuma
+User={{ application.uid }}:{{ application.gid }}
+Network=uptime-kuma.network
+Volume={{ application.data_directory }}:/app/data:rw
+PublishPort=127.0.0.1:{{ application.port }}:{{ application.port }}
+{% if expose_backend %}
+PublishPort={{ host.ipv4 }}:{{ application.port }}:{{ application.port }}
+PublishPort=[{{ host.permanent_ula }}]:{{ application.port }}:{{ application.port }}
+{% endif %}
+Environment=TZ={{ application.timezone }}
+Environment=UPTIME_KUMA_DB_TYPE={{ application.database }}
+Environment=UPTIME_KUMA_HOST=::
+DropCapability=ALL
+NoNewPrivileges=true
+ReadOnly=true
+Tmpfs=/tmp:rw,nosuid,nodev,size={{ resources.tmpfs_size }}
+Pull=never
+LogDriver=k8s-file
+PodmanArgs=--log-opt=max-size={{ resources.log_max_size }}
+
+[Service]
+ExecStartPre=/usr/bin/grep -qw memory /sys/fs/cgroup/cgroup.controllers
+ExecStartPre=/usr/bin/python3 /usr/local/libexec/uptime-kuma/check-network.py --network uptime-kuma
+Restart=on-failure
+RestartSec=10s
+TimeoutStartSec=180s
+MemoryHigh={{ resources.memory_high }}
+MemoryMax={{ resources.memory_max }}
+MemorySwapMax={{ resources.memory_swap_max }}
+CPUQuota={{ resources.cpu_quota }}
+TasksMax={{ resources.tasks_max }}
+
+[Install]
+WantedBy=multi-user.target

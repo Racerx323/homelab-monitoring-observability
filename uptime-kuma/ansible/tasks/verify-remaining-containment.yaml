@@ -1,0 +1,42 @@
+---
+- name: Independently check stopped services, guards, permits, sockets and containers
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/python3
+      - -c
+      - |
+        import hashlib,json,pathlib,stat,subprocess
+        receipt={}
+        for u in ['uptime-kuma.service','uptime-kuma-network.service','uptime-kuma-loopback.socket','uptime-kuma-loopback.service','webmin.service']:
+            props=dict(x.split('=',1) for x in subprocess.check_output(['systemctl','show',u,'--property=ActiveState,MainPID'],text=True).splitlines())
+            assert props['ActiveState'] in ['inactive','failed'] and props.get('MainPID','0')=='0', u
+            receipt[u]=props
+            if u!='webmin.service':
+                p=pathlib.Path('/etc/systemd/system')/(u+'.d/50-network-diagnostic-guard.conf')
+                assert not p.is_symlink() and p.read_bytes()==b'[Unit]\nConditionPathExists=/run/uptime-kuma-network-diagnostic/permit\n'
+        for p in ['/run/uptime-kuma-network-diagnostic/permit','/etc/webmin/.installation-accepted','/etc/cron.d/needrestart_check']:
+            assert not pathlib.Path(p).exists(), p
+        for flag in ['-lnt','-lnu']:
+            assert not subprocess.check_output(['ss','-H',flag,'( sport = :3001 or sport = :10000 )']).strip()
+        assert not json.loads(subprocess.check_output(['podman','ps','-a','--format','json']))
+        state=json.loads(pathlib.Path('/var/lib/uptime-kuma-maintenance/remaining-deployment/state.json').read_text())
+        assert state['status']=='contained'
+        if 'original_predecessor_sha256' in state:
+            authority=pathlib.Path('/var/lib/uptime-kuma-maintenance/remaining-deployment')
+            for name,key in [('previous-state.json','original_predecessor_sha256'),('completion-state.json','predecessor_sha256')]:
+                p=authority/name; info=p.lstat()
+                assert not any(x.is_symlink() for x in (p,*p.parents))
+                assert stat.S_ISREG(info.st_mode) and info.st_uid==info.st_gid==0 and stat.S_IMODE(info.st_mode)==0o600
+                assert hashlib.sha256(p.read_bytes()).hexdigest()==state[key]
+        assert subprocess.check_output(['systemctl','show','webmin.service','--property=UnitFileState','--value'],text=True).strip()=='disabled'
+        receipt['state']=state
+        print(json.dumps(receipt))
+  changed_when: false
+  register: kuma_remaining_stopped
+- name: Preserve independently verified containment
+  ansible.builtin.copy:
+    content: '{{ kuma_remaining_stopped.stdout }}'
+    dest: '{{ operation_evidence_directory }}/containment.json'
+    mode: '0600'
+  delegate_to: localhost
+  become: false

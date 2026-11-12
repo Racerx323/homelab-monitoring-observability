@@ -1,0 +1,11 @@
+[Unit]
+Description=Uptime Kuma IPv6 loopback frontend
+PartOf=uptime-kuma.service
+BindsTo=uptime-kuma-firewall.service
+After=uptime-kuma-firewall.service
+
+[Socket]
+ListenStream=[::1]:{{ application.port }}
+BindIPv6Only=ipv6-only
+Accept=no
+Backlog=16

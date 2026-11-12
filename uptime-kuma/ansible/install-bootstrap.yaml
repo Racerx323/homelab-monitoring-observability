@@ -1,0 +1,352 @@
+- name: Install the contained Uptime Kuma service foundation
+  hosts: uptime_kuma
+  gather_facts: false
+  become: true
+  any_errors_fatal: true
+  vars_files:
+    - ../manifests/deployment.yaml
+    - ../operations/initial-deployment.yaml
+  vars:
+    expose_backend: false
+  environment:
+    LC_ALL: C
+    PYTHONDONTWRITEBYTECODE: '1'
+  tasks:
+    - name: Refuse check mode and unintended transport targets
+      ansible.builtin.assert:
+        that:
+          - not ansible_check_mode
+          - inventory_hostname == host.hostname
+          - ansible_host == host.ipv4
+          - ansible_user == host.ssh_user
+    - name: Read the memory-controller prerequisite
+      ansible.builtin.command:
+        argv:
+          - /usr/bin/cat
+          - /sys/fs/cgroup/cgroup.controllers
+      register: kuma_runtime_controllers
+      changed_when: false
+    - name: Require memory enforcement before runtime installation
+      ansible.builtin.assert:
+        that: '''memory'' in kuma_runtime_controllers.stdout.split()'
+    - name: Inspect component-owned paths before writing anything
+      ansible.builtin.stat:
+        path: '{{ item }}'
+        follow: false
+      loop:
+        - /var/lib/uptime-kuma
+        - /etc/uptime-kuma
+        - /etc/containers/containers.conf
+        - /etc/containers/containers.conf.d
+        - /etc/containers/systemd/uptime-kuma.container
+        - /etc/containers/systemd/uptime-kuma.network
+        - /etc/systemd/system/uptime-kuma-firewall.service
+        - /etc/systemd/system/uptime-kuma-loopback.socket
+        - /etc/systemd/system/uptime-kuma-loopback.service
+        - /usr/local/libexec/uptime-kuma
+      register: kuma_runtime_paths
+    - name: Refuse existing application state or runtime policy
+      ansible.builtin.assert:
+        that: not item.stat.exists
+        fail_msg: Existing state requires review; this initial installer does not overwrite it.
+      loop: '{{ kuma_runtime_paths.results }}'
+      loop_control:
+        label: '{{ item.item }}'
+    - name: Read any pre-existing listener on the application port
+      ansible.builtin.command:
+        argv:
+          - ss
+          - --no-header
+          - --listening
+          - --tcp
+          - --numeric
+          - sport = :{{ application.port }}
+      register: kuma_runtime_port_before
+      changed_when: false
+    - name: Refuse an unrelated application-port listener
+      ansible.builtin.assert:
+        that: kuma_runtime_port_before.stdout | trim == ''
+    - name: Read the initial firewall without changing it
+      ansible.builtin.command:
+        argv:
+          - /usr/sbin/nft
+          - --json
+          - list
+          - ruleset
+      register: kuma_runtime_firewall_before
+      changed_when: false
+    - name: Require the reviewed empty firewall baseline
+      ansible.builtin.assert:
+        that: (kuma_runtime_firewall_before.stdout | from_json).nftables | rejectattr('metainfo', 'defined') | list
+          | length == 0
+    - name: Simulate initial package installation only for an absent foundation
+      tags: [foundation-package-install]
+      when: not (preserve_installed_foundation | default(false))
+      block:
+        - name: Simulate every pinned runtime package with no upgrades or removals
+          ansible.builtin.command:
+            argv: '{{ [''apt-get'', ''--simulate'', ''--no-install-recommends'', ''--no-remove'', ''-o'', ''Debug::NoLocking=1'',
+              ''install''] + runtime.packages }}'
+          register: kuma_runtime_simulation
+          changed_when: false
+        - name: Require exactly the reviewed new package closure
+          ansible.builtin.assert:
+            that:
+              - (kuma_runtime_simulation.stdout | regex_findall('(?m)^Inst (\S+) \((\S+)') | map('list') | list | sort)
+                == (runtime.packages | map('split', '=') | list | sort)
+              - '''0 upgraded, 9 newly installed, 0 to remove'' in kuma_runtime_simulation.stdout'
+    - name: Install and verify the contained foundation
+      block:
+        - name: Install packages only when the foundation is absent
+          tags: [foundation-package-install]
+          when: not (preserve_installed_foundation | default(false))
+          block:
+            - name: Create private offline payload directories
+              ansible.builtin.file:
+                path: '{{ item }}'
+                state: directory
+                owner: root
+                group: root
+                mode: '0700'
+              loop:
+                - /var/lib/uptime-kuma-maintenance/payload
+                - /var/lib/uptime-kuma-maintenance/payload/packages
+            - name: Copy the exact offline package artifacts
+              ansible.builtin.copy:
+                src: '{{ runtime_payload_directory }}/packages/{{ item.filename }}'
+                dest: /var/lib/uptime-kuma-maintenance/payload/packages/{{ item.filename }}
+                owner: root
+                group: root
+                mode: '0600'
+              loop: '{{ payload.packages }}'
+              loop_control:
+                label: '{{ item.filename }}'
+            - name: Copy the exact offline image archive
+              ansible.builtin.copy:
+                src: '{{ runtime_payload_directory }}/{{ payload.image_archive }}'
+                dest: /var/lib/uptime-kuma-maintenance/payload/{{ payload.image_archive }}
+                owner: root
+                group: root
+                mode: '0600'
+            - name: Check transferred artifact identities independently
+              ansible.builtin.stat:
+                path: '{{ ''/var/lib/uptime-kuma-maintenance/payload/'' + ('''' if (item.kind | default(''package''))
+                  == ''image'' else ''packages/'') + item.filename }}'
+                checksum_algorithm: sha256
+                get_mime: false
+              loop: '{{ payload.packages + [{''filename'': payload.image_archive, ''sha256'': payload.image_archive_sha256,
+                ''kind'': ''image''}] }}'
+              register: kuma_payload_stats
+            - name: Require exact copied bytes before any package install
+              ansible.builtin.assert:
+                that:
+                  - item.stat.isreg
+                  - not item.stat.islnk
+                  - item.stat.checksum == item.item.sha256
+              loop: '{{ kuma_payload_stats.results }}'
+              loop_control:
+                label: '{{ item.item.filename }}'
+            # Disable repository sources: --no-download also blocks APT's local-file acquisition.
+            - name: Simulate the actual transferred local packages without downloading
+              ansible.builtin.command:
+                argv: '{{ [''apt-get'', ''--simulate'', ''--no-install-recommends'', ''--no-remove'',
+                  ''-o'', ''Dir::Etc::sourcelist='', ''-o'', ''Dir::Etc::sourceparts='', ''install''] + (payload.packages | map(attribute=''filename'') | map(''regex_replace'', ''^'', ''/var/lib/uptime-kuma-maintenance/payload/packages/'')
+                  | list) }}'
+              register: kuma_runtime_offline_simulation
+              changed_when: false
+            - name: Require the same exact offline installation closure
+              ansible.builtin.assert:
+                that:
+                  - (kuma_runtime_offline_simulation.stdout | regex_findall('(?m)^Inst (\S+) \((\S+)') | map('list')
+                    | list | sort) == (installation.packages | map('split', '=') | list | sort)
+                  - ('0 upgraded, ' + installation.new_package_count | string + ' newly installed, 0 to remove') in
+                    kuma_runtime_offline_simulation.stdout
+            - name: Prepare fleet package controls and the Webmin first-start guard
+              ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/prepare.yaml'
+            - name: Install the complete offline package closure without downloads or removals
+              ansible.builtin.command:
+                argv: '{{ [''apt-get'', ''--yes'', ''--no-install-recommends'', ''--no-remove'',
+                  ''-o'', ''Dir::Etc::sourcelist='', ''-o'', ''Dir::Etc::sourceparts='', ''install''] + (payload.packages | map(attribute=''filename'') | map(''regex_replace'', ''^'', ''/var/lib/uptime-kuma-maintenance/payload/packages/'')
+                  | list) }}'
+              changed_when: true
+              environment:
+                DEBIAN_FRONTEND: noninteractive
+                NEEDRESTART_MODE: l
+                NEEDRESTART_SUSPEND: '1'
+                APT_LISTCHANGES_FRONTEND: none
+                APT_CONFIG: '{{ foundation.work_directory }}/apt-install.conf'
+            - name: Read actual installed package versions independently
+              ansible.builtin.command:
+                argv: '{{ [''dpkg-query'', ''--show'', ''--showformat=${Package}=${Version}\n''] + (installation.packages
+                  | map(''regex_replace'', ''=.*$'', '''') | list) }}'
+              register: kuma_runtime_installed_packages
+              changed_when: false
+            - name: Require all deployed package versions to match the approved pins
+              ansible.builtin.assert:
+                that: kuma_runtime_installed_packages.stdout_lines | sort == installation.packages | sort
+            - name: Configure fleet host services before creating the application
+              ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/configure.yaml'
+        - name: Correct the verified installed Webmin foundation without package actions
+          when: preserve_installed_foundation | default(false)
+          block:
+            - name: Correct and accept Webmin with independent startup containment
+              ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/resume.yaml'
+            - name: Verify the previously transferred image before import
+              ansible.builtin.stat:
+                path: '/var/lib/uptime-kuma-maintenance/payload/{{ payload.image_archive }}'
+                follow: false
+                checksum_algorithm: sha256
+                get_mime: false
+              register: kuma_retained_image
+            - name: Refuse retained image drift
+              ansible.builtin.assert:
+                that:
+                  - kuma_retained_image.stat.isreg | default(false)
+                  - not (kuma_retained_image.stat.islnk | default(true))
+                  - kuma_retained_image.stat.uid == 0
+                  - kuma_retained_image.stat.mode == '0600'
+                  - kuma_retained_image.stat.checksum == payload.image_archive_sha256
+        - name: Disable unneeded newly installed API sockets and unattended image updates
+          ansible.builtin.systemd_service:
+            name: '{{ item }}'
+            state: stopped
+            enabled: false
+            daemon_reload: true
+          loop:
+            - podman.socket
+            - podman.service
+            - podman-auto-update.timer
+        - name: Create component configuration and runtime-policy directories
+          ansible.builtin.file:
+            path: '{{ item }}'
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
+          loop:
+            - /etc/uptime-kuma
+            - /etc/containers/containers.conf.d
+            - /etc/containers/systemd
+            - /usr/local/libexec/uptime-kuma
+        - name: Create the protected application parent
+          ansible.builtin.file:
+            path: /var/lib/uptime-kuma
+            state: directory
+            owner: root
+            group: root
+            mode: '0750'
+        - name: Create local data storage for the actual application UID
+          ansible.builtin.file:
+            path: '{{ application.data_directory }}'
+            state: directory
+            owner: '{{ application.uid | string }}'
+            group: '{{ application.gid | string }}'
+            mode: '0700'
+        - name: Explicitly select the supported native nftables driver
+          ansible.builtin.template:
+            src: containers.conf.j2
+            dest: /etc/containers/containers.conf.d/80-uptime-kuma.conf
+            owner: root
+            group: root
+            mode: '0644'
+        - name: Load the source-verified offline ARM64 image
+          ansible.builtin.command:
+            argv:
+              - systemd-run
+              - --wait
+              - --collect
+              - --pipe
+              - --unit=uptime-kuma-image-load
+              - --property=MemoryMax=384M
+              - --property=MemorySwapMax=0
+              - --property=CPUQuota=200%
+              - --property=RuntimeMaxSec=300
+              - /usr/bin/podman
+              - load
+              - --input
+              - /var/lib/uptime-kuma-maintenance/payload/{{ payload.image_archive }}
+          changed_when: true
+        - name: Render and natively check the owned ingress guard
+          ansible.builtin.template:
+            src: ingress.nft.j2
+            dest: /etc/uptime-kuma/ingress.nft
+            owner: root
+            group: root
+            mode: '0600'
+            validate: /usr/sbin/nft --check --file %s
+        - name: Install the ordinary firewall unit
+          ansible.builtin.template:
+            src: uptime-kuma-firewall.service.j2
+            dest: /etc/systemd/system/uptime-kuma-firewall.service
+            owner: root
+            group: root
+            mode: '0644'
+        - name: Install the native IPv6 loopback transport units
+          ansible.builtin.template:
+            src: '{{ item }}.j2'
+            dest: '/etc/systemd/system/{{ item }}'
+            owner: root
+            group: root
+            mode: '0644'
+          loop: [uptime-kuma-loopback.socket, uptime-kuma-loopback.service]
+        - name: Install the network and loopback-only Quadlet definitions
+          ansible.builtin.template:
+            src: '{{ item }}.j2'
+            dest: /etc/containers/systemd/{{ item }}
+            owner: root
+            group: root
+            mode: '0644'
+          loop:
+            - uptime-kuma.network
+            - uptime-kuma.container
+        - name: Install the component pre-start route-conflict guard
+          ansible.builtin.copy:
+            src: '{{ playbook_dir }}/../scripts/check-network.py'
+            dest: /usr/local/libexec/uptime-kuma/check-network.py
+            owner: root
+            group: root
+            mode: '0755'
+        - name: Start and enable the ingress guard before the application
+          ansible.builtin.systemd_service:
+            name: uptime-kuma-firewall.service
+            daemon_reload: true
+            enabled: true
+            state: started
+        - name: Start the generated application service
+          ansible.builtin.systemd_service:
+            name: uptime-kuma.service
+            state: started
+        - name: Observe and check the actual bootstrap runtime
+          ansible.builtin.import_tasks: tasks/accept-runtime.yaml
+          vars:
+            require_administrator: false
+            runtime_observation_label: bootstrap-first-start
+      rescue:
+        - name: Contain newly installed foundation services while retaining package residue
+          ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/contain.yaml'
+        - name: Stop the application if its generated unit exists
+          ansible.builtin.command:
+            argv:
+              - systemctl
+              - stop
+              - uptime-kuma.service
+          register: kuma_runtime_stop
+          failed_when: false
+          changed_when: kuma_runtime_stop.rc == 0
+        - name: Stop the component network if its generated unit exists
+          ansible.builtin.command:
+            argv:
+              - systemctl
+              - stop
+              - uptime-kuma-network.service
+          register: kuma_runtime_network_stop
+          failed_when: false
+          changed_when: kuma_runtime_network_stop.rc == 0
+        - name: Preserve a failed installation for manual review
+          ansible.builtin.fail:
+            msg: Runtime/foundation installation failed. Webmin permit removed and stop requests are retained; their
+              status does not prove cleanup. Keep the ingress guard; packages, image, data and definitions may remain,
+              including startup on a future reboot. A temporary policy-rc.d may remain after package/configuration
+              failure; inspect and restore it only through reviewed recovery. Observe actual service/network/firewall
+              residue before any further mutation. Accepted host prerequisites remain; no whole-host rollback is
+              claimed.

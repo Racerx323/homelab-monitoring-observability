@@ -1,0 +1,44 @@
+---
+- name: Verify combined service peaks, pressure counters and remaining host reserve
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/python3
+      - -c
+      - |
+        import json,pathlib,subprocess,time
+        expected={'uptime-kuma.service':(268435456,335544320),'webmin.service':(134217728,201326592),'uptime-kuma-loopback.service':(None,16777216)}
+        result={}
+        for unit,(high,maximum) in expected.items():
+            props=dict(x.split('=',1) for x in subprocess.check_output(['systemctl','show',unit,'--property=ActiveState,NRestarts,ControlGroup'],text=True).splitlines())
+            assert props['ActiveState']=='active' and props['NRestarts']=='0', unit
+            group=pathlib.Path('/sys/fs/cgroup')/props['ControlGroup'].lstrip('/')
+            values={name:(group/name).read_text().strip() for name in ['memory.high','memory.max','memory.swap.max','memory.current','memory.peak','memory.events']}
+            assert int(values['memory.max'])==maximum and values['memory.swap.max']=='0', unit
+            if high is not None: assert int(values['memory.high'])==high, unit
+            events=dict(line.split() for line in values['memory.events'].splitlines())
+            assert all(events.get(k)=='0' for k in ['max','oom','oom_kill']), (unit,events)
+            result[unit]=values
+        available=int(next(x.split()[1] for x in pathlib.Path('/proc/meminfo').read_text().splitlines() if x.startswith('MemAvailable:')))
+        assert available>=98304, 'host reserve below 96 MiB'
+        # memory.high throttling is allowed at startup; sustained pressure is not.
+        time.sleep(10)
+        for unit in expected:
+            name=subprocess.check_output(['systemctl','show',unit,'--property=ControlGroup','--value'],text=True).strip()
+            after=dict(line.split() for line in (pathlib.Path('/sys/fs/cgroup')/name.lstrip('/')/'memory.events').read_text().splitlines())
+            before=dict(line.split() for line in result[unit]['memory.events'].splitlines())
+            assert all(after[k]==before[k] for k in ['high','max','oom','oom_kill']), (unit,after)
+            result[unit]['settled_memory_events']=after
+        end_available=int(next(x.split()[1] for x in pathlib.Path('/proc/meminfo').read_text().splitlines() if x.startswith('MemAvailable:')))
+        assert end_available>=98304
+        result['available_kib']=min(available,end_available)
+        result['scope']='reserve at two checkpoints, cumulative peaks and counters, ten seconds without new pressure events'
+        print(json.dumps(result))
+  register: kuma_combined_observation
+  changed_when: false
+- name: Retain the combined resource checkpoint
+  ansible.builtin.copy:
+    content: '{{ kuma_combined_observation.stdout }}'
+    dest: '{{ operation_evidence_directory }}/combined-{{ foundation_observation_label }}.json'
+    mode: '0600'
+  delegate_to: localhost
+  become: false

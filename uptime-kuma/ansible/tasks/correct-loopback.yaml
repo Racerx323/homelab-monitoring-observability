@@ -1,0 +1,53 @@
+---
+- name: Verify the installed native proxy belongs to systemd before changing sources
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/python3
+      - -c
+      - |
+        import pathlib,stat,subprocess
+        p=pathlib.Path('/usr/lib/systemd/systemd-socket-proxyd'); i=p.stat()
+        assert p.is_file() and not p.is_symlink() and i.st_uid==0 and not (i.st_mode & 0o022) and i.st_mode & 0o111
+        assert 'systemd: /usr/lib/systemd/systemd-socket-proxyd' in subprocess.check_output(['dpkg-query','--search',str(p)],text=True).splitlines()
+  changed_when: false
+- name: Preserve the original checked Quadlet in protected operation storage
+  ansible.builtin.copy:
+    src: /etc/containers/systemd/uptime-kuma.container
+    dest: '{{ diagnostic.work_directory }}/original-uptime-kuma.container'
+    remote_src: true
+    owner: root
+    group: root
+    mode: '0600'
+- name: Install the owner-rendered corrected Quadlet
+  ansible.builtin.template:
+    src: uptime-kuma.container.j2
+    dest: /etc/containers/systemd/uptime-kuma.container
+    owner: root
+    group: root
+    mode: '0644'
+  vars:
+    expose_backend: false
+- name: Install the native loopback socket and transport service without enabling either
+  ansible.builtin.template:
+    src: '{{ item }}.j2'
+    dest: '/etc/systemd/system/{{ item }}'
+    owner: root
+    group: root
+    mode: '0644'
+  loop: [uptime-kuma-loopback.socket, uptime-kuma-loopback.service]
+- name: Create private persistent guard directories for both proxy units
+  ansible.builtin.file:
+    path: '/etc/systemd/system/{{ item }}.d'
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  loop: [uptime-kuma-loopback.socket, uptime-kuma-loopback.service]
+- name: Gate the additional socket and service on the same ephemeral permit
+  ansible.builtin.copy:
+    content: '{{ kuma_diag_guard }}'
+    dest: '/etc/systemd/system/{{ item }}.d/50-network-diagnostic-guard.conf'
+    owner: root
+    group: root
+    mode: '0644'
+  loop: [uptime-kuma-loopback.socket, uptime-kuma-loopback.service]

@@ -1,0 +1,74 @@
+---
+schema_version: 1
+service: uptime-kuma
+status: proposed_not_deployed
+host:
+  hostname: j2-svpi3bmf
+  management_fqdn: j2-svpi3bmf.local.theama.co
+  ssh_user: ama
+  ipv4: 10.1.3.75
+  ipv4_prefix: 22
+  permanent_ula: fd36:5aa8:6971:1::75
+  ipv6_prefix: 64
+  interface: eth0
+  architecture: arm64
+  os_major: '13'
+application:
+  fqdn: uptime.local.theama.co
+  release: 2.5.9
+  image_variant: slim-rootless
+  image: docker.io/louislam/uptime-kuma@sha256:18f903cf1fd9dd87c70442355e9cca2837aab0cdcb99c3baac4bf326273e6653
+  data_directory: /var/lib/uptime-kuma/data
+  uid: 1000
+  gid: 1000
+  port: 3001
+  timezone: America/Chicago
+  database: sqlite
+  monitors: []
+  notifications: []
+  automatic_updates: false
+  local_image_id: sha256:315dfadc88ca9be7ba59515578363871bda93f7989a8e406f162acf36c9b0037
+runtime:
+  firewall_driver: nftables
+  packages:
+    - podman=5.4.2+ds1-2+b2
+    - crun=1.21-1
+    - netavark=1.14.0-2
+    - aardvark-dns=1.14.0-3
+    - conmon=2.1.12-4
+    - libyajl2=2.1.0-5+b2
+    - golang-github-containers-image=5.34.2-1
+    - golang-github-containers-common=0.62.2+ds1-2
+    - libsubid5=1:4.17.4-2
+resources:
+  memory_high: 256M
+  memory_max: 320M
+  memory_swap_max: '0'
+  cpu_quota: 200%
+  tasks_max: 256
+  tmpfs_size: 64m
+  log_max_size: 10mb
+proxy:
+  ipv4_vip: 10.1.0.56
+  ipv6_vip: fd36:5aa8:6971:1::56
+  backend_ipv4_sources:
+    - 10.1.0.53
+    - 10.1.0.54
+  backend_ipv6_sources:
+    - fd36:5aa8:6971:1::53
+    - fd36:5aa8:6971:1::54
+    - fd36:5aa8:6971:1::56
+  proposed_client_cidrs:
+    - 10.1.0.0/22
+    - fd36:5aa8:6971:1::/64
+bootstrap:
+  expose_backend: false
+  administrator_setup: operator_via_ssh_tunnel
+  final_exposure_requires_administrator: true
+requirements:
+  memory_cgroup: true
+  intended_host_addresses: true
+  preserve_router_advertisement_routing: true
+  reject_unreviewed_existing_data: true
+  guard_before_container_start: true
+  qualified_exact_bundle_before_mutation: true

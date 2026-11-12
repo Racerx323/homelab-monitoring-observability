@@ -1,0 +1,24 @@
+operation:
+  id: uptime-kuma-capacity-measurement-20261110
+  status: locally_qualified_not_authorized
+  scope: Three paired observer readings and one 96 MiB list-only scan with applications stopped
+controller:
+  ansible_core_version: 2.21.3
+foundation:
+  qualification_status: qualified
+fleet_server_root: '{{ playbook_dir }}/../../../homelab-server-configs'
+operation_evidence_directory: /home/aaron/code/.local-evidence/uptime-kuma/capacity-measurement-hbvxmkz9/execution
+capacity:
+  hostname: j2-svpi3bmf
+  address: 10.1.3.75
+  identity:
+    - j2-svpi3bmf
+    - aarch64
+    - 6.18.60+rpt-rpi-v8
+    - f694a945-f345-4516-9349-480654ec9161
+    - 3.11-1
+  scan_files:
+    - path: /etc/needrestart/conf.d/rpi-kernel.conf
+      sha256: a0ff6f13987c8216f52a2de64fea08073463ac02df8db3a28e5ad858bc6a371b
+    - path: /etc/needrestart/conf.d/zzz-fleet-rpi-v8.conf
+      sha256: dfee8fa2c0f67265eea4a6e1a2dbe0096a145a25fe8d776b101c6b81e10691a4
