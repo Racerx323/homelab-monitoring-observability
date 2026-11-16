@@ -6,14 +6,12 @@
   network/radio dispositions, then required standard-browser Webmin access;
   the SSH-only profile does not satisfy this revised requirement (W-128).
 - Last updated: November 16, 2026 (America/Chicago).
-- Next action: Reconcile the archived Caddy operation to the neutral state locally
-  before preparing W-147's bounded diagnostic correction. W-148's approved 61-file
-  terminal archive commit and annotated tag are published and remote-verified.
-  Cleanup has not run; consumed inputs remain present. W-149 remains deferred.
-  The production timeout cause is unconfirmed; browser/scan never started and
-  AC-013 remains pending. No retry, inspection, successor, permanent promotion
-  or further publication is authorized. Session 59826 exited 0 and is retired;
-  no execution session is active.
+- Next action: Reconcile W-154/W-147/W-157 before proposing further live work.
+  Server reconciliation is published and remote-verified at 722bc45; repository
+  validation and CodeQL pass. This monitoring commit records the approved
+  publication; its remote and CI verification receipts are retained in the private
+  publication review. The Caddy stream is clean with no successor. AC-013 remains
+  pending. No live work, retry or promotion is authorized.
 - Document roles: [PLAN.md](PLAN.md) owns scope/criteria; this ledger owns work and
   decisions; [RESULT.md](RESULT.md) owns the accepted scope and pending Webmin extension. Permanent design and
   procedures remain in [architecture](../../uptime-kuma/docs/ARCHITECTURE.md) and
@@ -224,7 +222,20 @@
 | W-146 | Execute the approved combined Webmin/Caddy trial once and reconcile independent acceptance/recovery outcomes. | W-128, AC-013 | Resolved | Preserve approved inputs and one-attempt marker; verify native browser, source/path and scan-overlap/resource evidence plus Caddy and backend restoration separately. | November 16 exact-bundle approval recorded in private approval.json. Input and owner preflight passed without contact; awaiting private workstation operator launch. No attempt has started; do not relaunch after a marker or failure.  Attempt completed with parent exit 2 and Caddy exit 1; primary IPv4 HTTPS timed out before browser/scan. Both owner recovery checks passed. Execution disposition resolved as failed-consumed, not application acceptance; W-147/W-148 carry remaining diagnosis/archive work. |
 | W-147 | Primary Webmin HTTPS route times out after activation despite passing direct backend paths. | W-146, AC-013 | Open | Reconcile retained failing request, route/configuration and recovery evidence locally; identify supported cause or the precise missing observation before any separately reviewed successor. | curl 28 after 5001 ms, HTTP 000, zero response bytes on Node A. No application IPv6, browser or scan acceptance ran. Cause is unconfirmed; do not extend deadlines or infer capacity/authentication failure. Local reconciliation below identifies the request-path difference and missing timing/correlated logs; no further fixture load can establish the historical cause. |
 | W-148 | Preserve and prepare the consumed combined trial terminal archive under the Caddy owner. | W-146, Caddy lifecycle | Resolved | Exact executed inputs and sanitized terminal record remain preserved; review any archive commit/tag/push separately before cleanup or implementation changes. | All 236 non-secret inputs copied and hashes checked in executed-inputs. Caddy is terminal-pending/failed-consumed with planned archive tag. A 61-file exact archive is prepared below; core lifecycle checks and actual documentation check pass, but the broader policy self-test has W-149’s missing sibling-tree fixture failure. No publication authorized. November 16: approved archive published as commit 66d8ae5 and annotated tag caddy-webmin-first-host-trial-terminal-2026-11-16; remote branch/tag/peeled commit verified. Hooks passed; W-149 remains explicitly deferred. Cleanup not performed. |
-| W-149 | Documentation self-test omits the sibling DNS owner tree referenced by the fleet onboarding guide. | W-148, local validation | Deferred | Caddy test owner retains follow-up here for future documentation-test maintenance; do not repair or repeat the fixture for this historical archive. | Aaron explicitly declined fixture repair for this effort on November 16. The actual workspace link check passes; the isolated self-test failure remains recorded. It does not establish production behavior or block preservation of the failed attempt. No test disabled, pass fabricated or publication authorized; mandatory publication hooks remain intact. |
+| W-149 | Documentation self-test omits the sibling DNS owner tree referenced by the fleet onboarding guide. | W-148, local validation | Resolved | Caddy test owner retains follow-up here for future documentation-test maintenance; do not repair or repeat the fixture for this historical archive. | Aaron explicitly declined fixture repair for this effort on November 16. The actual workspace link check passes; the isolated self-test failure remains recorded. It does not establish production behavior or block preservation of the failed attempt. No test disabled, pass fabricated or publication authorized; mandatory publication hooks remain intact. November 16 current request authorizes resolving this CI blocker: fixture now preserves the real server/DNS sibling layout and copies the actual linked owner document. Missing-document rejection and all existing negative checks pass. Earlier archive deferral remains historical. |
+| W-150 | Clear archived Webmin trial bindings and restore the neutral Caddy stream locally. | W-148, W-147 preparation | Resolved | Verify the published archive identity, reset consumed operation/recipe/terminal evidence, preserve implementation and accepted state, and pass focused owner checks. | November 16: archive bytes matched the annotated tag and retained remote-verification receipt. Inactive operation and clean stream retain the archive tag; recipe is header-only, terminal manifest/registration removed, outer operation hash rebound. Runtime transaction and accepted-state manifests unchanged. Eight focused checks passed; uncommitted, no live contact or publication. |
+| W-151 | Prepare W-147 diagnostic correction in the existing Webmin/Caddy paths. | W-147, AC-013 | Resolved | Align request paths; retain safe timed failure evidence before recovery; qualify exit preservation, confidentiality and parent recovery ordering locally. | Matching session_login.cgi backend request, direct/curl phase timing, filtered bounded Caddy journal metadata and parent pre-restoration numeric snapshot implemented. Focused tests cover curl failure retention, private-text exclusion and recovery despite unavailable diagnostics. Final six-scenario parent test passes. Source hashes and results retained below. No historical root-cause attribution, successor or live authority. |
+| W-152 | Seal a bounded diagnostic successor using existing Webmin/Caddy owners. | W-147, W-151, AC-013 | Resolved | Exact owner graph, diagnostic-only parent, immutable input/command bindings and focused qualification ready for separate live review. | Diagnostic-only mode skips all credential/browser/scan work and immediately finishes after owner readiness. Sixteen offline Caddy cases, eight parent scenarios, helper tests, syntax, owner authorization and sealed preflight pass. Exact review below; no live authority. |
+| W-153 | Execute the separately reviewed route diagnostic once if authorized and reconcile both recoveries. | W-152, AC-013 | Resolved | Explicit exact-bundle approval, one-attempt marker, retained original failure/timing and independent owner recovery results; no production acceptance inferred. | Aaron approved WORK.md:7311. One attempt exited 2 (Caddy child 1); primary HTTPS curl 28 after successful TCP/TLS. Both Caddy restore/resume and native Webmin restore assertions passed. All 230 inputs and receipts retained. No browser/scan. Replication-health alert remains W-154; no acceptance or replay follows. |
+| W-154 | Aaron reported replication-health failure during diagnostic recovery. | W-153, Caddy owner | Open | Reconcile retained chronology and recovery coverage; establish subsequent monitor health through separately reviewed authority if evidence is insufficient. | User notification at 17:53:23 UTC reports caddy-sync-health.service exit-code, lsyncd unknown, Caddy active, no VIP movement. Recovery checks do not prove a later successful monitor cycle. No fresh inspection or reset/restart authorized. Local reconciliation completed: sender containment leaves health timer running; inactive sender or invalid status snapshot can reject. Exact failing predicate and post-resume health are absent. Static notification labels are not measured transitions. Remains Open. |
+| W-155 | Diagnostic narrows HTTPS failure to after TLS; later snapshot includes Webmin OOM counters without event timing. | W-147, W-151, AC-013 | Resolved | Review retained evidence and actual request/control paths locally; distinguish missing observations from established cause before proposing another bounded operation. | Four direct login requests passed in 2.36–2.54 s; primary TCP 0.000118 s, TLS 0.052676 s, no first byte by 5.002007 s. Journal projection retained 32 other-category entries. Later Webmin peak 192 MiB, oom 3, oom_kill 1; no before/after counter or event timestamp establishes when or why. Neither historical nor current cause is proved. Local source/evidence review complete: direct probes were sequential, while the activated fragment defines two backend health probes alongside proxy requests; actual overlap was not recorded. Client TLS timing does not measure upstream connection. The bounded journal projection cannot recover discarded messages. Missing evidence and uncertainty are explicit; W-147/AC-013 remain unresolved. |
+| W-156 | Preserve the consumed diagnostic in its required terminal archive. | W-153, Caddy lifecycle | Resolved | Review exact terminal commit/tag/push separately before publication or neutral cleanup. | All 230 executed inputs copied and hash-verified; three Caddy readback streams decoded with byte/hash verification. Terminal result/history recorded, successor/coverage cleared, stream terminal-pending. Operation/recipe/implementation bytes preserved. No publication authorized. Exact 12-file archive prepared with temporary index, source hashes, patch, messages and guarded command; nine focused checks pass. Normal index unchanged; publication requires separate approval below. Approved continuation published commit 4e6b3d5 and annotated diagnostic terminal tag; exact tree and remote branch/tag verified. Mandatory hooks passed, server worktree/index clean. Original failed attempt retained. No neutral cleanup or live authority. |
+| W-157 | Replication notifier loses nonactive sender status and presents static transition/VIP labels as event context. | W-154, Caddy notification owner | Open | Owner review should preserve command status and safe observed state separately; distinguish static context from measured transitions and qualify the existing notifier before any deployment. | Pure local reproduction of the current expression converts inactive plus exit 3 into unknown. No notifier execution, message send or source change. Track here for follow-up after terminal archival; do not infer the exact live sender state from unknown. |
+| W-158 | Approved terminal archive publication stopped at test-inventory hook. | W-156, Caddy archive | Resolved | Preserve failure, resolve generated-file mismatch without changing executed source, review continuation from exact staged tree. | One ignored Python bytecode file was unregistered. Preserved privately, removed locally; inventory check passes. Base and 12-file tree unchanged, no commit/tag/push. Continuation prepared below; no replay. Approved continuation published commit 4e6b3d5 and annotated diagnostic terminal tag; exact tree and remote branch/tag verified. Mandatory hooks passed, server worktree/index clean. Original failed attempt retained. No neutral cleanup or live authority. |
+| W-159 | Two published commits fail CI because the pinned DNS dependency lacks the linked owner procedure. | Repository validation, Caddy CI | Resolved | Update and qualify the immutable DNS dependency pin separately from the preserved terminal archive; retain W-149's independent self-test limitation. | Runs 43913820717 (c88c77b) and 43913190025 (66d8ae5), jobs 133462505168/133460271387, fail Repository policies at the APPLICATION_ONBOARDING.md link to Unbound/docs/host-record-deployment.md. Workflow pins DNS 9ae13d0, which lacks that file; published 2ce7105 contains it. No workflow edit, rerun or publication performed. Approved pin correction now selects 2ce710544c96479da2d79ab058a023646dd33c92. Exact clean old/new checkouts prove document check fail/pass. Full qualification is partial: W-149 still fails and W-160 exposes stale accepted-zone hash. Synchronization and remaining serving regressions pass. No publication. November 16 final qualification passes all three Caddy host CI profiles with DNS 2ce7105 and corrected W-149/W-160 dependencies; workflow syntax passes. Local only, no remote CI success claimed. |
+| W-160 | New DNS checkout exposes a stale accepted-zone hash in Caddy serving-health validation. | W-159, DNS/Caddy ownership | Resolved | Reconcile accepted deployed DNS evidence and repository-source identity before changing the manifest or test; qualify the exact owner decision. | serving-health-regression.sh:316 compares current DNS zone source to f1f422d64a55a77af4d77a829ed3360341cf89f5f78c8e87419f01c3e593054d. Selected published DNS source is 4659dde5e93786ab144cb5a4f31b40de99faece7500303fcbde9ac65968158d9. Every other serving-health manifest input matches its expected hash. No runtime/hash waiver applied. Verified November 12 terminal evidence index, both apply results and paired gate. Installed hash is 2df1be44a9ea39a35df1e75db16d72a4138b4ab3048fdc7bcf58bd7ff1a959dc; source remains 4659dde5. Reconciled canonical/serving inventory and typed source/deployed comparison. Wrong source and installed hashes both reject. |
+| W-161 | Complete published diagnostic neutral cleanup before rebinding reconciled inventories. | Caddy lifecycle, W-160 | Resolved | Verify consumed inputs against published terminal tag; clear operation/recipe/terminal record, preserve archive, refresh inactive/state hashes and pass owner policy. | Exact operation, recipe, transaction, outer and terminal record matched tag at 4e6b3d5 before cleanup. Stream now clean, operation inactive, successor absent; no transaction behavior changed. Full three-profile qualification passes. Local changes uncommitted; no live authority. |
+| W-162 | Review qualified CI/inventory reconciliation for later publication. | W-149/W-159/W-160/W-161 | Resolved | Confirm exact changed paths, qualification identities, ownership, archive preservation and secret disposition; keep publication separate. | Reviewed 15 server files and three monitoring records; source hashes match final qualification, full three profiles passed. Server secret scan passes; one monitoring finding is the verified diagnostic-manifest digest, not a credential. No commit/push or live work. Publication remains awaiting explicit instruction. |
 
 ## Execution record
 
@@ -7206,3 +7217,514 @@ only, with mandatory hooks and destination/ref verification. It does not authori
 Caddy neutral cleanup, target contact, retry or deployment. Exact selected paths,
 base commits, destination visibility and command results are retained in
 `.local-evidence/uptime-kuma/remaining-publication-nuxtpfm8`.
+
+### November 16 neutral Caddy cleanup (W-150)
+
+The published annotated archive and retained remote-verification receipt were
+checked locally. Executed operation, recipe, outer runner and terminal-result
+bytes matched the tag before editing. No remote query or live host contact was
+needed. The archive and all private execution evidence remain unchanged.
+
+The current operation is inactive (`action: none`), with current transaction and
+state hashes. The outer runner's operation hash is rebound. The recipe is empty
+apart from its header; the terminal manifest and lifecycle registration are
+removed. The stream is `clean`, retains the latest archive tag, and has no
+successor or coverage. Operation/recipe lifecycle classifications are restored
+to workstation-only. The neutral transaction and accepted production/state
+manifests retain their previous hashes; no runtime behavior was changed.
+
+Private evidence: `.local-evidence/uptime-kuma/webmin-neutral-cleanup-tqg49dry`.
+`cleanup.json` records archive provenance and protected hashes; `checks.json`
+and individual logs record eight passing checks: deployment-window, successor,
+lifecycle and actual-workspace documentation policies, Bash syntax, ShellCheck,
+canonical shell formatting and whitespace. W-149's deferred fixture was not run.
+Session 38621 exited 0 and is retired. Changes remain local and uncommitted.
+
+W-147 diagnostic preparation is next; no new operation, retry, browser workload,
+scan, deployment or publication is authorized. AC-013 remains pending.
+
+### November 16 bounded diagnostic correction locally qualified (W-151)
+
+The existing Webmin backend probe now requests `/session_login.cgi`, matching
+Caddy's reviewed probe. It records the request start epoch, connect/header elapsed
+times and fixed failure phase without retaining the body or exception message.
+Its source/endpoint checks and timeout settings are unchanged.
+
+Caddy retains the original HTTP status receipt plus numeric curl connection,
+TLS, first-byte and total times and remote endpoint, including on failure. Start
+and timing files use `.tsv` names carried by the existing readback. Before the
+restoration trap runs, a failed application probe captures at most 32 Caddy
+journal entries since its start, with a three-second command bound and 64 KiB
+input bound. Only numeric timestamps and fixed categories survive filtering;
+raw messages, headers, cookies and URLs are not retained. The original curl
+failure remains authoritative even if diagnostic collection fails. No deadline
+was increased and no probe retry was added.
+
+The existing parent records one fixed numeric Webmin/Kuma cgroup snapshot before
+native backend restoration, with a three-second command limit. This happens
+AFTER the Caddy owner completes, so it is labelled and timestamped as later
+resource evidence, not a simultaneous failure sample or capacity acceptance.
+Missing evidence cannot suppress backend recovery. The fleet onboarding guide
+now documents these repeatable diagnostic requirements and evidence limitations.
+
+Local qualification decision: prove request alignment, safe evidence and failure/
+recovery contracts, not named-host capacity. Existing tests were extended rather
+than adding another framework. Shell probe cases cover success, curl 28, HTTP
+failure, unavailable journal and private-text exclusion. Webmin tests cover
+matching path, timeout phase, credential-safe output and connection cleanup.
+The parent passes six scenarios, including failure of the added snapshot while
+restoration still completes. Its original failures remain preserved.
+
+Private evidence root:
+`.local-evidence/uptime-kuma/webmin-diagnostic-local-it_tu3qy`.
+`source-hashes.json` pins the changed source; `final-checks.json`,
+`http-outside.log`, `parent-final.log` and `gitleaks.log` retain passing checks.
+Shell collision policy, syntax, ShellCheck, canonical formatting, YAML,
+neutral successor/window policy, documentation and whitespace checks pass.
+The changed-file secret scan passed with existing owner configuration. The
+vexp completion helper reported unavailable because its session root is not a
+Git repository; it supplied no verification. Direct focused checks were used.
+
+Initial HTTP and parent tests could not use local socket/worker facilities in
+the filesystem sandbox. Those failed results remain retained; the same suites
+passed outside the sandbox using localhost only. Sessions 69695, 29741, 58248
+and 93051 are complete and retired. W-149's deferred fixture was not repaired or
+rerun. Consumed bundles and archive remain untouched. The operation remains
+inactive with current neutral hashes; no successor is defined or sealed.
+
+W-147's historical timeout cause is still unknown. This correction improves the
+next authorized attempt's evidence; it does not prove production behavior. No
+live target contact, browser load, scan, retry, promotion or publication occurred.
+
+### November 16 bounded diagnostic successor sealed for review (W-152/W-153)
+
+This is a new diagnostic operation, `20261116-webmin-proxy-diagnostic`, using
+existing Webmin parent and primary-first Caddy owner entrypoints. The published
+failed attempt and every consumed input/receipt remain unchanged. W-147's
+historical cause is unconfirmed. W-149 fixture repair remains Deferred.
+
+Private bundle:
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-diagnostic-review-eb_83at5`.
+
+- Parent manifest SHA-256 (230 input files):
+  `9ddd690a5663a49f7c783464ab1c062388797038572ad19b8fd39684f5693637`.
+- Exact Caddy outer SHA-256:
+  `c51b010aacc2c2a2ca3d79a273a041cd85c61ad2ce7eaa250914a9928d56ffcc`.
+- `review.json` records the command/scope; `launch.json` and
+  `INPUT-METADATA.json` bind invocation, SSH inputs, file modes and symlinks.
+- The operator helper requires no credential or browser runtime. It verifies the
+  manifest and owner authorization gate, creates one exclusive `attempt.started`
+  marker, then invokes the existing parent with private logs. Replays fail.
+
+#### Exact bundle, command and scope for one diagnostic attempt
+
+```bash
+/usr/bin/python3 -I -B /home/aaron/code/.local-evidence/uptime-kuma/webmin-diagnostic-review-eb_83at5/operator.py --manifest-sha256 9ddd690a5663a49f7c783464ab1c062388797038572ad19b8fd39684f5693637 --run-approved-once
+```
+
+Requested authority: one temporary diagnostic on ama@10.1.3.75 and the existing
+pi@10.1.0.53/10.1.0.54 Caddy pair. Admit current boot continuity and exact installed
+configurations/controls. Temporarily apply the same guarded Webmin profile;
+verify the four direct login paths with route/socket/counter evidence and the
+two workstation denial paths. Activate and verify the selected Caddy fragment
+on the primary, expose through managed replication only after acceptance, and
+verify the same release on the secondary and reviewed shared endpoints.
+
+On probe failure, retain bounded safe timing/journal evidence before Caddy's
+restoration. On readiness success, the diagnostic-only parent sends finish
+immediately. Retain the later numeric backend snapshot, verify paired Caddy
+restoration/outgoing inventories and exact native Webmin loopback restoration,
+then stop the owned recovery timer. Evidence failure cannot bypass recovery or
+replace the original operation failure. Review both owner receipts even on
+nonzero exit. Controller loss can require manual Caddy recovery; independent
+backend recovery remains armed at 1800 seconds. The Caddy exposure safety bound
+remains 660 seconds; it is not a request to wait that long after readiness.
+
+No password, login, browser, WebSocket workload, scan, DNS, reboot, forced
+failover, resource-limit change, unrelated route change, permanent promotion,
+Git commit/tag/push or additional attempt is included. A passing diagnostic does
+not accept AC-013. This candidate does not authorize itself: explicit approval
+of this exact bundle/command/scope is required by the
+[Caddy authorization rule](../../../homelab-server-configs/Caddy/AGENTS.md#authorization-cadence)
+and the current no-live-work boundary. No operator attendance window is needed.
+
+#### Local qualification and preparation findings
+
+The existing offline Podman suite passed all 16 activation/replication/recovery
+cases with network disabled and cleanup status zero. This validates the changed
+owner path; no capacity conclusion is drawn. The original fixture remains at
+`/tmp/caddy-application-qualification-krcbdzgb`; a durable namespace-safe copy is
+under `caddy-qualification/`. The exact current owner graph passed
+`--authorization-ready`, and `operator.py --verify-only` passed without contact.
+Eight localhost parent scenarios include diagnostic success/failure with no
+workload, unavailable snapshot evidence and unchanged recovery ordering. The
+private helper tests cover verification-only, success, failure, replay and drift.
+Playbook syntax, YAML, shell/collision/format, lifecycle and documentation checks
+passed. No new platform fixture or W-149 repair was added.
+
+Preparation corrected two local binding omissions before sealing: a defined
+stream cannot retain an archive tag in its active registry field, and operation/
+recipe lifecycle rows must be `defined-unexecuted`. The prior archive remains in
+HISTORY and its published tag. Initial gate failures are retained; corrected gates
+pass. The secret scan reported only the generated nonsecret correlation token in
+two parent/resource bindings; its exact equality and purpose are recorded in
+`secret-scan-disposition.json`. No credential value or new source allowlist was
+introduced. The original parent test log was renamed `parent-tests.log` so the
+future operation's exclusive `parent.log` remains absent.
+
+Sessions 84643 (offline owner suite), 26559 (parent tests) and 70031 (evidence copy)
+completed successfully and are retired. `sessions.json` retains their state.
+No attempt marker exists; no target contact, browser, scan or publication occurred.
+
+### November 16 diagnostic failed; owner restoration verified (W-153–W-156)
+
+Aaron approved the exact bundle, command and scope at the review above for one
+attempt. The operator verified the sealed inputs, recorded `approval.json` and
+created its exclusive attempt marker. Parent session 32715 exited 2; the Caddy
+child exited 1. Both are complete. This approval is consumed.
+
+Private evidence remains under
+`.local-evidence/uptime-kuma/webmin-diagnostic-review-eb_83at5`. All 230 manifest
+inputs were verified and copied to `executed-inputs/` before terminal metadata
+edits. `caddy-execution/` preserves the original controller evidence from
+`/tmp/caddy-ssh-evidence-serving_health.P8GYpY`; three readback streams were decoded
+only after verifying every recorded byte count and SHA-256. `terminal-summary.json`
+records the observations; raw logs remain private.
+
+The four direct `/session_login.cgi` probes passed with HTTP 200, matching route,
+socket source and target guard counters. Total times were 2.36–2.54 seconds.
+Both workstation denial checks passed. The first primary IPv4 HTTPS request
+then failed with curl 28, HTTP 000 and zero response bytes. TCP connected in
+0.000118 seconds, TLS completed at 0.052676 seconds, and no first byte arrived
+before the 5.002007-second total. This narrows the current failure to after TLS;
+it does not identify the upstream cause. Managed replication exposure, secondary
+application acceptance, browser and scan workloads never started.
+
+The bounded Caddy journal capture succeeded but retained 32 entries classified
+`other`; it does not establish a request failure cause. The subsequent Pi snapshot,
+after Caddy recovery and before backend restoration, reports Webmin peak
+201326592 bytes (192 MiB), oom 3 and oom_kill 1. These counters lack a preceding
+baseline or event timestamp. They cannot establish that the kill happened during
+this request, caused this timeout or explains W-147. Kuma's snapshot reports
+zero OOM events. No host-capacity acceptance follows.
+
+Both Caddy restore/resume commands and readbacks passed, including the original
+outbound inventories and existing dual-stack serving checks. The parent restored
+Webmin, passed its exact restored-state assertion and stopped the owned timer.
+This proves the scoped restoration checks, not all later monitor health.
+
+Aaron supplied an Apprise alert first observed at `2026-11-16T17:53:23Z`, during
+the Caddy child's recovery window (child ended at 17:53:24 UTC). It reports
+`caddy-sync-health.service` failed, `lsyncd=unknown`, Caddy active and no VIP
+movement. The owner resumes transport and checks baseline state, but does not
+retain a subsequent successful replication-health cycle. A transient recovery
+interaction is possible, not established. W-154 remains open; no suggested live
+status/journal commands, reset-failed or restart were run.
+
+Caddy is `terminal-pending` / `failed-consumed`; the operation, recipe and
+implementation remain byte-identical to execution. The terminal manifest and
+history retain sanitized outcomes/hashes, and successor/coverage registries are
+cleared. Planned tag: `caddy-webmin-proxy-diagnostic-terminal-2026-11-16`.
+Archive review/publication is separate. AC-013 remains pending, W-149 remains
+Deferred, and no retry, live inspection, promotion or publication is authorized.
+
+Terminal reconciliation checks passed: deployment-window, lifecycle, actual-workspace
+documentation policy, terminal YAML, Markdown and whitespace. W-149 was not run.
+The original operation, recipe, transaction and outer runner match their preserved
+executed copies. No source behavior was changed after execution.
+
+### November 16 retained-evidence reconciliation (W-154/W-155/W-157)
+
+No target contact occurred. The existing recovery implementation deliberately
+stops `caddy-lsyncd.service`, then restores both nodes and resumes transport.
+It does not stop `caddy-sync-health.timer`. The health worker rejects either an
+inactive sender or an invalid `/run/caddy-lsyncd/status` snapshot. The reported
+11:53:23 AM CST alert falls within this recovery window. This establishes a
+plausible monitor/recovery interaction, not the exact failed predicate or later
+recovery. No health-worker journal or completed post-resume cycle was retained.
+W-154 remains Open; the alert must not be dismissed as harmless or resolved.
+
+The notifier's `is-active` expression appends `unknown` after nonzero exit, then
+rejects the combined string. A pure local scalar reproduction maps `inactive`
+with exit 3 to `unknown`. No systemctl, notification or network command was run.
+Its `active -> failed` and no-VIP-movement text are static labels, not independent
+transition measurements. W-157 records this information-loss defect separately;
+no consumed source was changed. Current source explains the possible path but
+does not establish which code or state produced the reported live event.
+
+W-155's local evidence review is complete. Direct login probes were sequential;
+the activated fragment defines health checks for both addresses every 30 seconds,
+with a three-second health timeout, alongside proxied requests. Their actual
+concurrency was not captured. TCP/TLS client timings exclude a client-side
+connection/handshake timeout for this request, but do not measure the upstream
+connection. The 32-entry journal projection contains only `other` categories;
+raw messages cannot be reconstructed. The later OOM counters lack a preceding
+baseline and event timestamp. None proves the current or historical root cause.
+W-147 and AC-013 remain unresolved. No timeout increase, limit change or fixture
+load test is justified by this evidence. If further live work is proposed later,
+its missing evidence is the health-worker result after resume and request-window
+upstream/Webmin timing with timestamped resource events, using existing owners.
+
+Private `local-reconciliation.json` records source hashes, the scalar reproduction
+and limitations beside the original diagnostic receipts.
+
+### November 16 diagnostic terminal archive prepared (W-156)
+
+The exact 12 changed Caddy/Webmin files are retained under
+`.local-evidence/uptime-kuma/webmin-diagnostic-archive-review-650k0rmk/files/`.
+`files.txt` enumerates scope; `FILES.SHA256SUMS`, `archive.patch`, commit/tag messages
+and `review.json` bind the candidate. A separate temporary Git index produced the
+reviewed tree; the normal index remains empty. No commit, tag or push occurred.
+The executed operation, recipe, transaction and outer runner match the preserved
+230-input bundle. Terminal metadata adds the local reconciliation limitations;
+raw/private evidence and monitoring change records are excluded from this archive.
+
+- Base commit: `c88c77b29b9c62c194545a421e37eaf6ad845d05`.
+- Candidate tree: `63a1562bfc9b485bdb8e84a7da1707e5c579af4c`.
+- File-manifest SHA-256: `f277c26d4f881c849f965e8c6b884d74e9e9d0ae3e985577840b059ef7d4aac6`.
+- Patch SHA-256: `6c8f4c63a6c47f8ec5bfe64c7f2a25b7493989c10cbb45d78714498e51d69460`.
+- Planned annotated tag: `caddy-webmin-proxy-diagnostic-terminal-2026-11-16`.
+- Command SHA-256: `d7bc9fd7849f39f309ce88bfa2f18686858af9661e1942b2a70e501ee04060bf`.
+
+#### Exact terminal archive command and scope for separate approval
+
+```bash
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/webmin-diagnostic-archive-review-650k0rmk/review-command.sh
+```
+
+Requested scope: one commit of the exact 12-file tree, one annotated tag and one
+atomic push to `Racerx323/homelab-server-configs` main plus that tag. The command
+checks base/remote identity, remote visibility, absence of the tag, source hashes
+and candidate tree before publication. Mandatory hooks remain enabled; changed
+inputs or hook rejection stop progression. Remote branch/tag readback follows.
+No live host work, cleanup of consumed inputs, successor, retry or promotion is
+included. The repository's [archive rule](../../../homelab-server-configs/Caddy/AGENTS.md#scope-and-archive)
+requires an annotated pushed terminal archive before consumed operation removal;
+the current request grants preparation only, so publication needs explicit approval.
+
+Nine focused checks passed: deployment window, lifecycle, actual-workspace owner
+documentation, terminal YAML, history Markdown, whitespace, command Bash syntax,
+ShellCheck and snapshot Gitleaks with the existing owner configuration. W-149's
+known documentation fixture was not run or repaired. This is archive validation,
+not production or browser acceptance. All checks completed; no session is active.
+
+### November 16 archive publication stopped at commit hook (W-158)
+
+Aaron approved the exact archive command at WORK.md:7485 for one commit, annotated
+tag and push. Destination verification confirmed the intended GitHub repository.
+The command staged the exact 12-file tree, then the mandatory test-lifecycle hook
+rejected one extra generated file:
+`Caddy/tests/__pycache__/application-onboarding-regression.cpython-312.pyc`.
+No tracked source or inventory entry was missing. No commit, tag or push ran.
+
+The generated bytecode is preserved privately as `blocking-generated-bytecode.pyc`
+in the archive review root, then removed from the test directory. The unchanged
+inventory check passes. The reviewed base, every source hash and candidate tree
+still match; all 12 reviewed files remain staged. This is not W-149's deferred
+fixture problem. No source behavior, fixture or inventory policy was changed.
+`publication.log`, `publication.exit`, `publication-result.json` and the retired
+session record retain the failed attempt. Session 36583 exited 1.
+
+#### Exact archive publication continuation for separate approval
+
+```bash
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/webmin-diagnostic-archive-review-650k0rmk/continue-publication.sh
+```
+
+Command SHA-256: `9f7a551ea8cf25b49bc9596a30f2acee90ac9673584dc7221fab80e8a1897a43`.
+
+Scope remains the exact 12-file tree, one commit, annotated tag and atomic push
+specified above. The continuation checks the already-staged tree instead of
+requiring an empty index; it also requires no unstaged changes. All destination,
+base, input, tag-absence, tree and mandatory-hook checks remain. Bash syntax and
+ShellCheck pass. This command has not run. The approved scope explicitly said
+hook rejection stops progression; separate approval is needed to continue.
+No host work, replay, neutral cleanup or additional files are included.
+
+### November 16 reported CI failures reconciled (W-159)
+
+Both reported runs failed in `Caddy current-production contracts` / `Repository
+policies`: run 43913820717 for c88c77b and run 43913190025 for 66d8ae5. GitHub job
+logs are retained as `ci-job-133462505168.log` and `ci-job-133460271387.log` in the
+archive review root. The initial `gh run view --log-failed` returned empty output;
+the actual job logs were retrieved through the read-only jobs API.
+
+Both report the same broken relative link from `Caddy/docs/APPLICATION_ONBOARDING.md`
+to the DNS owner's `Unbound/docs/host-record-deployment.md`. The workflow does
+check out the sibling DNS repository, but pins commit
+`9ae13d0b03a4cec4124d411dd86b273462370129`, which lacks that file. Local Git object
+inspection confirms the published DNS commit
+`2ce710544c96479da2d79ab058a023646dd33c92` contains it. Updating that immutable
+dependency requires checking the other DNS inputs consumed by these CI profiles;
+file existence alone does not qualify the replacement pin.
+
+This is not the generated-bytecode publication-hook issue (W-158), and not exactly
+W-149's isolated self-test, which omits the sibling tree altogether. That deferred
+self-test can remain a separate failure after the stale CI pin is corrected.
+Neither failure establishes a production fault or explains the HTTPS timeout.
+The staged archive, publication continuation and source files remain unchanged.
+No workflow rerun, target contact or publication occurred. W-159 tracks the CI
+correction separately; archive publication authority remains pending.
+
+### November 16 diagnostic terminal archive published (W-156/W-158)
+
+Aaron approved the prepared publication continuation. The staged tree, all source
+and command hashes, base commit and destination were rechecked. The exact command
+exited 0 with mandatory hooks enabled. The original failed attempt remains intact.
+
+- Commit: `4e6b3d5a016e03d4ee2101d9fe745f7d63702de7`.
+- Annotated tag: `caddy-webmin-proxy-diagnostic-terminal-2026-11-16`.
+- Tag object: `37cfe4773890eccf826c9667d7e9c3d46d313898`.
+- Tree: `63a1562bfc9b485bdb8e84a7da1707e5c579af4c`, exactly as reviewed.
+- Destination: verified public repository `Racerx323/homelab-server-configs`.
+
+Atomic push completed; remote main and peeled tag match the commit, and the remote
+tag object matches locally. Server worktree and normal index are clean. Private
+`continuation-approval.json`, `continuation-publication.log`, exit/result and
+session records retain the evidence in the existing archive review directory.
+Session 56626 exited 0 and is retired. No further execution session is active.
+
+This publication preserves the consumed diagnostic; it does not resolve W-154,
+W-147, W-157 or AC-013. W-159's stale CI dependency pin remains unchanged; passing
+local hooks is not a claim that GitHub CI is green. Caddy remains terminal-pending
+until local neutral reconciliation. No host contact, replay, cleanup, promotion
+or additional publication occurred. This monitoring-record update remains local.
+
+### November 16 DNS CI pin correction and qualification limits (W-159/W-160)
+
+Aaron approved fixing and qualifying the dependency pin. The sole server-repository
+change is `.github/workflows/validation.yml`: DNS revision 9ae13d0 is replaced
+with published `2ce710544c96479da2d79ab058a023646dd33c92`. Workflow YAML, actionlint
+and whitespace checks pass. No commit, push, workflow dispatch or live contact ran.
+
+Private evidence: `.local-evidence/uptime-kuma/caddy-dns-pin-review-yilym96l`.
+Local detached checkouts of server commit 4e6b3d5 and the exact old/new DNS commits
+reproduce the original document failure with the old pin and pass the same
+`operator-documentation-policy.sh --check` with the new pin. These checkouts use
+committed files, not the working DNS tree. All three CI host profiles ran with
+`--phase host --container never`; no capacity or container workload was used.
+
+- Repository policies still fails inside W-149's isolated documentation self-test,
+  whose temporary tree lacks the DNS sibling. The real checkout check now passes.
+- Serving-health passes tracking lifecycle checks, then fails at the accepted-zone
+  hash comparison (W-160). All other serving manifest hashes match. The remaining
+  installation production-path and durable Apprise queue regressions were run
+  separately and pass; this does not turn the failed profile green.
+- Synchronization passes completely.
+
+The earliest published commit adding the DNS procedure already changes the zone
+source; selecting an older document-bearing commit does not preserve the old
+accepted-zone hash. Do not change a production accepted identity merely to fit
+new source. W-160 requires retained DNS acceptance/source reconciliation. W-149
+remains explicitly deferred; this narrow pin approval did not repair that fixture
+or disable its check. W-159's pin fix is implemented and its original symptom is
+qualified, but end-to-end CI qualification remains incomplete.
+
+Sessions 73312 (three profiles) and 5291 (remaining serving tests) completed and
+are retired. Profile exit codes and logs remain retained, including both failures.
+No consumed diagnostic input, Caddy lifecycle state or production file was changed.
+
+### November 16 CI ownership reconciliation completed locally (W-149/W-159/W-160/W-161)
+
+Aaron requested resolving the remaining CI scope/ownership. This authorizes the
+local correction of W-149's test layout for this CI task; its earlier deferral
+for archive preparation remains historical. The fixture now uses a private parent
+containing sibling server/DNS directories and copies the real DNS owner document.
+It explicitly removes that document and proves rejection before restoring it;
+all prior negative tests remain. No fake document or disabled link check is used.
+
+W-160 was stale Caddy bookkeeping, not proof of DNS drift. The November 12 DNS
+terminal summary's complete evidence hash index verifies unchanged. Both node
+apply outputs identify installed hash
+`2df1be44a9ea39a35df1e75db16d72a4138b4ab3048fdc7bcf58bd7ff1a959dc`; the paired final
+gate accepted. The published source at DNS 2ce7105 has hash
+`4659dde5e93786ab144cb5a4f31b40de99faece7500303fcbde9ac65968158d9`, with the same
+directives in preserved repository order as already reconciled under W-124.
+Caddy's accepted-live registry, production inventory and serving contract now cite
+the actual DNS-owner deployment. Source and deployed hashes remain separate;
+serving validation compares each to the corresponding inventory field. This is
+reconciliation of retained acceptance, not a new live observation or deployment.
+
+The first local profile rerun correctly rejected the old state-hash binding.
+To avoid rewriting a consumed operation, its operation/recipe/transaction/outer/
+terminal bytes were checked against the published annotated diagnostic archive
+at commit `4e6b3d5a016e03d4ee2101d9fe745f7d63702de7`. Local neutral cleanup then
+removed the current terminal record, emptied the consumed recipe, inactivated
+the operation and restored clean lifecycle classifications. State/outer/registry
+hashes now bind the reconciled inventories. The archive and original receipts
+remain unchanged; no runtime transaction behavior changed or successor exists.
+
+Evidence is retained in
+`.local-evidence/uptime-kuma/caddy-ci-reconciliation-p355i4oc`, including initial
+failed profiles, final input hashes and final logs. The exact DNS checkout is
+2ce7105; server inputs are the archived commit plus the recorded local changes.
+All three CI host profiles pass with containers disabled: repository policies,
+serving-health contracts and synchronization. Separate negative cases reject
+wrong source and wrong installed zone hashes. Shell collision policy, Bash syntax,
+ShellCheck, canonical formatting, workflow actionlint/YAML, Markdown and whitespace
+checks pass. No host-capacity fixture or live contact was used.
+
+Sessions 80284 (initial rerun) and 56823 (final profiles) completed and are retired;
+individual failed profile statuses remain in their logs. Final negative/static
+checks completed synchronously. Changes remain local and uncommitted. Hosted CI
+has not run on them; publication remains separate. W-154/W-147/W-157 and AC-013
+are unaffected and still unresolved.
+
+### November 16 reconciliation publication review (W-162)
+
+Reviewed scope: 15 paths in `homelab-server-configs` and three existing records in
+`homelab-monitoring-observability` (PLAN, WORK, RESULT). Server changes cover the
+pinned DNS dependency, documentation fixture layout, evidence-backed DNS inventory
+identities, typed source/installed-hash validation and completed neutral cleanup.
+The transaction implementation and production configurations are unchanged. The
+monitoring records preserve the diagnostic attempt, archive publication, CI
+findings, owner decisions and remaining acceptance gaps.
+
+Private review: `.local-evidence/uptime-kuma/caddy-ci-publication-review-qj7dvmm0`.
+Every server input still matches the final qualification hash list; no reason to
+repeat unchanged profiles was found. The three host profiles and negative cases
+remain passing evidence, not a hosted-CI result. Bases are server 4e6b3d5 and
+monitoring 14cd5bd. Local remotes point to the corresponding Racerx323 repositories;
+remote identity/visibility/ref verification remains part of authorized publication.
+
+The server snapshot secret scan passes using existing owner configuration. The
+monitoring scan reports one generic-api-key match on the documented parent
+manifest digest `9ddd690a5663a49f7c783464ab1c062388797038572ad19b8fd39684f5693637`.
+It was verified against the retained manifest bytes; it is not a credential.
+The finding and disposition are preserved, with no suppression or policy change.
+No raw private evidence, unrelated repository changes or `oom` file is selected.
+
+Ready scope for a future explicit publication request: one ordinary commit and
+push per owner repository, mandatory hooks enabled, then remote-ref and relevant
+CI verification. No new tag is needed: the diagnostic terminal archive is already
+published. This review does not authorize those writes, deployment, retries,
+notification sends or changes to pending Webmin acceptance. No code changed
+within this review; only this local record was updated. No sessions are active.
+
+### November 16 approved reconciliation publication (W-162)
+
+Aaron approved commit and push of all reviewed changes. Scope remains the 15
+server paths and PLAN/WORK/RESULT monitoring records. Both origin destinations
+were verified as the corresponding public Racerx323 repositories. Server inputs
+still match local qualification; mandatory commit hooks remain enabled. No new
+tag or live operation is included. Publication and hosted-CI results follow.
+
+The reported Repository validation run 43926049277 for archived commit 4e6b3d5
+failed on the same missing DNS owner-document link; that commit predates the
+reviewed correction. This adds no new implementation defect.
+
+Server publication completed at `722bc45a9f85bb3a50eb4d47fe33f9852562c7e0`;
+remote main matches and the worktree is clean. Mandatory commit hooks passed.
+Repository validation run 43933039649 passed, including all three Caddy profiles;
+CodeQL workflow run 43933039034 passed. W-149/W-159/W-160 now have hosted
+validation as well as local qualification. W-161 neutral cleanup is published.
+
+This monitoring publication includes only PLAN, WORK and RESULT, with mandatory
+hooks. Its resulting commit/ref and hosted-CI receipts are retained under
+`.local-evidence/uptime-kuma/caddy-ci-publication-review-qj7dvmm0`; this record
+does not predeclare their success. No deployment or new tag is included.
+
+The monitoring commit hook initially rejected the previously reviewed manifest
+digest as a generic API key because its adjacent label contained “nonsecret
+input”. The label was clarified; the digest and consumed bundle are unchanged.
+No scanner suppression or hook bypass was added.

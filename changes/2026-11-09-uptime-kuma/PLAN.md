@@ -775,3 +775,21 @@ created exclusively and removed after parent exit; never enter it in chat.
 Preserve the one-attempt marker and receipts on failure. No DNS, reboot, forced
 failover, account/ACL change, terminal workload, resource-limit change, permanent
 promotion, consumed-operation replay or Git publication is included.
+
+### W-147 diagnostic successor boundary
+
+Prepare one temporary route diagnostic using the existing combined parent with
+`proxy_trial.diagnostic_only: true`. Admit fresh boot continuity and exact installed
+controls, qualify direct dual-stack backend sources and denial, then activate the
+reviewed Caddy fragment through its existing primary-first owner. On failure retain
+bounded safe timing/journal evidence before recovery. On successful readiness,
+signal finish immediately. Retain a timestamped later backend resource snapshot
+and verify paired Caddy restoration and exact Webmin loopback restoration.
+
+No password, browser, scan, monitor/notification, DNS, reboot, forced failover,
+resource-cap change or permanent promotion is included. Existing 660-second Caddy
+exposure safety deadline and 1800-second independent backend recovery timer remain;
+normal successful diagnostic readiness ends exposure immediately. Controller loss
+can still require manual Caddy recovery. AC-013 remains pending even if this
+diagnostic passes. Source preparation grants no live authority; use the exact
+bundle/command review in WORK.md before one execution attempt.
