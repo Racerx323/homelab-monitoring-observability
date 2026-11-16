@@ -1,8 +1,11 @@
 # Uptime Kuma architecture
 
 Status: service foundation and guarded backend accepted November 11, 2026.
-The dashboard name and service-first scope are agreed; DNS/Caddy and final HTTPS
-onboarding remain pending. Current findings and execution status belong in the
+Caddy application acceptance and DNS/ordinary-name dual-stack HTTPS are accepted
+through November 12, 2026. W-020 is explicitly deferred and W-076 resolved by its approved no-change
+disposition. The added Webmin browser-access requirement keeps expanded
+project closeout pending (W-128). Current findings and
+execution status belong in the
 [work ledger](../../changes/2026-11-09-uptime-kuma/WORK.md).
 
 ## Purpose and boundaries
@@ -21,16 +24,16 @@ monitoring service.
 ## Host and resources
 
 The service runs on Raspberry Pi 3B+ `j2-svpi3bmf`, using Debian 13 ARM64,
-Ethernet `eth0`, 1 GB physical RAM and a 32 GB raw microSD card. The intended
+Ethernet `eth0`, 1 GB physical RAM and a 32 GB raw microSD card. The accepted
 host addresses are `10.1.3.75/22` and `fd36:5aa8:6971:1::75/64`.
-Management identity is distinct from the dashboard alias.
+Management DNS is `j2-svpi3bmf.local.theama.co`; it is distinct from the dashboard alias.
 
 Preserve DHCP IPv4, Router Advertisement routing, global IPv6, resolver policy,
 existing services and radio-block policy. Network ownership remains with
 `homelab-network`; the application installer must not silently allocate or
 replace a LAN address. A missing intended address blocks final backend exposure.
 
-Proposed initial container budget: 256 MiB memory pressure threshold, 320 MiB
+Accepted initial container budget: 256 MiB memory pressure threshold, 320 MiB
 hard memory limit, no container swap, at most two CPU cores of aggregate time,
 and 256 tasks. These are starting limits for the service foundation, not a claim
 about supported monitor count. Require a working memory cgroup controller and
@@ -44,7 +47,7 @@ auto-update service is required.
 
 ## Runtime and state
 
-Proposed runtime: system-managed Podman Quadlet, with the application running as
+Accepted runtime: system-managed Podman Quadlet, with the application running as
 the image's non-root `node` user inside an isolated network namespace. Rootful
 Podman is the service manager's runtime; this does not make the application
 process root. Keep the container runtime socket unexposed.
@@ -79,7 +82,7 @@ copies of fleet configuration. Installing Kuma does not establish host readiness
 | Requirement | Configuration authority | Required disposition |
 | --- | --- | --- |
 | needrestart | [Needrestart](../../../homelab-server-configs/Needrestart/README.md) | Install package and owner script/cron policy; qualify Debian 13 and Pi 3B+ kernel reporting before enabling daily 05:30 execution. No Pi 5 kernel filter by inference. |
-| Webmin | [Webmin](../../../homelab-server-configs/Webmin/README.md) | Install and configure host administration through an owner-reviewed Debian 13 ARM64 package and management-access policy. Select the proposed SSH-loopback profile and existing sudo/PAM account; the USB drive-polling trial is not selected. |
+| Webmin | [Webmin](../../../homelab-server-configs/Webmin/README.md) | Install and configure host administration through an owner-reviewed Debian 13 ARM64 package and management-access policy. Use the accepted SSH-loopback profile and existing sudo/PAM account; the USB drive-polling trial is not selected. |
 | msmtp | [Fleet mail owner](../../../homelab-dns/msmtp/docs/FLEET_AUDIT_STANDARDIZATION_PROMPT.md) | Install msmtp and the sendmail-compatible frontend. Resolve consumer account selection explicitly; preserve unrelated accounts and aliases. |
 | watchdog | [Fleet watchdog policy](../../../homelab-server-configs/watchdog/docs/FLEET-POLICY.md) | Discover hardware and current device owner; prefer qualified systemd manager coverage. A Debian watchdog daemon is an exception requiring exclusive ownership, not an automatic additional package. |
 | Notification transport | [Apprise API and Mailrise](../../../homelab-notification/apprise-api/README.md) | Consume the existing shared services; do not deploy duplicate notification servers on this Pi. |
@@ -100,8 +103,9 @@ consumer contracts do not select a Uptime Kuma alert recipient or configuration
 key. Apprise credentials and notification URLs remain external secret inputs.
 No synthetic email, test alert or downstream delivery is part of local validation.
 
-Watchdog policy currently proposes 60-second runtime and 120-second reboot
-settings for qualification; these are not accepted values for this Pi. Preserve
+The accepted vendor systemd watchdog uses `/dev/watchdog0`, a 60-second runtime
+and 120-second reboot setting. Its existing manager ownership was verified; no
+additional watchdog daemon was installed. Preserve
 an existing owner and vendor policy during discovery, never open the device as a
 probe, and do not introduce load/ping/temperature reset triggers. Configuration
 adoption and real watchdog-expiry recovery proof remain separate claims.
@@ -127,7 +131,7 @@ HTTP/WebSocket traffic to the Kuma backend on TCP 3001. Preserve certificate
 validation; never work around trust errors by disabling it. Use a separate
 application fragment through Caddy's immutable-release process.
 
-Proposed dashboard client allowlist: the supplied LAN IPv4 network
+Accepted dashboard client allowlist: the supplied LAN IPv4 network
 `10.1.0.0/22` and ULA network `fd36:5aa8:6971:1::/64`. Additional client networks
 require an explicit access decision; do not assume VPN or public access.
 
@@ -147,12 +151,12 @@ owns client TLS and source-network restriction; Uptime Kuma owns application
 authentication. Verify HTTP, WebSocket, authentication and each intended address
 family independently; a successful root-page request alone is insufficient.
 
-The prepared Caddy health contract is GET `/dashboard` with exact status 200.
+The accepted Caddy health contract is GET `/dashboard` with exact status 200.
 The administrator-bearing application redirects `/`; do not use that redirect
 as a failed backend health check. HTTP health does not establish authentication
-or WebSocket acceptance. The proposed single application uses two backend
-addresses, with passive exclusion disabled and HTTP keepalive off; deployment
-remains subject to the Caddy owner's onboarding review.
+or WebSocket acceptance. The accepted application route uses two backend
+addresses, with passive exclusion disabled and HTTP keepalive off. Future route
+changes use the Caddy owner's primary-first onboarding procedure.
 
 Local IPv6 administration uses an IPv6-only systemd socket on ::1:3001,
 forwarding through the installed systemd-socket-proxyd to 127.0.0.1:3001.
@@ -161,11 +165,29 @@ remote backend IPv6 are separate paths. Podman publishes IPv4 loopback and,
 after authorized promotion, the explicit IPv4/ULA backends. It does not publish
 ::1 through container NAT. The socket is wanted by and stopped with the
 application; the proxy is unprivileged, capped at 16 MiB/no swap/10% CPU/16 tasks.
-It forwards TCP without terminating HTTP or WebSocket. During controlled recovery,
-all four units require the same ephemeral permit. Releasing those temporary
-recovery guards remains a later reviewed transition. This transport correction
-passed bounded ARM64 target acceptance; the service remains stopped and guarded.
-Full foundation, startup and backend/HTTPS acceptance remain in the work ledger.
+It forwards TCP without terminating HTTP or WebSocket. All four units retain the
+same ephemeral-permit guards. Accepted startup state
+allows the startup dependency to recreate the permit on ordinary boots; the
+deployment containment timer is disabled. Recovery can return the service to
+contained state and requires its own reviewed operation. ARM64 foundation,
+startup, guarded backend and HTTPS acceptance are recorded in the work ledger.
+
+## Network and radio evidence limits
+
+NetworkManager retains automatic IPv4/IPv6 methods, the permanent ULA and an
+RA-protocol IPv6 default route with runtime forwarding enabled. Accepted runtime
+and reboot snapshots show global IPv6 and the required routes. They do not prove
+renewal throughout a timed RA lifetime. W-020 is an explicit network-owner
+follow-up before the next host networking/runtime migration or earlier reported
+IPv6 loss; that unmeasured-renewal risk is accepted for initial deployment. Do not
+change `accept_ra` or network ownership based only on these snapshots.
+
+Wi-Fi and Bluetooth were soft-blocked before and after the accepted reboot and
+at backend promotion. Radio-related daemons being resident does not contradict
+those observations. Keep the existing services and block policy: no target-specific
+service-removal policy is selected. W-076 is resolved by accepting the observed
+softblocks and keeping services unchanged. A future removal proposal needs a
+dependency review; neither memory savings nor hardware-level disablement is claimed. These retained observations are not a fresh host inspection.
 
 ## Initial administration
 
@@ -219,7 +241,7 @@ belong in component records and change results, not in this architecture.
 - [Podman Quadlet](https://docs.podman.io/en/v5.4.2/markdown/podman-systemd.unit.5.html)
   governs native unit and network behavior for the candidate target runtime.
 
-## Proposed guarded steady-state startup
+## Guarded steady-state startup
 
 Keep the four existing Kuma permit guards. A shared native startup dependency
 creates their ephemeral permit from protected owner state. While deployment is
@@ -315,3 +337,13 @@ transport remains outside the producer cgroup as in the existing owner schedule;
 it is host activity, not a separately reserved allocation. Owner qualification
 uses local mail substitutes; live notification authority remains separately scoped.
 Deployment records own observed outcomes and the current authorization state.
+
+## Webmin browser-access extension
+
+Fleet Webmin administration must use a dedicated browser HTTPS URL through
+Caddy, not a required workstation tunnel. The approved URL for this host is
+`https://webmin-j2-svpi3bmf.local.theama.co`; deployment remains pending. Webmin's
+[shared operations](../../../homelab-server-configs/Webmin/docs/OPERATIONS.md)
+and [Caddy onboarding](../../../homelab-server-configs/Webmin/docs/CADDY_ONBOARDING.md)
+own the reusable fleet process and optional SSH recovery path. The installed
+loopback profile remains unchanged until owner-reviewed browser onboarding.

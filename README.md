@@ -3,7 +3,7 @@
 This repository owns fleet Munin configuration and the
 [Uptime Kuma application](uptime-kuma/README.md). Munin profiles remain candidates
 unless their component records state live acceptance. Uptime Kuma service foundation
-and guarded backend are accepted; the Caddy route and private HTTPS application acceptance are accepted; DNS remains pending. There is no Prometheus, Grafana, or Alertmanager configuration here.
+and guarded backend are accepted; the Caddy route and private HTTPS application acceptance are accepted; DNS and ordinary-name HTTPS over both address families were accepted November 12, 2026. There is no Prometheus, Grafana, or Alertmanager configuration here.
 
 The [Munin component](Munin/README.md) contains node plugin source, plugin
 settings, candidate profiles, and the master-configuration contract. The

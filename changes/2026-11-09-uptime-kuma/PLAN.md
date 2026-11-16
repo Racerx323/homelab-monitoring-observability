@@ -56,7 +56,7 @@ service. Aaron approved this dashboard name on November 9, 2026.
    exposure, then replicate the same revision and independently accept Node B.
    Primary service does not wait for Node B; HA completion and DNS do. This
    sequence is implemented and locally qualified in the existing machinery;
-   deployment and production acceptance remain pending.
+   production acceptance is recorded in W-102/W-106 and W-124.
    Preserve platform maintenance separately and do not reuse the consumed
    certificate-derived onboarding operation. Keep login/WebSocket completion
    checks separate from activation, without a timed human receipt window.
@@ -396,3 +396,382 @@ persistent radio disablement or justify removing services. Neither finding
 authorizes an unrelated network/radio change, and neither is silently waived
 by DNS/Caddy success. Keep both tracked until evidenced or explicitly deferred
 with an agreed acceptance decision. This plan grants no live authority.
+
+## Boot continuity policy — approved November 12, 2026
+
+Aaron approved using boot IDs only for continuity within an operation. Future DNS
+admission authenticates each host, captures its current boot ID and independently
+checks the approved configuration and service/DNS readiness. A routine reboot
+before admission does not invalidate the candidate merely because its boot ID
+differs from preparation or historical evidence. Later phases must match the
+admitted IDs; an unexpected reboot stops progression for reconciliation, including
+whether recovery remains safe. Resuming an operation does not reset its admitted
+IDs. Explicitly planned reboots require their own approved transition and acceptance.
+
+This revises the future DNS contract. W-122 source implementation and local
+qualification are complete; a new candidate must explicitly select
+`boot_policy: operation-admission-v1`. Retained consumed scripts keep their
+original historical-ID contract. Preserve all
+consumed bundles and failures. Policy agreement does not authorize a live retry,
+reboot, or deployment. The workspace and DNS AGENTS.md instructions carry the
+permanent rule; WORK.md tracks implementation and evidence.
+
+## DNS and dashboard acceptance — November 12, 2026
+
+W-124 records the accepted secondary-first DNS operation using fresh admission
+and operation-scoped boot continuity. Both nodes serve the six records; paired
+DNS/service gates and normal-name trusted HTTPS `/dashboard` checks passed over
+IPv4 and IPv6. Together with W-106 accepted private login/WebSocket and passive
+observation, this satisfies AC-004. Existing service/backup acceptance is retained.
+W-020/W-076 and permanent-document reconciliation still prevent project closeout;
+W-096 remains deferred. Approval is consumed and grants no further live work.
+
+## Closeout reconciliation — November 12, 2026
+
+[RESULT.md](RESULT.md) records a Partial outcome from retained acceptance.
+The service, foundation and dashboard are accepted; W-020 timed RA renewal and
+W-076 host/network ownership disposition remain open under AC-008. AC-010 and
+W-012 await those dispositions. Radio softblocks are evidenced before/after
+reboot and at promotion; no daemon removal or hardware-disable claim follows.
+This reconciliation changes no requirement and grants no live authority.
+
+## Proposed final acceptance disposition — awaiting agreement
+
+The [W-127 decision](WORK.md#proposed-w-020w-076-acceptance-decision--november-12-2026-w-127)
+proposes accepting the evidenced radio softblocks with unchanged services, and
+explicitly deferring timed RA-renewal proof to the network owner before the next
+host networking/container-runtime migration or an earlier reported IPv6 failure.
+This would accept initial-deployment network preservation from existing startup,
+reboot and promotion checks while retaining the unmeasured-renewal risk. It is
+not yet approved and does not change current AC-008/AC-010 results. No live action,
+requirement waiver or project closure follows from this proposal alone.
+
+## Final acceptance decision — approved November 12, 2026
+
+Aaron approved W-127 for initial-deployment closeout. Accept observed radio
+softblocks across reboot/promotion with existing services unchanged (W-076
+Resolved). Accept initial-deployment network preservation from retained startup,
+reboot and promotion checks; defer timed RA-renewal proof (W-020) to the network/
+runtime owner before the next host networking/container-runtime migration, or
+earlier if IPv6 route/address loss is reported. Retain this follow-up in W-020.
+The risk of an unobserved later renewal failure is explicitly accepted; the
+measurement is not marked passed. No sysctl change, forced renewal, reboot or
+live inspection is authorized. This decision supersedes the pending proposal
+and prior partial-closeout assessments above. AC-008/AC-010 pass within this
+agreed boundary; W-096 stays deferred and future workload remains separate.
+
+## Webmin browser access — requirement added November 12, 2026
+
+Aaron rejected tunnel-only Webmin administration. Provide a normal trusted HTTPS
+browser URL through the existing Caddy pair and dedicated DNS if needed, without
+requiring a workstation SSH tunnel. Preserve Pi-account authentication, existing
+Kuma access, resource limits and unrelated fleet configuration. W-127 dispositions
+remain approved; they do not authorize a Webmin/Caddy/DNS execution.
+
+| ID | Required observed outcome | Verification method and evidence required |
+| --- | --- | --- |
+| AC-013 | Webmin is usable from an ordinary LAN browser over trusted HTTPS without an SSH tunnel. | Dedicated hostname, both intended families, correct redirects/assets, private existing-account login/logout, required WebSocket functions, restricted backend ingress and preserved existing proxy routes. |
+
+AC-011's earlier package/loopback acceptance remains evidence, but the revised
+management-access policy also requires AC-013. Local preparation is authorized;
+any live inspection or deployment needs its concrete owner-governed scope.
+
+The browser-access workflow is fleet-wide and reusable. The approved first URL
+is `https://webmin-j2-svpi3bmf.local.theama.co`. Webmin owns the shared profile,
+backend restriction and [operator procedure](../../../homelab-server-configs/Webmin/docs/OPERATIONS.md);
+Caddy retains its existing primary-first replication path and DNS retains its
+owner transaction. SSH is optional recovery only. Other hosts require explicit
+selection and their own baseline/acceptance; this task grants no fleet-wide live
+access. No duplicate publisher, replication engine or project ledger is created.
+
+## Fleet DNS procedure — requirement added November 12, 2026
+
+All fleet DNS additions, updates, deletions and other changes must enter through
+[the existing DNS owner procedure](../../../homelab-dns/Unbound/docs/host-record-deployment.md).
+Adapt that procedure in place, preserving its qualified atomic transaction,
+operation-scoped boot continuity and owner boundaries. Webmin and future
+application onboarding link to it. Broader resolver/package/HA changes select
+the appropriate owner runbook there; unsupported record types require explicit
+implementation qualification. No new application-specific DNS orchestrator.
+W-129 tracks documentation/routing, while W-128 retains Webmin implementation
+and live acceptance. This requirement grants no inspection or deployment authority.
+
+## Target qualification boundary — November 12, 2026
+
+Aaron approved preparation of a bounded actual-host qualification after reviewing
+fixture evidence limits. Local tests establish configuration behavior and defects;
+they do not accept or reject j2-svpi3bmf capacity. W-135's fixture failures remain
+risk evidence, not a requirement for another fixture capacity pass. Correctness,
+authentication, ingress, resource controls and recovery requirements remain.
+No live action is authorized by this strategy decision.
+
+Prepare the following operation through the existing Webmin, Caddy and host owners:
+
+1. Reconcile readiness once: exact installed Pi unit/drop-in identities, effective
+   controls, native module availability and terminal ACL disposition; both proxies'
+   current routes to both Pi addresses, accepted release identity and certificate
+   coverage. A read-only capture is separately reviewable because retained evidence
+   lacks these inputs. Fresh operation-start boot IDs provide continuity only.
+   Drift stops preparation for owner review; no historical boot ID is required.
+2. Bind exact before-files and backups, source-restricted browser profile, guard,
+   native start dependencies and Caddy child release. Reuse configure-miniserv.py,
+   the profile renderer, native Ansible/systemd and Caddy primary-first publication.
+   Do not replay the original installer, rebuild a fixture, add a publisher or
+   change accounts, caps, reserve, packages, startup authority or unrelated routes.
+3. Apply guard before opening the selected backend listener. Verify both backend
+   families from each proxy and actual Pi-observed sources/counters; verify a
+   selected unlisted client's denial. Keep strict TLS through Caddy, selected
+   hostname and both node addresses. Normal dual-upstream production policy stays
+   intact: direct backend checks prove each upstream family, while per-node browser
+   checks prove proxy integration. Do not publish successive production releases
+   merely to force upstream families for a test.
+4. Start measurement only after Aaron is ready for private browser acceptance.
+   Use one browser on the workstation; no Chromium on the Pi, no synthetic account,
+   no password/session capture and no mandatory wrong-password attempt against the
+   real account. Test ordinary login, dashboard/assets, the protected referrer page,
+   logout and session invalidation on each frontend family/node. Confirm applicable
+   WebSocket behavior only through a reviewed existing-account capability; never
+   launch a root terminal merely as a probe. Bind any missing capability disposition
+   before sealing; do not silently mark required WebSocket acceptance passed.
+5. Bound workload observation to ten minutes, including a 30-second unloaded
+   baseline and at least 95 seconds of ordinary authenticated use with both proxies'
+   normal health checks running. Sample once per second: host MemAvailable, Webmin/
+   Kuma/proxy cgroup usage/events/pressure, restart counters and sampler overhead;
+   correlate browser/HTTP timings without capturing bodies or secrets. Reuse the
+   existing sampler's passive function, not its extra HTTP probe loop. One scheduled
+   needrestart scan may overlap only through the already accepted guard/observer;
+   do not add a second scan or competing sampler. Capture scan admission and reserve.
+6. Preserve the accepted 128/192 MiB Webmin high/max and no-swap controls, Kuma and
+   loopback-proxy caps, staged scan admission (224 MiB before observer; 192 MiB after)
+   and 96 MiB sampled host reserve. Startup's 624 MiB admission applies only at its
+   defined stopped-service boundary; do not require it while accepted services run.
+   Stop load on reserve breach, OOM/max event, restart, missing safety samples,
+   guard/source drift, operator abort, browser failure or proxy timeout. Record
+   memory-high/PSI with latency; high events alone neither pass nor fail capacity.
+   No extended timeout or assumed overhead correction may turn failure into a pass.
+7. Arm host-side bounded recovery before mutation, independent of controller
+   connectivity, using native systemd/Ansible recovery. Restore only this change:
+   stop Webmin, restore exact saved configuration and unit/drop-in state, verify
+   loopback listeners and health before removing only the added Webmin guard.
+   Preserve Kuma/data/accounts and unrelated firewall tables. Caddy uses its owner
+   recovery for the added route; DNS remains unchanged during qualification. If
+   restoration fails, keep backend restriction and report recovery incomplete.
+   Operator availability is confirmed before the measured trial; waiting for the
+   operator outside a trial is not a release-transaction failure.
+8. Accept only the measured target workload with complete observations and verified
+   recovery/disposition. No claim of unlimited or long-running capacity. Failed
+   capacity leaves DNS pending and retains evidence; no automatic retry. Successful
+   target/application acceptance permits preparation of the separate DNS owner
+   change and normal-name verification, not automatic DNS execution.
+
+The concrete mutation bundle remains unsealed until installed identities, actual
+sources, browser capability and exact recovery bindings are reconciled. The
+readiness capture grants no backend mutation, browser load, restart, publication
+or DNS authority. It is preparation for one bounded trial, not a capacity verdict.
+
+### First-host trial bindings after readiness capture
+
+Use W-137's November 12 accepted capture in
+`webmin-target-readiness-fe7cvab0/attempt/` as preparation evidence. Preserve the
+consumed bundle. Recheck relevant identities at the future operation's preflight;
+capture fresh boot IDs and enforce continuity only within that operation.
+
+| Boundary | Prepared binding and remaining work |
+| --- | --- |
+| Target and frontend | Native hostname j2-svpi3bmf; ama@10.1.3.75; backend addresses 10.1.3.75 and fd36:5aa8:6971:1::75, port 10000; approved browser name webmin-j2-svpi3bmf.local.theama.co. |
+| Installed controls | Bind the three installed file hashes recorded in W-137: vendor webmin.service, 10-fleet-foundation.conf and 60-startup-authority.conf. Preserve the latter two and all effective controls; add only the reviewed ingress dependency. Repository identity is not installed identity. |
+| Proxy sources | Node A selects 10.1.0.53 and fd36:5aa8:6971:1::56; node B selects 10.1.0.54 and fd36:5aa8:6971:1::54, all via eth0. The proposal's additional ::53 is a node-owned address, not an observed selected source in this capture. Reconcile its intended role explicitly; do not claim failover acceptance. |
+| Caddy parent | Bind accepted release 20261111T213048Z-71b7deb8-bc71-45d5-8f33-98270af79d3b and manifest identity from W-137. The proposal remains outside production; prepare the exact child through the existing Caddy owner entrypoint. Certificate coverage passed, but target trusted-browser acceptance is pending. |
+| Backend producer | Reuse Webmin/scripts/render-proxy-profile.py and configure-miniserv.py with the reviewed first-host profile. Preserve authentication, collect_pkgs=0, unrelated settings and loopback access; install the source restriction before opening network listeners. |
+| Browser capability | Aaron confirms existing ama access to System Information and real-time statistics graphs. Select that native statistics WebSocket, not xterm. Permission and traffic must still pass during actual acceptance; no account/ACL or statistics setting changes. |
+
+The reusable acceptance requirements live in
+[the fleet Webmin procedure](../../../homelab-server-configs/Webmin/docs/CADDY_ONBOARDING.md#safe-websocket-method-for-each-host).
+For this host, use the existing Authentic Theme System Information graphs.
+Aaron confirms both the page and real-time graphs are already available to ama;
+this is operator-reported capability, not a new live permission inspection.
+The pinned native stats endpoint checks System Status access and authenticates
+its WebSocket session. Do not visit xterm: the retained terminal implementation
+starts a shell before accepting its connection.
+
+Use an isolated workstation browser session with trusted TLS and the approved
+hostname, following the Caddy owner's pre-DNS route selection. At each reviewed
+node/frontend-family path, log in privately, open System Information, observe an
+authenticated wss upgrade and continuing graph updates for at least 95 seconds
+without administrative actions, then close that test connection and log out.
+Verify that the prior session cannot access the protected page. Retain connection
+status, timing and frame counts only; do not export frames, cookies, HAR files,
+screenshots of private data or credentials. Permission denial or absent native
+statistics traffic stops acceptance; no fallback to a terminal or ACL edit.
+
+Preserve the graph interval/history and shutdown settings. The collector can
+register a loopback backend and write ordinary statistics cache/history; include
+that work in observation. Do not invoke global statistics shutdown/disable, which
+can affect other clients. Close only trial-owned browser sessions. The selected
+trial ends by restoring loopback through native Webmin recovery; its service stop
+also ends the collector under the reviewed maintenance scope. Do not claim that
+closing one tab necessarily stops a shared collector. Normal graph availability
+and target resource acceptance still require the authorized trial.
+
+### Native backend execution and recovery binding
+
+This is an active loopback baseline, not the stopped baseline used by the earlier
+installation diagnostic. Do not reuse that diagnostic's stop/disable/permit-removal
+disposition. Preserve accepted startup authority, enabled state and unrelated Kuma
+services throughout the new recovery design.
+
+| Failure boundary | Required disposition |
+| --- | --- |
+| Before mutation | Stop with bounded expected/observed diagnostics; remove only trial-owned staging. Do not restart an unchanged service. |
+| Backend changed, controller lost or deadline reached | A pre-armed native host-side recovery action stops Webmin, restores the exact saved config and changed unit/drop-in before-state, reloads systemd as needed and restores the prior active loopback service. Verify loopback-only listeners and HTTP health before restoring the previous guard state. |
+| Recovery cannot prove loopback restoration | Keep the restrictive guard, stop further workload, retain diagnostics and report recovery incomplete. Do not expose the old or new network listener by removing protection. |
+| Caddy child partly or fully activated | Use the Caddy owner's recorded recovery/partial-state procedure for this child. Preserve unrelated routes/TLS and record each node's resulting release. Backend recovery must remain effective even if Caddy/controller recovery is unavailable. |
+| Trial completed | Verify application/resource results and explicit accepted-or-restored disposition before disarming recovery. DNS remains unchanged and separately governed. |
+
+The reusable backend includes are now implemented as
+[proxy-trial.yaml](../../../homelab-server-configs/Webmin/ansible/proxy-trial.yaml)
+and [proxy-trial-restore.yaml](../../../homelab-server-configs/Webmin/ansible/proxy-trial-restore.yaml),
+using [recover-proxy.py](../../../homelab-server-configs/Webmin/scripts/recover-proxy.py).
+The private preparation directory is
+`webmin-trial-preparation-h3qt9wvn/`: binding.json contains installed config/unit
+hashes, metadata and normalized effective controls from W-137; miniserv.json,
+webmin.json and ingress.nft are generated by the existing profile renderer.
+This directory is preparation, not a sealed or executable parent operation.
+
+Proposed host storage is `/run/webmin-proxy-trial/webminfirsthost`, root-only 0700;
+config-0.before/config-1.before and state.json are root-only 0600. The binding
+requires exact installed FragmentPath/all DropInPaths and the observed config
+identities. Existing ingress artifacts or an inet webmin table reject before
+mutation. The extra allowed ::53 remains Node A's captured permanent address;
+retaining it is a proposed role-preservation choice, not post-failover acceptance.
+Fresh route-selected sources must still match before any exposure.
+
+The native apply service has a 180-second start/15-second stop deadline; the
+independent recovery timer starts before apply and expires at 1800 seconds with
+one-second accuracy. Recovery has 300 seconds. Each helper is capped at 48 MiB,
+no swap and 64 tasks. These are control bounds, not measured Pi overhead. The
+parent must allocate the Caddy stage and ten-minute workload within that deadline.
+Recovery stops the apply service before locking/restoring, and a cancelled or
+restored state rejects late apply. An expired transient apply unit is accepted
+only as the exact not-found state. All backend writes occur in the native service;
+Ansible stages inputs before arming and cannot resume configuration writes later.
+
+This qualification trial restores loopback even after a passing workload; it does
+not promote an unreviewed final browser deployment. The finish include verifies
+restored state before stopping the timer. The timer survives controller loss,
+not reboot/power loss. No reboot is included. Preserve the before-state and
+receipts, and report unexpected reboot or incomplete recovery for owner handling.
+
+Before sealing the combined trial, bind and qualify the Caddy child/recovery and
+pre-DNS browser paths, real-source/guard observations, and the passive resource/
+guarded-scan acceptance path. Neither parent boolean gates nor these backend
+includes implement those missing owner checks. No parent operation or live
+command is sealed, and no inspection or execution authority is implied.
+
+### Combined trial owner integration
+
+The parent remains unsealed. Reuse the existing Caddy outer
+`Caddy/scripts/run-serving-health-deployment-outer.sh` and its neutral transaction;
+Webmin's Ansible includes must not publish or select Caddy releases themselves.
+The owner recipe now supports the exact Webmin proposal source and basename.
+Keep accepted production inventories unchanged while preparing the trial.
+
+| Parent phase | Owner entrypoint and required evidence |
+| --- | --- |
+| Admission | Exact installed unit/config/guard identities, fresh operation boot continuity, current route-selected sources and operator readiness. Historical readiness is preparation, not permission to contact targets. |
+| Backend preparation | Webmin `proxy-trial.yaml`: private snapshot, independent recovery timer, bounded native apply. Its readiness flags must be backed by the admission results. |
+| Real backend paths | One request from each proxy to each backend family, with route-selected source and target-side allow/deny evidence; reject drift before publishing. No forced-family production release or second backend pool. |
+| Proxy activation | Existing Caddy primary-first outer: one original parent and child, primary acceptance before exposure, secondary and shared-endpoint acceptance. Preserve restoration inputs until the temporary trial ends. |
+| Application/resource trial | Existing ama System Information statistics method, trusted per-node/VIP paths before DNS, bounded timings and phase-correlated service/cgroup/host observations. One guarded scan with the accepted staged thresholds and a single observation owner. |
+| Finish or failure | Stop owned browser load. Contain transport of the exact Caddy child, restore and verify both prior selections and unrelated routes through the Caddy owner, then invoke Webmin `proxy-trial-restore.yaml`. Backend deadline recovery acts independently even if Caddy recovery cannot complete. |
+| Terminal decision | Report workload acceptance separately from both recovery results. Missing or failed recovery is incomplete/manual intervention, never a passing trial. Preserve all receipts and source identities; no DNS or permanent browser-profile promotion. |
+
+W-140's application-owned paired restoration is locally qualified through the
+actual offline primary-first entrypoints, including incomplete transfer,
+post-exposure lost reply, failed restoration and late exposure rejection. Use
+[Caddy's temporary trial interface](../../../homelab-server-configs/Caddy/docs/APPLICATION_ONBOARDING.md#temporary-application-trials).
+Its 660-second window and machine finish signal do not establish application
+acceptance. Controller loss can leave paired Caddy recovery incomplete; native
+backend deadline recovery remains independent.
+
+W-141's resource/scan component now stages reviewed source and profile without
+reinstalling the accepted guard. One existing locked observer covers baseline,
+workload and scan; 224/192/96 MiB thresholds and caps remain unchanged. See the
+[foundation interface](../../../homelab-server-configs/foundation/README.md#combined-workload-observation-without-changing-the-installed-guard).
+Local tests establish sampling, admission, failure and cleanup control flow, not
+this host's capacity. W-137 still must bind the parent to actual source/path and
+browser receipts, prove workload/scan overlap, stop owned load on failure, and
+join both recovery outcomes before sealing. No boolean or finish signal replaces
+those receipts. No parent operation or live command is sealed.
+
+### November 16 preparation checkpoint
+
+Crash reconciliation found the combined parent/path/workload drafts present but
+not qualified as one final revision. The existing acceptance above is unchanged:
+all reviewed browser paths require the specified sustained observation, prior
+sessions must lose access after logout, and the scan must overlap the selected
+paired workload. Current draft gaps and exact-input qualification remaining are
+tracked in [WORK.md](WORK.md#november-16-crash-status-reconciliation-w-137w-141w-143).
+No sealed parent or live authority results from this checkpoint.
+
+### Combined implementation qualified locally, November 16
+
+The parent now joins native backend recovery, the Caddy temporary-trial interface,
+actual-path collectors and the single observer. Browser implementation matches
+the existing all-six-path duration and prior-session rejection requirements.
+See [the reusable contract](../../../homelab-server-configs/Webmin/docs/CADDY_ONBOARDING.md#combined-parent-and-browser-receipt-contract)
+for native navigation, bounded pairing and clock-bracket acceptance. Local tests
+qualify these contracts and failure ordering; they do not establish host capacity
+or native UI acceptance. Final Caddy owner/input bindings and live review remain
+before the trial. No threshold, deadline, workload criterion or authority is waived.
+
+### First-host combined trial candidate, November 16
+
+The sole Caddy operation is `20261116-webmin-first-host-trial`, defined in the
+existing owner manifests. The private parent inputs and operator handoff are in
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-combined-review-0ve83yjr`.
+The ledger records the final seal, qualification and exact approval command;
+this preparation grants no live authority.
+
+The operation covers ama at `10.1.3.75` and pi at `10.1.0.53`/`10.1.0.54`, using
+accepted SSH keys, exact native host/configuration/control checks and fresh
+operation boot continuity. Reviewed readiness binds retained evidence, not a
+waiver of current admission. Route/socket/counter checks must confirm the bound
+proxy sources and both direct-client denial paths after guarded backend exposure.
+
+The existing parent temporarily configures the Webmin backend and ingress guard,
+then invokes the Caddy owner to add only the selected Webmin fragment to the
+accepted release. Primary activation/verification precedes managed replication
+and independent secondary acceptance. Existing TLS, Kuma and unrelated routes
+remain covered by owner checks. No installed Caddy tool is replaced.
+
+The workstation client privately authenticates as ama over both address families
+on each proxy and both VIPs, using the approved name without changing DNS. It
+opens only native System Information statistics, with two simultaneous clients,
+at least 95 seconds on every path and a 180-second final pair. Logout must
+invalidate each owned prior session. The one existing scan observer covers the
+600-second resource window and one list-only scan, gated by actual paired
+readiness with a 400-second readiness deadline. Every running scan sample
+must overlap both final clients. Missing overlap, slow readiness, resource
+failure or incomplete cleanup fails the trial; no time extension or retry.
+
+Webmin remains at 128/192 MiB high/max, Kuma at 256/320 MiB and its loopback
+helper at 16 MiB max, with zero swap. Scan admission stays 224 MiB before the
+observer, 192 MiB afterward, and 96 MiB sampled reserve. Caddy exposure is
+bounded to 660 seconds. The backend's independent 1800-second recovery timer,
+300-second recovery limit and 48 MiB helper limit remain unchanged.
+
+On success or failure, stop owned browser load, cancel/finish the owned scan,
+restore the paired Caddy baseline and outgoing inventories through its owner,
+then restore the exact Webmin loopback baseline. Verify both owners separately.
+The parent retains independent outcomes even when Caddy recovery is incomplete;
+controller loss can still require manual Caddy recovery. A successful trial does
+not leave browser ingress promoted or prove long-term capacity.
+
+The private operator command verifies the non-secret manifest and owner gate
+before prompting. Its interactive invocation confirms readiness only after
+exact-bundle approval. The password is an external owner-private runtime file,
+created exclusively and removed after parent exit; never enter it in chat.
+Preserve the one-attempt marker and receipts on failure. No DNS, reboot, forced
+failover, account/ACL change, terminal workload, resource-limit change, permanent
+promotion, consumed-operation replay or Git publication is included.

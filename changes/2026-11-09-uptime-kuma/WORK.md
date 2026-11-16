@@ -2,17 +2,22 @@
 
 ## Current position
 
-- Status: Backend-completion executed once and passed. Kuma/Webmin are active;
-  service foundation, guarded dual-stack backend, backup/restore, combined scans,
-  daily needrestart schedule and permanent startup are accepted. Approval is consumed.
-- Last updated: November 11, 2026 (America/Chicago).
-- Next action: Reconcile the separately owned DNS candidate and its conditional
-  approval/expiry before proposing DNS progression. W-106 private and passive
-  application acceptance passed: both nodes and combined verification accepted.
-  This observation approval is consumed. W-116 source publication is complete:
-  four owner repositories are pushed and remote-verified, with green validation
-  and CodeQL runs. No DNS or further live work is authorized. W-020/W-076 and documentation/closeout remain open; W-096 is
-  deferred. Session 34421 exited 0 and is retired. No execution sessions are active.
+- Status: Existing Kuma service/dashboard accepted. Aaron approved W-127's
+  network/radio dispositions, then required standard-browser Webmin access;
+  the SSH-only profile does not satisfy this revised requirement (W-128).
+- Last updated: November 16, 2026 (America/Chicago).
+- Next action: Reconcile the archived Caddy operation to the neutral state locally
+  before preparing W-147's bounded diagnostic correction. W-148's approved 61-file
+  terminal archive commit and annotated tag are published and remote-verified.
+  Cleanup has not run; consumed inputs remain present. W-149 remains deferred.
+  The production timeout cause is unconfirmed; browser/scan never started and
+  AC-013 remains pending. No retry, inspection, successor, permanent promotion
+  or further publication is authorized. Session 59826 exited 0 and is retired;
+  no execution session is active.
+- Document roles: [PLAN.md](PLAN.md) owns scope/criteria; this ledger owns work and
+  decisions; [RESULT.md](RESULT.md) owns the accepted scope and pending Webmin extension. Permanent design and
+  procedures remain in [architecture](../../uptime-kuma/docs/ARCHITECTURE.md) and
+  [operations](../../uptime-kuma/docs/OPERATIONS.md).
 
 ## Tasks and findings
 
@@ -21,15 +26,15 @@
 | W-001 | Define initial functional scope. | AC-009 | Resolved | Explicit service/monitor/notification boundary. | Aaron chose service first; monitors and alerts follow later. No test alert is included. |
 | W-002 | Fix the dashboard name and access path. | AC-004 | Resolved | User agrees to one internal HTTPS name. | Aaron approved `uptime.local.theama.co` through existing Caddy on November 9. This does not approve source publication or live reload. |
 | W-003 | Establish SSH identity and read-only host baseline. | AC-001, AC-008 | Resolved | Confirm intended target and collect bounded, non-mutating resource/runtime/network observations. | Read-only SSH succeeded with strict existing host-key verification. Host/model/OS/ARM64 and IPv4 match; hostname reports `j2-svpi3bmf.local.theama.co`. About 745 MiB memory available and 24.65 GiB root free at observation. No Podman or Kuma account/path was found by the scoped checks. Findings W-013 through W-016 retain limitations. |
-| W-004 | No governing architecture exists. | AC-002, AC-010 | In progress | Prepare one proposed permanent architecture, with rationale and unresolved choices explicit. | Permanent architecture and operations drafts now define the complete candidate. Live approval reviews this design; reconcile observed behavior at closeout. |
+| W-004 | No governing architecture exists. | AC-002, AC-010 | Resolved | Prepare one proposed permanent architecture, with rationale and unresolved choices explicit. | Permanent architecture and operations drafts now define the complete candidate. Live approval reviews this design; reconcile observed behavior at closeout. November 12 W-125: architecture reconciled with accepted runtime, watchdog, startup and DNS/Caddy paths; remaining network/radio evidence limits explicit. |
 | W-005 | Qualify a pinned ARM64 image for the Pi 3B+ resource envelope. | AC-001, AC-002, AC-006 | Resolved | Verify upstream stable release, actual architecture manifest/digest and resource budget. | ARM64 registry digest, local configuration ID and offline archive identity are separately verified in the sealed manifest. runtime-smoke-pxk7g5w0 passed actual AMD64 startup/restart/restore under the proposed controls; about 115 MB initial memory is an observation, not ARM64 capacity proof. Actual Pi execution and resource acceptance remain pending.  The proposed IPv6 loopback proxy adds a 16 MiB cap: the isolated corrective gate is 528 MiB and the future combined-foundation floor is 720 MiB. Requalify on the Pi; do not infer combined capacity from the isolated diagnostic.  Actual isolated corrective trial passed: Kuma peak 117.73 MiB, proxy 2.04 MiB, no memory-high/max/OOM events. Preflight available 728,184 KiB (711.12 MiB) exceeded the 528 MiB isolated floor but was 9,096 KiB below the future 720 MiB combined floor. Reconcile admission/capacity locally before a remaining-deployment candidate; no combined acceptance is claimed. November 11: actual pinned ARM64 runtime passed both combined checkpoints and scan-time reserve/pressure checks under the user-approved staged admission policy. Initial-service workload only; later monitors/load need review. |
 | W-006 | Define runtime ownership, local persistence and safe initial administration. | AC-003, AC-005, AC-008 | Resolved | Establish runtime/service identity, filesystem/ownership, backend restriction and bootstrap path without stored chat credentials. | Proposed Quadlet uses UID/GID 1000, protected local data, read-only rootfs and loopback-only bootstrap. Native observer checks actual mounts, ports, limits, user counts and authentication setting without reading credentials. Actual target acceptance and operator account creation remain pending. November 11: actual runtime/administrator, persistent data, mounts/identity, backup/restore, guarded backend and ingress-denial checks passed. One active user, authentication enabled, no monitors/notifications; no credentials collected. |
-| W-007 | Prepare DNS and Caddy onboarding under their owners. | AC-004, AC-008 | In progress | Reuse current application onboarding and source ownership; qualify both address families and WebSockets. | DNS read-only baseline completed; append-only six-record proposal and application fragment remain outside accepted production configuration. Existing immutable local image 1bab90ae19f4d9091b9529336ef023ecce44f96cf2bad6016ce95dbc04c64156 passed Unbound 1.17.1 candidate checking and Caddy 2.11.4 adaptation for both node environments. native-config-gwfqkdh5 retains inputs/status. No target staging, TLS provisioning or live application/auth/WebSocket acceptance. Owner execution definitions remain to prepare; application authority now homelab-monitoring-observability. |
-| W-008 | Prepare simple declarative deployment, acceptance and rollback. | AC-002, AC-006, AC-008 | In progress | Reuse repository automation conventions; validate real entrypoints and failure boundaries. | Complete native coordinator includes controller integrity checks, boot/address prerequisites, offline runtime, boot proof, private administrator pause, actual backup/restore and guarded backend promotion. Frozen controller-only preflight passed. Runtime failure retains guard/data and requires residue review; earlier accepted prerequisites may remain. Actual execution/recovery acceptance pending. |
+| W-007 | Prepare DNS and Caddy onboarding under their owners. | AC-004, AC-008 | Resolved | Reuse current application onboarding and source ownership; qualify both address families and WebSockets. | Preparation history: DNS read-only baseline completed; append-only six-record proposal and application fragment remain outside accepted production configuration. Existing immutable local image 1bab90ae19f4d9091b9529336ef023ecce44f96cf2bad6016ce95dbc04c64156 passed Unbound 1.17.1 candidate checking and Caddy 2.11.4 adaptation for both node environments. native-config-gwfqkdh5 retains inputs/status. No target staging, TLS provisioning or live application/auth/WebSocket acceptance. Owner execution definitions remain to prepare; application authority now homelab-monitoring-observability. November 12: accepted primary-first Caddy release and W-106 private/passive evidence are joined by W-124 accepted DNS deployment and normal-name HTTPS 200 over both families. |
+| W-008 | Prepare simple declarative deployment, acceptance and rollback. | AC-002, AC-006, AC-008 | Resolved | Reuse repository automation conventions; validate real entrypoints and failure boundaries. | Complete native coordinator includes controller integrity checks, boot/address prerequisites, offline runtime, boot proof, private administrator pause, actual backup/restore and guarded backend promotion. Frozen controller-only preflight passed. Runtime failure retains guard/data and requires residue review; earlier accepted prerequisites may remain. Actual execution/recovery acceptance pending. November 12 W-125: accepted native backend successor, retained recovery/containment evidence and separately accepted owner proxy/DNS operations satisfy implementation/qualification. Consumed definitions are not reusable maintenance commands. |
 | W-009 | Define and qualify consistent backup/restore and retention. | AC-003, AC-007 | Resolved | Full local-data backup method, isolated restore proof, storage policy and off-node destination explicit. | Production restore checker passed against actual stopped application data in restore-final-khncnm5o/restore-cnpz4fqz/receipt.json, including immutable configuration-ID execution, database/authentication counts and cleanup. First-deployment archive budget is 64 MiB/10,000 members with no monitors/notifications; future workloads need review. Live administrator-bearing backup and protected controller copy remain pending; no recurring backup service is claimed. November 10 administrator-completion actual ARM64 backup/off-node identity, isolated restore, cleanup and source recovery passed; protected 307200-byte controller archive retained. No recurring backup service is claimed. |
 | W-010 | Qualify and seal the concrete operation. | AC-001 through AC-009 | Resolved | Local checks pass; remaining target checks, immutable inputs, exact command and complete scoped bundle are reviewable. | One expanded offline candidate is sealed; frozen controller and actual boot-input checks pass locally. Exact hash, graph, command, scope, target acceptance and recovery are recorded below. Aaron approved and executed this exact bundle November 10; terminal APT simulation failure retained below. Approval is consumed; no replay or changed-input retry is authorized. |
-| W-011 | Execute the authorized operation and independently accept or recover. | AC-001 through AC-009 | In progress | Required observed criteria pass, or failed/partial outcome and recovery/residue are recorded honestly. | Partial installation accepted boot/address prerequisites and all 29 package pins; Webmin remains contained after failed HTTP acceptance. Kuma image/definitions/data were installed and started, but loopback observer connection timed out; native rescue and independent inspection confirm stopped services. Private administrator acceptance, startup reboot, backup/restore, guarded backend, schedule and final DNS/Caddy HTTPS remain pending. Consumed operations are preserved; only a newly authorized continuation may proceed.  Subsequent approved loopback correction passed actual Pi HTTP acceptance over every container/direct/published family path, then returned all four units to verified stopped/guarded state. Remaining criteria above are still pending. November 11 successor exited 0: service foundation, preserved reboot identity, administrator, fresh backup/restore, guarded backend, combined scans, schedule and permanent startup accepted. DNS/Caddy HTTPS still pending; this is service-stage acceptance, not project closeout. |
-| W-012 | Reconcile permanent documentation and close the record. | AC-010 | Open | Operations and architecture are current; every finding has disposition; write criterion-linked RESULT.md. | Keep repeatable procedures and enduring design out of the change journal. |
+| W-011 | Execute the authorized operation and independently accept or recover. | AC-001 through AC-009 | Resolved | Required observed criteria pass, or failed/partial outcome and recovery/residue are recorded honestly. | Partial installation accepted boot/address prerequisites and all 29 package pins; Webmin remains contained after failed HTTP acceptance. Kuma image/definitions/data were installed and started, but loopback observer connection timed out; native rescue and independent inspection confirm stopped services. Private administrator acceptance, startup reboot, backup/restore, guarded backend, schedule and final DNS/Caddy HTTPS remain pending. Consumed operations are preserved; only a newly authorized continuation may proceed.  Subsequent approved loopback correction passed actual Pi HTTP acceptance over every container/direct/published family path, then returned all four units to verified stopped/guarded state. Remaining criteria above are still pending. November 11 successor exited 0: service foundation, preserved reboot identity, administrator, fresh backup/restore, guarded backend, combined scans, schedule and permanent startup accepted. DNS/Caddy HTTPS still pending; this is service-stage acceptance, not project closeout. November 12 W-124 accepted DNS/Caddy HTTPS; service execution is complete. Final AC-008 disposition remains with W-020/W-076; see partial RESULT.md. November 12: W-127 approval accepts the initial-deployment preservation boundary; all required service criteria are reconciled in RESULT.md. |
+| W-012 | Reconcile permanent documentation and close the record. | AC-010 | In progress | Operations and architecture are current; every finding has disposition; write criterion-linked RESULT.md. | Keep repeatable procedures and enduring design out of the change journal. November 12 W-125 reconciled permanent documents and wrote criterion-linked Partial RESULT.md. Final closure waits on W-020/W-076; no scope waiver. November 12: Aaron approved W-127; permanent docs, criterion-linked accepted result and all ledger dispositions reconciled. No publication authorized. Reopened for Aaron's W-128 standard-browser Webmin requirement; prior dispositions remain approved. |
 | W-013 | Requested permanent ULA is not configured. | AC-001, AC-004, AC-008 | Resolved | Establish the network owner's persistent address design and review the exact correction before deployment. | Native NetworkManager checkpoint operation prepared by the network owner appends only the permanent ULA, preserves automatic methods/routes and verifies a fresh SSH connection before committing. Source is included in the sealed bundle. No address change has occurred. Accepted November 10 through native checkpoint/reapply, fresh SSH, DAD and preserved route checks; independently retained after the later failure. |
 | W-014 | Memory cgroup controller is unavailable. | AC-001, AC-006 | Resolved | Verify kernel/boot cause; prepare and authorize any needed correction/reboot, then observe the actual controller and resource enforcement. | Exact original/proposed boot bytes and native reboot/recovery play are included in the sealed candidate. Actual memory-controller availability and resource enforcement must pass after authorized reboot. No boot change has occurred. Accepted November 10 after the first reboot: changed boot ID, exact stored boot bytes, memory controller present, radio softblocks retained. Later residue inspection confirms controller remains active. |
 | W-015 | Radio-disable claim needs finer verification. | AC-001, AC-008 | Resolved | Distinguish interface/rfkill/firmware state from daemon state without changing either. | Both Wi-Fi and Bluetooth are soft-blocked by rfkill. Daemon activity did not mean enabled radios. Preserve this policy; no radio changes needed. |
@@ -37,13 +42,13 @@
 | W-017 | A bridged container's published port may bypass an INPUT-only firewall rule. | AC-005, AC-008 | Resolved | Qualify the guard against the actual DNAT/forwarding path, including allowed proxy sources, denied direct clients and unchanged SSH. | Final actual-Ansible-rendered guard passed packet-y9e7vocf: native IPv4/IPv6 DNAT/forwarding packets, all five allowed proxy sources, both denied sources, production counter parser, unchanged SSH/unrelated table, and removal recovery. Target Podman path still requires acceptance. November 11 actual Pi ingress trial accepted: both proxy nodes returned dashboard 200 over both families; unapproved source HTTP timed out, deny counters rose by 6 IPv4/3 IPv6, SSH remained reachable, and temporary client was removed. |
 | W-018 | Caddy source selection and current release need target observation. | AC-004, AC-008 | Resolved | Inspect both proxies read-only; establish actual per-family routes to Kuma and current immutable-release identity before defining the final guard/onboarding operation. | Both inspections succeeded; Caddy/Keepalived are active and native release-hash checks pass on the same release. IPv4 selects node .53/.54; active-node IPv6 selects shared Proxy ULA ::56, standby selects ::54. Proposed guard explicitly allows observed Proxy ULA plus both permanent node ULAs, avoiding unnecessary proxy route changes. No reload or failover occurred. Private proxy0/proxy1 receipts retain the baseline. |
 | W-019 | Recovery access for the required boot prerequisite was unknown. | AC-001, AC-006, AC-008 | Resolved | Identify an independent way to recover a Pi that fails to return after reboot. | Aaron confirmed physical device/microSD access and console KVM. Candidate must preserve the original boot file and distinguish manual recovery from verified remote recovery. This does not authorize reboot. |
-| W-020 | A rootful dual-stack bridge may change IPv6 forwarding/RA behavior. | AC-004, AC-008 | In progress | Verify the target runtime's effects and preserve existing Router Advertisement routes and global IPv6 throughout installation and reboot. | Netavark enables global forwarding; this NetworkManager-managed host already uses kernel eth0 accept_ra=0 with automatic IPv6. No generic accept_ra=2 edit is proposed. Native observer requires preserved automatic methods, persistent ULA, global addresses and IPv6 default routes after runtime start and reboot. A separately timed periodic RA renewal has not been qualified. November 11 runtime/preflight again accepted required addresses and routes after startup and promotion. Separately timed RA renewal remains unqualified; no new live observation authorized. |
+| W-020 | A rootful dual-stack bridge may change IPv6 forwarding/RA behavior. | AC-004, AC-008 | Deferred | Verify the target runtime's effects and preserve existing Router Advertisement routes and global IPv6 throughout installation and reboot. | Netavark enables global forwarding; this NetworkManager-managed host already uses kernel eth0 accept_ra=0 with automatic IPv6. No generic accept_ra=2 edit is proposed. Native observer requires preserved automatic methods, persistent ULA, global addresses and IPv6 default routes after runtime start and reboot. A separately timed periodic RA renewal has not been qualified. November 11 runtime/preflight again accepted required addresses and routes after startup and promotion. Separately timed RA renewal remains unqualified; no new live observation authorized. November 12 W-125 re-read before/after-reboot and backend-promotion receipts: auto/auto methods, permanent ULA, global IPv6 and RA default route retained with forwarding=1/accept_ra=0. No timed renewal series exists in these receipts; no new probe or sysctl change. Network/runtime owner must establish renewal evidence or obtain an explicit acceptance decision. November 12: Aaron approved initial-deployment acceptance from retained startup/reboot/promotion evidence without claiming timed renewal. homelab-network/runtime owner retains this record; timed observation due before the next host networking/container-runtime migration or earlier reported IPv6 route/address failure. Residual unobserved-renewal risk accepted; no live work authorized. |
 | W-021 | The local smoke helper could lose its failure receipt or leave a container after a launch timeout. | AC-002, AC-007, AC-008 | Resolved | Register attempted container names before launch, clean only matching task labels, preserve the original failure and always retain cleanup results. | Cleanup corrected; revised test records its own source hash. runtime-smoke-pxk7g5w0 passed startup, restart and restored-data checks; both task containers removed. No homelab target contacted. |
 | W-022 | Native local Quadlet rejected the proposed LogOpt key. | AC-002, AC-006 | Resolved | Use a log-bound configuration accepted by the relevant generator and preserve the first failed parse. | Target 5.4.2 documentation supports LogOpt, but the older local generator does not. The equivalent native PodmanArgs log bound passes both; definitions-n44a_l_4 generated bootstrap and exposed services successfully. definitions-d22wf7ed preserves the first failed parse. |
 | W-023 | Local packet fixture could not inspect PID 1's network namespace after entering a user namespace. | AC-002, AC-005 | Resolved | Compare against the caller's captured network namespace identity and rerun in disposable namespaces. | Caller now supplies its captured namespace identity, checked before any network setup. packet-gr102hne passed under isolated namespaces; no host firewall was touched. |
 | W-024 | Local forwarded IPv6 packet test timed out for an allowed proxy source. | AC-004, AC-005 | Resolved | Establish whether the fixture path or candidate guard is responsible and retain the failing observation. | Initial packet-0vhme_n4 failure retained. packet-b946stla confirmed failure even without the guard and an unresolved backend neighbor. Fixture now waits for link-local DAD; packet-gr102hne passed both address families. Target acceptance is still required. |
 | W-025 | Minimal runtime package simulation does not establish which firewall driver the installed Netavark will use. | AC-002, AC-004, AC-008 | Resolved | Explicitly qualify a supported driver and its complete package/configuration inputs before sealing the operation. | Explicit nftables driver is supported by the pinned containers-common/Netavark versions. All nine packages were downloaded and verified against target APT metadata; ARM64 OCI archive is acquired and separately hashed. Native offline APT simulation rejects upgrades/removals; target installed driver and port behavior remain pending. November 11 accepted pinned installed package/configuration identities and actual dual-stack runtime, published backend and denied-source packet behavior. No package/driver change was needed. |
-| W-026 | Existing Pi memory-controller planner is specific to Nautobot's USB storage baseline. | AC-001, AC-006 | In progress | Prepare an exact append-only boot correction bound to this Pi's saved original bytes and recovery path. | MicroSD-specific planner preserves exact original bytes/line endings, rejects drift/conflicts and passed five regression tests. Native phase preserves on/off-node copies and verifies controller/file/boot identities; reachable recovery restores the original, otherwise stops for physical intervention. Definitions and frozen controller locally qualified; target reboot/recovery not executed. |
+| W-026 | Existing Pi memory-controller planner is specific to Nautobot's USB storage baseline. | AC-001, AC-006 | Resolved | Prepare an exact append-only boot correction bound to this Pi's saved original bytes and recovery path. | MicroSD-specific planner preserves exact original bytes/line endings, rejects drift/conflicts and passed five regression tests. Native phase preserves on/off-node copies and verifies controller/file/boot identities; reachable recovery restores the original, otherwise stops for physical intervention. Definitions and frozen controller locally qualified; target reboot/recovery not executed. November 12 W-125: W-014 accepted boot correction and the retained staged reboot/runtime evidence supersede this stale pending status. Actual controller enforcement and startup reboot passed; emergency physical recovery was not exercised. |
 | W-027 | DNS readiness is outside the approved Caddy-only inspection scope. | AC-004, AC-008 | Resolved | Obtain bounded read-only authority for the owning Unbound/Pi-hole readiness procedure, then establish exact source/live baselines and conflicts before preparing mutation. | Aaron approved bounded read-only DNS inspection; both node receipts passed, all four services active and VIPs coherent, dashboard A/AAAA NXDOMAIN. W-028/029 reconcile ordering differences and the effective include graph without conflicts. Bounded readiness is complete; DNS mutation and final HTTPS remain W-007. |
 | W-028 | Both live Unbound local-zone files differ from the repository source. | AC-004, AC-008 | Resolved | Explain exact byte/semantic differences and preserve unrelated deployed records; do not overwrite drift with repository content. | Both live files have identical saved SHA-256 and root:root 0644. Parsed directives match repository content; ordering differs. Private proposal appends six records to exact live bytes without removal/reordering. Native Unbound candidate check passed in native-config-gwfqkdh5; no live mutation. |
 | W-029 | Unbound 1.17.1 does not return its include graph through the attempted -o include query. | AC-004, AC-008 | Resolved | Read only include directives and file identities through a bounded, symlink-aware traversal, retaining the failed native query. | Both -o include and -o local-data queries failed and remain retained. includes0/includes1 collected the active process's main config and all five regular config files, 70 relevant directives per node, without reading private key files. No Kuma host/service/address conflicts. Native active configuration checks passed separately. |
@@ -116,7 +121,7 @@
 | W-073 | Measure observer differences and scan-time reserve without replaying deployment. | AC-001, AC-006, AC-008, AC-011 | Resolved | Retain paired readings, scan-time headroom and verified cleanup; reconcile W-069/W-070 without claiming combined acceptance. | Exact approved measurement completed once on November 10, exit 0. Three pairs, 17 samples including 15 while scanner PID was live, exact native scan peak, successful kernel report, unchanged application states and owned cleanup retained under capacity-measurement-hbvxmkz9/execution. W-069 admission and W-070 combined reserve remain open work. |
 | W-074 | Reconcile admission using measured observer differences and baseline variability. | AC-001, AC-006 | Resolved | Keep the floor and raw numeric evidence; explain why changing observers cannot qualify the latest baseline; define prerequisites for a continuation. | Local source/evidence review retained the 737280 KiB Ansible-path gate. Raw readings also fail; no correction factor or retry policy adopted. Architecture now distinguishes admission from combined scan acceptance and explicitly accounts for the separate observer. W-069 capacity remedy and W-070 integration remain pending; no candidate sealed. |
 | W-075 | Attribute stopped-host memory without replaying deployment or changing capacity policy. | AC-001, AC-006, AC-008 | Resolved | Execute the approved bounded inspection and retain hierarchy-aware attribution and gaps before proposing a remedy. | Exact approved bundle ran once, exit 0, three samples, unchanged stopped application state. No enumeration truncation; PSI and some root/udev-child memory interfaces absent. Full evidence retained under host-memory-attribution-ydppox2d/execution. No sufficient safe capacity remedy established; W-069 remains unresolved. |
-| W-076 | Radio-related daemons have resident processes despite the radio-disabled host requirement. | AC-001, AC-008 | Open | Review fleet ownership/dependencies locally before proposing any service change; preserve Ethernet/NetworkManager and do not infer radio state from daemon presence. | Attribution observed wpa_supplicant and bluetooth service cgroups/processes. Combined current charge about 7.03 MiB, anonymous charge about 1.51 MiB; neither total is guaranteed recoverable or sufficient for the prior admission deficit. Inspection did not re-read rfkill or dependency policy. No stop/disable action authorized.  Local owner review found no target-specific radio-service disable profile in the searched fleet/network sources. Nautobot Bluetooth masking belongs to a different host and grants no authority here; no wpa_supplicant removal rule was found. Dependencies remain unverified; no action proposed. |
+| W-076 | Radio-related daemons have resident processes despite the radio-disabled host requirement. | AC-001, AC-008 | Resolved | Review fleet ownership/dependencies locally before proposing any service change; preserve Ethernet/NetworkManager and do not infer radio state from daemon presence. | Attribution observed wpa_supplicant and bluetooth service cgroups/processes. Combined current charge about 7.03 MiB, anonymous charge about 1.51 MiB; neither total is guaranteed recoverable or sufficient for the prior admission deficit. Inspection did not re-read rfkill or dependency policy. No stop/disable action authorized.  Local owner review found no target-specific radio-service disable profile in the searched fleet/network sources. Nautobot Bluetooth masking belongs to a different host and grants no authority here; no wpa_supplicant removal rule was found. Dependencies remain unverified; no action proposed. November 12 W-125: exact runtime receipts show wlan and bluetooth soft-blocked before/after the accepted reboot and at backend promotion. This corrects the earlier incomplete evidence summary, but does not prove hardware disablement or resolve service dependencies. Preserve the existing daemons; host/network owner must finish dependency/ownership review or explicitly accept a no-change disposition. No service change or capacity credit proposed. November 12: Aaron approved retaining existing radio daemons and accepting observed softblocks across reboot/promotion. No dependency-completeness, hardware-disablement or memory-recovery claim. Host/network owner must review dependencies before any future removal proposal; unexpected unblocking reopens this finding. |
 | W-077 | Review capacity options while preserving the floor, caps and reserve. | AC-001, AC-006, AC-011 | Resolved | Assess retained footprint and owner policies; state a supported path or the unresolved decision without pretending admission passed. | No sufficient supported footprint remedy identified. Radio service charges do not establish needed recovery; required foundation services and caps remain. Aaron confirmed no alternative host is available. Deployment is on hold pending an explicitly reviewed capacity/design decision; no continuation or new inspection prepared. |
 | W-078 | Review and implement staged admission for the only available host. | AC-001, AC-006, AC-011 | Resolved | Explicit policy agreement and locally qualified owner implementation; live acceptance remains separately governed. | Aaron approved 624/224/192/96 MiB with unchanged caps and sampling tradeoff. Shared guard, all three acceptance checkpoints, scheduled producer, restore/ingress fresh gates and failure receipts implemented. 41 tests, five syntax playbooks and native isolated success/failure qualification passed. No continuation sealed or Pi execution performed. |
 
@@ -170,6 +175,56 @@
 
 | W-115 | Prepare observation-only continuation after W-114. | AC-004, AC-008 | Resolved | Bind corrected observer, accepted private receipt and fresh attempt/evidence identity; qualify and seal without repeating login or live observation. | Candidate proxy-observation-review-c9vdnab_ passes frozen-source tests, receipt verification, syntax and secret scan. Observer matches the full successful native journal/systemd/Caddy qualification. Four consumed attempts preserved; no live approval or execution. |
 | W-116 | Publish reviewed pending changes and reconcile reported CI failures. | Repository publication; AC-010 | Resolved | Validate and secret-scan intended sources, commit/push to verified owner repositories and verify remote refs; preserve private evidence and deployment boundaries. | Aaron requested commit and push of all changes. Four owner repositories contain pending work. Latest server-config Caddy/Nautobot jobs passed; baseline secret scanning flags the exact archived runner SHA-256, independently verified and narrowly excepted. The older Nautobot failure is superseded by later passes. CodeQL startup failure has no jobs/annotations; the October 12 Webmin run has no available logs. All four source commits are pushed and remote-verified; their Repository validation and CodeQL runs passed. Private evidence and the empty oom scratch file remain excluded. No live change or retry is included. |
+
+| W-117 | Reconcile the unused DNS candidate and conditional authority after Caddy acceptance. | AC-004, AC-008 | Resolved | Verify frozen inputs, unused phase state, original expiry, owner-source applicability and retained Caddy acceptance without target contact. | November 12 local archive/member/index checks and retained combined acceptance verification passed. Owner helpers match; repository zone differs only in record ordering, with an identical directive multiset. Preserve the sealed live-baseline bytes. Approval remains unused with its original expiry; current instructions pause live execution. See the reconciliation entry below. |
+
+| W-118 | Initial DNS paired gate loses the underlying snapshot failure diagnostics. | AC-004, AC-008 | Resolved | Diagnose from retained/local evidence where possible; qualify bounded safe reporting of the actual subprocess status and failure category before a separately reviewed successor. | Approved before phase exited 1 after repeated snapshot_transport_failed and the bounded convergence deadline. Gate accepted=false; no apply invocation exists. The verifier combines nonzero remote exit and output-size rejection into one message and discards the underlying status/output. No DNS fault or SSH cause is established; no mutation/recovery occurred. Approval consumed; preserve all inputs and receipts. Current owner source now reports bounded exit/count/category/hint diagnostics; 34 existing-suite tests pass, including actual local streamed Python rejection and safe paired-timeout reporting. Historical cause remains unknown; no successor or retry is authorized. |
+
+| W-119 | Prepare the DNS successor with qualified snapshot diagnostics. | AC-004, AC-008 | Resolved | Freeze current qualified verifier with unchanged candidate and checks, fresh operation/backup identity, preserved predecessor evidence and exact commands for review. | Successor uptime-kuma-dns-20261112-q8i4a51n is sealed and locally checked. Exact archive/indices, qualified verifier identity, reviewed operation delta, predecessor preservation and secret scan pass; wrong digest is rejected. No target contact or execution authority; original November 14 expiry retained. |
+
+| W-120 | DNS successor rejects the secondary boot identity. | AC-004, AC-008 | Resolved | Reconcile retained identity provenance and define any needed bounded refresh before a separately reviewed successor; preserve exact checks and both consumed attempts. | Approved successor before gate exited 1 with secondary boot_identity_mismatch, expected exit 0 / observed 1, stdout 0 bytes / stderr 191 bytes. Gate accepted=false; no apply invocation or mutation receipt. Primary was not reached because the secondary snapshot failed first. No restarts or recovery; approval consumed. Current boot value and timing/cause of the boot change were not captured. Earlier attempt cause remains unknown. Local provenance reconciliation confirms the expected secondary ID in the October 20 capture and October 21 accepted operation, inherited unchanged by both attempts. Later reviewed DNS/proxy evidence supplies no new boot ID. Existing owner readiness refresh is required; W-121 tracks preparation. |
+
+| W-121 | Refresh paired DNS readiness before another deployment candidate. | AC-004, AC-008 | Resolved | Prepare and separately authorize bounded read-only owner readiness, capture both boot identities and current DNS baseline/health, then reconcile before sealing a successor. | Existing owner collector extended with Uptime-only readiness mode; v2 node archives sealed for separate review. 27 readiness and 34 transaction tests pass; exact streamed Python rejects the workstation identity before collection, archive/member and negative-digest checks pass, and secret scans pass. No new platform fixtures or simulated failover. Both approved v2 captures completed once, secondary then primary. Fresh boot/service stability, unchanged bound configuration/launcher identities, native validation, exact local DNS controls, expected absent Uptime records, public resolution and coherent primary-owned four-VIP state passed local reconciliation. Projection limitations retained below; no deployment acceptance or successor authorization. |
+
+| W-122 | Replace historical boot pinning with operation-scoped continuity. | AC-004, AC-008 | Resolved | Capture current IDs at fresh authenticated admission; bind them through existing gates/dispatch and resumed phases; stop on unexpected mid-operation changes. Existing tests prove pre-admission reboot allowed, mid-operation reboot blocked and host/configuration drift still rejected. | Aaron approved the policy November 12. Workspace and DNS AGENTS.md instructions plus PLAN.md now distinguish durable identity from runtime continuity. Source implementation and local qualification are complete: initial paired gate binds admitted IDs to operation/digest; later gates, apply and rollback reuse them. Incomplete initial discovery and boot changes stop without re-admission. 42 transaction and 27 readiness tests pass; syntax, working-tree secret scan and preserved-archive/receipt hashes pass. No candidate is sealed, frozen bundle changed or live authority granted. |
+
+| W-123 | Prepare DNS successor using fresh admission and reconciled readiness. | AC-004, AC-008 | Resolved | Bind qualified source, current readiness provenance, unchanged six-record candidate and exact operation/recovery scope into one reviewable archive. | Sealed uptime-kuma-dns-admission-20261112-myuc3p0t. Qualified W-122 source hashes match; paired-readiness and consumed evidence hashes verify; closed archive and input checks pass, wrong digest and missing admission are rejected, secret scan passes. Expiry retained. No phase, successor execution authority or deployment acceptance. |
+| W-124 | Execute the approved DNS admission-policy successor. | AC-004, AC-008 | Resolved | One ordered attempt; accepted paired gates, unchanged admitted boots, exact records, both full restarts per node and ordinary-name HTTPS over both families. | November 12: all five phases exited 0, secondary before primary; no recovery or forced failover. Both final gates accepted, all four VIPs remained on .53 in retained samples, and both dashboard HTTPS checks returned 200. Private terminal summary binds receipts; backups retained. Approval consumed; no replay or publication. |
+| W-125 | Reconcile retained acceptance and permanent documentation for closeout. | AC-002, AC-008, AC-010 | Resolved | Verify retained evidence, update stale task states and permanent docs, and report remaining acceptance gaps without fresh live work. | Seven indexed receipts verified; architecture/operations and Partial RESULT.md reconciled. W-004/W-008/W-026 resolved from completed work; W-020/W-076 remain explicit. No consumed input, live state or acceptance requirement changed. |
+
+| W-126 | Host inventory still describes accepted foundation/application as not deployed. | AC-010, AC-011 | Resolved | Reconcile only accepted metadata with retained receipts under the inventory owner; preserve host/profile selection and partial project status. | Found during W-020/W-076 owner review; no target drift is implied by stale source metadata. Inventory now records accepted foundation/watchdog and service/dashboard dates with an explicit partial-closeout status and shared result link. Only five metadata fields changed; selections unchanged. Owner YAML/Markdown checks passed. |
+| W-127 | Select final W-020/W-076 acceptance dispositions. | AC-008, AC-010 | Resolved | Present a concrete owner-supported no-change decision and explicit unmeasured-renewal deferral for Aaron's agreement; do not silently waive required acceptance. | Owner source requires softblocks and automatic addresses/routes, not daemon removal. Retained checks pass those properties. Proposed decision below; W-020/W-076 remain unchanged pending agreement. November 12: Aaron explicitly approved the presented W-020/W-076 dispositions for initial-deployment closeout. Plan and result now reflect that decision; no inspection or mutation is included. |
+
+| W-128 | Replace tunnel-only Webmin access with a normal HTTPS browser endpoint. | AC-011, AC-013 | In progress | Owner-governed backend restriction, dedicated Caddy/DNS route, trusted TLS, private login/session/WebSocket acceptance and unrelated-service preservation. | Aaron rejected the SSH-only access policy and requested direct browser access through Caddy/DNS as needed. Prepare locally; existing operation approvals remain consumed. |
+
+| W-129 | Make the existing DNS procedure the entry point for all fleet DNS changes. | AC-010, fleet DNS requirement | Resolved | Shared intake, add/edit/delete query contract, broader-change owner routing and consumer links; local documentation checks. | Existing procedure adapted in place; DNS instructions/index and Caddy/Webmin onboarding point to it. No new execution engine, live authority or claim of support for unqualified record types. |
+
+| W-130 | Complete shared Webmin backend profile and focused local qualification. | AC-013, W-128 | Resolved | Preserve auth/TLS/referers; exact listeners/sources and native redirect/rejection checks with limitations stated. | Renderer and example added in place; 4 profile, 7 readiness and 7 existing atomic-helper tests pass. Native Webmin 2.670 tests passed with networking disabled. Two fixture failures expected a redirect from an internally served login path; corrected to exercise native explicit redirect mapping. No login/TLS/Caddy/CSRF/WebSocket acceptance claimed. |
+| W-131 | Prepare bounded first-host Webmin readiness capture. | AC-013, W-128 | Resolved | Exact read-only scope approved, one complete safe capture reviewed before host binding. | One-use sealed bundle below; strict retained SSH host-key pin, fresh boot continuity and selected non-secret settings. Local syntax, ShellCheck, manifest and collector tests passed. Aaron approved one capture; it exited 1 with hostname_mismatch before configuration reads/diagnostic commands. No mutation; approval consumed. W-132 resolved locally; the separately approved corrected successor completed once with all seven commands successful, stable boot/configuration identity and no mutation. Collection accepted; W-133 and actual proxy-source/ingress qualification remain. |
+
+| W-132 | Readiness hostname gate failed without retaining the observed hostname. | AC-013, W-131 | Resolved | Reconcile the exact expected identity and qualify bounded credential-safe expected/observed reporting before separately reviewing another capture. | Sealed expectation was j2-svpi3bmf.local.theama.co. Strict SSH transport reached the collector; hostname_mismatch receipt contains no observed name. Do not infer short-name equivalence, relax the gate or retry. Retained promoted/foundation JSON supplied no hostname value. Subsequent frozen-operation reconciliation establishes j2-svpi3bmf as the previously accepted native expectation; exact-match semantics remain. Bounded expected/observed CLI reporting and 11 local tests pass. Failed live observation remains unknown; see reconciliation below. |
+
+| W-133 | Reconcile the observed Webmin referrer policy and shared renderer rejection. | AC-013, W-128 | Resolved | Native source/behavior qualification, correct policy semantics and preserved legitimate access before host binding. | Earlier description that referers_none=1 disables checking was incorrect. Native 2.670 proves it rejects missing referrers; referer controls the global bypass. Renderer preserves referers_none, explicitly sets referer=0 and extends trusted names. Seven native CGI cases and local tests pass. Prior live referer value was not captured; full browser acceptance remains W-128. |
+| W-134 | Qualify persistent ingress and full native browser/proxy behavior before sealing. | AC-013, W-128 | In progress | Native guard ordering/failure/recovery, trusted HTTPS login/logout/referrer/assets and applicable WebSocket checks; actual source/path and production-unit gaps explicitly closed before sealing. | Guard lifecycle, container restart and ordered loopback recovery passed. Earlier IPv4/IPv6 browser HTTP/session checks passed; the fresh full-browser fixture failed with OOM before WebSocket. W-135 blocks full acceptance. Actual target sources/paths and native unit equivalence remain unqualified. November 12 strategy revision: fixture capacity is not a prerequisite for the bounded target trial; actual-source/unit/browser acceptance still remains. |
+| W-135 | Full-browser qualification exceeded the preserved Webmin service memory cap. | AC-013, W-128, W-134 | In progress | Webmin/host-owner footprint or capacity reconciliation and reliable native browser/resource qualification without weakening accepted controls; then close the actual target-path gaps. | Fresh isolated AMD64 fixture timed out opening the protected referrer settings page and subsequently ended Result=oom-kill, MemoryPeak=201326592 bytes, MemoryHigh=134217728, MemoryMax=201326592, NRestarts=0. WebSocket stage never ran. This is a local failure, not proof of Pi failure; preserve limits and evidence before choosing a remedy. Retained-evidence reconciliation confirms matching source hashes and owner memory/swap/CPU/task controls, but no allocation/event timeline exists. A cap increase or specific cause is not justified. Existing sampler attribution fields are locally qualified; align the native fixture and capture causal evidence next. One aligned native-unit/foundation diagnostic now passed IPv4 including WebSocket: 139042816-byte peak, no OOM/max events or restart. Sustained paired-proxy/dual-stack capacity and historical causality remain unqualified; see phase capture below. The subsequent paired fixture failed its second path at trusted-referrer: 169021440-byte peak, 12440 memory-high events, severe reclaim stalls, paired health timeouts and HTTP 504, with no max/OOM event or restart. The sustained phase never began; see paired resource evidence below. This supports current-run throttling, not attribution of earlier failures.  Aaron approved moving capacity acceptance to the actual host; no further substitute-fixture capacity pass is required. |
+| W-136 | Propose a durable boundary between fixture testing and target-host capacity acceptance. | Validation policy, AC-006, AC-013 | Resolved | Review the exact workspace instruction below; install only after its approval, with one canonical rule and skill/repository references as needed. | Aaron approved the exact proposal; installed verbatim in /home/aaron/code/AGENTS.md on November 12, 2026. Direct mechanism/resource regression and controlled comparisons remain allowed with bounded, explicit claims. |
+| W-137 | Prepare bounded actual-host browser/resource qualification from accepted evidence. | W-128, W-134, W-135, AC-013 | Resolved | Reconcile installed unit identities and actual proxy sources; bind one target workload, unchanged controls, acceptance and independent recovery before exact live review. | PLAN.md defines the trial. Extended owner collector and one three-target read-only readiness bundle are locally qualified and ready for separate review. No target contact or mutation bundle sealing.  Approved capture passed once on the Pi and both proxies; installed controls/identities and current sources retained. No per-user ama terminal ACL exists; capability/recovery binding remains before mutation sealing. Approval consumed. Native backend apply/restore includes and private first-host bindings are locally qualified; Caddy parent/recovery and combined observation integration remain before sealing.  November 16: exact combined trial sealed for review under W-144. Preparation closure is satisfied; this does not resolve AC-013 live acceptance or authorize execution. |
+| W-138 | Define safe per-host WebSocket acceptance and retain reusable onboarding discoveries. | W-128, W-137, AC-013 | Resolved | Fleet procedure defines effective capability, safe action, expected results and cleanup; selected host has an evidenced safe method or owner-reviewed applicability disposition before sealing. | Aaron confirms existing ama access to System Information and real-time statistics. Select that native authenticated statistics WebSocket; pinned source checks module/session access and does not launch a terminal. Record ordinary collector/cache side effects, preserve settings, close only test sessions and never invoke global shutdown/disable. Live permission/traffic/resource acceptance remains pending; method selection is not a live pass. |
+| W-139 | Prevent late backend writes after timed recovery and qualify native lifecycle handling. | W-137, AC-013 | Resolved | Bounded apply is stoppable by independent recovery; exact baseline and unrelated state survive, late apply rejects, and diagnostics remain bounded. | Backend writes moved into one native systemd service; recovery stops it before locking/restoring. A transient unit may disappear after completion, and the guard contributes a reverse After edge until unloaded. Native tests and failure regressions retain earlier failed runs; final exact-input native qualification passed with restored controls/listeners, preserved unrelated table and rejected late apply; 14 focused regressions pass. |
+
+| W-140 | Complete the fleet Caddy application binding and temporary paired-release recovery. | W-137, AC-013 | Resolved | Build the selected owner fragment rather than a hard-coded Kuma fragment; qualify post-exposure restoration and transport residue before sealing the combined trial. | Local integration review found a Kuma-only payload source and 20-prefix restriction. Existing application_restore covers local activation failure; the application outer cleans its payload on success and has no paired temporary-trial restoration phase. Do not call certificate repair rollback or claim that backend restoration restores Caddy. Local disposition: selected-fragment binding and actual offline paired restoration now pass through the existing owner entrypoints; normal finish, timeout, lost exposure reply, partial convergence, failed recovery, incomplete candidate and late exposure are covered. Controller-loss Caddy recovery remains explicitly manual/incomplete, independent of native backend recovery. |
+
+| W-141 | Integrate the combined trial with the existing guarded-scan observer without reinstalling the guard or adding a competing sampler. | W-137, AC-013 | Resolved | Exact installed scan entrypoint, single observer, service/cgroup/host samples throughout the workload and scan, real-path/source evidence and owned cleanup are executable and locally qualified. | Existing guarded-scan.yaml imports installation tasks; observe-needrestart.py explicitly reports scan-only acceptance. The parent must retain the 224/192 MiB admission and 96 MiB reserve, include workload samples during scans and stop owned load on failure. No new installed identity or target measurement is assumed. Local component qualification now passes: separately staged source/profile, installed guard preservation, one locked observer, pre/workload/scan/post samples and failure receipts. Real-path/source and browser overlap/owned-load cleanup still require the W-137 parent; no combined acceptance claim. November 16: local parent integration passes token-gated readiness, all-path browser/session receipts, cross-clock scan overlap and owned cleanup. This closes local implementation qualification only; actual-host AC-013 remains pending. |
+
+| W-142 | Reject incomplete candidate copies when recovery calls validation in a conditional shell context. | W-140, AC-013 | Resolved | Actual owner restoration rejects a missing manifest, retains incoming state and stopped transport, and returns recovery incomplete. | The new offline incomplete-transfer case recovered instead of rejecting. certificate_verify_candidate relied on errexit for intermediate commands; its conditional recovery caller disables that behavior. Add explicit failure returns and rerun the real entrypoints; no live state was involved. Explicit failure propagation now rejects the incomplete manifest in the actual native recovery case with exit 125 and stopped transport; all 16 application cases pass. |
+| W-143 | Bind the combined parent to real path counters and the statistics-only client without fixed-time scan races. | W-137, W-141, AC-013 | Resolved | Exact owner interfaces, gated paired workload, conservative cross-clock overlap, process cleanup and recovery ordering pass focused local tests before sealing. | The old browser fixture uses xterm and cannot be reused for W-138. A fixed scan start can precede browser readiness. The guard has no per-source accept counters. Prepare a native statistics-only client, parent-supervised workload readiness/cancellation and named per-source counters; preserve ordinary collector settings and all earlier evidence. Changing the rendered guard requires renewed correctness checks, not a fixture capacity workload. November 16: fresh open-socket frames, all-six-path sustained checks, old-session denial and two-client bounded concurrency pass local regressions. Real client receipt logic joins the parent verifier; exact final source hashes and affected-test rechecks are retained below. No native browser or target acceptance is claimed. |
+
+| W-144 | Complete the exact Caddy temporary-trial candidate and combined parent authorization graph. | W-137, AC-013 | Resolved | Current owner qualification and authorization policy pass; every parent non-secret execution input and external secret/readiness reference is bound; exact command, acceptance and recovery are reviewable before live approval. | Preparing one 20261116-webmin-first-host-trial definition from the clean stream. No live authority or publication. Retain definition-check failures and baseline snapshots in webmin-combined-review-0ve83yjr.  November 16: sealed 236-file parent manifest and exact Caddy outer identity below. Sixteen offline Caddy cases, owner authorization/negative-evidence checks, final parent syntax/module checks and six private-handoff cases passed. Source graph and external credential/readiness references bound; no live authority. |
+| W-145 | Caddy temporary-trial coverage labels a successful restoration as reject, contradicting exit 0 and blocking authorization. | W-144, AC-013 | Resolved | Success expectations derive from the existing expected statuses; actual owner qualification and authorization/negative-evidence checks agree. | Discovered during final candidate checks. Original 16-case run passed but authorization failed at application-trial-success. Retain original evidence and policy-diagnostic.log; correct the coverage generator without changing deployment behavior.  Corrected coverage expectations to use existing expected exit statuses. Final 16-case qualification, exact authorization-ready gate and evidence-mutation checks all pass. Preserve original policy mismatch, failed pre-scenario wrapper/fixture hash binding and both original qualification runs; no live behavior or threshold changed. |
+| W-146 | Execute the approved combined Webmin/Caddy trial once and reconcile independent acceptance/recovery outcomes. | W-128, AC-013 | Resolved | Preserve approved inputs and one-attempt marker; verify native browser, source/path and scan-overlap/resource evidence plus Caddy and backend restoration separately. | November 16 exact-bundle approval recorded in private approval.json. Input and owner preflight passed without contact; awaiting private workstation operator launch. No attempt has started; do not relaunch after a marker or failure.  Attempt completed with parent exit 2 and Caddy exit 1; primary IPv4 HTTPS timed out before browser/scan. Both owner recovery checks passed. Execution disposition resolved as failed-consumed, not application acceptance; W-147/W-148 carry remaining diagnosis/archive work. |
+| W-147 | Primary Webmin HTTPS route times out after activation despite passing direct backend paths. | W-146, AC-013 | Open | Reconcile retained failing request, route/configuration and recovery evidence locally; identify supported cause or the precise missing observation before any separately reviewed successor. | curl 28 after 5001 ms, HTTP 000, zero response bytes on Node A. No application IPv6, browser or scan acceptance ran. Cause is unconfirmed; do not extend deadlines or infer capacity/authentication failure. Local reconciliation below identifies the request-path difference and missing timing/correlated logs; no further fixture load can establish the historical cause. |
+| W-148 | Preserve and prepare the consumed combined trial terminal archive under the Caddy owner. | W-146, Caddy lifecycle | Resolved | Exact executed inputs and sanitized terminal record remain preserved; review any archive commit/tag/push separately before cleanup or implementation changes. | All 236 non-secret inputs copied and hashes checked in executed-inputs. Caddy is terminal-pending/failed-consumed with planned archive tag. A 61-file exact archive is prepared below; core lifecycle checks and actual documentation check pass, but the broader policy self-test has W-149’s missing sibling-tree fixture failure. No publication authorized. November 16: approved archive published as commit 66d8ae5 and annotated tag caddy-webmin-first-host-trial-terminal-2026-11-16; remote branch/tag/peeled commit verified. Hooks passed; W-149 remains explicitly deferred. Cleanup not performed. |
+| W-149 | Documentation self-test omits the sibling DNS owner tree referenced by the fleet onboarding guide. | W-148, local validation | Deferred | Caddy test owner retains follow-up here for future documentation-test maintenance; do not repair or repeat the fixture for this historical archive. | Aaron explicitly declined fixture repair for this effort on November 16. The actual workspace link check passes; the isolated self-test failure remains recorded. It does not establish production behavior or block preservation of the failed attempt. No test disabled, pass fabricated or publication authorized; mandatory publication hooks remain intact. |
 
 ## Execution record
 
@@ -4950,3 +5005,2204 @@ Private evidence and the empty `homelab-server-configs/oom` scratch file were no
 committed. Temporary qualification worktrees were removed. Publication does not
 activate DNS or close the remaining project findings. W-020/W-076 and permanent
 documentation/closeout remain open; W-096 is deferred. No live host action occurred.
+
+### DNS candidate and authority reconciliation — November 12
+
+W-117 is resolved locally. The unchanged DNS archive identified in
+[the exact owner review](#exact-owner-bundles-commands-and-scope--awaiting-approval)
+passes the owner runner's non-contact `check` action. Every frozen member and the
+internal index match. The three execution helpers match current DNS owner source;
+the retained qualification and six provenance files also match their bound hashes.
+No invocation marker, gate, controller result or node receipt exists in the
+sealed directory. The original approval remains unused; no timestamp was renewed.
+
+The preserved W-106 private receipt, specification, frozen input indexes and both
+node observation records pass the existing combined verifier locally. Accepted
+release `20261111T213048Z-71b7deb8-bc71-45d5-8f33-98270af79d3b` satisfies the DNS
+review's application-acceptance prerequisite. The DNS operation does not bind
+execution to the failed earlier Caddy attempt. This is reconciliation of retained
+acceptance, not a fresh observation or permission to replay any consumed Caddy
+operation.
+
+The current repository zone differs from the sealed baseline only in directive
+ordering; comparison including duplicate counts confirms identical record
+content. The six-record candidate remains an append-only extension of the exact
+retained live baseline. Preserve these sealed bytes. Do not substitute the
+repository file, infer current live identity, or weaken preflight to accommodate
+a mismatch. After accepted DNS execution, reconcile owner source record content
+and live-state documentation.
+
+Original expiry: November 14, 2026 at 11:02:35 a.m. CST
+(`2026-11-14T17:02:35+00:00`). Every runner invocation, including recovery,
+requires more than five minutes remaining; therefore it must begin before
+10:57:35 a.m. CST. Start with enough time for the complete operation and recovery.
+Do not extend timestamps, replay a phase or bypass an expired guard.
+
+Recommended progression remains the existing `before`, `apply-secondary`,
+`after-secondary`, `apply-primary`, `after-all` sequence, with the reviewed
+conditional recovery and ordinary-name HTTPS checks. The original approval is
+not consumed by this local review and need not be requested again. Aaron's
+current instruction explicitly excludes live work; wait for his instruction to
+resume execution. Exact live file/binary/boot checks, fresh paired gates,
+expected initial VIP ownership and native candidate validation remain mandatory.
+Retained identity provenance does not establish today's target state.
+
+Private reconciliation evidence:
+`/home/aaron/code/.local-evidence/uptime-kuma/dns-reconciliation-20261112-y4jntav7/reconciliation.json`.
+The DNS [owner review](../../../homelab-dns/Unbound/docs/uptime-kuma-host-record-review.md#local-reconciliation--november-12-2026)
+records the same disposition. No new fixtures, seal, SSH/DNS/HTTPS requests,
+service actions, commit or push occurred. W-020/W-076 and documentation/closeout
+remain open; W-096 stays deferred. No execution session is active.
+
+### DNS execution resumed — November 12
+
+Aaron approved resuming the existing DNS sequence. The original archive and
+local expiry check passed; no prior invocation or node receipt exists. The
+unchanged conditional scope covers the five phases, reviewed recovery and final
+ordinary-name HTTPS checks. Authorization is recorded privately in the sealed
+review directory's execution-authorization.json; frozen inputs are unchanged.
+
+### DNS initial gate failed before mutation — November 12
+
+Session 89316 completed with exit 1. The one-use `before` phase exhausted its
+180-second paired-gate convergence window, repeatedly retaining only
+`snapshot_transport_failed`. Its gate receipt remains `accepted=false`. The
+verifier raises that category for a nonzero remote command exit or oversized
+output; it does not retain the underlying return code, stdout or stderr. Thus
+SSH transport, remote preflight rejection and other remote-command failure
+cannot be distinguished from this evidence. The deadline label does not prove
+an HA convergence or DNS service failure.
+
+Neither apply phase was invoked. No zone replacement, Unbound/Pi-hole restart,
+rollback, ordinary-name HTTPS check or later phase ran. Recovery is unnecessary
+because the executed phase is read-only. The original operation is now
+failed-consumed: its unused later phases are not permission to bypass the failed
+gate, remove the receipt or retry. Preserve the frozen archive, before invocation,
+controller log/exit, rejected gate and terminal-summary.json in the existing
+private bundle. W-118 records the diagnostic gap. No additional live inspection
+or successor is authorized; DNS remains pending. Session 89316 is retired.
+
+### DNS snapshot diagnostics corrected and qualified — November 12
+
+W-118 local reconciliation confirms the reporting defect in the consumed
+verifier: nonzero subprocess status and oversized output both became
+snapshot_transport_failed, with the underlying status and output discarded.
+Retained evidence cannot distinguish transport failure from remote preflight
+rejection. No historical cause is inferred from a synthetic reproduction.
+
+The DNS owner's current verify-host-records.py reports a bounded JSON diagnostic
+with node label, failure category, expected/observed exit status, stream byte
+counts, launch errno where applicable and an allowlisted error hint. Raw stderr,
+stdout, credentials, arbitrary RuntimeError messages and command arguments are
+not echoed. Timeout, launch failure, malformed/non-object output and size-limit
+failure remain rejected. Existing identity/hash/trust checks and paired-gate
+convergence behavior are unchanged; no automatic bypass or replay was added.
+
+The existing owner test suite passes 34 tests. Added cases cover safe SSH/sudo
+and remote RuntimeError hints, unknown-message suppression, secret canaries,
+local-launch and subprocess timeout, output limits, empty/malformed/non-object
+results, normal event-prefixed result decoding and safe diagnostics at the
+paired deadline without advancing to the peer. The actual streamed node source
+was executed through local Python and rejected a deliberately invalid identity
+with an accurately classified exit; this used no SSH, DNS or service operation.
+No additional DNS fixture or simulated failover was built.
+
+Qualification and exact source identities are retained privately at
+`/home/aaron/code/.local-evidence/uptime-kuma/dns-diagnostics-qualification-fdihlcwa/`.
+Every frozen member of the consumed archive remains byte-identical; failed
+receipt/log identities are recorded there. Local correction does not modify the
+consumed runner or renew its approval. No successor has been prepared or sealed.
+Vexp completion verification is unavailable from the parent workspace; focused
+owner tests provide the mechanical check. DNS remains pending and no live
+contact, publication or replay occurred. All local checks are complete.
+
+### DNS successor sealed for review — November 12
+
+Preparation is complete under W-119; this is not execution authorization.
+
+- Operation: `uptime-kuma-dns-20261112-q8i4a51n`.
+- Archive SHA-256: `0cc507728f976d0b51acb30803e785428b901c3fe4a68d6bedd3d77acc45c089`.
+- Private directory: `/home/aaron/code/.local-evidence/homelab-dns/current/uptime-kuma-dns-20261112-q8i4a51n`.
+- Exact scope, individual phase commands, recovery and ordinary-name HTTPS checks:
+  `review.md` in that directory. `provenance.json` binds the consumed predecessor,
+  failed receipt/log identities, retained application acceptance and W-118 qualification.
+- Expiry: November 14, 2026 at 11:02:35 a.m. CST
+  (`2026-11-14T17:02:35+00:00`), unchanged from the predecessor.
+  Every invocation, including recovery, must begin before **10:57:35 a.m. CST**;
+  allow time for the entire operation and recovery, not just initial admission.
+
+#### Exact successor bundle, commands and scope — awaiting approval
+
+One approval covers this archive and the following individually gated sequence:
+
+```bash
+dns_bundle=/home/aaron/code/.local-evidence/homelab-dns/current/uptime-kuma-dns-20261112-q8i4a51n
+reviewed_dns_sha256=0cc507728f976d0b51acb30803e785428b901c3fe4a68d6bedd3d77acc45c089
+python3 -I -B "$dns_bundle/runner.py" step --directory "$dns_bundle" --sha256 "$reviewed_dns_sha256" --phase before
+python3 -I -B "$dns_bundle/runner.py" step --directory "$dns_bundle" --sha256 "$reviewed_dns_sha256" --phase apply-secondary
+python3 -I -B "$dns_bundle/runner.py" step --directory "$dns_bundle" --sha256 "$reviewed_dns_sha256" --phase after-secondary
+python3 -I -B "$dns_bundle/runner.py" step --directory "$dns_bundle" --sha256 "$reviewed_dns_sha256" --phase apply-primary
+python3 -I -B "$dns_bundle/runner.py" step --directory "$dns_bundle" --sha256 "$reviewed_dns_sha256" --phase after-all
+```
+
+This is not an unconditional shell paste. Execute one phase at a time, inspect
+its result, and stop on the first failure. Each phase consumes its own receipt;
+no retry or receipt deletion is permitted. Initial paired acceptance must place
+all four coupled VIPs on .53; apply on pi@10.1.0.54 first, then pi@10.1.0.53.
+Each mutation requires a successful paired gate no older than 120 seconds.
+
+The only DNS change is the existing six-record addition: dashboard A/AAAA to
+Proxy VIP .56/::56, host A/AAAA to .75/::75 and both host PTRs. Preserve unrelated
+records and Proxy PTRs. Exact baseline file/binary/boot/include checks and native
+candidate validation remain mandatory. On each changed node, atomically replace
+the zone file, fully restart Unbound, establish health, then fully restart
+Pi-hole DNS. Require paired DNS/Caddy health, exact answers over both families
+and coherent ownership of the four linked VIPs before advancing. Normal
+cluster-driven movement is permitted; forced failover is not.
+
+On failure, inspect mutation and automatic recovery evidence. A failed `before`
+gate makes no mutation and needs no rollback. For changed nodes, restore only
+those requiring recovery using their own exact backups, primary before secondary
+if both changed. Use the same runner and digest with `rollback-primary`,
+`after-rollback-primary`, `rollback-secondary`, `after-rollback-all` as applicable;
+if only the secondary changed, use only `rollback-secondary` and
+`after-rollback-all`. Restoration includes both full restarts and paired acceptance.
+Do not repeat verified automatic restoration. Lost workers, changed destination,
+unknown write state, unavailable backup or unproved recovery require manual
+intervention; do not restart the sequence.
+
+After successful `after-all`, run the two exact ordinary-name HTTPS commands in
+the sealed review: one IPv4 and one IPv6 request to the dashboard, each bounded
+to 15 seconds, with normal certificate verification and expected HTTP 200.
+A workstation resolution failure remains separate from accepted owner DNS state;
+do not roll back accepted DNS solely to hide that client-path failure.
+
+Excluded: Caddy configuration/restart, backend mutation, package changes, account
+changes, monitors/alerts, synthetic notifications, route/radio changes, forced
+failover, reboot, unrelated DNS changes and Git publication. W-020/W-076 and
+project closeout remain separate. Existing Caddy/private-login/passive evidence
+satisfies the application prerequisite; retained health is not a fresh live check.
+
+Only the W-118 diagnostic verifier, fresh operation/backup namespace, preparation
+time and provenance differ from the consumed candidate. Candidate, baseline,
+expanded configuration, host-key pins, node transaction, dispatcher, runner and
+expiry are unchanged. The new sealed review states these differences; the old
+archive and failed receipts remain byte-identical. The historical live cause
+remains unknown and may cause this new attempt to reject too.
+
+Local qualification: closed-archive/member/index check passed, the verifier/test
+hashes match the recorded 34-test W-118 qualification, an invalid archive digest
+was rejected, and the exact candidate secret scan passed. No new platform
+fixture or live probe was run. The fresh directory has no phase/dispatch receipts.
+The local preparation and negative-check records are beside the new seal.
+The previous approval was consumed by its failed before gate; this successor
+requires fresh exact-bundle authorization under the
+[DNS owner procedure](../../../homelab-dns/Unbound/docs/host-record-deployment.md#deployment-readiness).
+No approval, target contact, commit or push occurred during preparation.
+
+### November 12: DNS successor authorized and started
+
+Aaron approved the exact bundle, commands and scope in the successor section
+above for one attempt. Archive identity and original expiry were verified before
+launch. The exclusive authorization receipt is retained beside the sealed bundle.
+The `before` phase started in session 3863; its controller log, invocation and
+terminal status belong to `uptime-kuma-dns-20261112-q8i4a51n`. No apply phase has
+started. Preserve the consumed predecessor. Advance only after each successful
+fresh gate; no replay or expanded inspection is authorized.
+
+### November 12: DNS successor stopped before mutation — W-120
+
+The approved `uptime-kuma-dns-20261112-q8i4a51n` attempt completed its bounded
+`before` phase with exit 1. The corrected diagnostics retain repeated secondary
+`boot_identity_mismatch` failures: expected command exit 0, observed 1, zero
+stdout bytes and 191 stderr bytes. The remote guard compares the current boot ID
+with the sealed expected boot ID. This establishes a stale boot-identity
+prerequisite for this attempt, not a DNS service failure. It does not establish
+the cause of the earlier attempt, whose underlying diagnostics were discarded.
+The observed boot ID and when or why it changed remain unknown.
+
+The paired gate returned `accepted=false`. The secondary snapshot failed before
+the primary snapshot; primary contact and paired health acceptance did not occur.
+Only `before-invocation.json` exists; there are no apply receipts. No zone write,
+Unbound/Pi-hole restart, rollback or final dashboard request ran. No recovery is
+required. Approval is consumed; no retry or additional inspection is authorized.
+
+The unchanged sealed archive and its predecessor remain retained. The successor
+contains `before-controller.log`, `before-controller.exit`, `gate-before.json`,
+its invocation and authorization, and `terminal-summary.json` binding their
+hashes. Session 3863 exited 1 and is retired. W-120 tracks identity reconciliation;
+DNS remains pending. Existing private/application acceptance is unchanged.
+
+### November 12: retained boot-identity reconciliation — W-120
+
+The sealed secondary boot identity traces to the October 20 DNS readiness
+capture (`ntp1-dns54-readiness-20261020-v1/transport-4.json`). Its before/after
+identity agrees, and its hash matches the successor's retained provenance.
+The October 21 `munin-svmf-dns-deployment-20261021-v1` operation binds the same
+identity and has an accepted final paired gate. Both November DNS attempts
+inherited that value unchanged. Their primary boot identities were also inherited.
+
+The November 9 `initial-deployment-20261109-9jtrff4m/dns0-stdout.log` and
+`dns1-stdout.log` captures do not record a boot identity. Neither does the
+accepted `proxy-observation-review-c9vdnab_` observation output. These records
+cannot supply a replacement or establish when or why the secondary boot changed.
+This is a bounded review of the relevant retained records, not a claim that
+no other workspace record could contain a boot identity.
+
+The actual node guard rejects immediately after hostname/root checks, before
+binary, include, file and service checks. The failed gate therefore does not
+qualify those later prerequisites or the primary. A boot-only substitution
+would leave readiness incomplete. Use the existing DNS owner's bounded read-only
+readiness procedure for both nodes: current identity, exact zone and metadata,
+effective include graph and non-secret binary/service identities, local/node/VIP
+DNS health and coherent coupled ownership. Compare with retained expectations;
+review drift rather than overwriting it. Preserve six-record scope and existing
+acceptance/recovery policy. W-121 tracks preparation for separate inspection
+review; no inspection command or deployment successor is sealed here.
+
+Private `dns-boot-reconciliation-kyqtl28p/reconciliation.json` under the Uptime
+Kuma evidence store binds the inspected provenance and source hashes. Both
+archive digests and both attempts' retained failed-evidence hashes were verified.
+No consumed member or receipt was changed. No target contact, code change,
+service action, publication or replay occurred. W-120 is resolved for local
+reconciliation; DNS readiness and deployment remain pending.
+
+### November 12: paired DNS readiness prepared — W-121
+
+The DNS owner's existing `inspect-ntp-dns-readiness.py` now has an explicit
+`--uptime` mode. It retains the existing protected file/include handling, strict
+established host-key transport, bounded in-memory collector and exclusive
+one-use receipt. It reads current boot identity and requires before/after
+stability; it does not relax the deployment's exact boot checks. No deployment
+candidate is generated, and neither consumed deployment is changed.
+
+The mode adds current Caddy service state, all four coupled VIP roles, Uptime
+record queries, executable hashes, sanitized launch definitions and a cursor-only
+journal read. Current configuration is checked natively; its identical expanded
+copy is checked through stdin. Existing NTP controls and local/public DNS checks
+remain. All observations require local reconciliation before deployment.
+
+Local qualification: 27 readiness tests and 34 transaction tests passed. Tests
+extend the existing suite and capture harness; no new platform fixture or
+simulated failover was built. Tests cover scope/boot bindings, fixed query counts,
+proxy-VIP drift, baseline preservation and credential-safe launch projection.
+Both exact frozen payloads ran through actual local isolated Python and rejected
+the workstation identity before collection; this proves startup/identity rejection,
+not the live collection path. Closed archive/member checks, invalid-digest rejection
+and per-archive secret scans passed. `vexp verify_done` was unavailable because
+its session root is the non-Git parent workspace; owner checks were used.
+
+Evidence: private `dns-readiness-qualification-4mbr3m3u/final-result.json` and
+adjacent logs under the Uptime Kuma evidence store. The unapproved v1 preparation
+archives were superseded during local review; v2 below is the only review candidate.
+No phase receipt exists in either v2 archive directory. No host contact, service
+change, commit or push occurred. Local sessions 10276 and 69657 ended with exit 0
+and are retired.
+
+#### Exact paired read-only readiness scope — awaiting approval
+
+One approval covers one capture per node, secondary first, using these two
+private directories under `/home/aaron/code/.local-evidence/homelab-dns/current/`:
+
+| Node | Directory | inspection.tar SHA-256 |
+| --- | --- | --- |
+| pi@10.1.0.54 | uptime-kuma-dns54-readiness-20261112-v2 | `689c3b603b64ff3f524e4fab9997969852378f21b90bd3156b5926fffd9eafc1` |
+| pi@10.1.0.53 | uptime-kuma-dns53-readiness-20261112-v2 | `3a752a4cb1e09b548a57e74a047b10f6a4f1e0d2b6572fd79e7f2fbef0632467` |
+
+Both expire **November 13, 2026 at 9:59:03 a.m. CST**
+(`2026-11-13T15:59:03+00:00`). The runner's five-minute margin makes the invocation
+cutoff **9:54:03 a.m. CST**. Start with enough time for both bounded captures.
+
+```bash
+readiness_root=/home/aaron/code/.local-evidence/homelab-dns/current
+python3 -I -B "$readiness_root/uptime-kuma-dns54-readiness-20261112-v2/runner.py" execute --directory "$readiness_root/uptime-kuma-dns54-readiness-20261112-v2" --sha256 689c3b603b64ff3f524e4fab9997969852378f21b90bd3156b5926fffd9eafc1
+python3 -I -B "$readiness_root/uptime-kuma-dns53-readiness-20261112-v2/runner.py" execute --directory "$readiness_root/uptime-kuma-dns53-readiness-20261112-v2" --sha256 3a752a4cb1e09b548a57e74a047b10f6a4f1e0d2b6572fd79e7f2fbef0632467
+```
+
+Run individually, not as an unconditional paste. Inspect .54's result first;
+stop on a failed/incomplete capture. Each command consumes an exclusive receipt;
+never replay or remove receipts. Capture success alone is not DNS health or
+deployment acceptance. After both captures, reconcile identities, native checks,
+answers, effective include/zone records and coherent four-VIP ownership together.
+Unexpected drift, conflicting/duplicate records, missing required evidence or
+unhealthy services hold deployment. Expected absent Uptime answers are recorded;
+they do not authorize insertion.
+
+Per node scope: one IPv4 SSH session as pi with strict existing Ed25519 keys;
+current hostname/boot before/after; Unbound/Pi-hole/Keepalived/Caddy identity;
+addresses and DNS .55/::55 plus Proxy .56/::56 ownership; protected local-zone
+bytes/metadata and bounded effective .conf include graph; current native config
+validation; Unbound version/control help; executable and Pi-hole launcher/version
+metadata; sanitized service launch/reload definitions; journal cursor without
+entries; existing bounded sync identity/path hints. Full local-zone bytes stay
+private; other configuration contents are not exported wholesale. No credentials,
+private keys, environment files, setupVars or arbitrary home directories.
+
+Each node issues 60 fixed single-attempt UDP queries: NTP A/AAAA/PTR controls,
+dashboard and host A/AAAA plus host PTRs through loopback Unbound, node addresses
+and DNS VIPs; plus four public A controls through loopbacks and DNS VIPs. No DNS
+queries target proxy-only VIPs. Per-command bounds are eight seconds/64 KiB per
+stream, DNS three seconds; remote capture 240 seconds, controller 270 seconds
+and 16 MiB per stream. Configuration limits remain 64 files/4 MiB aggregate/
+1 MiB each; three executable reads allow 16 MiB each and export only metadata.
+
+Excluded: target staging or file writes, package actions, reload/restart, sync
+runs or suspension, failover, reboot, notifications, backend/Caddy mutation,
+record publication, deployment retry and Git publication. Ordinary SSH/sudo
+audit records and DNS cache activity may occur. Read-only failure needs no
+rollback; retain partial evidence and stop. Inspection findings cannot silently
+change deployment expectations. A new deployment bundle remains separate.
+
+This fresh scope requires exact approval under the
+[DNS owner readiness procedure](../../../homelab-dns/Unbound/docs/host-record-deployment.md#deployment-readiness).
+Both previous DNS approvals are consumed and do not authorize these captures.
+
+### November 12: approved paired DNS readiness completed — W-121
+
+Aaron approved the two exact archives and secondary-first scope above. Both
+archives/member sets and expiry were checked before execution. Secondary session
+77362 and primary session 72386 each exited 0; both exclusive captures completed
+and their approvals are consumed. No retry, staging, zone write, service restart,
+failover, recovery or publication occurred. Both sessions are retired.
+
+Observed and locally reconciled:
+
+- Both current boot IDs differ from the inherited October values and are stable
+  before/after their respective captures. Current values remain in private evidence.
+  This confirms the stale boot prerequisite on both nodes; change timing/cause and
+  the original diagnostic-poor attempt's cause remain unknown.
+- All five effective configuration files and every previously bound metadata field
+  match. Both local-zone files are byte-identical to the consumed baseline. The
+  Pi-hole launcher hash is unchanged. Expanded current configuration matches the
+  retained expanded candidate after locally replacing its candidate zone with the
+  original zone; the different candidate/current hash is expected, not drift.
+- Native current/expanded configuration checks pass on both nodes. Unbound,
+  Pi-hole FTL, Keepalived and Caddy remain active with stable captured identities.
+  Both cursor reads succeed. All four coupled VIPs are owned by .53; .54 owns none,
+  unchanged within each capture. These are sequential samples, not continuous HA proof.
+- Each node completed 60 DNS queries: preserved NTP A/AAAA/PTR answers are exact;
+  dashboard/host A/AAAA and both host PTRs return expected NXDOMAIN through every
+  planned endpoint. All four public controls per node return successful A answers.
+  No conflicting Uptime record appears in the selected effective record projection.
+
+The protected read of `/etc/pihole/versions` was unavailable, and the alternate
+`/opt/pihole/pihole` path was absent. These are retained limitations, not missing
+service assumptions: the actual `/usr/local/bin/pihole` hash matches the accepted
+owner input and current local Git reports v5.18.3. Sync projection is incomplete;
+retain the existing owner contract that local-zone synchronization is not implemented
+and prior restart/control qualification. Do not claim a new comprehensive writer
+or restart-chain qualification from this capture. A successor must reconcile any
+required scope beyond these observations locally before review.
+
+Private evidence: both v2 readiness directories contain authorization, exclusive
+execution, bounded streams, transport/result and terminal summaries. The combined
+`dns-paired-readiness-result-3_ajijte/reconciliation.json` under the Uptime Kuma
+evidence store binds their hashes and comparison results. W-121 is resolved for
+read-only readiness and reconciliation. Existing Caddy/application acceptance
+remains retained; DNS deployment and ordinary-name dashboard acceptance are still
+pending. No new deployment candidate or live authority is implied.
+
+### November 12: boot continuity made a permanent harness rule
+
+Aaron confirmed that normal patching/reboots must not be blocked by historical
+boot IDs and asked to make the distinction permanent. The workspace AGENTS.md
+now governs durable host identity, fresh operation admission and runtime continuity.
+The DNS AGENTS.md adds the owner-specific gate/dispatch and regression-test
+requirements. PLAN.md records the accepted contract change; W-122 tracks its
+implementation before another candidate. No extra skill, hook, tracker or runtime
+framework was introduced. These instructions guide future agent work; executable
+enforcement is still pending and must not be claimed from documentation alone.
+
+No live contact, source execution change, publication or consumed-bundle edit
+occurred. The workspace instruction file is local workspace policy; the DNS owner
+instructions and project records are repository changes awaiting publication.
+
+### November 12: operation-scoped DNS boot continuity qualified — W-122
+
+The existing owner node/verifier/dispatcher now implement the approved policy.
+New source entrypoints require `boot_policy: operation-admission-v1`. The first
+paired gate ignores historical node boot values, authenticates the intended hosts,
+and observes current IDs while preserving configuration, binary, DNS and HA checks.
+It retains those IDs across its convergence samples. Incomplete initial discovery
+stops; it cannot retry into a different admitted boot.
+
+The accepted private `gate-before.json` binds both IDs to the operation ID and
+approved input digest. Later gates and dispatch load that receipt and reject
+missing, unsafe, foreign or incomplete admission evidence. Apply still requires
+paired acceptance no older than 120 seconds, now with matching operation/boot
+bindings. Apply/rollback receipts also record the admitted IDs. Resume does not
+reset admission. Node-side continuity checks run at inspection completion and
+around mutation/recovery; boot mismatch stops convergence and blocks automatic
+restoration on a different boot. Existing recovery rules otherwise remain.
+
+Qualification in the existing suite passed 42 transaction tests and 27 readiness
+tests. Added cases cover fresh node admission without writes, changed-boot rejection
+before apply/rollback, persisted gate bindings and resumed phases, one-use initial
+gate, incomplete admission, immediate boot-change stop, strict host/configuration
+rejection, and missing/foreign admission records. Existing transaction, native
+streamed-Python rejection, recovery and exact DNS tests still pass. No new platform
+fixture, simulated failover, container or live contact was used.
+
+Private `dns-boot-continuity-qualification-482zwv4b/result.json` under the Uptime
+Kuma evidence store binds final source hashes and logs. Syntax checks, working-tree
+secret scan and whitespace checks passed. Both consumed deployment archives and
+both completed readiness archives/recorded receipt hashes were verified unchanged.
+`vexp verify_done` remained unavailable from its non-Git parent workspace session;
+owner checks supplied qualification. Session 40171 exited 0 and is retired.
+
+W-122 is resolved for source and local qualification. These changes are uncommitted;
+no deployment candidate was sealed and no live acceptance is claimed. The next
+candidate must use the new policy and fresh operation identity; consumed inputs
+remain immutable. No retry, reboot, publication or other live work is authorized.
+
+### November 12: DNS admission-policy successor prepared — W-123
+
+Private directory: `/home/aaron/code/.local-evidence/homelab-dns/current/uptime-kuma-dns-admission-20261112-myuc3p0t`.
+Archive SHA-256: `d89d3b0c252dc86173ef98603539189ca96dc46dff55c333e2352e004cbb8e2e`.
+Internal input-index SHA-256: `16b6740ceaeef6cd8a15ee3e040281486dd7f9e8f2cea1186c5fc1759337b12f`.
+
+The candidate freezes the qualified W-122 node/verifier/dispatcher and unchanged
+owner runner. It declares `boot_policy: operation-admission-v1`; node boot fields
+are null at preparation. November 12 observed IDs remain provenance only. Fresh
+live admission captures current IDs, and subsequent phases use the accepted initial
+gate's operation/digest-bound IDs. Neither a preparation-time reboot nor an old
+inventory value is a permanent admission requirement. Unexpected reboot after
+admission stops progression and requires reconciliation, including recovery safety.
+
+Both completed readiness results are bound by hash. Their exact zone bytes,
+configuration/include set and previously bound metadata, and Pi-hole launcher
+identity match the predecessor inputs. The baseline, six-record candidate,
+expanded candidate bytes and SSH host-key file are unchanged. Operation identity,
+backup paths, preparation time, boot policy and readiness/qualification provenance
+are new; expiry and DNS/HA/restart requirements are unchanged. No observed file
+identity was silently refreshed or replaced. Readiness projection limitations
+remain as recorded under W-121; this is not a new comprehensive writer proof.
+
+Local qualification reused the exact W-122 source hashes and retained passing
+42 transaction/27 readiness tests. The frozen runner's closed archive/member/index
+check passed. The frozen verifier accepted the input policy/manifest locally and
+rejected absent admission evidence; an incorrect archive digest was rejected.
+The reviewed operation delta was checked against the allowed field list; preserved
+input bytes and all four consumed archive/recorded evidence hashes verify.
+The exact new directory passed secret scanning. No phase invocation or gate receipt
+exists. `preparation.json`, local check logs and `seal.json` are beside the archive.
+No new platform fixture, target probe, commit or push occurred.
+
+#### Exact DNS admission-policy bundle, commands and scope — awaiting approval
+
+Approve this archive for **one attempt**, individually gated in this order:
+
+```bash
+dns_bundle=/home/aaron/code/.local-evidence/homelab-dns/current/uptime-kuma-dns-admission-20261112-myuc3p0t
+reviewed_dns_sha256=d89d3b0c252dc86173ef98603539189ca96dc46dff55c333e2352e004cbb8e2e
+python3 -I -B "$dns_bundle/runner.py" step --directory "$dns_bundle" --sha256 "$reviewed_dns_sha256" --phase before
+python3 -I -B "$dns_bundle/runner.py" step --directory "$dns_bundle" --sha256 "$reviewed_dns_sha256" --phase apply-secondary
+python3 -I -B "$dns_bundle/runner.py" step --directory "$dns_bundle" --sha256 "$reviewed_dns_sha256" --phase after-secondary
+python3 -I -B "$dns_bundle/runner.py" step --directory "$dns_bundle" --sha256 "$reviewed_dns_sha256" --phase apply-primary
+python3 -I -B "$dns_bundle/runner.py" step --directory "$dns_bundle" --sha256 "$reviewed_dns_sha256" --phase after-all
+```
+
+This is not an unconditional paste. Inspect each terminal result and stop on
+failure. No receipt deletion or replay. Initial paired acceptance must show .53
+owning all four coupled VIPs; update pi@10.1.0.54 before pi@10.1.0.53. Each apply
+requires paired acceptance no older than 120 seconds, bound to this operation
+and the same admitted boot IDs. Missing/unsafe admission evidence or a boot
+change stops before further mutation; resuming cannot reset admission.
+
+Expiry remains **November 14, 2026 at 11:02:35 a.m. CST**
+(`2026-11-14T17:02:35+00:00`); every invocation, including recovery, requires more
+than five minutes remaining. Effective cutoff is **10:57:35 a.m. CST**. Leave
+enough time for the complete operation and scoped recovery.
+
+Change only the existing six-record addition in the local-zone file on each node:
+dashboard A/AAAA to Proxy VIP .56/::56, host A/AAAA to .75/::75, and both host PTRs.
+Preserve unrelated records and Proxy PTRs. Require exact host/configuration/binary
+checks and native validation, atomic zone replacement, full Unbound restart,
+healthy Unbound, then full Pi-hole DNS restart. Require exact paired/node/VIP DNS
+answers over both families, healthy Caddy, preserved public/local DNS and coherent
+ownership of DNS .55/::55 plus Proxy .56/::56. Normal cluster-driven movement is
+allowed; no forced failover. Each node's backup path is
+`/var/backups/uptime-kuma-dns-admission-20261112-myuc3p0t`.
+
+On failure inspect mutation and automatic-recovery receipts first. Before-gate
+failure needs no rollback. Restore only changed nodes requiring recovery from
+their own exact backups, under unchanged admitted boots. If both changed, use
+`rollback-primary`, `after-rollback-primary`, `rollback-secondary`, then
+`after-rollback-all`; secondary only uses `rollback-secondary` then
+`after-rollback-all`. Invoke the same runner/digest with the applicable phase.
+Recovery includes both full restarts and paired acceptance. Do not repeat verified
+automatic restoration. Lost workers, unknown write state, changed destination,
+missing backup, changed boot or unproved recovery require manual reconciliation;
+no automatic re-admission or replay is authorized.
+
+After accepted `after-all`, run each command once, expecting HTTP 200 with normal
+TLS validation:
+
+```bash
+curl -4 --noproxy '*' --fail --silent --show-error --connect-timeout 5 --max-time 15 --output /dev/null --write-out '%{http_code}\n' https://uptime.local.theama.co/dashboard
+curl -6 --noproxy '*' --fail --silent --show-error --connect-timeout 5 --max-time 15 --output /dev/null --write-out '%{http_code}\n' https://uptime.local.theama.co/dashboard
+```
+
+A workstation resolution failure is separate from accepted owner DNS state;
+do not roll back accepted DNS solely for that failure. Preserve accepted private
+login and passive application evidence; no new login check is included.
+
+Excluded: Caddy configuration/restart, backend mutation, packages, accounts,
+monitors/alerts, notifications, route/radio work, forced failover, reboot,
+unrelated DNS edits and Git publication. W-020/W-076 and project closeout remain
+separate. Prior deployment and inspection approvals are consumed. This exact
+successor requires fresh authorization under the
+[DNS owner procedure](../../../homelab-dns/Unbound/docs/host-record-deployment.md#deployment-readiness).
+Its frozen `review.md` carries the same scope and recovery boundary.
+
+### DNS admission-policy deployment accepted — November 12, 2026 (W-124)
+
+Aaron approved the exact bundle and scope at line 5449 for one attempt. Archive
+`d89d3b0c252dc86173ef98603539189ca96dc46dff55c333e2352e004cbb8e2e`
+passed sealed-input/expiry verification. All five ordered phases exited 0:
+`before`, `apply-secondary`, `after-secondary`, `apply-primary`, `after-all`.
+
+Fresh admission recorded current boot IDs; every later phase retained them.
+The secondary and then primary atomically installed the six-record candidate,
+validated configuration and fully restarted Unbound followed by Pi-hole DNS.
+Both mutation receipts report candidate SHA-256
+`2df1be44a9ea39a35df1e75db16d72a4138b4ab3048fdc7bcf58bd7ff1a959dc`.
+Paired gates accepted exact node/VIP answers over both families, preserved
+local/public DNS controls and service health, including Caddy. Every retained
+ownership sample has all four linked VIPs on .53. These samples do not claim
+uninterrupted availability during service restarts.
+
+The two approved ordinary-name `/dashboard` requests each exited 0 and returned
+HTTP 200 with normal TLS validation, IPv4 and IPv6. Existing accepted private
+login/WebSocket and passive application receipts remain the application evidence;
+no new login occurred. AC-004 is satisfied by those receipts and this DNS/HTTPS
+acceptance. W-020/W-076 and documentation reconciliation remain before closeout.
+
+Private evidence: `.local-evidence/homelab-dns/current/uptime-kuma-dns-admission-20261112-myuc3p0t/`
+under the workspace, including `authorization.json`, all invocation/controller
+and node receipts, `gate-before.json`, `gate-secondary.json`, `gate-all.json`,
+`dashboard-https.json` and the hash-indexed `terminal-summary.json`.
+Both node backups remain at `/var/backups/uptime-kuma-dns-admission-20261112-myuc3p0t`.
+No rollback, forced failover, reboot or Caddy mutation ran. Repository zone source
+now contains the same directives as the accepted candidate, preserving its prior
+ordering and unrelated content; its bytes therefore differ from installed bytes.
+
+Sessions 60203, 18605, 2752, 18801 and 4956 all exited 0 and are retired; the two
+HTTPS checks completed synchronously. Approval is consumed. Both earlier failed
+DNS bundles and all readiness receipts remain unchanged. No further live work,
+backup cleanup, replay or Git publication is authorized.
+
+Local reconciliation checks passed: DNS transaction/readiness contracts,
+Markdown checks in both repositories and whitespace checks. The repository
+zone's directives match the accepted installed candidate; unrelated source bytes
+are preserved. Local check sessions 12006 and 27264 exited 0 and are retired.
+These local source/document changes remain uncommitted and unpublished.
+
+### Local closeout reconciliation — November 12, 2026 (W-125)
+
+Re-read retained runtime/foundation/startup/restore receipts and compared seven
+files with their original evidence indexes; all hashes matched. The private
+reconciliation index is `closeout-reconciliation-t490dweo/evidence-index.json`
+under `.local-evidence/uptime-kuma/`. No live command or new observation ran.
+
+W-020 snapshots establish required networking after startup/reboot/promotion,
+not a timed RA-renewal series. W-076 evidence is stronger than the earlier ledger
+summary: `runtime-remaining-before-reboot.json` and
+`runtime-bootstrap-after-reboot.json` in `remaining-staged-20261110-5i0l9c9t/execution/`,
+plus `runtime-backend-promoted.json` in `backend-completion-20261111-nin6u10h/execution/`,
+all report Bluetooth and WLAN soft-blocked. Daemon presence alone is not a radio
+failure. Keep both services and NetworkManager unchanged; their target-specific
+ownership/dependency disposition remains unverified. Neither finding is waived.
+
+W-004/W-008/W-026 were stale pending rows and are reconciled with completed work.
+Architecture now describes accepted Podman resources, vendor watchdog coverage,
+Caddy/DNS, loopback transport and ordinary accepted startup. Operations separates
+normal access from new installation and contained-state recovery; it no longer
+instructs the accepted host to repeat account setup. RESULT.md records all twelve
+criteria, accepted service scope and incomplete AC-008/AC-010. W-012 remains in
+progress and W-096 remains deferred at Aaron's direction. No new candidate is
+sealed and no approval is requested for an undefined operation.
+
+Focused pre-commit documentation checks passed; session 95357 exited 0 and is
+retired. Relative file links, all twelve acceptance IDs and changed ledger-row
+structure were checked; whitespace checks passed. An initial whole-ledger cell
+counter rejected the existing escaped pipe in W-069; the corrected scoped check
+passed without changing that historical row. No code or executable input changed.
+The vexp completion helper remains unavailable for this parent-workspace session;
+focused repository checks provide verification. Changes remain uncommitted.
+
+### Proposed W-020/W-076 acceptance decision — November 12, 2026 (W-127)
+
+Local owner review covered the network-owned
+[ULA procedure](../../../homelab-network/host-network/uptime-kuma/ansible/permanent-ula.yaml),
+[fleet foundation ownership](../../../homelab-server-configs/foundation/README.md),
+[selected host profile](../../../homelab-server-configs/inventory/prod/hosts/j2-svpi3bmf.yaml),
+and the application's accepted-prerequisite/runtime checks. The latter require
+both radio types soft-blocked and automatic networking, persistent ULA, global
+IPv6 and default routes. They do not require radio-daemon removal. The network
+procedure preserves existing automatic methods/routes through its checkpoint;
+it does not define a timed RA-renewal proof. No new executable rule is proposed.
+
+**Recommended decision, awaiting Aaron's explicit agreement:**
+
+1. **W-076: resolve with no service change.** Accept the retained before/after-reboot
+   and promotion softblocks as the initial deployment's radio-disabled outcome.
+   Keep Bluetooth, wpa_supplicant, NetworkManager and existing block policy intact.
+   Dependency analysis is a prerequisite for a future removal/disable proposal,
+   not evidence that these unchanged daemons must be removed now. Do not claim
+   hardware disablement, complete dependency discovery or memory savings. Host/
+   network ownership remains unchanged; any radio/service change needs its own
+   review. Unexpected unblocking reopens this item before dependent maintenance.
+2. **W-020: explicitly defer the unmeasured timed-renewal check.** Accept the
+   observed startup/reboot/promotion addresses and routes for this initial
+   service deployment, retaining the fact that continuous RA-renewal behavior
+   was not measured. This accepts a residual risk of an unobserved later
+   renewal/routing failure; dashboard ULA success alone does not remove it.
+   `homelab-network` owns follow-up in this existing W-020 record, due before
+   the next host networking or container-runtime migration, or earlier if IPv6
+   route/address loss is reported. That work must define a bounded read-only
+   observation using actual advertised lifetimes and preserve host identity,
+   automatic methods, required addresses and default routes across renewal.
+   No observation, forced renewal, reapply, sysctl edit or reboot is authorized
+   by this decision. Successful future evidence can resolve the deferred item.
+3. **Closeout effect:** after agreement, amend the plan to record this acceptance
+   boundary, mark W-076 Resolved and W-020 Deferred with the owner/trigger above,
+   and reconcile AC-008/AC-010, W-011/W-012 and RESULT.md. Close the initial service
+   deployment using its existing evidence and explicit limitation; do not call
+   the timed-renewal test passed. W-096 stays Deferred. Monitors/alerts, future
+   workload qualification, actual notification delivery and Git publication
+   remain separate. No further live work follows automatically.
+
+Alternative: retain both findings as closeout blockers and prepare a separately
+reviewed network/host observation. No such executable operation is prepared or
+approved here. The recommendation avoids service changes unsupported by the
+observed radio state and leaves the remaining measurement obligation visible.
+
+Agreement is needed because this changes the remaining acceptance boundary,
+not because repository editing needs permission. The change-control rule states:
+“A decision that changes acceptance or authorized scope requires the user's
+agreement.” The existing plan likewise requires evidence or explicit deferral.
+
+W-126 reconciles stale inventory metadata with accepted foundation/runtime and
+DNS/dashboard receipts. It does not assert fresh live state, change selected
+components, or remove the project's partial-closeout limitation. No secret/raw
+evidence was copied into inventory; the shared result is its evidence reference.
+
+Local review checks passed: both repositories' applicable pre-commit hooks,
+relative file links, metadata-only comparison and whitespace checks. The
+monitoring check session 34488 exited 0 and is retired; the inventory checks
+completed synchronously. No code, deployment inputs or target state changed.
+All work remains uncommitted and unpublished. W-127 awaits the explicit decision
+above; W-020/W-076 are not marked resolved/deferred by preparation alone.
+
+### Initial-deployment closeout approved — November 12, 2026
+
+Aaron approved the exact W-127 dispositions in the response annotation. W-076
+is resolved with existing radio services retained; W-020 is explicitly deferred
+with its network owner, maintenance trigger and residual risk preserved above.
+W-096 remains deferred at the prior instruction. AC-008/AC-010 now pass under the
+approved initial-deployment acceptance boundary; no timed RA test is claimed.
+All remaining initial-deployment tasks have final dispositions. RESULT.md is
+Accepted with those explicit follow-ups. No live operation or publication follows.
+
+Aaron also reported failed login at `https://uptime.local.theama.co:10000`.
+That name maps to the Proxy VIP, not this Pi. The accepted Webmin profile binds
+only IPv4/IPv6 loopback on port 10000, with TLS off inside the SSH tunnel and
+`ama` selected for existing Unix/sudo authentication. The operating guide now
+explicitly separates these endpoints and credentials. Use its workstation tunnel
+and `http://127.0.0.1:11000/`; no password reset, new login attempt, endpoint
+inspection or claim about which remote Webmin answered was made. Prior accepted
+Webmin login evidence remains unchanged; the newly reported wrong-endpoint
+failure does not establish a failure on the Pi.
+
+### Fleet browser and DNS procedures — November 12, 2026
+
+Aaron approved `webmin-j2-svpi3bmf.local.theama.co` and required normal browser
+access for fleet Webmin. The shared Webmin operations guide documents HTTPS as
+normal access and SSH tunneling as optional recovery, with workstation steps and
+credential/endpoint distinctions. The onboarding procedure reuses primary-first
+Caddy publication and its existing replication/secondary acceptance. The URL is
+approved but not deployed; W-128 remains in progress. A local read-only collector
+and tests are prepared, but no inspection bundle is sealed or authorized.
+
+W-129 promotes the existing DNS procedure to the fleet entry point. Additions,
+edits and deletions use exact before/after/intermediate/recovery query matrices;
+other DNS changes route to their owner runbook. Current record-checker support
+is A/AAAA/PTR, not every DNS type. Application-specific readiness modes require
+coverage review for new consumers. Historical bundles and approvals remain
+unchanged. No target contact, new attempt or publication occurred.
+
+Local validation passed: applicable pre-commit hooks for DNS, server and monitoring
+procedure/document changes (sessions 25236, 9816 and 87050, all exit 0 and retired),
+and relative file-link checks for the shared procedures and plan. The vexp
+completion helper reported unavailable from the parent workspace, so no graph
+verification is claimed. No execution session remains active. Changes remain
+local and uncommitted; Webmin implementation and live acceptance remain pending.
+
+### Shared Webmin profile qualification — November 12, 2026
+
+The owner renderer `Webmin/scripts/render-proxy-profile.py` produces two policies
+for the existing atomic configuration helper. Explicit backend/source addresses,
+selected current settings and approved browser hostname are reviewed inputs.
+Authentication, SSL/key settings and unrelated configuration remain untouched;
+referers are extended rather than replaced. Conflicting redirects, access policy,
+subpaths and disabled referer/session checks stop for review. First-host source
+addresses and transport are not inferred or sealed by the fictional example.
+
+Qualification: four profile tests, seven readiness tests and seven existing atomic
+configuration tests passed. Final native session 18819 exited 0; pre-commit session
+2863 exited 0. Earlier native sessions 72651/83175 exited 1 because the fixture
+expected a redirect from an internally served login path; the corrected explicit
+redirect fixture passed in session 49742 and again against final inputs in 18819.
+Final ledger pre-commit session 58250 also exited 0 and is retired.
+All sessions are retired. Actual native miniserv 2.670 in local image 126c2a383378
+ran with networking disabled, read-only root and disposable temporary files. Its
+miniserv source hashes match the retained package (SHA-256
+`67ddbbeb415daa44643b91c2b4c7ce65c29f3170bd88cf37c6b2b516542c9839`).
+It passed dual-stack canonical HTTPS/443 redirects, selected listener access and
+403 rejection of an unlisted source. Containers used `--rm`; processes were
+terminated in the fixture's cleanup. No live target was contacted.
+
+Private evidence: `/home/aaron/code/.local-evidence/uptime-kuma/webmin-profile-qualification-e43eyzx8/`
+contains exact source hashes, native result and pre-commit output. YAML, relative
+file links and whitespace checks pass. This is backend-policy qualification only:
+full Webmin login, cookies/CSRF, Caddy TLS/WebSockets, real ingress and Pi resource
+acceptance remain pending. Operations now warns that canonical redirects may
+leave a localhost tunnel; independent browser recovery is not claimed. SSH
+command-line recovery and owner-reviewed saved-profile restoration remain available.
+
+### Exact Webmin readiness inspection for review — W-131
+
+**Prepared, not authorized.** One read-only capture on `ama@10.1.3.75`, expected
+hostname `j2-svpi3bmf.local.theama.co`, interface `eth0`. No other host is contacted.
+The frozen collector runs through SSH standard input with `sudo -n python3`;
+there is no target staging file. Strict retained SSH host-key validation is
+required. Fresh boot identity and selected configuration identities must remain
+stable during capture. Existing consumed operations remain unchanged.
+
+Bundle: `/home/aaron/code/.local-evidence/uptime-kuma/webmin-readiness-review-zmzk_x1o/`
+
+`INPUTS.SHA256SUMS` SHA-256:
+`799c8cece351a30a1ff78a0b134d2d91508e81ce532f4c048491464a89e4d766`
+
+Exact command, after verifying that manifest digest and the approved scope:
+
+```bash
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/webmin-readiness-review-zmzk_x1o/run.sh
+```
+
+The command verifies all four frozen inputs and consumes one exclusive local
+attempt directory before SSH. Total controller timeout is 90 seconds plus a
+five-second termination grace; each remote command has an eight-second timeout.
+Captured command output is checked against 64 KiB per stream, configuration reads
+against 256 KiB per file; launcher file-size limits bound retained output. Receipts,
+transport diagnostics and exit status remain in the owner-private local store.
+Do not automatically retry a partial or failed capture.
+
+Reads: selected non-secret settings and file identities from miniserv, Webmin and
+system-status configuration; Webmin package version; native service state and
+resource properties; TCP port 10000 listeners; eth0 addresses and IPv4/IPv6 routes;
+and the nftables ruleset. It does not read password/user databases, session data or
+private keys. Stderr is not copied into collector JSON. No HTTP/login probe, write,
+package change, firewall edit, service action, reboot, Caddy/DNS operation or new
+network test is included. No recovery is needed for these reads.
+
+After capture, review effective settings, listeners, routes and ingress policy to
+bind the first host's candidate; this receipt alone does not establish actual proxy
+source addresses or accept a deployed route. Further owner qualification and exact
+live authority remain separate. Repository policy requires scoped live inspection
+authority; see `homelab-server-configs/AGENTS.md`, Definition and authorization.
+
+### W-131 approved read-only attempt — November 12, 2026
+
+Aaron approved the exact bundle, command and scope referenced at line 5747 for
+one capture on `10.1.3.75`. Before launch, the manifest digest matched
+`799c8cece351a30a1ff78a0b134d2d91508e81ce532f4c048491464a89e4d766`,
+all four frozen files matched and no attempt directory existed. The exact reviewed
+command ran once with the required network permission; it exited 1 synchronously.
+No execution session was created or remains active. This approval is consumed.
+
+The private `attempt/receipt.json` is 69 bytes and reports `complete: false`,
+`error: hostname_mismatch`, `mutation: false`. Transport stderr is empty. The
+strict SSH host-key check completed and the collector reached its first hostname
+comparison. It stopped before configuration reads, boot capture, root-read checks
+or diagnostic subprocesses. The expected hostname was
+`j2-svpi3bmf.local.theama.co`; the observed value is unavailable because the
+collector omitted it. Neither a renamed host nor short-name/FQDN equivalence is
+established. No readiness or backend acceptance is claimed.
+
+The receipt, empty transport stderr and exit status remain in the sealed bundle's
+private `attempt/` directory with an evidence-hash index. No original input was
+changed. No retry, additional live query, write, restart or recovery ran. W-132
+tracks the missing diagnostic and prerequisite reconciliation; W-131 is blocked
+and W-128 remains open. Review locally before proposing another exact scope.
+
+### W-132 local hostname reconciliation and reporting — November 12, 2026
+
+The earlier readiness scope incorrectly used the DNS FQDN as the native hostname
+expectation. The accepted backend operation's frozen
+`operations/remaining-deployment.yaml` selects `target_hostname: j2-svpi3bmf`.
+Its frozen `ansible/accepted-prerequisites.yaml` reads `/usr/bin/hostname` and
+requires exact equality to that value. Both files match their retained
+`candidate/bundle/INPUTS.sha256` entries. The retained `execution/ansible.log`
+records the hostname read followed by the accepted boot/radio assertion passing.
+These files reside under the previously accepted private
+`backend-completion-20261111-nin6u10h` evidence directory.
+
+This reconciles the next candidate's native identity expectation to
+`j2-svpi3bmf`, separately from DNS `j2-svpi3bmf.local.theama.co` and the approved
+Webmin browser hostname. It does not reconstruct the failed W-131 observation,
+prove today's hostname or authorize accepting arbitrary short-name aliases.
+Strict SSH key and exact native hostname checks remain required; no DNS lookup,
+normalization or automatic expectation update is introduced.
+
+The existing collector now reads the native hostname once and retains an
+allowlisted failure object containing the source, expected value and observed
+value. Only ASCII hostname characters up to 253 characters are reported;
+malformed/overlong observed strings are redacted, invalid expected values are
+not echoed and unknown exception text remains suppressed. Mismatch still exits
+1 before config reads or diagnostic subprocesses.
+
+Qualification: all 11 readiness tests pass, including the actual local CLI
+mismatch path, short-name/FQDN rejection, no downstream reads/commands, bounded
+JSON, control/overlong redaction, invalid expected-input suppression and existing
+configuration-drift/privacy cases. Focused pre-commit passed synchronously.
+No target contact or native service action occurred. The consumed inspection
+manifest, script and receipt remain unchanged and retain their prior hashes.
+No successor was prepared or sealed; W-131 remains blocked awaiting a separately
+reviewed capture, while W-132's local correction and prerequisite reconciliation
+are complete. Full Webmin browser acceptance remains pending under W-128.
+
+### Exact Webmin readiness successor for review — November 12, 2026
+
+**Prepared and locally qualified; not authorized.** This is one new read-only
+capture on `ama@10.1.3.75`, expected native hostname `j2-svpi3bmf`, interface
+`eth0`. It uses the corrected bounded expected/observed reporting and preserves
+exact hostname matching and strict SSH host-key verification. No other host is
+included. The approved browser name remains
+`webmin-j2-svpi3bmf.local.theama.co`; it is not the native hostname expectation.
+
+Bundle: `/home/aaron/code/.local-evidence/uptime-kuma/webmin-readiness-review-rl27up6b/`
+
+`INPUTS.SHA256SUMS` SHA-256:
+`01918d621cc5cebffedaf7c3c4a48f4e033b2e11fa222597b7c33ed4ed8f8037`
+
+Frozen collector SHA-256:
+`5351e3b929f17973ffbabd253d9b8151b5ea840af6318c1502e76e1126bd3c61`
+
+Exact command after approval and verification of the manifest digest:
+
+```bash
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/webmin-readiness-review-rl27up6b/run.sh
+```
+
+The four bound inputs are the collector, retained known-hosts file, scope JSON
+and launcher. The launcher verifies them and claims one exclusive local attempt
+directory before SSH. Existing credentials are used without prompting or collection.
+The remote command streams the collector to `sudo -n /usr/bin/python3 -I -B -`
+with the explicit native hostname and interface; no remote staging file is created.
+
+Authorized scope, if approved: selected non-secret settings and identities from
+`/etc/webmin/miniserv.conf`, `/etc/webmin/config` and
+`/etc/webmin/system-status/config`; installed Webmin version; service state and
+resource properties; TCP port 10000 listeners; eth0 addresses, IPv4/IPv6 routing
+and nftables rules. Capture current boot identity and require continuity during
+this operation; do not compare a historical boot ID. Configurations must remain
+unchanged during collection. This is observation, not readiness acceptance by
+itself or evidence of actual proxy source addresses.
+
+Limits remain 90 seconds plus a five-second controller termination grace,
+eight seconds per remote command, 256 KiB per configuration and a 64 KiB
+post-capture check per command stream. The launcher's file-size limit bounds
+retained output. Failure stops; do not automatically retry. A hostname mismatch
+reports bounded expected/observed values and exits before configuration reads or
+diagnostic commands. Malformed observed names and arbitrary exception text remain
+redacted. Receipts, transport diagnostics and exit status stay in the owner-private
+bundle's `attempt/` directory.
+
+Excluded: password/user databases, sessions, private keys, HTTP/login probes,
+remote staging or writes, package/configuration/firewall changes, service actions,
+restarts/reloads/reboots, Caddy/DNS operations and other targets. No recovery is
+needed for these reads. Any later host/profile binding, proxy-source inspection,
+backend deployment, Caddy/DNS work or publication requires its own applicable scope.
+
+Qualification passed: 11 collector tests including real local CLI mismatch,
+launcher `bash -n` and ShellCheck, strict manifest verification and local validation
+that the retained SSH pin covers the exact target. Frozen collector bytes match
+the tested owner source. No attempt directory exists. The consumed predecessor's
+input manifest and every retained receipt hash were reverified unchanged. No
+live target contact occurred and no local execution session remains active.
+
+Repository policy requires explicit scoped live inspection authority under
+`homelab-server-configs/AGENTS.md`, Definition and authorization. Approving this
+successor grants one read-only capture only; the prior approval remains consumed.
+
+### W-131 successor capture accepted — November 12, 2026
+
+Aaron approved the exact bundle, command and scope at line 5851 for one read-only
+capture. Before execution, all four input hashes matched manifest SHA-256
+`01918d621cc5cebffedaf7c3c4a48f4e033b2e11fa222597b7c33ed4ed8f8037`
+and the attempt directory was absent. The exact command ran once and exited 0
+synchronously; no execution session was created. The approval is consumed.
+
+The private receipt reports `complete: true`, native hostname `j2-svpi3bmf`,
+interface `eth0`, and `mutation: false`. Strict SSH host-key validation and native
+hostname checks passed; fresh boot identity and all three configuration identities
+remained stable across collection. All seven commands completed with exit 0 and
+zero stderr bytes; SSH transport stderr is empty. No login/HTTP probe was run.
+
+Observed baseline:
+
+- Webmin 2.670, active/running, NRestarts=0. Native service properties retain
+  MemoryHigh 128 MiB, MemoryMax 192 MiB and MemorySwapMax 0. These are configured
+  limits, not measured workload/resource acceptance.
+- TCP 10000 listens only on 127.0.0.1 and ::1. The allowlist contains those two
+  addresses; ssl=0, session=1, localauth empty, allowusers=ama, sudo=1. Existing
+  foundation/startup-authority drop-ins remain listed. collect_pkgs=0 persists.
+- Webmin configuration has referers_none=1, no explicit referers and empty
+  webprefix. W-133 tracks the required explicit referrer-policy transition;
+  the current renderer rejects this baseline, as designed.
+- eth0 retains 10.1.3.75/22 and fd36:5aa8:6971:1::75/64, with IPv4 and IPv6 default
+  routes. Additional observed addresses stay in private evidence; this snapshot
+  does not qualify timed RA renewal or actual Caddy-to-Webmin source selection.
+- Captured nftables contains the existing Kuma and Netavark tables. No rule
+  explicitly naming port 10000 was found. No claim is made about upstream network
+  controls; restricted ingress and actual proxy source identities remain required
+  before opening Webmin network listeners. Existing Kuma rules are preserved.
+
+Receipt, transport stderr and exit status remain under the new bundle's
+`attempt/` directory with `evidence-hashes.json`. Frozen inputs still match after
+execution. The consumed predecessor remains unchanged. No remote file, setting,
+service, firewall, DNS or Caddy change occurred; no recovery or retry was needed.
+W-131 closes the scoped collection only. Webmin browser deployment/acceptance
+remains pending under W-128; W-133 must be reconciled locally before a candidate.
+
+### W-133 corrected semantics and first-host proposal — November 12, 2026
+
+The prior interpretation of `referers_none=1` was wrong. Unmodified Webmin 2.670
+`web-lib-funcs.pl` distinguishes the two controls: truthy `referer` bypasses checks
+globally; `referers_none=1` rejects missing referrers on protected actions, subject
+to native login/index/module exceptions. The earlier capture did not project
+`referer`, so its live value is unknown. Historical notes above retain the mistaken
+assessment; this correction supersedes it. No weakening of the observed
+missing-referrer policy is proposed or necessary.
+
+The shared renderer now preserves `referers_none`, deliberately sets `referer=0`
+and adds only the approved browser hostname to existing trusted names. It retains
+backend SSL/authentication keys and unrelated settings. The collector now includes
+both referrer controls for future reviewed captures; neither consumed collector
+nor receipt was modified. The full candidate must bind the deliberate global-check
+write to the exact before-file identity and verify effective policy after apply.
+
+Local native qualification calls unmodified `init_config` with isolated CGI inputs
+in the existing network-none container. Seven cases passed: a known global-bypass
+positive control; the approved HTTPS name across frontend/backend port differences;
+a preserved existing trusted name; rejection of foreign and suffix-spoofed names;
+rejection of missing referrers on a protected action; and the native login exemption.
+This tests real native policy decisions, not authentication or full HTTP/CSRF flow.
+The library hash matches the retained Webmin 2.670 package source:
+`c39aa5219939d29804bcfbfdee2a766705b15428427ed0ecf7527aed9ea42ba3`.
+
+First-host review input:
+`homelab-server-configs/Webmin/configs/hosts/j2-svpi3bmf-proxy.json`.
+It binds the approved browser hostname, observed port/loopback/authentication/TLS
+settings, 10.1.3.75 and fd36:5aa8:6971:1::75. Proposed proxy sources are copied from
+the captured existing Kuma guard: IPv4 .53/.54 and IPv6 ::53/::54/::56. This is a
+retained policy basis, not proof of current Webmin connection source selection.
+The proposal preserves backend HTTP with source-restricted LAN access and frontend
+HTTPS. The backend leg would be plaintext; this trust boundary belongs in the live
+operation review and must not be mistaken for end-to-end TLS acceptance.
+
+`--format ingress` on the shared renderer emits only the Webmin-owned nftables
+table, using the existing fleet pre-routing guard pattern. It permits loopback
+and reviewed source/destination pairs on port 10000 and drops other traffic to
+that local port. Native nftables check, apply/reapply and preservation of an
+unrelated sentinel table passed in a disposable network-none container with
+NET_ADMIN limited to its namespace. No host network namespace or target was used.
+This does not qualify packet paths, guard persistence, boot ordering or Pi resources.
+
+Private qualification evidence:
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-referrer-qualification-ehxgfx5b/`.
+It retains native logs/status, source hashes, rendered policy/guard and first-host
+binding with the observed configuration hashes/modes/ownership. Its source receipt
+SHA-256 is `efc66ea4335e9df7a987aed67eaac05dd5e5e1cfd32c4e82d4c5dd859f1abd3a`.
+Both inspections' frozen inputs and receipts remain preserved. No executable live
+operation or new inspection was sealed or run, and nothing was published.
+
+Qualification: six profile tests, twelve readiness tests and seven existing atomic
+configuration tests pass (25 total), alongside the native referrer and ingress
+checks above. Native sessions 10034 and 31317 exited 0 and are retired; containers
+used `--rm` with temporary-only writable storage. Full authenticated browser,
+cookies/CSRF, WebSocket, Caddy/DNS, actual proxy-source/path, persistent ingress
+ordering/recovery and Pi resource acceptance remain under W-128. Preparing those
+checks in the complete owner candidate is the next action; no separate platform
+or replication engine is introduced.
+
+The first documentation hook passes found extra blank lines in the onboarding,
+architecture and result updates. Those formatting defects were corrected locally;
+no executable input changed. Sessions 80002/61585 are retired (their final shell
+status was 0, but the Markdown hooks inside them failed, so that shell status is
+not counted as a successful hook run). Final scoped checks are recorded below.
+
+Final scoped documentation pre-commit runs passed for both owners; monitoring
+session 91373 exited 0 and is retired, and server checks completed synchronously.
+Executable profile/readiness hooks, JSON validation, configuration YAML, relative
+links and whitespace checks passed. No execution session remains active. Changes
+are local and uncommitted; no live operation or publication is authorized.
+
+## November 12 — W-134 guard/browser qualification and W-135 stop
+
+Aaron requested guard persistence/recovery, actual proxy paths and full browser
+acceptance before sealing. Work remained local. No production Webmin listener,
+Caddy release, DNS record, account or service was changed. Both consumed readiness
+bundles remain intact; no new deployment bundle was defined or sealed.
+
+Added the proposed Webmin-owned guard unit/dependency and one Caddy fragment outside
+its accepted tree. The native systemd/nft fixture passed:
+
+- stopping the guard stops Webmin while retaining its rules;
+- invalid rules block startup and invalid reload retains the last valid table;
+- each Webmin start reasserts the guard, preserving an unrelated sentinel table;
+- restarting the owned container restores the enabled guard and Webmin;
+- restoring exact saved loopback configuration, verifying IPv4/IPv6 HTTP and only
+  loopback listeners, then removing only the owned table preserves the service
+  and unrelated rules.
+
+The first stop assertion expected inactive, but native miniserv exited nonzero
+on stop. The corrected check accepts inactive/failed only with MainPID=0. Its
+failed receipt remains retained; subsequent lifecycle and recovery checks passed.
+This does not bypass a running-service check. The oneshot guard is not continuous
+integrity monitoring: deleting its table externally while Webmin runs is not
+automatically detected. Native allowlisting remains a separate control.
+
+Private evidence:
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-browser-qualification-mpcul8ux/`.
+`qualified-source-hashes.json` binds the tested sources. Native Webmin 2.670 and
+Caddy 2.11.4 ran under systemd in a network-none container with namespace-local
+NET_ADMIN. Chromium 156 trusted only the fixture CA; no TLS verification bypass
+was used. Browser credentials were randomly generated, fixture-only and private.
+The explicit miniserv fixture unit replaces the image's SysV-generated unit; it
+is not proof of production unit equivalence or ARM64 resource acceptance.
+
+The production-shaped proposed Caddy fragment was used with declared local
+hostname/address/client-network/TLS substitutions. Both frontend families passed
+rejected-password/valid login, eight assets, Secure/HttpOnly session cookie,
+approved/foreign/missing referrer checks, and logout with old-session rejection.
+The first protected-page attempt timed out at 15 seconds; a bounded 60-second
+check later passed. First-choice upstream selection means these receipts do not
+prove each backend family independently. These were partial HTTP/session passes;
+WebSocket was not included and full application acceptance was not claimed.
+
+The standalone Perl dependency probe initially omitted Webmin's vendor_perl path
+and wrongly suggested a missing WebSocket module. Native package source contains
+the module; the corrected Perl load of Net::WebSocket::Server and IO::Pty exited 0.
+A disposable dependency-image build failed because the guessed Debian package
+name was unavailable. Its log is retained, the build was abandoned, and no added
+package or production dependency change is proposed from that invalid probe.
+
+A fresh fixture used the existing image, full browser test and a fixture-only
+non-root terminal account. No terminal command was sent. Its private evidence is
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-browser-complete-tqseeb19/`.
+`source-hashes.json`, `image-id.txt`, the browser receipt and `terminal-service.json`
+retain input and outcome identities. It again passed login/assets, then timed out
+at the protected settings page and ultimately recorded the W-135 OOM state.
+WebSocket testing never started. The same workload is therefore not reliably
+qualified within the preserved service cap. No cap increase, narrowed acceptance,
+production retry or inferred Pi failure follows from this local result.
+
+Actual Caddy-to-Pi source/path checks remain pending: retained Kuma source policy
+is only a proposal basis. Before sealing, reconcile native unit/drop-in identity
+and route-selected sources under bounded target authority. Actual HTTP ingress,
+unlisted-client rejection, each upstream family, both proxy nodes/VIP, existing
+PAM/sudo account, WebSocket and Pi resource acceptance must be staged in the one
+owner-reviewed operation after the restricted listener exists. A route lookup or
+local loopback test cannot replace those gates. Updated owner onboarding and
+operations documents describe that boundary and ordered guard recovery.
+
+All shell sessions exited and are retired: 34819/1635 exited 1 (browser failures),
+21913 exited 1 (fixture stop assertion), 55849/33194/40737/86422/83107 exited 0
+(lifecycle, browser and restart/recovery), 10298 exited 100 (abandoned image build),
+55831/98074 exited 0 (fresh fixture start/preparation). Both owned containers were
+removed. No browser, container or execution session from this work remains active.
+Local tests: 18 profile/readiness and 7 configuration tests passed; browser script
+syntax passed. Full native browser/resource qualification remains failed, not
+superseded by these smaller checks. Source changes remain uncommitted.
+
+Scoped pre-commit checks passed in both owner repositories; monitoring session
+30181 exited 0 and is retired. Qualification Python syntax and browser JavaScript
+syntax passed. Whitespace checks passed. No source was committed or published.
+
+## November 12 — W-135 retained-evidence reconciliation
+
+This work reviewed retained local receipts and owner sources only. No browser
+acceptance, container workload, live inspection, service change or publication was
+replayed. The prior guard and partial-browser results remain intact. No architecture or accepted resource-policy change was made.
+
+Six current source hashes match the failed fixture's recorded bindings. The
+private reconciliation store is
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-memory-reconciliation-r8zm5_tv/`.
+`retained-evidence.json` preserves comparisons and hashes of the original safe
+receipts; `unit-source-comparison.json` records declared owner/fixture differences.
+The original evidence directories were read, not rewritten.
+
+The terminal receipt establishes Result=oom-kill, MemoryPeak=201326592 bytes,
+MemoryMax=201326592, MemoryHigh=134217728 and NRestarts=0. The browser receipt
+establishes a timeout at trusted-referrer after successful login/assets. Neither
+receipt contains contemporaneous memory.events, anonymous/file/kernel charge
+breakdown, process PSS or an ancestor-limit timeline. They do not establish which
+process allocated memory, whether the service or an ancestor triggered the OOM,
+or whether that page alone caused the failure. A memory leak, package-query
+regression, required larger cap and Pi failure remain unproven.
+
+The foundation-owned drop-in source hashes to
+`2cf5ef73617a668b7f39bd8f75da0694735c9dfefa763661de3bd08a61c9071b`, matching the
+retained correction operation's guard identity. Its memory/swap/CPU/task controls,
+installation condition and control-group kill mode match the fixture declarations.
+The fixture substitutes direct foreground miniserv for the installed native unit,
+uses 30/15-second startup/stop timeouts instead of 60/20, and omits explicit start
+rate, OOMPolicy and SendSIGKILL declarations. Defaults or inheritance may match
+some effective values; this source comparison does not establish effective drift
+or attribute the OOM to those differences. The successful target capture retained
+unit/drop-in paths, not enough unit content to close equivalence. The native
+miniserv source still forks request handlers with --nofork; that flag does not disable
+request forking and is not evidence of serialized requests.
+
+The first fixture's successful browser sequence and the fresh fixture's failure
+used different histories. The latter added a synthetic Unix account and future
+WebSocket branch, but never reached that branch. Neither a clean restart alone
+nor that account change is an established remedy or cause. One local Caddy and
+its two upstream health paths, browser background work and extra asset checks
+remain potential contributors to measure, not asserted causes. A production pair
+must also be represented in later workload qualification.
+
+Reconciliation recommendation: preserve Webmin's 192 MiB cap, 128 MiB high watermark, no-swap
+policy, other service caps and 96 MiB reserve. The accepted 624 MiB startup budget
+is 320 + 192 + 16 + 96; increasing Webmin by any amount changes that admission
+budget and requires separate host review plus combined running-service/scan
+qualification. Do not borrow reserve or count hypothetical recovered overhead.
+
+Reused the existing Webmin diagnostic sampler rather than adding another runner.
+Its samples now retain memory charge categories, effective limits/swap usage,
+selected numeric PSS aggregates, parent PID and explicit unavailable/truncated
+process evidence. Existing response-body/cookie/command-line/environment exclusions
+and output/time bounds remain. Its live HTTP runner still emits diagnostic GETs;
+it must not be mistaken for a passive browser observer. Future local attribution
+must call the sampler without that request thread, correlate bounded safe browser
+phases, capture unit and container/ancestor events before teardown, and verify
+that observation is outside the Webmin service cgroup. Measurement overhead and
+missing samples must remain visible. No such runtime diagnostic was executed here.
+
+The next local qualification must first align the fixture with owner unit/drop-in
+controls, preserve the existing browser workload/health checks and use one changed
+factor per controlled comparison. A passing diagnostic control cannot replace
+full browser, WebSocket, actual proxy-source/path, native account or Pi resource
+acceptance. W-135 stays Open and W-134 stays Blocked until that evidence supports
+an owner-governed correction; no deployment is sealed.
+
+Validation: six focused diagnostic tests passed, including numeric-only memory
+projection, omission reporting, disappearing processes, private-data exclusion and
+real local-loopback HTTP/timeouts. Scoped pre-commit checks passed in both owners;
+working-tree Gitleaks scans passed for Webmin and the monitoring repository, and
+whitespace/table checks passed. Sessions 50530, 21555 and 12568 exited 0 and are
+retired. No runtime fixture or live-target execution session was created.
+
+## November 12 — W-135 aligned offline attribution in progress
+
+Aaron requested alignment and phase-correlated memory capture. The new private
+store is `/home/aaron/code/.local-evidence/uptime-kuma/webmin-memory-phases-b5u3vjvd/`.
+One owned network-none fixture uses existing image
+`14256f5f3c69b7fec79d8153ca54737d5b9df4c60af6a46faa57a791d7d5e9a2`.
+Its Webmin unit comes from the pinned package's updateboot.pl producer; its
+foundation drop-in is extracted unchanged from the owning YAML and hash-bound.
+No handwritten unit or copied resource-policy subset is used. Synthetic account,
+loopback fixture addresses, fixture CA and AMD64 limitations remain explicit.
+The existing browser test now emits bounded safe monotonic phase markers. The
+offline observer reuses sample() without its HTTP probe thread, samples Webmin
+and visible ancestors, and stops the owned services on failure/deadline. It does
+not retry the browser or change resource limits. Runtime evidence is diagnostic,
+not a new production acceptance attempt or a deployment authorization.
+
+### Aligned attribution result
+
+The package-generated unit and unchanged owner drop-in passed effective checks:
+MemoryHigh=128 MiB, MemoryMax=192 MiB, no swap, 128 tasks, one CPU,
+KillMode=control-group, OOMPolicy=stop, 60/20-second startup/stop timeouts,
+Restart=on-failure with two seconds, and three starts per five minutes. The native
+unit also supplies PERLLIB and its own ExecStart/ExecReload. The generated unit,
+effective property receipt, owner binding and exact executed source copies are
+retained. Current installed Pi unit/drop-in identity is still not verified; the
+fixture does not recreate its host-specific startup-authority state.
+
+The one diagnostic collected 48 samples over 11.975 seconds (including a
+five-second baseline), with a maximum observed sampling gap of 0.257 seconds.
+The synthetic IPv4 browser workload exited 0: trusted TLS, rejected/accepted login,
+eight assets, protected-page referrer checks, native WebSocket frames without
+terminal input, and logout/old-session rejection passed. The Webmin service was
+active before containment with NRestarts=0 and MemoryPeak=139042816 bytes
+(132.6015625 MiB), below the unchanged 192 MiB cap. Its memory.events.local ended
+with high=446 and max/oom/oom_kill/oom_group_kill=0. Visible system.slice/container
+ancestors also showed no local hard-limit/OOM events. This is a diagnostic pass,
+not production acceptance or proof that the historical OOM cause is fixed.
+
+The highest sampled current charge, 138997760 bytes, coincided with trusted-referrer.
+The sample included nine native/CGI-related processes and predominantly anonymous
+memory; one process rollup was unavailable. Across the run there were no truncated
+process inventories, but seven samples lacked at least one rollup. The observer
+ran outside Webmin's service cgroup and peaked at 18604 KiB RSS. It is not free
+observation overhead and is not added back to any admission threshold. Recorded
+phase markers cover every browser stage, but assets and foreign-referrer completed
+between memory samples. Cross-file reads are not an atomic allocation snapshot;
+these data cannot attribute every byte or reconstruct the historical failure.
+
+The run was shorter than the configured 30-second health interval and used one
+Caddy process, synthetic authentication, fixture CA and AMD64. It does not qualify
+sustained health-check overlap, a real proxy pair, IPv6 browser/each upstream path,
+Pi resources or the existing operator account. Keep full acceptance pending and
+preserve all earlier partial passes/failures. No cap increase or acceptance waiver
+was selected. Fixture alignment plus instrumentation changed several conditions;
+a single successful run is not a controlled proof of which change mattered.
+
+Evidence files include `memory-phases.jsonl`, `browser-phases-ipv4.jsonl`,
+`phase-summary.json`, `attribution-result.json`, `browser-expanded-ipv4.json`,
+`generated-webmin.service`, `effective-unit.txt`, `source-hashes.json` and
+`executed-sources/` in the private store above. Credentials/keys remain separate
+private fixture inputs and are not included in source hashes or diagnostic output.
+After collection, only the phase reader was hardened to read at most 16385 bytes
+and accept known phase names; three neutral parser regressions cover that change.
+The actual executed observer is preserved with its original hash; no workload was
+repeated to validate the parser-only correction.
+
+Containment stopped Webmin/Caddy. Native miniserv left failed/exit-code on stop,
+with MainPID=0 and no restarts; that stop result is distinct from runtime OOM.
+Caddy was inactive and no owned browser/node process remained. Container
+webmin-memory-b5u3vjvd was removed. Sessions 57315 (launch), 48669 (preparation)
+and 6121 (diagnostic) exited 0 and are retired. No live target was contacted,
+no consumed deployment was replayed, and nothing was published or sealed.
+
+Final validation: three phase-reader and six diagnostic regressions passed;
+browser JavaScript syntax passed. Scoped owner pre-commit checks, whitespace
+checks and working-tree Gitleaks scans passed. Test/hook sessions 42774 and 95731,
+and final scan session 63230, exited 0 and are retired. The parser-only follow-up
+has its own private qualification hash record; the executed sources remain intact.
+No session or task-owned container remains active. Changes are uncommitted.
+
+## Sustained paired-proxy resource qualification — November 12, 2026 (W-135)
+
+Local scope only: extend the aligned fixture in place with two Caddy processes,
+four sequential node/frontend-family browser checks (A forces IPv4 upstream,
+B forces IPv6), then restore both upstreams on each proxy and run two concurrent
+95-second authenticated browser/WebSocket workloads. Repeated protected HTTP
+checks occur at 0/15/30/45/60/75/95 seconds. This spans three configured 30-second
+health intervals; it does not instrument each successful health probe.
+All addresses remain inside one network-none namespace; production source/path
+acceptance is not represented by these fixture paths.
+
+Reuse the pinned fixture image and package-generated unit with exact owner
+foundation controls. No cap, reserve or restart-policy change. Observe every
+250 ms with existing bounded cgroup/process sampler; retain phase markers,
+visible ancestor and proxy charges, gaps and observer RSS. Stop/contain on failed
+workload, hard-limit/OOM event, disappearing cgroup, 24 MiB evidence bound or
+420-second deadline; do not rerun a failed workload. Preserve old evidence.
+
+Private evidence: `.local-evidence/uptime-kuma/webmin-paired-resource-ioc4sknu/`.
+Source copies/hashes, owner binding and scope are retained before launch.
+Five neutral phase/matrix/containment tests and syntax checks passed. No live
+contact or publication is authorized. Runtime qualification is not yet complete.
+
+### Paired resource result: failed, contained
+
+The exact source snapshot above ran once. Preparation exited 0 with the package
+unit and owner controls verified. Observation exited 1 after 82.176 seconds with
+318 samples; its stop reason was workload-failed. Node A/IPv4 completed trusted
+TLS, rejected/accepted login, assets, referrer checks, native WebSocket and logout.
+Node A/IPv6 reached the expected TLS endpoint, accepted login and eight assets,
+then timed out after 60 seconds opening the protected referrer page. Both used
+A's deliberately single IPv4 upstream; this is not evidence of an IPv6 backend
+failure. Node B browser paths, restoring dual upstreams and the concurrent
+95-second sustained phase were not executed.
+
+Webmin was active with NRestarts=0 before containment. MemoryPeak was 169021440
+bytes (161.19140625 MiB), and sampled current memory reached 168566784 bytes.
+The unchanged MemoryHigh=128 MiB produced 12440 high events; max/oom/oom_kill/
+oom_group_kill remained zero. During the failing phase, up to 13 sampled
+processes waited in __mem_cgroup_handle_over_high. End-of-run memory pressure
+reported full avg10=97.42%, with about 61.9 seconds cumulative full stalls.
+This directly demonstrates severe high-limit reclaim/throttling in this run;
+it does not identify each request's process or prove the earlier OOM's cause.
+
+Both Caddy health checks timed out awaiting headers around observer seconds
+37.7 and 67.7. Caddy subsequently returned HTTP 504 after a 60.003-second header
+wait. Initial connection-refused health messages occurred about 25.3 seconds
+before observation, while the fixture backend was starting; retain them separately
+from the later loaded-service timeouts. Absence of hard-limit/OOM events is not
+successful responsiveness or capacity acceptance. Do not relax browser/proxy
+response deadlines or service controls to turn this result into a pass.
+
+Sampling gap peaked at 0.2686 seconds; observer RSS peaked at 19368 KiB outside
+the Webmin cgroup. Inventory exceeded the 16-process capture bound in 24 samples
+(up to two omitted); seven samples lacked a process rollup. Attribution is
+therefore incomplete. Visible ancestors had no local max/OOM events; container
+peak was 874143744 bytes against its 1536 MiB limit. Chromium and both fixture
+proxies are outside Webmin's cap. This AMD64 run does not qualify the Pi's combined
+Kuma/foundation/scan reserve or actual proxy source selection.
+
+Retained private files include source-hashes.json and executed-sources/,
+foundation-dropin.conf and owner-binding.json, generated-webmin.service,
+effective-unit.txt, fixture-mode.json, four validated Caddy configurations,
+per-client results/phase markers, memory-phases.jsonl, phase-summary.json,
+proxy-timing-summary.json, bounded private journals and attribution-result.json.
+Synthetic credentials/keys remain separate, private and excluded from hashes.
+No previous bundle, receipt or evidence file was changed.
+
+Containment independently verified all three service MainPIDs=0, no Webmin/HTTPS
+listeners and no node/chromium processes. The native Webmin stop left failed/
+exit-code, distinct from its active/success state before containment. The first
+container removal refused because its systemd PID 1 was still running; the owned
+container was then stopped and removed successfully. No browser or service retry
+occurred. Launch 45638 and preparation 50094 exited 0; observer 75806 exited 1;
+all are retired. Cleanup commands completed synchronously. No live host contact,
+publication or deployment sealing occurred.
+
+Local validation: five neutral phase/matrix/stop-condition regressions and Python/
+JavaScript syntax checks passed. All eleven executed source hashes match their
+retained copies and current files. Owner checks and working-tree secret scans
+passed. Record lint initially rejected two extra blank lines; those were removed
+before the final check. Helper-based repository verification was unavailable from
+the parent workspace (not a Git repository); focused checks provide the available
+verification. This does not convert the failed browser workload into acceptance.
+Changes remain local and uncommitted.
+
+## Proposed durable fixture-evidence instruction (W-136)
+
+Proposed location: `/home/aaron/code/AGENTS.md`, beside substantial-change and
+validation guidance. This is proposed wording, not an installed global rule.
+Keep one canonical workspace instruction; component runbooks and the maintained
+change-control skill can reference its boundary rather than copy diverging rules.
+
+> **Fixture evidence and target capacity**
+>
+> Use fixtures primarily to validate configuration correctness, application
+> contracts, safety controls, recovery and reproducible defects. Identify the
+> decision each test supports before building or extending it.
+>
+> Do not use a substitute fixture to qualify, accept or reject the capacity of a
+> named deployment host. Do not expand or repeat fixture load tests to settle that
+> question. Target capacity requires bounded measurements on the actual host with
+> its intended workload, service controls, dependencies and co-resident services.
+>
+> Resource testing in fixtures remains appropriate when it directly answers the
+> question under test: verifying resource-limit enforcement, detecting a leak or
+> resource regression, comparing implementations under controlled conditions, or
+> characterizing the actual disposable deployment platform being evaluated. State
+> the workload, relevant equivalence/differences, metric, duration and decision in
+> the existing work record. Limit conclusions to that tested system or comparison;
+> never promote them to capacity acceptance of a different host.
+>
+> Stop fixture work when the stated correctness/defect question is answered or
+> the fixture cannot resolve the remaining uncertainty. Repeat only for changed
+> relevant inputs or a specific unresolved defect. A fixture capacity failure is
+> risk evidence for target trial design, not an indefinite requirement for a
+> fixture pass. Concrete correctness/security/recovery defects still require a
+> safe resolution before using the affected path.
+>
+> Preserve failures and uncertainty. Prepare one bounded actual-target trial with
+> unchanged accepted controls, explicit workload, observation, stop conditions and
+> recovery. Obtain the applicable live authority before contact or mutation; do
+> not weaken limits, omit failing functions or extend timeouts to manufacture a
+> pass. Do not add a separate document or bespoke test framework for this rule.
+
+Aaron's agreement to the actual-host direction is applied to this project:
+PLAN.md now defines the trial, and Webmin's onboarding procedure no longer makes
+a substitute-fixture resource pass a target-capacity prerequisite. Existing
+correctness qualification and historical failures remain valid within their
+limits. W-135 is neither erased nor marked target-capacity accepted.
+
+## Actual-host qualification preparation (W-137)
+
+The [target qualification plan](PLAN.md#target-qualification-boundary--november-12-2026)
+specifies real Pi/proxy paths, one workstation browser, unchanged host controls,
+a ten-minute measured workload with 30-second baseline and at least 95 seconds
+of authenticated use, existing guarded scan integration, stop conditions and
+owner recovery. No DNS change occurs in that trial. Private credentials remain
+with Aaron; operator waiting outside the measured trial is not a deployment
+failure. No root terminal is opened merely to satisfy a test.
+
+Retained readiness has paths but not hashes of the actual Pi service unit and
+all drop-ins, nor current route-selected proxy sources for Webmin. These are
+needed for exact before-state, ingress and recovery bindings. The existing
+Webmin collector now optionally hashes only selected unit paths, captures
+non-secret effective controls, loads native modules using explicit Webmin library
+paths, and reports only user/sudoenforce from an existing ama terminal ACL.
+It does not expose unit bodies, environments, users databases or credentials.
+Missing terminal ACL is an explicit observation, not permission to create one.
+Installed-file drift and boot changes reject the capture.
+
+Sixteen collector regressions passed, including rejected private/unexpected paths,
+empty metadata, unchanged legacy collection, no raw stderr and unit-identity drift.
+Launcher tests used a local SSH stub: exact three-target order, strict host pins,
+stop on primary failure and exclusive-attempt replay rejection passed. This is
+correctness qualification, not a capacity fixture. No test contacted a host.
+
+### Exact read-only target-readiness bundle for review (W-137)
+
+Prepared, locally qualified and unused; not authorized. One capture each, in order:
+`ama@10.1.3.75`, `pi@10.1.0.53`, `pi@10.1.0.54`; stop on the first failure.
+No browser, HTTP, load or scan runs. The selected Pi native hostname remains
+`j2-svpi3bmf`; targets are bound through retained strict SSH host-key pins.
+Proxy hostnames are reported for independent review. Each capture uses fresh
+boot identity and checks continuity within that capture, never an old boot ID.
+
+Bundle:
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-target-readiness-fe7cvab0/`
+
+`INPUTS.SHA256SUMS` SHA-256:
+`f269d075aea624082899b446b5c92ed451f44fbbfee4eaf47a17f6d216918c3c`
+
+Frozen collector SHA-256:
+`edbddd0b776c1d37a6732629f3d6586cfd487791db6061267a4de42ee191ea67`
+
+Exact command after approval and independent manifest-digest verification:
+
+```bash
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/webmin-target-readiness-fe7cvab0/run.sh
+```
+
+Five manifest-bound inputs: Pi collector, proxy read-only payload, retained host
+pins, scope JSON and launcher. The launcher verifies inputs and exclusively
+creates attempt/ before any SSH, preventing replay. Existing SSH credentials are
+used without collection; remote payloads run from stdin without staging files.
+No previous bundle or receipt is changed. An unsuccessful capture stops the
+sequence; it does not authorize a replacement attempt or a capacity conclusion.
+
+Pi scope: existing selected non-secret Webmin configuration/file identities;
+installed Webmin version and architecture; stable installed service/drop-in
+hashes and effective startup/dependency/resource properties; native IO::Pty and
+Net::WebSocket::Server availability with explicit Webmin library paths; only
+user/sudoenforce from the optional existing ama terminal ACL; port 10000 listeners,
+eth0 addresses/routes and nftables rules. No full unit bodies, environment,
+command lines, password/user databases, sessions, private keys or account changes.
+
+Proxy scope: route lookups to each Pi family and local addresses, hostname/current
+boot ID, accepted current-release path and manifest identity, Caddy service state,
+and public certificate coverage/expiry for the approved Webmin browser name.
+No probes to the backend or DNS, no certificate-worker execution, no release
+staging/publication/reload, no failover and no access to private TLS keys.
+
+Bounds: 115 seconds plus five seconds termination grace per SSH capture, remote
+100-second deadline with five-second grace, eight seconds per diagnostic command,
+256 KiB per selected file, 64 KiB retained command-output checks and 2 MiB file
+limits for controller stdout/stderr. At most three sequential target captures;
+no retry. Private receipts/transport output/status remain under attempt/.
+Capture failures report bounded error metadata. These limits bound the inspection;
+they are not application performance criteria or capacity qualification.
+
+Excluded: all remote writes/staging, workload generation, credential collection,
+package/configuration/firewall/account/DNS changes, service start/stop/reload,
+restart/reboot, publication and the future guarded backend/Caddy deployment.
+No recovery is needed for these reads. The mutation/trial scope remains unsealed
+until these missing inputs have been reconciled and the exact recovery binding
+and applicable browser capability are prepared. Reviewability is not live authority.
+
+Authorization reason: homelab-server-configs/AGENTS.md, Definition and authorization,
+requires: "A definition-only task must not contact a live target unless the user has
+explicitly requested or authorized a read-only inspection." The earlier inspection
+approvals are consumed; agreement to prepare the target trial does not authorize
+these captures or the later mutation. This is one bounded readiness review, not a
+new fixture requirement or an approval for each internal read command.
+
+### Fleet readiness instruction clarification (W-137)
+
+Aaron required the missing unit/source prerequisites to apply fleet-wide. Webmin's
+CADDY_ONBOARDING.md now has one mandatory readiness section for every host:
+installed FragmentPath/all DropInPaths identities and effective controls, plus
+current route-selected sources from every Caddy node to every intended backend
+family. It defines private evidence fields, ingress/recovery bindings, pre-mutation
+rechecks and separate real-packet acceptance. OPERATIONS.md links that canonical
+section. No values may be copied from the first host or another application's
+allowlist as assumed acceptance. The sealed inspection inputs and approval state
+remain unchanged; no live capture, harness-rule installation or publication occurred.
+
+### W-136 installation and W-137 execution authorization
+
+Aaron approved the exact proposed workspace rule and sealed read-only capture.
+The rule is installed verbatim under Fixture evidence and target capacity in
+/home/aaron/code/AGENTS.md. All five sealed input hashes and the reviewed manifest
+digest matched; attempt/ was absent. One execution is authorized, Pi then both
+proxies, stopping on failure. No mutation, browser load, retry or publication.
+
+### W-137 read-only capture passed — November 12, 2026
+
+The exact approved launcher ran once and exited 0. All three captures completed:
+Pi first, then primary and secondary. Both proxies reported capture timestamps
+19:49:53–19:49:54 UTC. All input hashes were verified before execution; receipts
+and their SHA-256 index remain in the sealed bundle's private attempt/ directory
+and receipt-hashes.json. Session 6287 is complete and retired. Approval is consumed;
+no further inspection, mutation, browser load, retry or publication is authorized.
+
+The Pi reports ARM64, Webmin 2.670, active/running and NRestarts=0, with only
+127.0.0.1/[::1]:10000 listeners. Effective owner controls remain 128/192 MiB
+high/max, no swap, 128 tasks, one CPU, control-group kill/stop-on-OOM, 60/20-second
+startup/stop timeouts and on-failure restart at two seconds. Its startup-authority
+dependency remains present; preserve it when adding the ingress dependency.
+Installed file identities, root-owned mode 0644:
+
+| Installed file | SHA-256 |
+| --- | --- |
+| /usr/lib/systemd/system/webmin.service | ca26388a569ef106439eec33a9ca29153caaeac63c06148a863a69196b496768 |
+| /etc/systemd/system/webmin.service.d/10-fleet-foundation.conf | 2cf5ef73617a668b7f39bd8f75da0694735c9dfefa763661de3bd08a61c9071b |
+| /etc/systemd/system/webmin.service.d/60-startup-authority.conf | 365cf8b8af7e55f2e22a78a7ba1bc5b234fb167c9832992b69808f49c5c16b7d |
+
+Both native module loads passed. The optional /etc/webmin/xterm/ama.acl is absent;
+this does not establish the effective terminal privilege or mean WebSockets are
+unavailable. Resolve a safe existing-account capability before browser acceptance;
+do not create an ACL/account or open a root terminal under this read-only approval.
+Selected configuration retains collect_pkgs=0, referers_none=1 and the loopback
+profile. Global referer remains absent, so the candidate's explicit referer=0 is
+still a deliberate reviewed change, not an observed existing setting.
+
+| Proxy | Destination family | Observed source | Interface |
+| --- | --- | --- | --- |
+| j1-svpihole0 (10.1.0.53) | IPv4 to 10.1.3.75 | 10.1.0.53 | eth0 |
+| j1-svpihole0 (10.1.0.53) | IPv6 to fd36:5aa8:6971:1::75 | fd36:5aa8:6971:1::56 | eth0 |
+| j1-svpihole00 (10.1.0.54) | IPv4 to 10.1.3.75 | 10.1.0.54 | eth0 |
+| j1-svpihole00 (10.1.0.54) | IPv6 to fd36:5aa8:6971:1::75 | fd36:5aa8:6971:1::54 | eth0 |
+
+Both route lookups report on-link paths with no gateway field. These are current
+route selections, not completed HTTP or target-observed packet acceptance, and
+do not establish post-failover selections. Both proxies are active with no restarts
+and report the same accepted release 20261111T213048Z-71b7deb8-bc71-45d5-8f33-98270af79d3b,
+manifest SHA-256 b972d15185960fc219d09c1c047cd5c2269be97f42e6cc5eef6a3b691aa7d52d.
+Public leaf/fullchain hostname and expiry checks passed for the approved Webmin
+name; the certificate expires January 19, 2027. This is certificate coverage,
+not a new trusted-browser handshake. Per-node boot continuity, Pi file/service stability and unchanged proxy release
+paths passed within the captures. No service, firewall, account, Caddy or DNS state was
+changed; no host capacity or browser acceptance is claimed.
+
+## Fleet model and actual-host trial preparation (W-137/W-138)
+
+Aaron approved adding safe WebSocket acceptance to fleet onboarding and preparing
+an actual-host trial. Preparation grants no live authority. CADDY_ONBOARDING.md
+now requires the enabled feature, effective existing-account permissions, exact
+safe action and side effects, expected connection/session/cleanup results and an
+explicit applicability disposition before sealing. OPERATIONS.md links that one
+canonical section. No account creation, permission broadening or root-terminal
+probe is implicit in acceptance.
+
+The fleet procedure also requires reusable discoveries to be incorporated into
+the appropriate Webmin/Caddy/DNS owner instructions before the finding closes.
+Host values, private evidence and attempt outcomes stay in the existing record.
+This first deployment is the model; its success will not accept other hosts.
+
+Local review of retained Webmin 2.670 source found xterm/shellserver.pl calls
+proc::pty_process_exec at lines 88–89 before constructing its WebSocket listener.
+The same source selects an execution identity and shell initialization earlier.
+Thus sending no terminal input does not establish absence of side effects. Source:
+foundation-prepare-20261110-bcvgim9k/extracted/webmin_2.670_all.deb/usr/share/webmin/.
+This does not establish ama's effective live permissions or justify a new live
+inspection. W-138 retains that gap; no not-applicable or successful check is claimed.
+
+PLAN.md now binds preparation to the accepted installed unit identities, observed
+per-node/family sources and Caddy parent, and distinguishes the active-loopback
+recovery baseline from the old stopped installation diagnostic. It records ordered
+restoration, controller-loss containment, Caddy partial-state handling and the
+remaining exact backup/timer/child bindings. No new executable recovery path or
+sealed operation is claimed. Existing profile/guard implementations are reused;
+no fixture capacity workload, live contact or publication occurred.
+
+Validation: focused Markdown/pre-commit checks cover the four changed documents;
+working-tree Gitleaks found no leaks. An extra blank line found by Markdown lint
+was corrected before the final check. No executable behavior changed and no
+capacity test ran. The prior parent-workspace vexp completion check remains
+unavailable (not a Git repository); direct repository checks are used instead.
+
+## Native trial bindings and safe statistics method (W-137/W-138/W-139)
+
+Aaron confirmed that existing ama access includes System Information and real-time
+statistics graphs, without a new login or inspection. W-138 selects that feature
+instead of xterm. Pinned Webmin 2.670 sources reviewed: authentic-theme/stats.cgi,
+stats.pl, authentic-funcs.pl and extensions/stats/stats.src.js in the retained
+foundation package. Native System Status access and session validation remain
+required during the future trial. The collector can write cache/history and
+register a loopback backend; those are declared workload effects. Its shutdown/
+disable control can affect all clients, so test cleanup must not invoke it.
+The method, ordinary settings preservation and cleanup distinction are now in
+the shared fleet procedure and first-host PLAN.md. Actual browser acceptance is
+still pending; no new native account capability was measured.
+
+The backend implementation reuses the existing renderer/configuration producer
+and native Ansible/systemd. proxy-trial.yaml stages all inputs first, snapshots
+an active enabled loopback baseline, arms a 30-minute recovery timer, then starts
+a bounded apply service. recover-proxy.py preserves exact file metadata and all
+installed unit/drop-in/effective controls. It stops the apply service before
+restoration; cancelled/restored states reject late apply. proxy-trial-restore.yaml
+requires verified restored state before stopping the timer. No backend writes
+remain as controller tasks after arming. This closes the delayed-controller
+write race identified during local review.
+
+The private prepared binding/rendered inputs are in
+webmin-trial-preparation-h3qt9wvn/. Installed identities come from W-137's accepted
+receipt, not source hashes. Proposed host storage, timer/service bounds and
+backup paths are in PLAN.md. This is an unsealed backend component, not a complete
+Caddy/browser/resource operation. No parent boolean gate is claimed to implement
+those missing owner checks. No Caddy stream was defined or production inventory
+changed. The selected trial restores loopback even on a passing measurement;
+future permanent promotion and DNS are not implicit.
+
+Native correctness qualification used the retained local image with networking
+disabled and a tiny dummy HTTP service, real systemd/nftables and the actual
+backend producer/recovery commands. It measures no Webmin/ARM64 host capacity and
+runs no browser. The fixture deadline accelerates the recovery timer to 30 seconds;
+production's reviewed proposal remains 1800 seconds. Earlier local failures are
+preserved in webmin-trial-local-20261112/ and webmin-recovery-native-n_3fk6d9/.
+The first stopped at its handwritten guard setup; the latter did not reach
+terminal recovery. Their retained diagnostics do not conclusively attribute every
+failure. The fixture now uses the actual guard renderer and preserves failure
+state/controls/journal before cleanup. Transient-unit absence and the guard's
+reverse ordering edge are explicit implementation/regression cases, not reasons
+to weaken baseline identity or effective-control checks.
+
+Final native qualification passed in webmin-recovery-native-kcsrdd5e/: real apply
+and timed recovery restored exact loopback configuration/metadata/effective
+controls and both HTTP listeners, removed only trial ingress, preserved an
+unrelated nft table and rejected a late apply. The frozen native inputs match
+current source. The dummy service does not establish Webmin behavior, Pi capacity,
+real proxy paths or Caddy recovery. Owned-container cleanup exited 0.
+
+Fourteen focused recovery regressions, Ansible syntax checking through the owner
+private-temp wrapper, scoped owner pre-commit and Webmin working-tree Gitleaks
+passed. qualification.json and sessions.json in the private preparation directory
+retain hashes, result boundaries and terminal session records. No live targets,
+browser workload, capacity fixture, Caddy publication or DNS change occurred.
+All local execution sessions are complete and retired. The combined trial remains
+unsealed pending its existing-owner integration; no live authorization is requested.
+
+## Combined trial integration review (W-137/W-140/W-141)
+
+The existing application outer selected the Kuma proposal directly; its transaction
+accepted only a 20-prefixed fragment, and the authorization test required Kuma's
+FQDN/probe. Those assumptions prevented reuse for the reviewed Webmin proposal.
+The outer now binds one workspace-relative owner source, exact application basename
+in the documented 20-79 range and SHA-256. Missing/duplicate fields, traversal,
+symlinked files/ancestors, name mismatch and changed bytes reject before transport.
+The payload is rehashed after copying. The transaction and definition checks use
+that selected application; no new publisher or parallel deployment entrypoint was
+introduced. The neutral operation/transaction pins are reconciled; the stream
+remains clean/inactive and accepted production inventories are unchanged.
+
+The actual offline owner fixture now includes Webmin primary-first activation
+while preserving the existing Kuma fragment. It exercises the real outer,
+serialized SSH substitute, publisher, finalizer, accepted deployed reconciler,
+Caddy reload and dual-stack HTTPS. These are correctness/path tests in an isolated
+network, not actual Pi capacity, real proxy-source or browser authentication tests.
+The first run stopped because the old Kuma-addition fixture copied a production
+baseline that now already includes Kuma. It did not retain its remote runner
+readback before its assertion; that evidence gap is preserved. The fixture now
+retains readback before asserting status, excludes the candidate only for modeled
+Kuma additions, and retains accepted Kuma for the Webmin case.
+
+Private integration records are under `webmin-trial-preparation-h3qt9wvn/`.
+The failed offline run is `/tmp/caddy-application-qualification-i7oosdii/`;
+`dbzetw3s` passed the intermediate source. Final source qualification is
+`/tmp/caddy-application-qualification-2skzatjx/`: all ten cases and independent
+retained-evidence verification passed, cleanup status 0. Result/log/source-graph
+copies are retained under the private preparation directory. The fixtures measure
+no target capacity, and no live host was contacted.
+
+Two integration boundaries still prevent sealing. W-140: application_restore
+only handles local activation failure; the current outer cleans payloads on
+success and does not contain/restore a replicated temporary child as one paired
+operation. A standalone symlink rollback can be undone by late replication.
+The certificate repair rollback is not an application trial recovery path.
+W-141: the existing scan include installs its guard, and its observer explicitly
+reports scan-only acceptance. The trial needs the installed guard identity and
+one observer covering the combined workload through the scan. Importing that
+include unchanged or adding another sampler would not satisfy this requirement.
+PLAN.md records the concrete owner sequence and recovery ordering; the reusable
+Webmin procedure now carries these requirements for subsequent fleet hosts.
+
+No combined parent command, Caddy successor or deployment authority is claimed.
+All consumed readiness and deployment bundles remain unchanged. W-137/W-140 and
+W-141 remain unfinished; backend correctness and Caddy source binding alone do
+not qualify the combined trial.
+
+Focused host application policy, payload rejection tests, shell syntax/ShellCheck,
+canonical formatting and readonly/local collision policy passed. Scoped owner
+pre-commit passed. The first record lint run found two added blank lines; those
+were corrected before the final record check. Caddy working-tree Gitleaks reports
+only the five unchanged historical outer-hash entries in HISTORY.md; no new
+finding or suppression. Offline sessions 90857 (failed), 31793 and 63431 (passed)
+are retired, with owned-container cleanup 0. Host and record check receipts remain
+in the private preparation directory. No live, publication or browser workload
+session was started.
+
+## Paired restoration and scan component qualification (W-140/W-141/W-142)
+
+The application owner now admits a temporary trial with fresh boot continuity,
+prior outgoing inventories and retained payloads. Its existing primary-first path
+activates the selected Webmin fragment alongside Kuma. Completion or timeout
+cancels later exposure, stops publication/reconciliation on both nodes, waits for
+receivers, restores B then A, checks inventories and only then resumes transport.
+Incomplete recovery retains inputs and stopped transport for owner handling.
+The finish signal is not an application receipt. Controller loss does not imply
+automatic paired Caddy restoration; backend deadline recovery is independent.
+
+The first native incomplete-transfer case found W-142: Bash conditional invocation
+suppressed intermediate errexit failures inside candidate validation. Explicit
+returns correct that defect. Preserve the failed run at
+`/tmp/caddy-application-qualification-bd77yg5a/`. The exact corrected 16-case run at
+`/tmp/caddy-application-qualification-dptr9r89/` passed with network disabled and
+owned-container cleanup 0. Its result.json binds source hashes and accepted
+reconciler bytes. Cases include lost exposure reply, missing secondary transfer,
+failed restoration, incomplete candidate and rejection of late exposure.
+This establishes recovery behavior, not host capacity.
+
+The foundation observer now accepts a private reviewed service/cgroup profile.
+One observer and the existing lock cover baseline, workload, list-only scan and
+post-scan samples. The 224/192/96 MiB thresholds and caps remain unchanged; fresh
+192 MiB admission is rechecked after baseline. It records service identity,
+controls, memory events/pressure and observer cost with timestamps. Drift,
+restarts, swap, hard-limit events, reserve loss or excessive sampling gaps reject.
+Resource acceptance remains separate from browser/path acceptance.
+
+The trial Ansible branch verifies the installed guard before and after, stages
+source/profile by separate hashes outside the empty evidence directory, and does
+not reinstall the guard or alter its schedule. Nineteen observer/guard tests pass,
+including overlap exclusion, post-baseline rejection, bounded trial launch,
+retained failure readings and cleanup failures. Two local Ansible rendering tests
+pass for default/trial commands and the unchanged daily schedule. The initial
+sandboxed rendering runs failed to start Ansible's local RPC; the local-only run
+outside that restriction passed. No inventory target was contacted.
+
+Permanent owner procedures now describe these interfaces and fleet reuse.
+W-140/W-142 are resolved locally. W-141 remains in progress because its full closure
+also requires the parent to join actual path/source and browser receipts, prove
+scan overlap and stop owned browser load promptly on failure. Those W-137 bindings
+remain before sealing; no new live scope or operator command is proposed.
+
+Private qualification/session records are retained under
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-paired-scan-e5vz3x0a/`.
+All consumed bundles, target controls and accepted inventories remain unchanged.
+
+## November 16 crash-status reconciliation (W-137/W-141/W-143)
+
+The interrupted preparation survived in the working tree and private directory
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-parent-integration-527pe9z6/`.
+New uncommitted drafts include the combined parent, proxy-source/counter checks,
+statistics-only browser client, workload supervisor and handoff helper. The
+single observer now has workload readiness/cancellation gates. These are local
+implementation drafts, not an accepted combined operation.
+
+Retained `native-result.json` reports pass, exit 0 and container cleanup 0.
+All five current packet-qualification inputs match `native-inputs.json`. Four
+isolated source/family paths and both denied families passed; no browser workload
+or target-capacity test ran. Preserve the earlier entrypoint-timeout failure.
+`render-tests.log` records two passing local Ansible tests; `parent-flow.log`
+records a passing test containing five synthetic-owner scenarios. However, the
+current combined parent and workload supervisor no longer match the retained
+`parent-flow-inputs.json`; that pass does not qualify their final revision.
+The earlier syntax-check log likewise does not establish current-input acceptance.
+
+W-143 remains In progress. Direct comparison with PLAN.md found concrete closure
+work: the client gives six paths short checks and only two a sustained hold,
+whereas the plan requires at least 95 seconds per reviewed path; logout checks
+for the login page but does not demonstrate denial of the prior session. Resolve
+these implementation gaps without silently changing acceptance. Also verify the
+native System Information navigation and current-socket frame readiness: the
+client requests `/sysinfo.cgi`, the pinned file is under `authentic-theme/`, and
+frame counts currently span navigation. This is an unresolved contract review,
+not proof that the native route fails.
+
+The first-host draft explicitly has no seal/live authority, operator readiness
+and readiness acceptance are false, and no final `INPUTS.SHA256SUMS` exists.
+The Caddy operation remains inactive. Exact owner authorization coverage, final
+input binding, affected qualification and permanent procedure reconciliation
+remain before a deployment review. W-137/W-141/W-143 stay In progress; accepted
+Kuma and the Partial Webmin-extension result are unchanged.
+
+Retained terminal logs reconcile stale session entries 9202 and 90506. The final
+native run associated with 80114 also has a terminal pass/cleanup receipt; no
+matching test/trial processes were visible in this status check. No old session
+was polled or command replayed. This review contacted no live target, launched
+no browser or fixture, and performed no publication. Production state has not
+been refreshed; accepted state remains based on the existing receipts.
+
+## November 16 final combined local qualification (W-137/W-141/W-143)
+
+The statistics client now follows the native System Information link, requires
+its page marker, and counts only fresh frames from currently open statistics
+sockets after navigation. Source review resolved the earlier path uncertainty:
+MiniServ searches the active theme's preroot, which provides `/sysinfo.cgi`.
+The native theme supplies the selected navigation and `sysinfo_host` marker;
+its own statistics client performs activation without test-driven setting changes.
+
+All six frontend paths now receive at least 95 seconds in three successive pairs;
+the final A/IPv4 and B/IPv6 pair uses the reviewed longer hold for scan overlap.
+No more than two owned clients run concurrently. Every path logs out and tests
+the prior session cookie against the protected page before clearing the cookie
+and closing its context. Cookies remain in memory and never enter receipts.
+The parent rejects missing per-path duration/session denial and uses the same
+single-observer token gate and conservative cross-clock overlap checks. The
+existing 600-second observation, Caddy window and backend recovery bounds are
+unchanged; insufficient time or missing overlap fails.
+
+Evidence is retained under
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-contract-final-d1xkjc2_/`.
+`INPUTS.json` binds the nine-group suite: browser contracts, workload verifier/
+cleanup, profile, recovery, resource observer, schedule rendering, actual Ansible
+parent control flow with synthetic owner adapters, parent syntax and YAML checks.
+All passed. The browser cases cover stale frames, closed sockets, absent page
+readiness, frame loss, insecure cookie, invalidation failure and launch failure,
+as well as success. Parent cases cover success, path failure, workload failure,
+Caddy failure and unverified cleanup with ordered restoration.
+
+After adding the receipt-interface regression, only two test files changed;
+`FINAL-INPUTS.json` and `final-recheck.json` bind their successful affected rechecks
+and confirm unchanged implementation inputs. Eight workload tests now include
+receipts emitted by the actual client logic through the synthetic browser adapter,
+joined to the actual parent verifier with synthetic clock/scan samples. This is
+contract qualification, not measured browser behavior, native service execution
+or Pi capacity. Retained native packet-test inputs still match the current source;
+no redundant packet or capacity fixture was run.
+
+The installed workstation module/executable access check passed without launching
+Chromium. First-host observer/profile hashes still match their draft bindings.
+The fleet Webmin and foundation procedures document native navigation, six-path
+duration, session rejection, readiness/cancellation, clock brackets and cleanup;
+neutral hooks cover the new client and workload regressions. vexp verification
+was unavailable because its session points at the non-repository workspace;
+focused repository checks provide the validation recorded here.
+
+W-141/W-143 are resolved for local implementation qualification. W-137 still needs
+the Caddy owner operation/authorization coverage and complete parent input manifest
+before sealing; the Caddy stream remains inactive and operator/readiness flags
+remain false. Live permission, browser/real-path, resource and recovery acceptance
+remain AC-013 work. No previous bundle or receipt was changed or replayed.
+
+Final checks: Markdown, YAML and whitespace checks passed. Repository-wide
+Gitleaks exited 1 with 18 findings; structured triage located every finding in
+`.vexp/manifest.json`'s generated `file_hashes` map, which Git ignores. They are
+index fingerprints, not source-file credentials; the hash algorithm is not
+inferred. There were zero source-file findings. Retain both scanner runs and
+`gitleaks-triage.json`; no suppressions or index changes were made. Qualification
+session 78485 and scan sessions 40555/32503 are complete and retired. Final source
+identities remain unchanged. No execution session is active.
+
+## November 16 combined trial sealed for review (W-137/W-144/W-145)
+
+One local candidate is prepared; execution approval is recorded below. The sole
+Caddy stream is `defined`, operation `20261116-webmin-first-host-trial`, with
+status `defined-unexecuted`. Production inventories and consumed bundles remain
+unchanged. [PLAN.md](PLAN.md#first-host-combined-trial-candidate-november-16)
+owns the combined scope, acceptance and recovery.
+
+### Exact bundle, command and scope
+
+Private review root:
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-combined-review-0ve83yjr`.
+
+- Parent authorization manifest: `INPUTS.SHA256SUMS`, 236 regular files;
+  SHA-256 `b15710ed9209ac6e47e0e796798e2c4956d0514d797f106394cf30857ee4ef8d`.
+- Caddy owner authorization: current
+  `Caddy/scripts/run-serving-health-deployment-outer.sh`, SHA-256
+  `d7b1d9ca0e8464286138f7c4c9954153bb7678cbc964f3753fa4fcae7889b754`.
+  Its operation, transaction, recipe, state and coverage graph pass the owner
+  authorization gate against `caddy-qualification-final`.
+- `launch.json` binds the existing Ansible parent invocation and explicit runtime
+  environment; `inputs/` binds inventory, native hostname, reviewed installed
+  unit/configuration identities, source addresses, rendered guard/profile,
+  resource controls, browser destinations and single-observer commands.
+- `INPUT-METADATA.json` binds relevant file modes, runtime symlinks and absent
+  SSH configuration inputs. Both SSH paths recognize the accepted keys.
+  Causal qualification evidence is revalidated by the existing owner gate.
+- Password: ama's existing Webmin password, prompted only in the workstation
+  terminal after approval. External file reference:
+  `/run/user/1000/webmin-trial-credentials-88f88a41b1ac58e502e3.json`.
+  Owner-private runtime parent, exclusive mode-0600 creation, no value in hashes
+  or logs, and identity-checked removal after the parent exits. Existing SSH
+  authentication remains external; no private key is read into the bundle.
+
+**Consumed November 16, 2026 — do not rerun:** approval covered one execution of this exact combined trial,
+including its bounded acceptance and both owner recovery paths. After explicit
+approval, run this command in the workstation WSL/Ubuntu terminal when available
+for the automated trial; keep it open until the parent exits. It does not open a
+human-response countdown or require a browser on the Pi.
+
+```bash
+/usr/bin/python3 -I -B /home/aaron/code/.local-evidence/uptime-kuma/webmin-combined-review-0ve83yjr/operator.py --manifest-sha256 b15710ed9209ac6e47e0e796798e2c4956d0514d797f106394cf30857ee4ef8d --run-approved-once
+```
+
+The helper verifies inputs and owner readiness, prompts privately, then invokes
+`Webmin/ansible/proxy-combined-trial.yaml` through the existing local-temp wrapper.
+It adds no deployment/recovery implementation. `attempt.started` prevents replay;
+retain that marker, `parent.log`, `parent.exit`, workload receipts and independent
+owner outcomes even on failure. A preflight failure is not permission to retry.
+`--verify-only` completed locally without credentials, target contact or Chromium.
+
+Targets: ama on `10.1.3.75`, pi on `10.1.0.53` and `10.1.0.54`, and the reviewed
+Caddy node/VIP frontend addresses. Mutation is confined to temporary guarded
+Webmin exposure, one Caddy application candidate through primary-first managed
+replication, one list-only scan and their owned runtime state. No DNS, reboot,
+forced failover, account/ACL change, terminal, resource-limit change, permanent
+browser promotion, unrelated route/radio change or Git publication.
+
+Acceptance requires actual native statistics login/WebSocket/session checks on
+all six paths, exact route/socket/guard evidence, paired browser/scan overlap,
+unchanged caps and sampled reserve, and both independent recovery outcomes.
+On success as well as failure, restore the paired Caddy baseline/outgoing
+inventories and exact Webmin loopback baseline. Controller loss can require
+manual Caddy recovery despite the independent backend timer. A passing trial
+qualifies only this bounded workload and does not leave browser ingress enabled.
+
+The exact bundle requirement is
+[server policy](../../../homelab-server-configs/AGENTS.md#definition-and-authorization)
+and [Caddy's owner authorization contract](../../../homelab-server-configs/Caddy/AGENTS.md#authorization-cadence).
+The former readiness inspection is consumed. Aaron separately approved this exact
+candidate for one attempt on November 16; that attempt is now failed-consumed.
+
+### Local evidence and retained failures
+
+`caddy-qualification-final/result.json` records 16 offline owner scenarios passed,
+network disabled and owned-container cleanup status zero. The original final
+fixture is `/tmp/caddy-application-qualification-61uz6gap`; its durable copy retains
+bytes and symlinks, with copy ownership normalized through the Podman namespace.
+`authorization-ready-final.log`, `evidence-negative-final.log`,
+`caddy-host-corrected.log`, `parent-syntax-final.log`, `client-preflight-final.log`,
+`operator-tests-final.log` and `sealed-preflight.log` retain the passing checks.
+The helper's six local cases cover verification without credentials/contact,
+success/failure cleanup, replay rejection, existing-file preservation and drift.
+These checks establish contracts and bindings, not Pi capacity or native UI success.
+
+W-145 was found by the actual authorization gate: the temporary restoration
+success row incorrectly expected rejection despite status zero. The generator
+now derives success from the existing expected exit status. Preserve the original
+16-case run and contradictory authorization result. My first rebinding placed the
+fixture hash in the wrapper field; the rerun stopped at the definition check
+before scenarios. Both correct field hashes were then bound and the complete
+suite passed. Retain that failed run at
+`/tmp/caddy-application-qualification-wfgllro8` and the original complete copy at
+`caddy-qualification`. The earlier failed evidence copy is retained separately;
+no consumed evidence was edited and no production defect is inferred from these
+local preparation failures.
+
+The fleet onboarding procedure now records final owner/input binding, separate
+SSH-path key checks and untimed private credential handoff. Local qualification
+sessions 51724, 49798, 78362, 3783 and 52613 completed successfully and are retired;
+65551 failed before scenarios and is retired. `sessions.json` retains prior IDs.
+No execution session is active. RESULT.md remains Partial with AC-013 pending.
+
+### November 16 approval and private operator handoff (W-146)
+
+Aaron approved the exact bundle, command and scope at the review section above
+for one attempt. `approval.json` records both authorization identities and the
+conversation reference without changing any sealed input. Local verification
+using the sealed helper passed again; `approved-preflight.log` retains the result.
+No attempt marker, parent result, browser workload or target contact exists.
+Session 80351 completed with exit zero and is retired.
+
+Run the approved command above in the workstation WSL/Ubuntu terminal, enter
+ama's existing Webmin password only at its private prompt, and keep the terminal
+open until completion. This operator launch supplies readiness for the automated
+trial. Report only the terminal outcome; do not share the password or raw browser
+contents. The one attempt includes both owner recovery paths and remains separate
+from any permanent browser promotion or publication. If it stops or fails, retain
+its evidence and do not repeat the command.
+
+### November 16 trial failed and recovered (W-146/W-147/W-148)
+
+The operator executed the approved command once. The parent exited 2; its Caddy
+child exited 1. The original approval and one-attempt marker remain preserved.
+No replay, extra live inspection or new workload ran during reconciliation.
+
+Actual Pi admission accepted hostname, boot capture, installed controls and service
+cgroups. Temporary backend apply completed. Both proxies reached Webmin over IPv4
+and IPv6 with the expected route/socket sources and increasing target allow
+counters. Both unlisted-workstation paths were denied with increasing family drop
+counters. Those retained path results establish this trial's backend connectivity,
+not native browser or combined capacity acceptance.
+
+Caddy prepared, finalized and reconciled the primary candidate. Its first
+application IPv4 probe, HTTPS port 443 on Node A for the Webmin name's
+`session_login.cgi`, returned curl 28 after 5001 ms with zero bytes received and
+HTTP 000. The expected HTTP status was 200. Readback succeeded. The exact stage is
+known; the underlying timeout cause is not established. No transport exposure
+command published the candidate to the secondary. The parent's readiness wait
+reported that the Caddy owner had already ended; this is the consequence, not a
+second independent timeout.
+
+The existing recovery path contained the candidate and restored both Caddy nodes.
+Decoded readbacks passed their byte-count and SHA-256 checks; each contains
+restored/resumed receipts and identical original, restored and resumed outgoing
+inventories. Both existing serving-family checks passed. The parent separately
+ran Webmin restore, read its private state, passed `phase == restored`, then
+stopped the recovery timer. The raw backend state remains in the host's retained
+private trial directory; the local parent log records the completed assertions.
+No further host contact was made to retrieve it.
+
+The browser and scan were never launched, so ama credentials and actual browser
+permissions were not tested. The private credential file is absent after helper
+cleanup. Workload receipts are absent; `parent-owner-outcomes.json` has null
+workload/finish results and a completed Caddy child. No active session remains.
+
+Private evidence remains beneath
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-combined-review-0ve83yjr`:
+`parent.log`, `parent.exit`, `inputs/evidence/`, `caddy-live-evidence/`,
+`decoded-caddy-readbacks.json` and `terminal-summary.json`. The Caddy evidence was
+copied unchanged from `/tmp/caddy-ssh-evidence-serving_health.2759y0`. Before any
+lifecycle edit, all 236 manifest inputs were hash-verified and retained under
+`executed-inputs/`, including original coverage and source identities. The
+original manifest, approval, marker and qualification evidence remain intact.
+
+Caddy now records `terminal-pending` / `failed-consumed`, clears the deployable
+and coverage registries, and retains the exact executed operation/recipe/runtime
+sources. Its sanitized terminal result and planned archive tag are in the owner
+history. Deployment-window, successor and lifecycle policy checks passed. No
+commit, tag or push occurred. W-147 owns local timeout diagnosis and W-148 owns
+archive preparation; neither grants a retry or accepts AC-013.
+
+### November 16 retained timeout reconciliation (W-147)
+
+Local source/receipt comparison narrows what the failed trial proves. The direct
+backend collector requested `/` over HTTP with the approved Host and forwarded
+HTTPS header, requiring status 200 and the password form. The four requests took
+about 1.74–1.82 seconds. The first Caddy request instead used trusted HTTPS on
+Node A and requested `/session_login.cgi`. It had a three-second connect limit
+and five-second total limit; the retained failure reports 5001 ms, zero received
+bytes, curl 28 and HTTP 000. Direct backend success does not establish this
+frontend TLS/request path or this different application endpoint.
+
+The fragment's active health check also uses `/session_login.cgi`, with its own
+three-second timeout; the upstream response-header limit is 60 seconds. These
+are distinct controls, not proof that changing a deadline would solve the issue.
+The retained evidence does not distinguish frontend connection/TLS delay,
+backend selection/health state, or application response delay. It has no curl
+phase timing, correlated Caddy request/error logs, backend request logs or
+contemporaneous resource samples. Authentication and host capacity were not
+exercised. Do not attribute the failure to either, reproduce speculative load,
+or lengthen limits to manufacture acceptance.
+
+W-147 remains open for the unknown cause. Before any future trial, the owner
+procedure should align the backend and proxy probe path and retain bounded,
+credential-safe transport phase timings, selected endpoint/status and correlated
+proxy/backend diagnostics at failure, before restoration. This is a preparation
+requirement for a separately reviewed change, not authority for contact now.
+The consumed sources and receipts remain unchanged. No additional fixture or
+live operation ran for this diagnosis.
+
+### November 16 terminal archive prepared locally (W-148/W-149)
+
+Private review root:
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-terminal-archive-review-oq66q1zm`.
+It contains `files.txt`, `FILES.SHA256SUMS`, `files/`, `archive.patch`,
+`diff-stat.txt`, `review.json`, exact commit/tag messages and `review-command.sh`.
+The temporary index leaves the normal Git index empty. This is a historical
+failed-attempt archive, not an accepted deployment or a successor.
+
+- Owner repository: `Racerx323/homelab-server-configs`, branch `main`.
+- Base commit: `3a27837f2a7dce023fc77154aff65aae7863106c`.
+- Candidate tree: `5cf239d64909a26c632012bf0ca49407e8e3c252`.
+- Exact selected paths: 61 files; `files.txt` SHA-256
+  `d94a6bc3e3f6de41b7698147c5c06d49e53d96e912217a32c231db5ff6bbaa47`.
+- File manifest SHA-256:
+  `cb3d4967e4d5c94aa827b5e84ad18e44944271a747d8730e3f295748d727ffc9`.
+- Patch SHA-256:
+  `c8e3c1d7889c555ffa47f0ed28df555eb1300aa8a52e57d844919bb3cc2d0907`.
+- Planned annotated tag:
+  `caddy-webmin-first-host-trial-terminal-2026-11-16`.
+
+The selection includes the consumed Caddy/Webmin/foundation implementation,
+required hooks/instructions and sanitized terminal lifecycle records. It excludes
+raw private receipts, credentials, the monitoring change record, both unrelated
+inventory edits and the untracked `oom` file. Excluded-file hashes are retained;
+no staging, commit, tag or network publication occurred. All 236 original inputs
+remain separately preserved, including pre-terminal operation coverage.
+
+The prepared command would verify the destination identity/visibility, unchanged
+remote/local base, absent tag, exact selected bytes and candidate tree; then make
+one commit, one annotated tag and an atomic push, followed by remote readback.
+Its command and message hashes are in `review.json`. Do not run it under the
+consumed trial approval. Separate exact archive approval is required by the Caddy
+owner lifecycle; destination visibility has not been queried during local work.
+
+Validation is explicit: source/snapshot hashes and core terminal lifecycle checks
+pass. The real workspace documentation policy passes. The wider host-only
+`current-repository-policies` run exited 1 because its documentation self-test
+copies only Caddy into `/tmp`, leaving the linked sibling DNS owner document
+absent (W-149). Preserve that failed check; this is not an all-green suite claim.
+The initial default secret scan flagged five historical outer integrity hashes;
+the same snapshot passed using the repository's existing exact-pin allowlist.
+No new allowlist exception was added. The private publication helper's standalone
+negated tag check was corrected to an explicit conditional after ShellCheck;
+Bash syntax and ShellCheck then passed. No consumed source changed.
+
+Session 78041 is retired with exit 1; its complete log is retained as
+`webmin-combined-review-0ve83yjr/archive-owner-checks.log`. At this checkpoint W-149 remained unresolved; its subsequent disposition is
+recorded below. The broader suite did not pass. No live work, retry, browser,
+scan, permanent promotion or publication is authorized by this preparation.
+
+### November 16 archive review and fixture disposition (W-148/W-149)
+
+Aaron directed that no time be spent repairing the documentation fixture for
+this deployment. W-149 is Deferred to the Caddy test owner, with this ledger as
+its follow-up destination. The actual workspace documentation check passed;
+the self-test's incomplete temporary repository layout does not explain the
+production timeout or establish production acceptance. Retain its failure, but
+remove fixture repair as a prerequisite to archiving this failed attempt. No
+fixture, production implementation or test configuration was changed.
+
+Local review rechecked all 61 selected source/snapshot hashes, file-list and
+patch hashes, publication-command and message hashes, unchanged base commit,
+empty normal index and exact temporary-index tree. All match the prepared
+archive above. Scope, planned tag and excluded files remain unchanged. W-148 is
+ready for separate archive authorization with the W-149 limitation disclosed;
+this is not a claim that the broader test suite passed. Mandatory publication
+hooks remain enabled; any hook rejection must be reported, not bypassed.
+
+The exact publication command is retained in the private review root's
+`review-command.sh`, SHA-256
+`8b4a2fb0073b3c6af4b028ba20c5253ef0eb6becc3c15c33d4229527cd683d0a`.
+Approval would cover only its one commit, annotated tag and atomic push of the
+reviewed historical archive, plus destination/ref verification. It would not
+cover neutral cleanup, source correction, a successor or live host work.
+Caddy's [archive rule](../../../homelab-server-configs/Caddy/AGENTS.md#scope-and-archive)
+requires preserving executed artifacts in an annotated pushed tag before removal;
+the current request explicitly grants no publication authority. No commit, tag,
+push, target contact, browser workload or retry occurred.
+
+### November 16 approved terminal archive published (W-148)
+
+Aaron approved the exact archive, command and scope for one commit, annotated
+tag and push. The approved command exited 0 with mandatory hooks enabled; all
+applicable hooks passed. The destination was verified as the public repository
+`Racerx323/homelab-server-configs`. No private evidence was published.
+
+- Commit: `66d8ae5bbaea05587bd30d2be01f2682b3d5066c`.
+- Annotated tag: `caddy-webmin-first-host-trial-terminal-2026-11-16`.
+- Tag object: `675e17873510f395f27bc32f193f7a27646186fb`.
+- Committed tree matches approved tree `5cf239d64909a26c632012bf0ca49407e8e3c252`;
+  its parent matches the reviewed base. Remote main and peeled tag both resolve
+  to the commit above; the remote tag object matches locally.
+
+Private `publication-approval.json`, `publication.log`, `publication.exit` and
+`publication-result.json` in the archive review root retain authorization,
+complete hook/push output and verification. Session 59826 is retired, exit 0.
+The normal index is empty and excluded inventory edits/`oom` hashes are unchanged.
+This record update remains local in the monitoring repository, outside the
+approved owner archive. W-149's separately observed fixture failure is still
+Deferred; passing publication hooks do not erase it.
+
+W-148 is resolved. The stream remains terminal-pending until separately scoped
+local cleanup; no consumed operation data was removed. W-147 and AC-013 remain
+open. Publication approval is consumed; no further publication, cleanup, live
+contact, retry or production promotion occurred.
+
+### November 16 remaining-source publication authorization
+
+Aaron requested committing and pushing all remaining changes. Scope review found
+three owner repositories: monitoring documentation/change records, the server
+inventory's retained accepted state, and DNS records/procedure/admission source
+and tests. The empty untracked server `oom` file is excluded and remains untouched;
+private evidence remains outside Git. This authorization covers source publication
+only, with mandatory hooks and destination/ref verification. It does not authorize
+Caddy neutral cleanup, target contact, retry or deployment. Exact selected paths,
+base commits, destination visibility and command results are retained in
+`.local-evidence/uptime-kuma/remaining-publication-nuxtpfm8`.

@@ -2,13 +2,13 @@
 
 This repository owns the Uptime Kuma application and file store for `j2-svpi3bmf`. The internal dashboard name
 `uptime.local.theama.co` is agreed. Service foundation and the guarded dual-stack
-backend were accepted November 11, 2026; the Caddy route and private HTTPS application acceptance are accepted, while DNS
-remains pending. Monitors and alerts remain unconfigured.
+backend were accepted November 11, 2026; the Caddy route and private HTTPS application acceptance are accepted, and DNS plus ordinary-name HTTPS over both address families were accepted November 12, 2026. Monitors and alerts remain unconfigured.
 
 - [Governing architecture](docs/ARCHITECTURE.md)
 - [Repeatable operating procedures](docs/OPERATIONS.md)
 - [Initial deployment plan](../changes/2026-11-09-uptime-kuma/PLAN.md)
 - [Current work and findings](../changes/2026-11-09-uptime-kuma/WORK.md)
+- [Accepted deployment result and deferred follow-up](../changes/2026-11-09-uptime-kuma/RESULT.md)
 
 The architecture holds enduring design, the change record holds this transition,
 and the operating procedure holds repeatable administration. The host foundation includes fleet-managed needrestart, Webmin, msmtp and

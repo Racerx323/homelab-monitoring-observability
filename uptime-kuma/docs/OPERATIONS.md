@@ -1,13 +1,40 @@
 # Uptime Kuma operations
 
-The installed service foundation and guarded backend are accepted; DNS/Caddy
-HTTPS onboarding remains pending. Deployment attempts recorded in the ledger
+The service foundation, guarded backend, Caddy application acceptance and DNS
+with ordinary-name dual-stack HTTPS are accepted through November 12, 2026.
+Kuma deployment is accepted; standard-browser Webmin access is pending (W-128).
+See the [result](../../changes/2026-11-09-uptime-kuma/RESULT.md).
+Deployment attempts recorded in the ledger
 are consumed and must not be replayed. The
 [work ledger](../../changes/2026-11-09-uptime-kuma/WORK.md) owns actual status and
 approval. [Architecture](ARCHITECTURE.md) owns enduring design;
 [deployment.yaml](../manifests/deployment.yaml) owns release and resource inputs.
 
+## Normal administration
+
+Aaron has required direct browser access for Webmin. The SSH tunnel documented
+below describes the currently installed fallback, not the requested final access
+policy. Do not expose port 10000 or change listeners outside the reviewed change.
+
+Use `https://uptime.local.theama.co` for the existing Kuma administrator. Monitors
+and alerts remain unconfigured. Use the workstation SSH tunnel below for Webmin;
+its loopback management endpoint is not published through the Kuma route.
+
+Accepted startup state permits ordinary systemd startup through the existing
+permit dependency. Keep the firewall and permit guards; the deployment deadline
+timer is disabled after acceptance. Do not use the contained-installation
+continuations below as routine restart or maintenance commands. Their preconditions
+and consumed operation definitions describe recovery states, not current startup.
+Future maintenance needs a newly scoped operation and a verified data backup.
+
+The daily 05:30 needrestart schedule and Mailrise default are accepted. No recurring
+Kuma backup job or downstream notification delivery proof is claimed. Review the
+service-only resource and backup limits before adding monitors or alerts.
+
 ## Initial installation
+
+This section applies to a new installation. The existing host is installed and
+has an administrator; do not repeat bootstrap, boot correction or setup on it.
 
 The previous Pi-only bundle is withdrawn following the repository move and
 expanded host foundation scope. Do not execute its historical command. Prepare
@@ -48,17 +75,26 @@ an alert-producing scan to verify configuration. Review exact content and
 recipient separately if an actual delivery test is required. Keep Uptime Kuma
 monitors and notification settings empty during service-foundation acceptance.
 
-Webmin management uses a separate loopback-only SSH tunnel:
+### Webmin: browser access and optional recovery
 
-```bash
-ssh -N -L 127.0.0.1:11000:127.0.0.1:10000 ama@10.1.3.75
-```
+Normal fleet Webmin access must use a browser HTTPS URL without a tunnel.
+Aaron approved `https://webmin-j2-svpi3bmf.local.theama.co`; its Caddy/DNS/backend
+onboarding is pending, so do not yet treat it as a working endpoint. Use the
+[shared Webmin operations guide](../../../homelab-server-configs/Webmin/docs/OPERATIONS.md)
+for normal access and its clearly labeled
+[optional SSH recovery](../../../homelab-server-configs/Webmin/docs/OPERATIONS.md#optional-recovery-access-ssh-tunnel)
+procedure. That guide owns the exact workstation command, local URL, account
+selection and tunnel shutdown; avoid maintaining competing instructions here.
 
-Open `http://127.0.0.1:11000/` and verify `ama` login privately when the
-coordinator pauses. Automatic local-peer authentication is disabled. No new Webmin account, password, public listener or DNS alias
-is created. Both this login and Kuma administrator acceptance remain target checks.
+The currently installed profile remains loopback-only until the browser change
+is accepted. It is a fallback, not the requested final policy. Kuma's hostname
+on port 10000 addresses the Proxy VIP rather than this Pi's Webmin. Neither
+that endpoint nor a successful recovery tunnel substitutes for ordinary-browser
+acceptance at the dedicated Webmin hostname.
 
 ## First administrator
+
+For a new, unclaimed installation only; the accepted host already has its account.
 
 Keep setup on loopback. In the operator's own terminal, use existing SSH access:
 
@@ -72,8 +108,8 @@ stay out of chat, Git and evidence logs. Tell the agent only that account creati
 and login succeeded. The playbook checks non-secret account counts and the
 authentication setting before exposing the backend.
 
-Use `https://uptime.local.theama.co` after its DNS/Caddy operations pass
-acceptance, then close the temporary SSH tunnel.
+The accepted host uses `https://uptime.local.theama.co`; the temporary Kuma
+bootstrap tunnel is no longer required for normal dashboard access.
 
 ## Routine inspection
 
@@ -150,6 +186,9 @@ the work ledger with their tested inputs. These checks do not contact the Pi
 or substitute for target acceptance.
 
 ## Installed-foundation continuation
+
+The continuation and diagnostic sections below are recovery procedures. They do
+not describe the accepted running baseline or authorize replay of earlier attempts.
 
 After a failed installation, verify observed residue before choosing a continuation.
 The installed-foundation mode verifies accepted package pins and contained Webmin,
