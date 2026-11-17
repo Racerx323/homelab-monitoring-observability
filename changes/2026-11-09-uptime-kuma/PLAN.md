@@ -793,3 +793,164 @@ normal successful diagnostic readiness ends exposure immediately. Controller los
 can still require manual Caddy recovery. AC-013 remains pending even if this
 diagnostic passes. Source preparation grants no live authority; use the exact
 bundle/command review in WORK.md before one execution attempt.
+
+### Post-restoration monitor acceptance for future trials
+
+Use the existing Caddy trial recovery and its locally qualified W-166 monitor
+phase. Follow the shared application-onboarding procedure's post-restoration
+acceptance boundary; distinguish restored service from completed monitor
+acceptance. The next exact candidate must fit activation, workload/diagnosis,
+restoration, observation and readback within unchanged parent deadlines. This
+source integration does not authorize a successor or resolve AC-013.
+
+### Diagnostic timing and resource evidence before sealing
+
+Use the existing diagnostic-only parent and collector. A random ID binds each
+Caddy client probe to its sanitized native access record and upstream timing.
+Webmin's upstream latency is observed by Caddy; it is not an internal CGI phase
+trace. Missing upstream timing is unknown, including cancellation before headers.
+The target sampler records one-second memory/event intervals with boot/cgroup
+continuity. No credential, browser, scan or notifier workload is added.
+
+| Existing bound | Required interpretation |
+| --- | --- |
+| Client request: 5 seconds; connect: 3 seconds | Unchanged; do not extend to obtain a response. |
+| Journal projection: 3 seconds, 128 entries, 64 KiB input | Capture before recovery; retain failure status and incomplete evidence. |
+| Resource observation: 300 seconds, one MiB | Require compared requests to fall within the observed interval; no implicit restart or extension. |
+| Caddy recovery monitor: completion within 150 seconds of each resume | Both nodes resume first; retain bounded-query/readback overhead in the whole-operation budget. |
+| Caddy child: 1200 seconds; terminal wait: 900 polling retries | Reserve restoration, monitor observation and readback inside the 840-second owner budget; retries are not a wall-clock bound. |
+| Caddy exposure: 660 seconds; backend recovery timer: 1800 seconds | Safety backstops, not additional execution time or permission to defer normal recovery. |
+
+W-168 binds wall-clock cancellation/containment for stalled owner commands and
+clock-offset uncertainty for comparing proxy and Pi intervals.
+SSH connect/keepalive settings do not establish a whole-command bound. Missing
+coverage, unknown cross-clock order or incomplete recovery remains unknown/failure;
+do not turn event proximity into OOM attribution. This preparation changes no
+accepted host state and does not resolve AC-013.
+
+W-168 local implementation binds diagnostic forward work to 240 seconds and the
+whole Caddy diagnostic/recovery path to an aggregate 840-second admission
+boundary. The existing child limit and terminal retry count remain unchanged;
+terminal retries are not themselves a precise wall-clock timer. Remote process
+groups, local SSH and uploads now receive bounded execution time inside that
+budget. A timeout is not proof of remote quiescence; missing independent owner
+recovery evidence remains incomplete/manual intervention. W-166 observation uses
+the recovery reserve, never a renewed forward window.
+
+The private diagnostic specification binds three reviewed SSH prefixes for fixed
+read-only clock queries before sampling and after collection. Boottime/boot IDs,
+controller round-trip intervals, request-index readback hashes and resource
+intervals feed the existing handoff verifier. Its output is an estimated offset
+envelope with explicit unobserved intervening drift and no causal attribution.
+Unknown coverage cannot pass. The shared Webmin onboarding procedure owns the
+repeatable command limits and evidence rules. A successor still requires exact
+input/owner bindings, local qualification and separate live authorization.
+
+W-168 implementation and focused qualification are complete locally. The ledger
+retains exact qualification evidence. W-169 prepares the exact successor using
+these bindings; its seal and any execution authority belong in WORK.md. These
+source bindings grant no live access and do not establish the timeout cause.
+
+### Narrow primary-only request diagnosis (W-174)
+
+Aaron approved this replacement diagnostic scope on November 16. It supersedes
+the earlier dual-stack/paired diagnostic workload for the next candidate, not
+the preserved consumed attempts or final Webmin acceptance requirements.
+
+Question: where does one unauthenticated login-page response stall between the
+primary Caddy frontend and the Pi? Limit target work to Node A and the Pi, IPv4,
+using the existing backend guard and Caddy owner mechanisms. Do not expose the
+candidate to replication, contact the secondary, alter DNS, authenticate, launch
+a browser/scan, move VIPs or promote the route. A successful request ends diagnosis;
+it must not advance the existing onboarding coordinator to secondary exposure.
+
+Use one direct request followed by one proxied request for `/session_login.cgi`,
+with the same method, public Host and relevant forwarded headers. Send no cookies,
+credentials or request body. Retain only an allowlisted projection of the headers
+actually reaching the backend; do not retain arbitrary traffic or headers. The
+candidate must specify a safe native way to obtain that projection and backend
+request arrival/completion before sealing. Caddy's selected upstream label alone
+does not prove delivery to Webmin. Missing phase evidence remains unknown.
+
+Use only the IPv4 upstream in the temporary diagnostic fragment. Preserve the
+existing health-check method/path, interval and timeout for that upstream and
+observe its overlap with the foreground requests; do not silently disable checks.
+The foreground requests are sequential, not a claim that background work is
+serialized. This isolation changes the prior dual-address workload: a pass is
+not proof of the historical failure's cause or acceptance of the dual-stack route.
+Do not add a custom serial health-check scheduler or select production health
+policy without evidence. A controlled follow-up may vary one demonstrated factor
+under its own reviewed scope; no automatic retries or extra comparisons follow.
+
+Correlate client connect/TLS/first-byte/total time, Caddy upstream timing when
+available, Webmin request arrival/completion and concurrent health requests with
+the existing bounded Pi sampler and cgroup identity/event deltas. Distinguish
+memory.high pressure from hard-limit/OOM events. Preserve clock uncertainty and
+coverage checks. Keep five-second request deadlines, resource limits, forward
+240-second and aggregate 840-second recovery/readback bounds, and existing
+independent recovery backstops; do not extend them to manufacture a response.
+Stop after the request pair, or earlier on a safety failure, and restore.
+
+Reuse the existing primary preparation/activation and restoration mechanisms.
+Before sealing, ensure their selected path cannot publish, mutate or inspect
+Node B; document precisely which Node A services it touches. Preserve recovery
+checks for those actual changes, including a subsequent natural monitor cycle
+if synchronization was stopped/resumed. Do not repeat replication acceptance or
+paired restoration for an untouched secondary. If the owner cannot express this
+scope safely, correct that existing path locally rather than adding a competing
+transaction framework or silently expanding target scope.
+
+W-173 archival precedes changes to executed owner inputs. W-171's failure-path
+handoff must work for the next diagnostic. Focus local tests on the changed
+request/header contract, primary-only stop boundary, safe evidence and recovery;
+no new load fixture can accept or reject Pi capacity. This is approved design,
+not a sealed executable or exact-bundle live authorization. AC-013 remains pending.
+
+W-174 implementation status, November 16: primary-only execution and recovery
+controls are locally qualified after W-173 archival/W-175 cleanup. W-171's failed
+handoff is corrected. W-176 now adds bounded backend-interface observation in the
+existing collector. Bind its exact source and the temporary health-marker fragment
+in each separately reviewed primary/IPv4 candidate. Its exact command and authorization status
+are owned by WORK.md; defining or sealing it does not grant live authority.
+
+For the selected native 64-bit Linux host, the observer requires a root packet
+socket with nanosecond kernel timestamps on `eth0`. It starts before either
+foreground request and shares the existing 300-second resource observer. Only the
+reviewed primary IPv4/backend port pair is parsed. No packet file, credentials or
+body is retained; only reviewed header matches, request markers, response status
+and connection-close events survive. The exact implementation bounds buffers,
+connections, records and duration; resource limits and parent cutoffs are unchanged.
+Failure to initialize capture prevents readiness. Loss, gaps, unsupported streams,
+missing receipts and out-of-window evidence prevent a complete diagnostic claim;
+owner restoration still runs.
+
+This boundary proves packets reaching/leaving the backend interface, not Webmin
+accepting them in CGI code. Connection close/reset does not establish full HTTP
+body completion. Missing response events remain unknown. Correlate both marked
+foreground requests and marked health probes without attributing resource events
+causally. No conclusion about the Pi's capacity or the historical timeout follows
+from local qualification. AC-013 remains pending.
+
+Routine onboarding package transport (W-177): only the primary receives the
+application fragment and publisher. The secondary receives a control recipe for
+expected identities and recovery, then obtains the application through existing
+replication after primary verification. The narrow diagnostic excludes even that
+secondary control transfer, admission and recovery. No installed notifier or
+accepted production route changes are included.
+
+W-181 local source reconciliation: direct and proxied diagnostic requests and
+backend header comparison use the same neutral User-Agent. Browser readiness
+still requires HTTP 200/login content. If the direct prerequisite fails before
+Caddy starts, the comparison is explicitly not run and cannot pass acceptance;
+backend evidence/recovery still complete. The unexecuted W-178 child is withdrawn
+and owner bindings are neutral/inactive. A future candidate requires new exact
+operation/parent bindings and qualification; consumed approvals cannot be reused.
+
+W-182 prepares a new primary/Pi diagnostic from W-181's corrected sources.
+The owner operation is defined but unexecuted; its current exact bindings and
+command belong to WORK.md. Neutral User-Agent and HTTP-200/login requirements,
+primary-only IPv4 transport, 240-second forward/840-second aggregate child
+cutoffs, independent backend restoration and all workload exclusions remain.
+Admission must revalidate current host/configuration/health and capture fresh
+boot continuity; retained readiness does not establish current target health.
+No live authority follows from definition, local qualification or sealing.

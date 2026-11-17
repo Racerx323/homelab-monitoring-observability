@@ -2,5 +2,11 @@
 useDefault = true
 
 [allowlist]
-description = "Ignore generated vexp index metadata"
+description = "Ignore generated vexp index metadata and verified public integrity pins"
 paths = ['''^\.vexp/''']
+regexTarget = "match"
+regexes = [
+  # Outer-runner SHA-256 values verified against the preserved W-178/W-182 inputs.
+  '''f1d56c0ebcc9b5a7b4fe119ef86881a3c79af3d4d56c9b36f2e6b8c989535e27''',
+  '''2a2d7df7c6464fed9f9b8cf16a83dc574e1e93594e72e90eddb81fa64b40bfaf''',
+]
