@@ -5,20 +5,16 @@
 - Status: Existing Kuma service/dashboard accepted. Aaron approved W-127's
   network/radio dispositions, then required standard-browser Webmin access;
   the SSH-only profile does not satisfy this revised requirement (W-128).
-- Last updated: November 17, 2026 (America/Chicago).
-- Next action: Seal W-227's locally qualified paired browser candidate for
-  separate live review. Exact private owner authorization passes with 19 current
-  whole-path cases and nine altered-evidence rejections. Actual payload and parent
-  bindings pass; W-229/W-230 are resolved. Only the private review projection is
-  defined; main Caddy remains clean/inactive. No live bundle or launcher is sealed.
-  W-147/AC-013 remain open and W-157 is not installed. W-231 source publication
-  is complete: server and monitoring source commits are pushed and remote-verified.
-  Refresh documentation hashes when sealing; publication formatting did not change
-  tested runtime inputs. No live contact, browser workload or retry occurred.
-- Document roles: [PLAN.md](PLAN.md) owns scope/criteria; this ledger owns work and
-  decisions; [RESULT.md](RESULT.md) owns the accepted scope and pending Webmin extension. Permanent design and
-  procedures remain in [architecture](../../uptime-kuma/docs/ARCHITECTURE.md) and
-  [operations](../../uptime-kuma/docs/OPERATIONS.md).
+- Last updated: November 18, 2026 (America/Chicago).
+- Next action: Identify the first persistent Webmin backend step, including
+  certificate trust, source restrictions and recovery, from existing owner
+  records. No paired trial, live change or service promotion is authorized.
+- Document roles: [PLAN.md](PLAN.md) owns scope, acceptance criteria and recovery.
+  This ledger [WORK.md](WORK.md) owns decisions and next actions. [RESULT.md](RESULT.md) records
+  observed outcomes, recovery and outstanding acceptance. Kuma's permanent
+  [architecture](../../uptime-kuma/docs/ARCHITECTURE.md) and
+  [operations](../../uptime-kuma/docs/OPERATIONS.md) link to the
+  [fleet Webmin onboarding procedure](../../../homelab-server-configs/Webmin/docs/CADDY_ONBOARDING.md).
 
 ## Tasks and findings
 
@@ -314,11 +310,38 @@
 | W-224 | Execute the approved temporary CPU comparison and verify restoration. | W-223; W-147 | Resolved | Retain actual request/resource receipts and independent restoration/cleanup from one attempt. | Exit 0. Single HTTP 200 in 2.327s; three concurrent HTTP 200 in 3.832-3.853s. No new memory high/max/OOM events. Original 100% quota/runtime override and unchanged main/unit identities verified; temporary files removed. Approval consumed. |
 | W-225 | Select host-specific CPU policy and compatible health contract for browser onboarding. | W-147; AC-013; Webmin/foundation/Caddy owners | Resolved | Explicit owner approval of policy before implementation. | Aaron approved local implementation/preparation: selected Pi 200%, explicit unauthenticated health headers and 5s health timeout; memory controls and foreground deadline unchanged. W-226 tracks implementation; deployment and sustained browser capacity are not accepted. |
 | W-226 | Implement selected-host CPU and explicit health policy in existing owners. | W-225; AC-013 | Resolved | Host-scoped selection, default preservation, native restore and adapted health contract locally checked. | CPU-only drop-in is explicitly selected in existing backend trial/recovery; 20 recovery tests pass. Offline Caddy 2.11.4 adaptation verifies proposed headers/thresholds. Production is 2.11.9; exact final owner candidate still requires its normal validation and paired/dual-stack/browser acceptance. No live authority. |
-| W-227 | Bind the paired/dual-stack browser candidate after W-225. | AC-013; W-226 | In progress | Exact owner/parent bindings and relevant qualification before a live review. | Fresh private draft selects the Pi CPU profile, four backend paths, six browser paths and existing observer/recovery. No executable seal or authority. Exact paired owner/parent qualification now passes: 19 whole-path cases, nine evidence rejections and actual authorization gate. Private definition and inputs are bound; final seal/launcher and separate live review remain. |
+| W-227 | Bind the paired/dual-stack browser candidate after W-225. | AC-013; W-226 | In progress | Exact owner/parent bindings and relevant qualification before a live review. | Fresh private draft selects the Pi CPU profile, four backend paths, six browser paths and existing observer/recovery. No executable seal or authority. Exact paired owner/parent qualification now passes: 19 whole-path cases, nine evidence rejections and actual authorization gate. Private definition and inputs are bound; final seal/launcher and separate live review remain. November 18: sealed and executed once under exact approval. See terminal outcome below. |
 | W-228 | Isolated-validator delivery is restricted to the earlier primary/IPv4 diagnostic. | W-191; W-227; Caddy owner | Resolved | Reconcile primary tool delivery with paired browser activation and pre-release-ID recovery in the existing owner path; retain secondary replication and unchanged installed secondary callers. | Primary-only tool delivery now accepts the paired recipe. Explicit empty-ID recovery restores A tools and cleans both payloads; post-ID recovery retains B-before-A restoration and monitor checks. Eighteen file/payload/recovery cases, focused paired dispatch checks and the host onboarding profile pass. Exact candidate qualification and writable target execution remain outside this local result; see checkpoint below. |
 | W-229 | Paired whole-path qualification omitted primary validation-tool delivery and seeded the secondary with the source finalizer. | W-227; W-228 | Resolved | Exercise the exact paired recipe option with hash-verified accepted secondary tools and independently verify restoration in existing owner cases. | Existing paired cases now select primary delivery, accepted finalizer/reconciler bytes and secondary preservation. All 19 current cases and exact authorization pass; no capacity or namespace qualification is added. |
 | W-230 | Private test-wrapper umask removed the deliberately public directory mode from the parent admission test. | W-227; controller evidence privacy | Resolved | Set the intended test mode explicitly and rerun only the admission test; preserve the failed run. | Existing paired and primary parent-flow tests passed. Public-mode case created 0700 under umask 077, so it never tested public input. Test setup now applies chmod; the admission-only rerun passed all six directory cases. Production admission is unchanged; failed receipt retained. |
 | W-231 | Publish all accumulated server and monitoring changes at Aaron's request. | Source publication only | Resolved | Required hooks pass; both commits pushed and remote refs verified. | Server 2a19a36 and monitoring a9cca0c are pushed and remote-verified. Required hooks pass after markdown-only repairs. Hosted checks and this completion-record publication are retained in publication-w231; target acceptance and candidate sealing remain separate. |
+| W-232 | Archive consumed W-227 under the Caddy owner. | AC-013 | Resolved | Publish and verify the reviewed commit and annotated tag before neutral cleanup. | Exact eight-file tree prepared locally. Both owner restorations passed. Published and remote-verified at 65d6f42. |
+| W-233 | Return the archived W-227 operation to neutral locally. | W-232 | Resolved | Preserve the archive and verify the neutral owner state. | Verified the local annotated tag peels to 65d6f42. Caddy scripts and manifests match the prior neutral revision 2a19a36 except for the registry's updated archive tag. Deployment-window, successor and documentation checks passed. |
+| W-234 | Review retained W-227 request evidence before selecting further work. | AC-013, W-147 | Resolved | Compare direct and proxied receipts and identify the limit of attribution. | Marked Caddy request and curl timing verified against readback hashes. Owner health-contract review recommended below. |
+| W-235 | Decide what each active Webmin health probe must prove on this Pi. | AC-013, W-226, W-234 | Resolved | Record the owner decision and its failure signal for each address. If proposing a different endpoint, identify which failures it would miss and submit the change for review before implementation. | Approved for local implementation. Native dual-stack responses and Caddy unavailable-backend behavior passed offline. Foreground login and browser acceptance remain required. |
+| W-236 | Bind the revised first-host health fragment in a fresh paired trial. | W-235, AC-013 | Resolved | One authorized attempt consumed. | Secondary convergence failed; see terminal outcome. AC-013 remains pending. |
+| W-237 | Prepare W-236 Caddy terminal archive. | AC-013 | Resolved | Publish and verify before neutral cleanup. | Remote main and peeled archive tag verified at db53401. |
+| W-238 | Restore replication handoff in paired tool-delivery path. | AC-013 | Resolved | After archive, qualify sender readiness before exposure and retain existing containment. | W-236 omission corrected locally: tool-delivery exposure starts and verifies the sender after primary acceptance. See qualification below. |
+| W-239 | Return the archived W-236 operation to neutral locally. | W-237, W-238 | Resolved | Preserve archive and verify inactive owner state. | Verified annotated tag at db53401; reset operation, recipe and runner bindings from neutral 2a19a36, removed consumed terminal result, retained latest archive tag. Window, successor and documentation checks passed. |
+| W-240 | Bind W-238 in a fresh paired browser trial. | W-238, AC-013 | Resolved | Account for the single authorized attempt and both recoveries. | Failed-consumed; release replicated, final primary IPv6 probe timed out. Both owners restored. |
+| W-241 | Archive W-240. | W-240 | Resolved | Publish and verify reviewed archive before neutral cleanup. | Approved atomic push; remote main and peeled tag verified at 0f1b10b. |
+| W-242 | Review final primary request. | AC-013 | Resolved | Reconcile retained request timing and evidence limits before further work. | Retained timing reconciled below. No request-correlated Pi observation; cause unresolved. |
+| W-243 | Return W-240 to neutral and retire verified staging. | W-241 | Resolved | Preserve published archive, sender correction and private evidence; verify inactive bindings. | Tag peels to 0f1b10b. Window, registry, documentation and sender-handoff checks passed. Verified staging against the private snapshot before removing it and its empty parent. |
+| W-244 | Decide whether a Pi boundary measurement adds evidence. | W-242 | Resolved | Identify a discriminating observation and its limits. | Prepare locally; the old IPv4 frontend and login-only packet parser cannot be reused unchanged. |
+| W-245 | Prepare the narrow primary/Pi measurement. | W-244 | Locally qualified | Mixed-family request, selected upstream, static health classification and minimum observation tail tested. | No live authority or candidate. |
+| W-246 | Review W-245 measurement readiness. | W-245 / W-147 | Resolved | Bound packet, client-exit and primary recovery times; withhold unchanged-route conclusions on overlap. | Locally qualified; W-240 has no Pi wire evidence. |
+| W-247 | Decide whether an exact primary/Pi measurement is worth preparing. | W-245/W-246 | Resolved | Identify a result that changes the next diagnostic decision. | Recommend local preparation only; await owner authorization. |
+| W-248 | Prepare the exact primary/Pi measurement locally. | W-245/W-246/W-247 | Resolved | Bind scope, owner recipe and parent inputs; verify actual offline owner paths and controller admission. | Private review only; no live authority. |
+| W-249 | Review exact W-248 candidate before sealing. | W-248 / W-246 | Resolved locally | Require a successful journal collection for path attribution; record temporary listener and allowlist scope explicitly. | Reader and scope corrected; fresh candidate binding pending. |
+| W-250 | Bind W-249 reader and temporary access in fresh inputs. | W-248 / AC-013 | Resolved | Local candidate and pre-contact validation complete. | Unsealed; no live authority. |
+| W-251 | Review W-250 for sealing. | W-249 / W-250 | Resolved | Candidate bindings, exposure, recovery and retained local checks reviewed. | Ready to seal locally; no execution authority. |
+| W-252 | Seal a one-attempt launcher against reviewed W-250. | W-251 / W-147 | Resolved | Local manifest, owner gate, drift and replay checks passed. | Await separate live approval; no attempt started. |
+| W-253 | Record W-252 execution and recovery. | W-252 / W-147 | Resolved | Primary HTTP 200; coverage and both owner restorations passed. | Non-reproduction only; live approval consumed. |
+| W-254 | Prepare the consumed primary Caddy terminal archive. | W-253 | Resolved | Verified private snapshot and prepared exact terminal tree. | Unpublished; separate approval required. |
+| W-256 | Return the published W-252 archive to neutral. | W-254 / W-255 | Resolved | Verified the annotated archive, inactive operation, empty registrations and owner checks. | Local only; AC-013 pending. |
+| W-257 | Retire W-248/W-250/W-252 staging omitted by W-256. | W-256 | Resolved | Verified archive coverage and missing inputs; removed all three paths and their empty parent. | Workspace AGENTS.md now requires verified retirement at cleanup. |
+| W-258 | Review outstanding paired browser acceptance. | AC-013 / W-240 / W-252 | Resolved | Reconciled paired and primary-only evidence; browser acceptance remains pending. | Recommendation only; no successor or execution. |
+| W-259 | Prepare one paired trial with marked final timing. | W-258 / AC-013 | In progress | Fresh private paired inputs, family-aware packet timing, subsequent private browser phase and unconditional recovery. | Local qualification only; no live launcher. |
 
 ### Current preparation
 
@@ -11679,3 +11702,986 @@ private publication receipt, avoiding a recursive documentation commit.
 W-227 remains unsealed. Refresh source/document identities during sealing to
 include these publication formatting changes; tested runtime inputs are unchanged.
 No live infrastructure work was performed.
+
+### November 18 W-227 sealed paired browser trial for review
+
+The manifest SHA-256 is
+`5882ccd50b39811effadfdf509c0364b7517cdb707f3395bf4dbf923f3730fcc`.
+It binds 4,514 files including the launcher, owner graph, controller inputs,
+operator handoff and qualification evidence. The executable workspace is outside
+evidence storage and uses a private index. Source verification found one changed
+qualified input, the published PLAN.md. Documentation hashes were refreshed.
+The final launcher passed verify-only, including client startup and the owner
+authorization gate. The sealed parent command passed Ansible syntax checking.
+No live execution or approval is recorded.
+
+Exact workstation command for one separately approved attempt:
+
+```bash
+/usr/bin/python3 -I -B /home/aaron/code/.webmin-w227-9vwxqxj5/operator.py --manifest-sha256 5882ccd50b39811effadfdf509c0364b7517cdb707f3395bf4dbf923f3730fcc --run-approved-once
+```
+
+Temporary scope covers the Pi at 10.1.3.75 and Caddy nodes 10.1.0.53 and
+10.1.0.54. Apply the selected Pi CPU profile (200%) and guarded Webmin ingress,
+verify four proxy/backend paths, activate the reviewed primary-first Caddy
+trial and exercise six browser paths with ama's System Information statistics.
+Observe for 600 seconds with the guarded scan after 400 seconds. Owner exposure
+is bounded at 660 seconds. Restore the paired proxy state and original Pi
+loopback/CPU controls on success or failure, with the existing 1800-second
+backend recovery timer. DNS and permanent promotion are outside scope.
+
+### November 18 W-227 paired browser trial terminal outcome
+
+Aaron approved one attempt and launched the sealed operator. Parent exit 2,
+Caddy exit 1. The four direct backend paths and denial check passed. Node A
+selected the candidate. Its foreground IPv4 request connected to port 443 and
+completed TLS in 0.049 s. Curl received zero bytes by 5.001 s and exited 28.
+The marked request logged status 499 after 4.954 s with upstream 10.1.3.75:10000
+and no upstream latency or duration. The journal also contained timeout entries
+without request attribution. The evidence does not establish why Webmin was late.
+Secondary activation, browser authentication, statistics and scan did not run.
+
+Caddy restore and readback passed on both nodes, followed by both monitor checks.
+The Pi's native loopback restoration assertion passed before its recovery timer
+was disarmed. No retry. Preserve the consumed operation for its terminal archive.
+Private receipts: `.local-evidence/uptime-kuma/w227-terminal` under the workspace.
+
+### W-232 exact archive publication for separate review
+
+The eight-file server archive retains the executed operation, recipe, transaction
+and outer runner, updates the stream and lifecycle inventories, and adds the
+sanitized terminal result and history entry. The sealed parent manifest still
+verifies. Caddy window and successor registry checks pass. Private receipts and
+executed inputs remain preserved. AC-013 remains pending.
+
+Base `2a19a36bbaf5ed2f24a25a687cf3c11954fe0ab8`, reviewed Git tree `894f44c115bc6c6f2f145484343eff0f16b11cf0`.
+One commit, annotated tag `caddy-webmin-paired-browser-terminal-2026-11-18`, and atomic push
+to Racerx323/homelab-server-configs. Verify remote main and peeled tag afterward.
+Command SHA-256: `b9f62a258cc9024fa61fee598809426ffd03e56f79996faf804c47e59ef3138d`.
+
+```bash
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/w227-terminal/publish-reviewed.sh
+```
+
+November 18: Aaron approved the exact command. It exited 0. Remote main and
+the peeled annotated tag both resolve to `65d6f428b1618deaf90d1c3077cfaa1466601bee`.
+The commit tree matches the reviewed tree. The private W-227 terminal directory
+retains the publication log and remote verification. Neutral cleanup is pending.
+
+### November 18 W-234 request review
+
+All four sequential direct requests returned HTTP 200 and the Webmin login
+form in 2.30–2.37 s. Node A IPv4 reached the same backend selected by the
+failing proxy request in 2.36 s. The direct probe and Caddy foreground client
+targeted the same login path with the diagnostic User-Agent and identity
+encoding. The direct probe supplied forwarding headers explicitly. W-227
+did not capture the actual headers or arrival time at the Pi for the proxy request.
+
+The primary IPv4 curl timing and marked journal entry agree. TLS completed at
+0.049 s. Curl received no bytes by 5.001 s. Caddy logged 499 at 4.954 s for
+the same request ID and selected 10.1.3.75:10000. Upstream duration and latency
+were null. The selected backend address alone does not prove Webmin accepted
+the request. Four timeout-category rows occur just before the 499, in two pairs
+with identical timestamps. They carry neither endpoint nor request ID. They
+cannot establish how many health probes ran or whether those probes caused delay.
+
+The pre-restoration Webmin snapshot reports 687 cumulative memory.high events
+and zero max/OOM events. There is no request-window baseline or CPU sample.
+W-224's quota comparison answers a different workload question. Neither CPU
+throttling nor memory pressure can be assigned to this W-227 request.
+
+Owner decision: the two active checks target different addresses of one Webmin
+service and each requests the login CGI. Review whether a cheaper existing
+unauthenticated response would establish the required per-address health while
+keeping the login page as the foreground acceptance test. Establish what a
+candidate response proves, including its behavior when Webmin is unavailable,
+before proposing any change. If the login CGI is itself required for health,
+the missing observation is Pi-side arrival and first response for the foreground
+and health markers during the same window. Repeating the full browser trial or
+extending its five-second deadline would not settle that question. No live
+operation is defined.
+
+### November 18 W-235 first-host health contract review
+
+Caddy's onboarding procedure requires an approved unauthenticated status without
+a redirect. It does not prescribe a login handler. The Webmin onboarding guide
+describes the current candidate's native login-page check. AC-013 separately
+requires authenticated browser and WebSocket acceptance. Changing the active URI
+therefore revises the approved first-host candidate, while preserving AC-013.
+
+Propose GET /robots.txt on each existing Webmin upstream through the same
+source restrictions and headers. The retained Webmin 2.670 source ships a
+26-byte static file and includes the path in MiniServ's default unauthenticated
+patterns (miniserv-lib.pl, lines 914 and 3942). This is a source-backed candidate;
+the effective response and cost on the Pi have not been measured.
+
+For local qualification check the native response is HTTP 200 with the shipped
+robots content, without credentials or redirect, and that an unavailable
+backend fails the check. Retain the existing five-second timeout, 30-second
+interval and failure threshold. The runtime status probe can pass while the CGI,
+PAM or authenticated UI is broken; the foreground login-form check and browser
+acceptance still cover those failures. Both addresses share the same Webmin
+process. This change would reduce the work requested per poll; it does not
+establish why W-227 timed out. Await owner approval for local implementation.
+
+November 18 implementation: the first-host proposal now selects GET /robots.txt
+for active health. Network-disabled Podman image 14256f5f3c69 ran Webmin 2.670
+and Caddy using both loopback families and the proposal's health settings.
+Each address returned the shipped 26-byte body, HTTP 200 and no redirect without
+credentials. The proxy served the same body while healthy. After MiniServ stopped,
+three failed active probes per address led to HTTP 503. The first test frontend
+matched the wrong Host; the second expected an absent log message. Correcting
+the local test preserved the proposed service settings. Final run exited zero.
+Private evidence: `.local-evidence/uptime-kuma/w235-ui4c2n/final.log`.
+Pi resource cost and actual browser acceptance remain unmeasured by this check.
+
+### W-236: exact paired Webmin browser trial for separate review
+
+The new candidate binds GET /robots.txt for Caddy active health on both Pi
+addresses. The foreground login-form and authenticated browser checks retain
+their W-227 criteria. The predecessor and its receipts remain consumed.
+Local payload inspection matched the fragment hash to the recipe; the secondary
+control archive contains only the recipe. All 19 offline owner cases passed,
+nine altered-evidence cases were rejected, and the final launcher passed
+verify-only against 4,297 sealed files. No browser or target was contacted.
+Private qualification receipts: `.local-evidence/uptime-kuma/w236-review-qnfrk18j`.
+
+Exact workstation command for one attempt, only after separate authorization:
+
+```bash
+/usr/bin/python3 -I -B /home/aaron/code/.webmin-w236-acvb25d_/operator.py --manifest-sha256 d1cc128a1db5c3f18e8150bad633ef725ca43ff88099809e6984e4865269aa1a --run-approved-once
+```
+
+Temporary scope: guarded Webmin ingress and 200% CPU on 10.1.3.75; primary-first
+Caddy activation on 10.1.0.53 and 10.1.0.54. Verify four direct backend paths
+and six browser paths using ama's existing System Information statistics access.
+Observe for 600 seconds with the guarded scan after 400 seconds. Owner exposure
+is bounded at 660 seconds. Restore both proxies and the Pi's original loopback
+and CPU controls on success or failure; retain the 1800-second backend recovery
+timer. No DNS change, permanent promotion, retry or publication is included.
+
+### W-236 terminal outcome and evidence placement
+
+Primary acceptance passed. The secondary still selected the November 11 release
+when the convergence check required the November 18 candidate. Parent exit 2;
+browser and scan did not start. Both Caddy restoration/readbacks and subsequent
+monitor checks passed. The Pi loopback restoration assertion passed. The primary
+replication alert at 17:21:25 UTC occurred during the trial; its precise cause
+and traffic impact are not established by those later checks.
+
+The launcher wrote runtime logs beside the private execution workspace; the Caddy
+runner used /tmp. Verified copies of terminal logs, status files and parent receipts
+are under `.local-evidence/uptime-kuma/w236-review-qnfrk18j/terminal`.
+At Aaron's request the controller staging directory and the Caddy /tmp directory
+were removed after all 484 files were verified against the inert private snapshot
+`terminal/consumed-w236.tar.gz` under the same evidence directory. The adjacent
+SHA-256 file identifies the archive. Historical paths in sealed inputs remain
+provenance only. The launcher is retired. Bind future durable outputs directly
+to private evidence storage; keep executable staging outside and retire it.
+
+### W-237: secondary convergence review and terminal archive
+
+Primary tool installation stopped caddy-lsyncd.service and observed MainPID 0.
+The transaction restarted only the local reconciler for primary activation.
+Primary IPv4 and IPv6 returned 200. The publisher's exposure receipt names the
+candidate and exited zero. Exposure places a release in the outbound tree; it
+does not transfer it. The executed forward path did not restart the sender.
+All 60 secondary polls saw the accepted predecessor. Recovery restarted the
+sender after restoration. This explains the missing handoff in the owner path;
+there is no per-transfer journal here to establish a separate receiver failure
+or the alert's precise trigger. No timeout increase or repeated browser workload
+is indicated. For W-238, make the paired path prove the sender is running at
+handoff; keep the primary-only diagnostic and recovery containment intact.
+
+Prepared eight changed files against `65d6f428b1618deaf90d1c3077cfaa1466601bee`; reviewed Git tree
+`229e199af7ffd62bdd5368111435b71d4b259d96`. Exact operation, transaction, outer runner, recipe and
+fragment were checked against the consumed manifest. Window and successor
+registry checks passed. The lifecycle classification already matches the
+failed-consumed state. The unrelated Webmin guide edit and monitoring ledger
+are outside this publication. Private evidence remains under W-236's terminal
+directory. No real index change, commit, tag or push in this review.
+
+Proposed publication only: one commit, annotated tag and atomic push to
+Racerx323/homelab-server-configs. Run only after explicit approval:
+
+```bash
+set -eu
+cd /home/aaron/code/homelab-server-configs
+test "$(git rev-parse HEAD)" = 65d6f428b1618deaf90d1c3077cfaa1466601bee
+test "$(git branch --show-current)" = main
+test "$(git remote get-url --push origin)" = https://github.com/Racerx323/homelab-server-configs.git
+git diff --cached --quiet
+test -z "$(git tag -l caddy-webmin-static-health-browser-terminal-2026-11-18)"
+git add -- Caddy/HISTORY.md Caddy/manifests/certificate-release-inputs.tsv Caddy/manifests/deployment-streams.tsv Caddy/manifests/serving-health-operation.yaml Caddy/manifests/serving-health-terminal-result.yaml Caddy/scripts/apply-serving-health-deployment.sh Caddy/scripts/run-serving-health-deployment-outer.sh Webmin/proposals/30-webmin-j2-svpi3bmf.caddy
+test "$(git write-tree)" = 229e199af7ffd62bdd5368111435b71d4b259d96
+git commit -m 'Archive failed Webmin static-health browser trial'
+test "$(git rev-parse 'HEAD^{tree}')" = 229e199af7ffd62bdd5368111435b71d4b259d96
+git tag -a caddy-webmin-static-health-browser-terminal-2026-11-18 -m 'W-236 failed-consumed; both owners restored'
+git push --atomic origin HEAD:refs/heads/main refs/tags/caddy-webmin-static-health-browser-terminal-2026-11-18
+```
+
+Verify remote main and the peeled tag against the resulting commit before cleanup.
+
+W-237 publication: Aaron approved the exact archive. The atomic push succeeded;
+remote main and the peeled annotated tag both resolve to
+`db534016eae9a32325eaf35dbcbdc8e49d1a780b` with the reviewed tree.
+Neutral cleanup has not run.
+
+November 18 fleet procedure review: Webmin/docs/CADDY_ONBOARDING.md is the
+permanent process owner for fleet Webmin onboarding through Caddy. Its exclusion
+from W-237 was a publication boundary only. The guide now distinguishes temporary
+trial restoration from permanent activation and DNS, and requires sender readiness
+at paired handoff. W-238 implementation and AC-013 live acceptance remain open.
+
+### W-238 local paired sender handoff qualification
+
+The existing exposure step now starts the sender only when the primary installed
+trial validation tools. It requires a successful start and state query, active
+service and positive MainPID before the publisher can expose the release.
+Failures retain command status or observed state and enter existing recovery.
+Ordinary exposure does not restart the sender; primary-only diagnostics still
+skip exposure. The transfer substitute now respects the actual simulated sender
+state instead of delivering unconditionally.
+
+Focused tests exercised the real exposure branch for paired success, failed start,
+zero PID and ordinary exposure. The payload, primary-only, recovery/monitor and
+budget checks passed, as did neutral registry, deployment-window, shell-format
+and collision checks. These are local control-flow results. Actual transport,
+secondary convergence and browser acceptance remain unverified by this change.
+
+### W-240: paired sender handoff and browser trial for separate review
+
+Candidate: `20261118-webmin-sender-handoff-browser-trial`. The existing
+W-236 archive remains consumed. The corrected primary accepts both HTTP paths,
+starts and verifies the sender, then exposes the same release to replication.
+The 19-case offline owner suite passed; the paired success case recorded sender
+readiness before exposure and secondary convergence. Nine altered-evidence
+cases were rejected. The exact payload, parent syntax, evidence handoff and
+launcher verify-only passed. The private manifest binds 4,301 inputs. Neither
+actual secondary convergence nor authenticated browser acceptance follows from
+these local results. The main owner stream remains inactive.
+
+Exact workstation command, for **one attempt only after separate approval**:
+
+```bash
+/usr/bin/python3 -I -B /home/aaron/code/.local-workspaces/webmin-w240-5zvwmoiy/operator.py --manifest-sha256 d2f1e78ce8adce8788dcfc27349f8376132db424c521bde16f5f014290bb23af --run-approved-once
+```
+
+Temporary scope: guarded Webmin ingress and 200% CPU on 10.1.3.75, four direct
+paths, primary-first activation on 10.1.0.53 and 10.1.0.54, and six browser
+paths using ama's existing System Information statistics. Keep the five-second
+foreground login-page deadline; active health uses GET /robots.txt. Observe for
+600 seconds with guarded scan after 400 seconds and bounded 660-second owner
+exposure. Restore both proxies and the original Pi loopback and CPU controls
+after success or failure; retain natural monitor acceptance and the independent
+1800-second backend recovery timer. DNS, permanent promotion, replay and
+publication are excluded.
+
+Controller staging is outside evidence storage. The parent log, owner handoff
+and Caddy readbacks go under `.local-evidence/uptime-kuma/w240-smapd2co/parent`;
+browser/workload receipts go under its sibling `workload`. The operator supplies
+the existing ama password privately in a workstation terminal.
+
+### W-240 terminal outcome
+
+Authorized once; parent exit 2, Caddy exit 1. Primary exposure and secondary
+convergence passed. Final node A IPv4 returned 200; IPv6 curl exited 28.
+TLS completed in 0.048 s, with no first byte by 5.001 s. The matching Caddy
+entry recorded 499 at 4.954 s with IPv4 upstream 10.1.3.75:10000 and no
+upstream latency/duration. Final node B and shared-endpoint checks passed.
+No backend execution timing proves why this request missed its deadline.
+Browser and scan were not started. Both Caddy restore/readbacks and natural
+monitor checks passed. The Pi asserted its loopback baseline before disarming
+recovery. Receipts: `.local-evidence/uptime-kuma/w240-smapd2co/parent`.
+
+### W-241: W-240 terminal archive for separate publication review
+
+Verified all 4,301 sealed inputs and the 495-file private snapshot at
+`.local-evidence/uptime-kuma/w240-smapd2co/consumed-w240.tar.gz`.
+Its adjacent SHA-256 file identifies the archive. Original inputs and receipts
+remain in place. The reviewed tree includes the executed owner inputs, sender
+regression, handoff helper and fleet Webmin onboarding guide. The recipe already
+matches the archived base. Window, successor registry and documentation checks
+passed. No production inventory change or new live operation is included.
+
+Exact scope: nine changed files, base `db534016eae9a32325eaf35dbcbdc8e49d1a780b`, tree `d3b8aba823a3a239cdafa0ad8816cf0b0ed3b117`.
+One commit, annotated tag and atomic push only after separate approval:
+
+```bash
+set -eu
+cd /home/aaron/code/homelab-server-configs
+test "$(git rev-parse HEAD)" = db534016eae9a32325eaf35dbcbdc8e49d1a780b
+test "$(git branch --show-current)" = main
+test "$(git remote get-url --push origin)" = https://github.com/Racerx323/homelab-server-configs.git
+git diff --cached --quiet
+test -z "$(git tag -l caddy-webmin-sender-handoff-browser-terminal-2026-11-18)"
+git add -- Caddy/HISTORY.md Caddy/manifests/deployment-streams.tsv Caddy/manifests/serving-health-operation.yaml Caddy/manifests/serving-health-terminal-result.yaml Caddy/scripts/apply-serving-health-deployment.sh Caddy/scripts/run-serving-health-deployment-outer.sh Caddy/tests/application-onboarding-regression.py Webmin/docs/CADDY_ONBOARDING.md Webmin/scripts/proxy-trial-handoff.py
+test "$(git write-tree)" = d3b8aba823a3a239cdafa0ad8816cf0b0ed3b117
+git commit -m 'Archive consumed Webmin sender handoff browser trial'
+test "$(git rev-parse 'HEAD^{tree}')" = d3b8aba823a3a239cdafa0ad8816cf0b0ed3b117
+git tag -a caddy-webmin-sender-handoff-browser-terminal-2026-11-18 -m 'W-240 failed-consumed; replication converged and owners restored'
+git push --atomic origin HEAD:refs/heads/main refs/tags/caddy-webmin-sender-handoff-browser-terminal-2026-11-18
+```
+
+Verify remote main and the peeled tag before cleanup.
+
+W-241 publication: the approved atomic push completed. Remote main and the peeled
+annotated tag both resolve to `0f1b10bb2e57d60bb137218dcd21b1d3fe948654`; the commit
+matches the reviewed tree. Neutral cleanup has not run.
+
+### W-242: final primary login request, retained evidence only
+
+Compared the hash-checked Caddy readback records in W-240's private
+`parent/caddy-owner` directory. The initial primary IPv6 request got HTTP 200
+in 2.315 s of Caddy request time. At final acceptance, primary IPv4 got 200
+in 3.032 s. The marked primary IPv6 request then completed TLS in 0.048 s but
+received no first byte by 5.001 s (curl 28). Its Caddy journal row recorded
+499 at 4.954 s, selecting the same IPv4 backend as both successful requests;
+upstream duration and latency were absent. This is a frontend-family label,
+not an IPv6 connection from Caddy to Webmin.
+
+The later final secondary and shared-endpoint probes returned 200 on both
+families, selecting that same upstream (2.29–2.32 s Caddy duration). These
+are distinct requests. The successful responses bracket a missed deadline;
+they do not prove what happened inside the failed request or rule out
+intermittent transport delay. The Pi's pre-restoration Webmin snapshot had
+382 cumulative memory.high events and zero max/OOM events. No synchronized
+resource delta, Webmin arrival or first-response timestamp covers that request.
+The browser and scan never started. No change to replication, health URI,
+CPU, or the five-second acceptance deadline follows from this evidence.
+
+Decision for owner review: if diagnosis continues, use the existing bounded
+Pi-side observation on the actual primary-to-Pi path, with a distinct marker
+and time coverage through the client deadline. Arrival and first response
+separate delay before the Pi, delay before its response, and delay after it.
+A passing sample cannot explain the historical miss. Do not repeat the full
+paired trial solely to collect the same proxy-side timings.
+
+### W-244: decision on a Pi-side boundary measurement
+
+Prepare one measurement, not a replay. The existing Pi collector already emits
+request/response first-byte, parsed-header and close events by TCP flow; reuse
+it. Two differences matter: the narrow Caddy mode skips IPv6 client requests,
+and the collector treats GET /robots.txt as unexpected because it admits only
+the login path. Reusing either assumption would change the question or discard
+valid evidence. Keep the active health policy; recognize its traffic separately
+without counting it as the foreground marker.
+
+Use one marked unauthenticated login request to the primary IPv6 HTTPS address,
+with the original Host/SNI, five-second deadline and unchanged host controls.
+Confirm the selected IPv4 backend from the marked Caddy row. Start capture
+before the request and retain a bounded tail after the deadline, clock bounds,
+packet-loss status, and first response/close before restoration. Record only
+safe timestamps, IDs and status. Preserve owner admission, guarded ingress
+and mandatory restoration. No secondary activation, DNS, login, scan, repeated
+sampling for a failure, or timeout adjustment. This omits the post-replication
+load context; it measures this request, not W-240's historical cause.
+
+On complete coverage, compare Pi inbound and outbound payload times on the
+marked flow with the client deadline. Late outbound data localizes elapsed time
+to the Pi side of the boundary but does not identify CGI, scheduling or CPU as
+the cause. Early outbound data warrants looking at proxy receipt/forwarding.
+No matching flow is inconclusive unless route selection and capture coverage
+are independently established. Missing markers, drops or timing uncertainty
+that straddles the deadline must not be reported as a measured delay. A normal
+response ends the measurement; do not loop or claim AC-013 acceptance.
+
+### W-245: local primary/Pi measurement preparation
+
+The primary-only probe can now select IPv6 independently of the IPv4 backend
+observer. The existing direct IPv4 admission probe is a separate control with
+its own marker. The new frontend setting is opt-in; the paired browser route
+and previously consumed recipes are unchanged. Recovery stays with the
+existing primary and backend owners.
+
+Focused checks exercised the shell probe arguments, encoded owner readback
+and Pi HTTP parser: one IPv6 foreground request, selected IPv4 upstream for
+the same marker, static health excluded, conflicting markers rejected. The
+coverage check rejects a short post-request tail. Tests also exercised legacy
+IPv4 and segmented TCP headers. Playbook syntax, neutral Caddy bindings,
+shell formatting and readonly collision checks passed. These are offline
+contract checks; no Pi timing was measured. No candidate or operation created.
+
+### W-246: hold exact candidate preparation
+
+The IPv6 frontend, marker-matched IPv4 upstream and separate static health
+traffic answer the path question. The remaining issue is interpreting time.
+In Webmin/scripts/proxy-trial-handoff.py, diagnostic_coverage maps the client
+interval and resource samples, and retains Pi wire events. It does not produce
+a comparable time interval for the marked first response versus client exit.
+The kernel packet timestamp and the time the Pi observer processed it are
+different observations; treating the latter as arrival can reverse a near-
+deadline verdict. The five-second resource tail is a coverage check, not proof
+the route stayed active: the Caddy owner starts restoration after primary
+readback, including on failure. Closure during recovery cannot by itself show
+what Webmin would have done on the unchanged path.
+
+Use existing receipts first. Qualify one small offline interpretation of marked
+arrival and first outbound payload, client exit and the earliest evidenced
+restoration boundary. Use conservative time bounds; report overlap, missing
+bytes or uncertain ordering explicitly. Do not postpone recovery or repeat
+capacity tests. An early/late result applies only to the observed request.
+No executable or owner operation changed; no new target outcome.
+
+### W-246: packet ordering and restoration disposition
+
+Local readback of the hash-verified W-202 archive (November 17; IPv4 frontend)
+put marked arrival before curl exit and first outbound Pi payload after it under
+the measured clock envelope. The two kernel timestamps were 7.491 seconds
+apart. No timestamp identifies when primary restoration began in this archive;
+the response's recovery phase and unchanged-route verdict are inconclusive.
+W-240 (the IPv6 frontend in question) has no corresponding Pi wire capture.
+Neither result attributes the historical delay to Webmin internals.
+
+One correction to the preceding review: on primary failure its local EXIT trap
+can restore the route **before** controller readback. Future mixed-family
+measurements timestamp that inline restoration, or containment through route
+restoration on the outer path. Missing timing cannot prevent restoration.
+The handoff bounds kernel packet times with ordered Pi samples and dequeue
+as an upper bound; curl duration and the shell bracket bound process exit.
+Ordering uses disjoint intervals under the pre/post clock model (unobserved
+clock steps are not ruled out). First response during or overlapping recovery,
+missing bytes, or ambiguous ordering cannot describe the unchanged route.
+
+Offline checks exercised encoded readback, packet timing on either side of exit,
+missing response, recovery overlap and timing-write failure. Existing neutral
+policy and shell checks passed. No target, candidate or consumed receipt changed.
+
+### W-247: recommend preparing one exact measurement
+
+W-240 lacks Pi packet timing for the failed frontend path. W-246 makes a
+single new request useful if it also misses its deadline: with confirmed
+arrival and unambiguous ordering before restoration, a late first Pi payload
+directs investigation to backend response time; an early first payload
+directs it to response progress between the Pi, Caddy and client. First
+payload alone does not establish complete HTTP headers or a complete body.
+
+A normal response ends the measurement as non-reproduction. Missing or
+ambiguous evidence, including recovery overlap, ends it as inconclusive;
+neither outcome triggers another request. The primary-only scope omits the
+post-replication context of W-240 and cannot establish that incident's cause
+or satisfy AC-013. Recommend local preparation under the existing plan;
+execution would require separate review. No candidate was prepared.
+
+### W-248: exact local candidate for owner review
+
+Aaron approved local preparation only. The private candidate is
+`/home/aaron/code/.local-workspaces/webmin-w248-p1an0vbe`; review its
+`scope.json`, `inputs/parent-vars.yaml` and `INPUTS.SHA256SUMS`.
+The 372-file preparation manifest has SHA-256
+`21bf113e7f51e2ffae0a22ef14468a47e8d1cc6eb88b91a27624d33c914df92a`.
+Local receipts are in
+`/home/aaron/code/.local-evidence/uptime-kuma/w248-radqhwub`.
+
+The candidate binds the existing direct admission control, one marked
+primary IPv6 HTTPS request, one Pi IPv4 upstream, the static health request
+and W-246 recovery timing. The guarded Webmin profile and temporary CPU
+selection use the W-240 host inputs. Keep the five-second client deadline
+and both owners' mandatory recovery. No secondary contact, browser, scan,
+DNS, permanent promotion or retry.
+
+The owner regression now forwards the candidate's explicit frontend family
+into its three narrow cases. Fresh offline success, HTTP rejection and
+pre-release-ID failure cases passed; actual readbacks confirm IPv6 client
+selection and inline recovery markers on HTTP failure. Nine altered-evidence
+cases rejected. The preserved evidence passed the exact private owner gate.
+The payload check, parent syntax, localhost-only pre-contact tasks and final
+manifest recheck passed. These checks do not measure Pi behavior.
+
+Only the private definition exists. The normal owner stream remains inactive.
+There is no live launcher, attempt marker or target result. Sealing an execution
+command and separate live review remain outside this preparation record.
+
+### W-249: exact W-248 review — hold sealing
+
+Verified the recorded manifest digest and all 372 file hashes. The two
+completed offline HTTP paths confirm the IPv6 frontend and exercise owner
+recovery, but their journal commands exited 1 with empty arrays. These cases
+do not demonstrate upstream attribution. W-240's retained final primary
+IPv6 readback provides a real positive control: the hash-checked journal
+returned zero with one matching 499 row selecting 10.1.3.75:10000. This is a
+control for reading the receipt, not Pi timing for W-240.
+
+The W-248 reader checks the marked row and selected upstream, but does not
+read the corresponding journal command status. A failed command that emits
+a usable partial row could therefore confirm the path. Before sealing,
+require status zero for attribution; retain the original status and report
+missing, failed or partial measurement without impeding restoration. Use
+the retained positive row and a nonzero-status copy for this focused check;
+no new container run or target request is needed to answer it.
+
+Scope disclosure: only the primary and Pi are targeted and only one IPv4
+upstream is measured, but the staged W-240 backend profile listens on the
+Pi's LAN IPv4 and ULA and permits both proxy nodes' listed sources as well
+as the listed IPv6 VIP source. That is broader temporary reachability than
+the measurement requires, not evidence that the secondary was contacted.
+State this explicitly in the execution review if preserving the existing
+guard; do not silently modify it. The consumed evidence, W-248 projection
+and RESULT.md remain unchanged. No command was sealed or run on a host.
+
+### W-249 disposition — journal attribution and temporary access
+
+The corrected owner reader requires a valid zero journal exit before using
+any row. A nonzero exit retains its numeric status in the safe failure code
+even if stdout contains the expected upstream. Missing status, invalid status,
+missing/invalid output and absent matches cannot confirm the route. Collection
+is still post-processing; native restoration behavior is unchanged.
+
+Projected the hash-checked W-240 final readback into the narrow reader format:
+one retained request-index row and its IPv6 fields. The unchanged successful
+journal identified the expected upstream. Changing only the command status to
+1 rejected the same row as primary_journal_exit_1. The focused readback test
+also rejects missing/malformed status and the wrong upstream. These are reader
+checks, not new measurements of Pi latency.
+
+The exact unsealed scope is in private evidence
+`.local-evidence/uptime-kuma/w249-0p0jv103/scope.json` (workspace-relative),
+SHA-256 `aabde2c50b65a3d7a725b902d01aa5179af8824dab87db9e9c949676e7e2ac42`.
+It includes the rendered listener addresses, Webmin allowlist and ingress
+rules. PLAN records the same exposure. W-248's 372 reviewed inputs remain
+unchanged. This scope and corrected source are not bound to an executable.
+
+### W-250: fresh local measurement inputs
+
+Workspace: `.local-workspaces/webmin-w250-71t296w5`; private checks:
+`.local-evidence/uptime-kuma/w250-8h1smm6e` (both workspace-relative).
+The parent binds the 372-file INPUTS.SHA256SUMS, SHA-256
+`00da914dde36338bb601bca688eb2707269a4fc25a8692313bb80e7f599b70f7`.
+It covers the executed-path reader, its readback test, revised PLAN and
+scope.json. Listener addresses, allowed sources and ingress rules match the
+rendered backend inputs. Parent paths, workload token and resource profile
+digest were refreshed. The unchanged owner inputs use W-248’s retained
+qualification evidence as read-only input; new output goes to W-250.
+
+The first local preflight selected no hosts. After explicitly including
+localhost in inventory, the localhost-limited pre-contact play passed,
+including the owner gate and manifest check. The projected reader test and
+both candidates’ manifest rechecks passed. No target contact, browser workload,
+launcher, or change in production acceptance.
+
+### W-251: W-250 sealing review
+
+No blocking discrepancy found. Rechecked the W-250 preparation manifest and
+owner manifest and independently rechecked W-248. Traced the projected parent
+through its direct IPv4 admission, workstation denial probe, wire observer and
+IPv6 frontend selection. The parent invokes the corrected reader from its own
+server root. A correlation failure is recorded before mandatory native
+restoration. The separately permitted secondary/VIP sources in scope.json are
+temporary reachability, not measurement targets. W-248’s qualification evidence
+is a referenced input; W-250’s parent output directory was empty at review.
+
+The retained localhost preflight passed. This review did not rerun fixtures or
+contact either host. Seal against the W-250 digest recorded above, with exclusive
+attempt consumption and the exact parent command, inventory, scope and recovery
+available for review. No launcher or target result is part of this disposition.
+
+### W-252: exact command, scope and recovery for separate approval
+
+Approve only one measurement through this command:
+
+```bash
+/usr/bin/python3 -I -B /home/aaron/code/.local-workspaces/webmin-w252-seal-uiz0tjv_/operator.py --manifest-sha256 2b13b487414a3e2f5c4ae564f9604a0a1be666e5f66f9616a4ac96b8e968f9fd --run-approved-once
+```
+
+The 437-file seal binds W-250's unchanged 372 inputs, its manifest, the
+launcher, exact parent argv/environment, selected owner evidence and controller
+bindings. See W-250’s `scope.json` for the exact rendered allowlist and
+`webmin-w252-seal-uiz0tjv_/launch.json` under .local-workspaces for the command
+passed to the existing parent. Runtime records go to
+`.local-evidence/uptime-kuma/w250-8h1smm6e`; its parent/ subdirectory is for
+the two owners. The launcher verifies the seal and local owner gate before
+exclusively consuming the single attempt. Any failure after consumption stops
+the operation; do not replay. No private login is part of this request.
+
+Only ama@10.1.3.75 and pi@10.1.0.53 are targets. Temporarily use the guarded
+CPU200 Webmin profile and primary-only Caddy route. Webmin listens on TCP
+10000 on both loopbacks, 10.1.3.75 and fd36:5aa8:6971:1::75. LAN sources
+10.1.0.53/.54 and ULA sources fd36:5aa8:6971:1::53/::54/::56 are permitted
+on their respective families; the secondary and IPv6 VIP are permitted sources
+but are not targets. After direct IPv4 admission and workstation denial checks,
+measure one marked login-page GET over primary IPv6 HTTPS to the Pi IPv4
+upstream. Keep static health checks and the five-second client deadline.
+Retain packet, resource, journal and recovery timing. No browser, login,
+scan, secondary activation, DNS, promotion, or retry.
+
+Keep the 240-second forward and aggregate 840-second owner budgets,
+300-second sampler and 1800-second independent backend recovery. On success
+or failure use existing owner recovery: restore primary release and tools,
+check natural monitor recovery, and restore the Pi loopback, ingress and CPU
+baseline. Report partial evidence or failed restoration explicitly.
+
+Exact verify-only passed without host contact. The launcher test used a local
+stand-in child: success and failure both consumed one attempt, repeat launch
+was rejected, and input drift was rejected. Neither local check created an
+actual attempt marker. This measurement cannot by itself accept AC-013.
+
+### W-253: W-252 executed once and restored
+
+Aaron approved the exact W-252 command. Session 35362 exited 0. The primary
+IPv6 HTTPS login-page probe returned 200, first byte 2.323211 s, total
+2.356623 s. The journal command returned zero and confirmed the Pi IPv4
+upstream. Pi arrival and first payload preceded restoration; the measured
+clock bounds cannot order that first payload against client exit. The request
+met its five-second deadline, so the planned disposition is non-reproduction.
+
+Primary restore/readback and natural monitor acceptance passed; the native
+Pi restoration and final assertions passed. The parent recap had no failures
+or rescues. See w250-8h1smm6e/parent under private uptime-kuma evidence and
+the adjacent attempt marker, parent.log and parent.exit. No browser/scan or
+secondary activation was in scope. Preserve receipts for W-254; no replay.
+
+### W-254: primary-only measurement terminal archive for review
+
+All 437 sealed inputs and the terminal receipts were preserved in the private
+513-member snapshot `.local-evidence/uptime-kuma/w254-archive-qvkkg3y8/consumed-w252.tar.gz`.
+Every member was read back and hash-checked; archive SHA-256
+`cfc467604f871cb81de697cf2baf83e31fcbf7230998125a9ecc7361e2a9081a`.
+Originals remain in place. The server archive records an accepted diagnostic
+and successful restoration, not a permanent route, browser acceptance or a
+cause for W-240. No accepted production inventory changed. The operation has
+no deployable successor. Keep it terminal-pending until publication is verified.
+
+Review scope: 15 tracked server files, base `0f1b10bb2e57d60bb137218dcd21b1d3fe948654`, tree `e39a24372c6c20eca7f1c6532a840ff6f054f8d9`,
+planned annotated tag `caddy-webmin-primary-v6-measurement-terminal-2026-11-18`.
+A disposable index outside evidence storage produced the tree; the normal
+index is unchanged. Window, successor, lifecycle and whitespace checks passed.
+The following publication commands are prepared only, not authorized:
+
+```bash
+set -eu
+cd /home/aaron/code/homelab-server-configs
+tag=caddy-webmin-primary-v6-measurement-terminal-2026-11-18
+test "$(git rev-parse HEAD)" = 0f1b10bb2e57d60bb137218dcd21b1d3fe948654
+test "$(git branch --show-current)" = main
+test "$(git remote get-url --push origin)" = https://github.com/Racerx323/homelab-server-configs.git
+git diff --cached --quiet
+test -z "$(git tag -l "$tag")"
+git add -- Caddy/HISTORY.md Caddy/manifests/certificate-release-inputs.tsv Caddy/manifests/deployment-streams.tsv Caddy/manifests/manifest-lifecycle.tsv Caddy/manifests/serving-health-operation.yaml Caddy/manifests/serving-health-terminal-result.yaml Caddy/scripts/apply-serving-health-deployment.sh Caddy/scripts/run-serving-health-deployment-outer.sh Caddy/tests/application-onboarding-regression.py Webmin/ansible/proxy-combined-trial.yaml Webmin/proposals/30-webmin-j2-svpi3bmf.caddy Webmin/scripts/probe-proxy-path.py Webmin/scripts/proxy-trial-handoff.py Webmin/tests/test_http_diagnostic.py Webmin/tests/test_proxy_workload.py
+test "$(git write-tree)" = e39a24372c6c20eca7f1c6532a840ff6f054f8d9
+git commit -m 'Archive restored primary IPv6 Webmin measurement'
+test "$(git rev-parse 'HEAD^{tree}')" = e39a24372c6c20eca7f1c6532a840ff6f054f8d9
+git tag -a "$tag" -m 'Primary IPv6 Webmin measurement accepted and restored'
+git push --atomic origin HEAD:refs/heads/main "refs/tags/$tag:refs/tags/$tag"
+```
+
+Publication review: the proposed tree still matches the 15 working files.
+All 11 files outside the four terminal records match the executed owner
+projection byte for byte. The private snapshot digest and three owner policy
+checks passed. The base and branch still match, the normal index is empty
+of staged changes, and the planned tag does not exist locally. Remote refs
+were not inspected. No commit, tag, push, cleanup or live action occurred.
+
+### W-255: corrected W-254 publication continuation
+
+The commit hook rejected comma spacing in the sanitized terminal result.
+No commit, tag or push occurred. Only formatting changed; parsed JSON is
+identical. Canonical yamllint and the owner successor check now pass.
+The original approved tree remains staged. For separate approval: stage only
+Caddy/manifests/serving-health-terminal-result.yaml over that index, require
+the corrected 15-file tree `fecf8778d4529af9b107a372020884d3cade5759` before commit and after commit,
+then use the same W-254 commit, annotated tag and atomic push. All other
+W-254 scope and base/ref guards remain. No hook bypass or live work.
+
+W-255 publication completed under Aaron’s approval. The commit hooks passed.
+Archive commit 3ce596a and its annotated tag were pushed atomically; remote
+main, tag object and peeled commit were checked against their local identities.
+The server worktree was clean. Receipt: w254-archive-qvkkg3y8/w255-remote.tsv
+under private uptime-kuma evidence. No cleanup or live operation occurred.
+
+### W-256: published primary diagnostic returned to neutral locally
+
+Verified the local annotated tag against the W-255 publication receipt and
+rechecked the W-254 private snapshot digest. The stream retains the archive
+tag; the current operation is inactive, the recipe is empty apart from its
+header, and the transaction and outer runner bind the neutral hashes. Removed
+the terminal-result manifest from the working tree only. Window, successor,
+lifecycle, documentation, shell syntax, readonly collision and whitespace
+checks passed. The archive and private staging/evidence remain intact. No
+successor was registered, and no host access or publication occurred.
+
+### W-257: staging retirement
+
+Compared 753 staged file paths to the verified W-254 archive by SHA-256.
+740 matched archived content; 11 additional W-248 inputs were saved and
+read back under private uptime-kuma evidence at w257-staging-retirement.
+Two generated Python cache files were discarded. inventory.json maps each
+original path to its disposition. Verified that .local-workspaces no longer
+exists. No operational inputs were replayed; AC-013 remains pending.
+
+### W-258: paired Webmin browser acceptance review
+
+W-240 recorded all four direct path receipts, workstation denial and secondary
+convergence. Its final primary IPv6 request failed before the browser/scan
+workload. W-252 passed on that frontend in a primary-only trial. Rechecked
+both retained Node A readbacks against their embedded byte counts and hashes.
+These outcomes establish neither a persistent IPv6 failure nor that replication
+caused the timeout. Neither demonstrates a usable authenticated browser session.
+
+If proceeding, use the existing paired procedure and carry the marked request
+and Pi arrival/first-payload timing into the final primary check after convergence.
+Keep the existing deadline; on failure retain the selected upstream/family,
+clock coverage and recovery boundary, restore, and stop. Do not assume the
+dual-stack release selected IPv4 or label missing packet coverage a backend stall.
+
+On passage, complete the planned six trusted browser paths (A/B/VIP, both
+families), redirects/assets, private ama login, real-time statistics WebSocket,
+logout and denial of the old session. Verify restricted ingress and existing
+proxy routes, and the bounded 600-second Pi observation overlapping one
+guarded scan. Restore both owners even on success. A passing temporary trial
+would support a separate decision on permanent access and normal-name DNS.
+No additional primary-only replay or capacity fixture is recommended.
+
+### W-259: paired trial preparation and staging ownership
+
+Webmin and Caddy own the private draft at
+`.local-workspaces/webmin-w259-jv_2lrcb` (workspace-relative). Qualification
+receipts belong in `.local-evidence/uptime-kuma/w259-2be6rj6y`. Retire this
+staging at withdrawal/supersession or after verified terminal archival: preserve
+any required unique input, verify its hash, remove this workspace, and remove
+the shared parent only if empty. No live launcher or credential file was created.
+
+The parent selects paired timing explicitly. It observes both primary-to-Pi
+address pairs, including the admitted primary IPv6 source ::56 (frontend ::53),
+using the existing Pi collector. After secondary convergence it selects the
+new Node A final IPv6 request ID, requires a successful journal and selects the
+matching IPv4 or IPv6 packet receipt. The earlier primary marker is not a
+substitute. Report unknown timing on incomplete evidence. On a successful
+handoff the collector must exit before private login; otherwise no browser
+starts. The subsequent 600-second browser/scan phase retains its own single
+observer. A failed owner probe proceeds to existing restoration without opening
+the browser. Both owners restore after every trial outcome.
+
+Normal browser access uses the cluster VIP on 443 (IPv4 10.1.0.56 or IPv6
+fd36:5aa8:6971:1::56); the active proxy connects separately to the Pi on port
+10000. The final marked request pins the primary node (::53) solely for
+attribution after convergence. The retained IPv6 backend source (::56) is
+the address the Pi observed on that second connection, not another hop. The
+browser trial includes separate VIP paths; a node-specific success cannot
+accept them. IPv6 ingress alone does not determine the upstream family.
+
+The offline owner qualification passed. The first localhost pre-contact run
+could not verify the incomplete transfer of mapped-user fixture files. After
+transferring the remaining evidence, the same pre-contact tasks passed,
+including the owner gate, manifest, storage and browser-runtime check (seven
+passed, zero changed). No browser launched and no production target was
+contacted. See the private owner result and precontact-complete.log above.
+
+### W-260: W-259 pre-seal review — IPv6 receipt mode
+
+Both draft checksum manifests verified. The paired plan covers four backend
+paths and six browser paths including the VIP. Capture must finish before the
+private client starts. The parent attempts native restoration even if Caddy
+restoration is incomplete; successful restoration alone cannot accept AC-013.
+
+Hold sealing. The parent fetches both wire receipts but explicitly sets 0600
+only on the IPv4 copy. If the final primary request selects the Pi over IPv6,
+the coverage reader requires exactly 0600 on the IPv6 copy too. The pre-contact
+checks end before either fetch. A local check with the draft reader rejected a
+0644 receipt and accepted the same bytes at 0600. No target file mode or live
+failure is inferred. Set the mode on both applicable controller receipts in
+the owner source, verify the fetch-to-reader handoff under a normal umask,
+then bind fresh inputs. No full trial replay is needed for this correction.
+
+W-260 resolved locally. The owner parent sets mode 0600 on both fetched
+receipts in paired mode and only the IPv4 receipt in primary-only mode.
+With umask 022 and pre-existing 0644 destinations, the actual Ansible tasks
+fetched and protected all three expected copies across the two modes. The
+production reader accepted each; contents matched the sources and primary-only
+mode created no IPv6 receipt. Both original W-259 manifests still verify.
+The corrected parent, reader, test and predecessor manifest identities are
+bound in private evidence at
+`.local-evidence/uptime-kuma/w260-aqa324vm/review-binding.sha256`. This is a
+source correction, not a replacement execution manifest or browser acceptance.
+
+### W-261: fresh paired inputs with W-260 receipt protection
+
+Private staging: `.local-workspaces/webmin-w261-t7byxv1l`. Parent manifest
+SHA-256: `5e8f4813e885ab31f3c659dec578903727b84484162cf3b10905d0ad9fa2f124`. The projected parent matches the
+qualified W-260 owner source. The candidate has fresh controller evidence,
+workload identity and paths. Both scan profile bindings match. All four
+backend paths and six browser destinations remain. The Caddy owner files
+are byte-identical to W-259; its retained owner qualification was reused
+without modification. Both W-259 manifests still verify.
+
+The nine pre-contact tasks match the actual parent prefix. On localhost
+seven passed and two inapplicable diagnostic branches skipped; zero changed.
+The owner authorization check, manifest, private storage admission and
+credential-free client preflight passed. Receipts and checked hashes:
+`.local-evidence/uptime-kuma/w261-5yi9v3j9`. No browser, host inspection,
+launcher, or live approval. Retire the W-261 staging directory at withdrawal
+or after verified terminal archival; preserve the two drafts as reviewed
+until their respective dispositions.
+
+### W-262: paired Webmin trial — exact command and recovery for separate review
+
+One attempt only, from the operator’s workstation terminal after explicit
+approval. Supply the existing ama Webmin password privately at the prompt;
+keep the terminal open until recovery finishes.
+
+```bash
+/usr/bin/python3 -I -B /home/aaron/code/.local-workspaces/webmin-launch-w262-tbu2lq7a/operator.py --manifest-sha256 1f200214ace2ca3bdc50b10e1b3650b9dab14dcaf4f263ead8181e28d67378c5 --run-approved-once
+```
+
+W-261 scope.json and parent manifest are bound unchanged. Temporary Pi Webmin
+TCP 10000 listeners: both loopbacks, 10.1.3.75 and fd36:5aa8:6971:1::75;
+guard admits loopback, IPv4 .53/.54 and IPv6 ::53/::54/::56 as specified in
+the sealed scope. Temporarily use 200% CPU; verify four backend paths and
+activate primary then secondary. Time the existing final primary IPv6 login
+request after convergence (five-second client deadline); correlate its marker
+with the selected upstream, then stop packet collection before private browser
+login. GET /robots.txt remains the active health check. Exercise six browser
+paths (both nodes and VIP, both families), existing ama statistics WebSocket,
+logout and invalidation. Observe 600 seconds with guarded scan after 400;
+retain the 660-second exposure limit. Restore both proxies and check their
+monitors; independently restore Pi loopback and original CPU controls on
+success or failure, with the 1800-second recovery timer. Stop and reconcile
+any incomplete recovery. No DNS, promotion, publication or replay.
+
+The archived paired launcher is reused byte-for-byte. Its verification-only
+path passed against the 4,305-file manifest, including W-261’s parent manifest
+and the unchanged owner qualification. No credential, marker, browser or
+target contact. Verification log: `.local-evidence/uptime-kuma/w261-5yi9v3j9/w262-verify.log`.
+The exclusive attempt marker, parent log and terminal receipt belong in that
+evidence root’s parent/ directory. Retire the W-262 launcher with its W-261
+staging after withdrawal or verified archival; W-259 remains preserved.
+
+Aaron approved the exact W-262 command, temporary scope and recovery for one
+attempt. At operator handoff the sealed manifest digest matched, the terminal
+directory was empty and no credential file existed. Execution is not yet evidenced.
+
+W-262 interim: the operator reported replication-health alert
+`caddy-sync-health-20261118T2313` at 23:13:08 UTC. Controller receipt
+times place it during paired restoration, after primary and secondary stages
+returned zero and final A, final B and shared A returned 28. The Caddy child
+exited 1. Both restore, resume, subsequent monitor and restored-readback steps
+returned zero. This timing does not establish the monitor's exact failed check,
+VIP movement or traffic impact. No workload receipt or terminal parent exit was
+present at this review; native Webmin recovery and final timing await readback.
+
+### W-262 terminal outcome
+
+Parent exited 2; Caddy exited 1. Both nodes accepted the release before final
+primary, secondary and shared checks returned 28. The marked primary IPv6
+request reached the Pi's IPv4 interface before client exit and restoration.
+No first response payload was observed on that flow within capture. Webmin
+memory.high events increased in overlapping sample intervals; no max/OOM/kill
+increments were observed there. Internal CGI execution and cause remain unknown.
+Coverage passed. Browser and guarded scan did not start.
+
+Both Caddy restore and subsequent monitor checks passed. The Pi's native
+loopback restoration and terminal assertion passed before its independent
+recovery timer was stopped. Approval consumed. Private receipts remain in
+`.local-evidence/uptime-kuma/w261-5yi9v3j9/parent`. Preserve launcher,
+candidate and owner inputs until verified terminal archival.
+
+### W-263: W-262 terminal archive for review
+
+The private snapshot `.local-evidence/uptime-kuma/w263-archive-2o8jnjw5/consumed-w262.tar.gz`
+preserves all 4,305 sealed inputs plus receipts and other controller evidence.
+Its path/mode index covers 4,440 files, stored as 995 distinct content blobs.
+Every blob and the index were read back; snapshot SHA-256:
+`4c10bb49a7ae7a6cb025dc02b69e2aeb13d565816457be8311af8aea9f72df5c`.
+Originals remain in place. The owner stream is terminal-pending with no
+successor. The normal Git index remains untouched. The 15-file server
+tree excludes private evidence and monitoring ledger edits; non-terminal files
+match the executed projection. Window, successor, lifecycle, terminal-result
+lint and whitespace checks passed. No commit, tag, push or live work.
+
+Proposed publication only: one commit, annotated tag and atomic push, guarded
+by the exact base and tree. No cleanup, deployment or retry:
+
+```bash
+set -eu
+cd /home/aaron/code/homelab-server-configs
+tag=caddy-webmin-paired-final-timing-terminal-2026-11-18
+test "$(git branch --show-current)" = main
+test "$(git rev-parse HEAD)" = 3ce596a2b3e484db1ca6687cc3d79ccf9ea36cc6
+test "$(git remote get-url --push origin)" = https://github.com/Racerx323/homelab-server-configs.git
+git diff --cached --quiet
+test -z "$(git tag -l "$tag")"
+git add -- Caddy/HISTORY.md Caddy/manifests/certificate-release-inputs.tsv Caddy/manifests/deployment-streams.tsv Caddy/manifests/manifest-lifecycle.tsv Caddy/manifests/serving-health-operation.yaml Caddy/manifests/serving-health-terminal-result.yaml Caddy/scripts/apply-serving-health-deployment.sh Caddy/scripts/run-serving-health-deployment-outer.sh Webmin/ansible/proxy-combined-trial.yaml Webmin/proposals/30-webmin-j2-svpi3bmf.caddy Webmin/scripts/probe-proxy-path.py Webmin/scripts/proxy-trial-handoff.py Webmin/tests/test_http_diagnostic.py Webmin/tests/test_proxy_parent.py Webmin/tests/test_proxy_workload.py
+test "$(git write-tree)" = 8e016c89dc84902a8981c719365af61e248b075a
+git commit -m 'Archive restored paired Webmin final-request timing trial'
+test "$(git rev-parse 'HEAD^{tree}')" = 8e016c89dc84902a8981c719365af61e248b075a
+git tag -a "$tag" -m 'Paired Webmin trial timed out after convergence and restored'
+git push --atomic origin HEAD:refs/heads/main "refs/tags/$tag:refs/tags/$tag"
+```
+
+W-263 publication review passed locally. The private snapshot checksum
+matched, all eleven non-terminal files matched their archived input hashes,
+and an isolated index reproduced the proposed 15-file tree. The local base,
+branch and push URL matched, the tag was absent locally, and the normal
+index remained empty. Remote refs were not queried. No publication occurred.
+
+W-263 publication complete. The approved 15-file tree was committed as
+`f63d957` and pushed atomically with the planned annotated tag. Remote main,
+tag object and peeled commit matched the local identities. The server worktree
+was clean. Private receipt: `.local-evidence/uptime-kuma/w263-archive-2o8jnjw5/w263-remote.tsv`.
+No host action or staging cleanup occurred.
+
+### W-264: neutral Caddy stream and verified staging retirement
+
+Verified the W-263 commit and annotated tag against the retained remote
+receipt, and verified the private snapshot digest, path index and all 995
+blobs. Restored the neutral recipe and inactive operation, rebound the
+transaction and outer runner, and retained the archive tag in the clean
+stream. Window, successor, lifecycle and whitespace checks passed.
+
+Retired the W-259 draft, W-261 candidate and W-262 launcher. Of 745 staged
+files, 732 matched archived content; 12 additional private review files were
+saved and read back, and one generated Python cache was discarded. The
+per-path inventory is in
+`.local-evidence/uptime-kuma/w264-staging-retirement-u39w3uqp/inventory.json`.
+The empty .local-workspaces parent was removed. The published archive and
+execution receipts remain intact. Changes are local and uncommitted.
+
+### W-265: marked request and later Webmin OOM
+
+Checked both wire receipts, resource samples and derived coverage against the
+W-263 archive index. Relative to the marked IPv4 backend arrival, the prior
+marked flow returned its first payload at -0.165 s and closed at -0.129 s.
+The failing flow showed a request-side FIN at +4.954 s and a response-side
+FIN at +76.970 s, with no observed response payload or reported capture
+drops. The next observed static health requests on both primary backend
+paths arrived at +5.16 s, after the request-side FIN. These are interface
+observations; they do not exclude other clients or identify internal workers.
+
+Webmin cgroup memory.current was 59.2 MiB at -0.22 s and 141.1 MiB at
++4.81 s. Its first sampled high events occurred at +2.79 s, above the
+128 MiB high threshold. During the deadline interval there were no max or
+OOM increments. Later, the same cgroup peaked at 192 MiB; its kill counter
+rose from zero at +76.18 s to one at +77.18 s. The subsequent cgroup has a
+different identity; its zero counters do not erase the kill. Pressure preceded
+the timeout; the later kill cannot explain the earlier deadline by itself.
+Neither the allocating process nor the killed process is identified by these
+counters. No limit change, new fixture or paired retry is selected.
+
+### W-266: review of the fleet onboarding contract
+
+Webmin’s dedicated-hostname guide and Caddy’s reverse_proxy documentation
+support a simpler design: one external hostname and one upstream per Webmin
+instance. The renderer already sets the hostname/referrer and HTTPS redirect.
+The vendor example encrypts the upstream; our proposed port 10000 hop crosses
+the LAN in plaintext. Resolve backend transport explicitly before normal use.
+Two IPs of one Pi do not provide independent application instances.
+
+Recommendation for owner review: use the normal primary-first Caddy publication
+and replication, keep source restrictions and rollback, verify both nodes have
+the release, and exercise one ordinary workstation session at the VIP:
+trusted HTTPS, ama login, live statistics and logout. Keep required client
+address-family reachability checks lightweight. Handle Pi capacity and scan
+coexistence as a distinct acceptance decision before permanent promotion.
+An OOM or service restart during ordinary use stops the trial; don't increase
+limits or timeouts to obtain a pass. Only investigate the first failing user
+step. No claim that a simpler configuration cures the historical timeout.
+This is a proposed revision; it does not amend AC-013 or grant live authority.
+
+### W-267: browser-first acceptance approved
+
+Aaron approved W-266. PLAN.md and the fleet onboarding procedure now distinguish
+one-session browser acceptance, independently retained installation steps, and
+the Pi capacity decision. Prior automatic restoration was a condition of the
+temporary trials; it is not a successful deployment step. No actual host state
+or historical outcome changed. The workspace already required the smallest
+sufficient test. The process failed to re-evaluate the combined acceptance
+contract when successive prerequisites kept the user workload from starting.

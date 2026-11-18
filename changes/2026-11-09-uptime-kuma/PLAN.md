@@ -470,7 +470,7 @@ remain approved; they do not authorize a Webmin/Caddy/DNS execution.
 
 | ID | Required observed outcome | Verification method and evidence required |
 | --- | --- | --- |
-| AC-013 | Webmin is usable from an ordinary LAN browser over trusted HTTPS without an SSH tunnel. | Dedicated hostname, both intended families, correct redirects/assets, private existing-account login/logout, required WebSocket functions, restricted backend ingress and preserved existing proxy routes. |
+| AC-013 | Webmin is usable from an ordinary LAN workstation browser through the trusted fleet hostname and VIP. | Verify both client families reach the VIP and the replicated route is healthy. In one existing-account browser session verify redirects/assets, login, live statistics WebSocket, logout and protected-page denial. Preserve restricted ingress, verified backend TLS, working recovery and unrelated routes. Assess Pi capacity and guarded scan coexistence separately before permanent service promotion. |
 
 AC-011's earlier package/loopback acceptance remains evidence, but the revised
 management-access policy also requires AC-013. Local preparation is authorized;
@@ -1384,3 +1384,46 @@ CPU profile and existing limits remain the planned live scope. Readiness flags
 remain false; final immutable parent manifest/launcher and separate live review
 are still required. No target browser/capacity or writable recovery acceptance
 follows from these tests.
+
+November 18 W-235: Aaron approved local implementation and qualification of
+GET /robots.txt as the first-host active health URI. Keep per-address HTTP 200,
+existing headers, intervals and thresholds. The foreground login-page and
+AC-013 browser requirements retain their existing scope. Live use requires
+separate review.
+
+November 18 W-245 measurement scope: one marked foreground GET /session_login.cgi
+over primary IPv6 HTTPS, five-second client deadline. Keep the existing direct
+IPv4 owner admission control separate. Require the IPv6 client receipt and
+marker-matched Caddy journal row selecting 10.1.3.75:10000, then compare
+arrival and first outbound payload on that marked Pi flow. GET /robots.txt
+with the browser-health header is background traffic. Require capture before
+the request, zero reported drops and clock-bounded coverage at least five
+seconds beyond client exit inside the existing 300-second sampler. Missing
+response bytes mean no first response observed within coverage; ambiguous
+timing or route evidence cannot localize the delay. Stop after this request;
+retain bounded evidence, restore the primary and native backend, and verify
+existing recovery checks. No secondary activation, DNS, browser or scan.
+
+W-249 exact temporary access for this measurement: Webmin listens on TCP
+10000 on 127.0.0.1, ::1, 10.1.3.75 and fd36:5aa8:6971:1::75. Ingress
+accepts loopback. For the Pi LAN IPv4 destination it permits 10.1.0.53 and
+10.1.0.54; for the Pi ULA destination it permits fd36:5aa8:6971:1::53,
+fd36:5aa8:6971:1::54 and fd36:5aa8:6971:1::56 (VIP). Webmin permits
+those sources and both loopbacks. The guard drops other local-destination
+IPv4/IPv6 TCP 10000 traffic. Secondary and VIP reachability is temporary;
+neither adds an active test. Restore the loopback baseline. Attribute the
+marked upstream only on a successful journal command with a unique matching
+row. Collection failures leave attribution unknown and recovery mandatory.
+
+W-259 paired timing: use the existing final Node A IPv6 HTTPS request after
+secondary convergence. Match its own fresh marker and journal-selected Pi
+upstream; admit both observed primary source paths and preserve clock bounds,
+packet loss and recovery intervals. Stop and join the pre-login packet collector
+before handing credentials to the existing ama statistics browser trial. Keep
+the foreground deadline, four backend paths, six browser paths, scan overlap,
+caps and both owners’ recovery. No new diagnostic request, DNS or promotion.
+
+W-267: The approved browser-first contract supersedes prior paired browser/scan
+trial criteria for future onboarding. Plan persistent, independently verifiable
+owner steps with explicit keep/rollback conditions. No old trial is converted
+into permanent authority. Capacity acceptance and live deployment remain pending.

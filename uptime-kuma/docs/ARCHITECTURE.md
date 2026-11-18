@@ -345,5 +345,5 @@ Caddy, not a required workstation tunnel. The approved URL for this host is
 `https://webmin-j2-svpi3bmf.local.theama.co`; deployment remains pending. Webmin's
 [shared operations](../../../homelab-server-configs/Webmin/docs/OPERATIONS.md)
 and [Caddy onboarding](../../../homelab-server-configs/Webmin/docs/CADDY_ONBOARDING.md)
-own the reusable fleet process and optional SSH recovery path. The installed
+own the reusable fleet process and optional SSH recovery path. The [fleet TLS design](../../../homelab-server-configs/Webmin/docs/WEBMIN_ARCHITECTURE.md#tls-on-both-connections) requires verified HTTPS from Caddy to Webmin. The installed
 loopback profile remains unchanged until owner-reviewed browser onboarding.

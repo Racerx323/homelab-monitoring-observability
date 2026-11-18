@@ -54,7 +54,7 @@ for this added requirement. Earlier loopback login is not proxy-login acceptance
 | AC-010 Operability and finding disposition | Not tested | Initial-scope closeout was accepted. Expanded Webmin scope remains open under W-128/W-012; fleet DNS procedure routing is documented under W-129. W-020/W-096 retain approved deferrals. |
 | AC-011 Fleet foundation | Not tested | Prior foundation and loopback Webmin acceptance retained. Revised direct-browser Webmin management policy awaits AC-013; other foundation capabilities remain accepted. |
 | AC-012 Fleet notification transport | Pass | Mailrise default and owner consumer configuration accepted; greeting/QUIT only. No downstream message-delivery claim or provisioned Mailgun secret. |
-| AC-013 Browser Webmin | Not tested | Newly requested dedicated trusted HTTPS endpoint without a tunnel; no new configuration or live acceptance yet. |
+| AC-013 Browser Webmin | Not tested | W-227 temporarily applied the trial configuration. The primary HTTPS probe timed out before browser testing. Both owners verified restoration. |
 
 ## Failure and recovery
 
@@ -803,3 +803,39 @@ source commit a9cca0c are pushed and remote-verified with required commit hooks
 passing. Hosted CI and completion-record verification are retained in the private
 publication receipt. This publishes local work only: W-227 remains unsealed,
 AC-013 remains pending, and no host configuration was changed.
+
+November 18 W-227 ended before browser acceptance. Direct backend checks passed.
+The primary HTTPS request timed out after TLS. Both proxy restore/readback and
+monitor checks passed, as did the Pi's loopback restoration assertion. AC-013
+remains pending. The attempt is consumed.
+
+November 18 W-233: the local Caddy stream is clean after archival at 65d6f42.
+The operation is inactive. Both owners' recorded restoration outcomes stand.
+AC-013 remains pending.
+
+November 18 W-236: primary acceptance passed; the secondary retained the prior
+release at the convergence deadline. The browser and guarded scan did not run.
+Both proxy restorations, subsequent monitor checks and the Pi loopback restoration
+assertion passed. AC-013 remains pending.
+
+W-240: Failed and restored. The secondary converged to the candidate; the final
+primary HTTPS request over IPv6 timed out after TLS. Both proxies and the Pi
+passed restoration checks. AC-013 browser/scan workload was not reached.
+
+W-252 (November 18): the primary-only IPv6 HTTPS probe through Caddy to the
+Pi IPv4 backend returned HTTP 200 in 2.357 s. This request did not reproduce
+W-240’s timeout after replication. Both owners restored their baselines and the
+primary monitor check passed. AC-013 remains untested by this measurement;
+the Webmin extension is still pending.
+
+W-262 (November 18): The paired Webmin trial timed out after both nodes accepted
+the release. The marked primary IPv6 request reached the Pi over IPv4; no response
+payload was observed on that flow during capture. Memory pressure coincided
+with the request; causation is unproven. Both proxies passed restoration and
+monitor checks; the Pi verified its native loopback baseline. Browser and scan
+never started. AC-013 remains pending.
+
+W-265 retrospective: Webmin crossed its 128 MiB high threshold during the
+marked request. The same cgroup reached a 192 MiB peak and recorded one OOM
+kill roughly 77 seconds after request arrival, well after the five-second
+timeout. The killed process and the timeout cause are unconfirmed.
