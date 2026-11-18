@@ -797,3 +797,9 @@ ready locally. Actual payload, parent bindings, recovery flow and syntax checks
 pass. W-229/W-230 are resolved within local qualification. No live bundle or
 launcher is sealed; no target was contacted. AC-013 remains Not tested for the
 final paired browser candidate, and existing accepted Kuma scope is unchanged.
+
+November 17 W-231 publication: server source commit 2a19a36 and monitoring
+source commit a9cca0c are pushed and remote-verified with required commit hooks
+passing. Hosted CI and completion-record verification are retained in the private
+publication receipt. This publishes local work only: W-227 remains unsealed,
+AC-013 remains pending, and no host configuration was changed.

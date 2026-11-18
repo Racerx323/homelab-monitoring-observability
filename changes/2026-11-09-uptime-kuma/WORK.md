@@ -12,8 +12,9 @@
   bindings pass; W-229/W-230 are resolved. Only the private review projection is
   defined; main Caddy remains clean/inactive. No live bundle or launcher is sealed.
   W-147/AC-013 remain open and W-157 is not installed. W-231 source publication
-  is in progress under Aaron's all-changes approval; the server commit is remote-
-  verified. No live contact, browser workload or retry occurred.
+  is complete: server and monitoring source commits are pushed and remote-verified.
+  Refresh documentation hashes when sealing; publication formatting did not change
+  tested runtime inputs. No live contact, browser workload or retry occurred.
 - Document roles: [PLAN.md](PLAN.md) owns scope/criteria; this ledger owns work and
   decisions; [RESULT.md](RESULT.md) owns the accepted scope and pending Webmin extension. Permanent design and
   procedures remain in [architecture](../../uptime-kuma/docs/ARCHITECTURE.md) and
@@ -317,7 +318,7 @@
 | W-228 | Isolated-validator delivery is restricted to the earlier primary/IPv4 diagnostic. | W-191; W-227; Caddy owner | Resolved | Reconcile primary tool delivery with paired browser activation and pre-release-ID recovery in the existing owner path; retain secondary replication and unchanged installed secondary callers. | Primary-only tool delivery now accepts the paired recipe. Explicit empty-ID recovery restores A tools and cleans both payloads; post-ID recovery retains B-before-A restoration and monitor checks. Eighteen file/payload/recovery cases, focused paired dispatch checks and the host onboarding profile pass. Exact candidate qualification and writable target execution remain outside this local result; see checkpoint below. |
 | W-229 | Paired whole-path qualification omitted primary validation-tool delivery and seeded the secondary with the source finalizer. | W-227; W-228 | Resolved | Exercise the exact paired recipe option with hash-verified accepted secondary tools and independently verify restoration in existing owner cases. | Existing paired cases now select primary delivery, accepted finalizer/reconciler bytes and secondary preservation. All 19 current cases and exact authorization pass; no capacity or namespace qualification is added. |
 | W-230 | Private test-wrapper umask removed the deliberately public directory mode from the parent admission test. | W-227; controller evidence privacy | Resolved | Set the intended test mode explicitly and rerun only the admission test; preserve the failed run. | Existing paired and primary parent-flow tests passed. Public-mode case created 0700 under umask 077, so it never tested public input. Test setup now applies chmod; the admission-only rerun passed all six directory cases. Production admission is unchanged; failed receipt retained. |
-| W-231 | Publish all accumulated server and monitoring changes at Aaron's request. | Source publication only | In progress | Required hooks pass; both commits pushed and remote refs verified. | November 17: both Racerx323 destinations and visibility verified; 31 server paths and three monitoring records selected. Private evidence and unsealed candidate remain outside Git. |
+| W-231 | Publish all accumulated server and monitoring changes at Aaron's request. | Source publication only | Resolved | Required hooks pass; both commits pushed and remote refs verified. | Server 2a19a36 and monitoring a9cca0c are pushed and remote-verified. Required hooks pass after markdown-only repairs. Hosted checks and this completion-record publication are retained in publication-w231; target acceptance and candidate sealing remain separate. |
 
 ### Current preparation
 
@@ -11666,3 +11667,15 @@ remote-verified on main. All required hooks passed after removing two duplicate
 blank lines in Webmin documentation; no behavioral checks were weakened. The
 initial failed-hook logs remain retained. Hosted validation run 44208718982 and
 Push on main run 44208717459 are in progress. The monitoring records are next.
+
+Monitoring source commit `a9cca0cf7da9735fe1f4737301dea6b94a31afec` is also
+pushed and remote-verified. Required hooks and staged secret scans passed for
+both repositories. Monitoring markdown repairs remove duplicate blank lines,
+add list spacing and bracket two existing URLs; they change no scope or evidence.
+Hosted checks are still running at this record's preparation. Their terminal
+status and the completion-record commit's remote verification belong to the
+private publication receipt, avoiding a recursive documentation commit.
+
+W-227 remains unsealed. Refresh source/document identities during sealing to
+include these publication formatting changes; tested runtime inputs are unchanged.
+No live infrastructure work was performed.
