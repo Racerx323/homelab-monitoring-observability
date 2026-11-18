@@ -5,14 +5,15 @@
 - Status: Existing Kuma service/dashboard accepted. Aaron approved W-127's
   network/radio dispositions, then required standard-browser Webmin access;
   the SSH-only profile does not satisfy this revised requirement (W-128).
-- Last updated: November 16, 2026 (America/Chicago).
-- Next action: Reconcile W-147's actual-host memory-pressure/timeout evidence
-  and W-184's close-only-flow correlation rejection locally. W-185's server
-  terminal archive is published and remote-verified at bda63a4; cleanup has not
-  run and consumed inputs remain present. W-186 records Aaron's all-changes
-  publication. Both owner restorations and primary monitor acceptance passed;
-  AC-013 remains pending and W-157 is not installed. No retry, fresh inspection
-  or promotion is authorized. All live execution sessions are retired.
+- Last updated: November 17, 2026 (America/Chicago).
+- Next action: Seal W-227's locally qualified paired browser candidate for
+  separate live review. Exact private owner authorization passes with 19 current
+  whole-path cases and nine altered-evidence rejections. Actual payload and parent
+  bindings pass; W-229/W-230 are resolved. Only the private review projection is
+  defined; main Caddy remains clean/inactive. No live bundle or launcher is sealed.
+  W-147/AC-013 remain open and W-157 is not installed. W-231 source publication
+  is in progress under Aaron's all-changes approval; the server commit is remote-
+  verified. No live contact, browser workload or retry occurred.
 - Document roles: [PLAN.md](PLAN.md) owns scope/criteria; this ledger owns work and
   decisions; [RESULT.md](RESULT.md) owns the accepted scope and pending Webmin extension. Permanent design and
   procedures remain in [architecture](../../uptime-kuma/docs/ARCHITECTURE.md) and
@@ -221,7 +222,7 @@
 | W-144 | Complete the exact Caddy temporary-trial candidate and combined parent authorization graph. | W-137, AC-013 | Resolved | Current owner qualification and authorization policy pass; every parent non-secret execution input and external secret/readiness reference is bound; exact command, acceptance and recovery are reviewable before live approval. | Preparing one 20261116-webmin-first-host-trial definition from the clean stream. No live authority or publication. Retain definition-check failures and baseline snapshots in webmin-combined-review-0ve83yjr.  November 16: sealed 236-file parent manifest and exact Caddy outer identity below. Sixteen offline Caddy cases, owner authorization/negative-evidence checks, final parent syntax/module checks and six private-handoff cases passed. Source graph and external credential/readiness references bound; no live authority. |
 | W-145 | Caddy temporary-trial coverage labels a successful restoration as reject, contradicting exit 0 and blocking authorization. | W-144, AC-013 | Resolved | Success expectations derive from the existing expected statuses; actual owner qualification and authorization/negative-evidence checks agree. | Discovered during final candidate checks. Original 16-case run passed but authorization failed at application-trial-success. Retain original evidence and policy-diagnostic.log; correct the coverage generator without changing deployment behavior.  Corrected coverage expectations to use existing expected exit statuses. Final 16-case qualification, exact authorization-ready gate and evidence-mutation checks all pass. Preserve original policy mismatch, failed pre-scenario wrapper/fixture hash binding and both original qualification runs; no live behavior or threshold changed. |
 | W-146 | Execute the approved combined Webmin/Caddy trial once and reconcile independent acceptance/recovery outcomes. | W-128, AC-013 | Resolved | Preserve approved inputs and one-attempt marker; verify native browser, source/path and scan-overlap/resource evidence plus Caddy and backend restoration separately. | November 16 exact-bundle approval recorded in private approval.json. Input and owner preflight passed without contact; awaiting private workstation operator launch. No attempt has started; do not relaunch after a marker or failure.  Attempt completed with parent exit 2 and Caddy exit 1; primary IPv4 HTTPS timed out before browser/scan. Both owner recovery checks passed. Execution disposition resolved as failed-consumed, not application acceptance; W-147/W-148 carry remaining diagnosis/archive work. |
-| W-147 | Primary Webmin HTTPS route times out after activation despite passing direct backend paths. | W-146, AC-013 | Open | Reconcile retained failing request, route/configuration and recovery evidence locally; identify supported cause or the precise missing observation before any separately reviewed successor. | curl 28 after 5001 ms, HTTP 000, zero response bytes on Node A. No application IPv6, browser or scan acceptance ran. Cause is unconfirmed; do not extend deadlines or infer capacity/authentication failure. Local reconciliation below identifies the request-path difference and missing timing/correlated logs; no further fixture load can establish the historical cause. |
+| W-147 | Primary Webmin HTTPS route times out after activation despite passing direct backend paths. | W-146, AC-013 | Open | Reconcile retained failing request, route/configuration and recovery evidence locally; identify supported cause or the precise missing observation before any separately reviewed successor. | curl 28 after 5001 ms, HTTP 000, zero response bytes on Node A. No application IPv6, browser or scan acceptance ran. Cause is unconfirmed; do not extend deadlines or infer capacity/authentication failure. Local reconciliation below identifies the request-path difference and missing timing/correlated logs; no further fixture load can establish the historical cause. November 17 W-187: eight health requests precede the marked proxy request; pressure begins during its bounded interval, while OOM follows the timeout. Backend delivery is proven, internal CGI/process attribution is absent. Trace the startup request burst before selecting one controlled comparison; no capacity waiver or retry. |
 | W-148 | Preserve and prepare the consumed combined trial terminal archive under the Caddy owner. | W-146, Caddy lifecycle | Resolved | Exact executed inputs and sanitized terminal record remain preserved; review any archive commit/tag/push separately before cleanup or implementation changes. | All 236 non-secret inputs copied and hashes checked in executed-inputs. Caddy is terminal-pending/failed-consumed with planned archive tag. A 61-file exact archive is prepared below; core lifecycle checks and actual documentation check pass, but the broader policy self-test has W-149’s missing sibling-tree fixture failure. No publication authorized. November 16: approved archive published as commit 66d8ae5 and annotated tag caddy-webmin-first-host-trial-terminal-2026-11-16; remote branch/tag/peeled commit verified. Hooks passed; W-149 remains explicitly deferred. Cleanup not performed. |
 | W-149 | Documentation self-test omits the sibling DNS owner tree referenced by the fleet onboarding guide. | W-148, local validation | Resolved | Caddy test owner retains follow-up here for future documentation-test maintenance; do not repair or repeat the fixture for this historical archive. | Aaron explicitly declined fixture repair for this effort on November 16. The actual workspace link check passes; the isolated self-test failure remains recorded. It does not establish production behavior or block preservation of the failed attempt. No test disabled, pass fabricated or publication authorized; mandatory publication hooks remain intact. November 16 current request authorizes resolving this CI blocker: fixture now preserves the real server/DNS sibling layout and copies the actual linked owner document. Missing-document rejection and all existing negative checks pass. Earlier archive deferral remains historical. |
 | W-150 | Clear archived Webmin trial bindings and restore the neutral Caddy stream locally. | W-148, W-147 preparation | Resolved | Verify the published archive identity, reset consumed operation/recipe/terminal evidence, preserve implementation and accepted state, and pass focused owner checks. | November 16: archive bytes matched the annotated tag and retained remote-verification receipt. Inactive operation and clean stream retain the archive tag; recipe is header-only, terminal manifest/registration removed, outer operation hash rebound. Runtime transaction and accepted-state manifests unchanged. Eight focused checks passed; uncommitted, no live contact or publication. |
@@ -264,11 +265,59 @@
 | W-181 | Integrate the reconciled probe contract without weakening acceptance. | W-180/W-174, AC-013 | Resolved | Use the neutral User-Agent in direct/proxy probes and wire comparison; retain HTTP-200/login acceptance, represent pre-Caddy exit as not run, then refresh/qualify owner bindings before any successor. | Neutral User-Agent integrated at all three sites. Pre-Caddy coverage reports not-run and preserves failure/restoration. Three primary parent scenarios and focused HTTP/privacy/owner checks pass. Withdrawn child was never executed; neutral hashes and clean stream pass owner policies. All 241 consumed input copies verified. No successor or live authority. |
 | W-182 | Prepare corrected primary/Pi diagnostic candidate | W-147; AC-013; W-181 | Resolved | Qualify current owner graph and exact parent/input bindings; seal for separate live review. | New 241-input candidate sealed; 18 owner cases and nine evidence rejection cases pass. No live authority; W-147/AC-013 remain unresolved. |
 | W-183 | Execute approved corrected primary/Pi diagnostic once | W-147; W-182; AC-013 | Resolved | Retain terminal evidence and both owner restoration results; reconcile remaining uncertainty. | One attempt exited 2. Direct HTTP 200; primary curl 28. Recorded headers match; Webmin memory pressure and later OOM kill observed. Both restorations and natural primary monitor acceptance passed. W-147 remains unresolved. |
-| W-184 | Close-only unmarked flows reject aggregate diagnostic correlation | W-147; W-176; AC-013 | Open | Reconcile retained flows and qualify a bounded completeness contract without discarding real capture gaps or changing consumed inputs. | Both marked header records exist; strict per-flow header requirement rejects flows containing only connection close events. Original rejected receipt remains preserved. |
+| W-184 | Close-only unmarked flows reject aggregate diagnostic correlation | W-147; W-176; AC-013 | Resolved | Reconcile retained flows and qualify a bounded completeness contract without discarding real capture gaps or changing consumed inputs. | Both marked header records exist; strict per-flow header requirement rejects flows containing only connection close events. Original rejected receipt remains preserved. November 17 W-187 reproduces the rejection with the unchanged checker; flows 3/5 contain only FIN events. A separate no-observed-payload classification is specified below; implementation and focused qualification remain pending after neutral cleanup. W-188 cleanup completed; corrected parser and 14 existing workload tests pass. Full retained-data correlation now passes in a separate derived receipt, retaining flows 3/5 and rejecting partial/unknown events and coverage failures. Original operation acceptance remains failed. |
 | W-185 | Archive the consumed primary login diagnostic | W-183; Caddy lifecycle | Resolved | Prepare and review exact terminal archive; obtain separate commit/tag/push authority and verify publication before neutral cleanup. | Aaron authorized all-changes publication. Server commit bda63a4 and annotated terminal tag published and remote-verified; cleanup has not run. |
 | W-186 | Publish all pending owner and tracking changes | Aaron publication request; W-185 | Resolved | Review scope, preserve private evidence, validate, commit/push and verify remote refs. | Server archive published; this monitoring commit records the authorized tracking publication. Final remote/CI receipts retained in the private publication review. |
+| W-187 | Reconcile retained request, memory and close-only-flow evidence | W-147; W-184; AC-013 | Resolved | Verify retained integrity, establish bounded temporal facts and specify remaining causal/classification gaps without live contact. | All 71 receipt hashes pass; unchanged checker reproduces W-184. Clock-envelope checks place pressure during the request and OOM afterward. Eight pre-request health flows and two no-observed-payload flows are reconciled below. W-147 causation and W-184 implementation remain open. |
+| W-188 | Reconcile published diagnostic archive to neutral Caddy state | W-185; W-187 | Resolved | Verify archive and retained publication receipts; clear consumed current bindings, preserve archive/private inputs, pass neutral owner checks. | Local cleanup authorized by the current next action; no successor or live authority. Annotated archive/retained remote identities verified; neutral operation/recipe/outer pins and lifecycle reconciled. Current repository-policy profile, neutral owner gates and shell checks pass. |
+| W-189 | Trace startup health-request burst through the existing owner path | W-147; W-187 | Resolved | Identify source paths capable of generating the observed burst, distinguish source inference from target attribution, and record a narrow next decision. | Local source and retained evidence only; no new target or capacity fixture. Publisher validation, two finalizer validations, installed-identity reconciler validation and reload traced. Pinned Caddy source starts health checks during provisioning and checks immediately. This explains a burst mechanism, not which process produced each retained connection or caused the timeout; W-147 remains open. |
+| W-190 | Review validation-probe containment under the Caddy owner contract | W-147; W-189 | Resolved | Identify a minimal proposed correction, caller/permission constraints, qualification decisions and unchanged live boundaries. | Validation subprocess network isolation is proposed; full validation and serving health checks remain required. Existing root/caddy-sync identity and file access must be preserved; no privilege expansion or networked fallback. See review below. |
+| W-191 | Implement and qualify validation-only network isolation | W-190; W-147 | In progress | Preserve exact-config/module/TLS validation, existing privileges, runtime health and bounded recovery through actual owner delivery. | W-197 passed actual-primary read-only capability on 2.11.9; W-198 caller wiring and twelve boundary cases pass locally. W-199 delivery and pre-release restoration are implemented and locally qualified. Writable owner execution and a controlled target comparison remain separately scoped and unaccepted. Root fixture expansion is closed; no rollout or timeout attribution follows. |
+| W-192 | Prepare a bounded primary-host validation-isolation check | W-191; W-147 | Resolved | Bind one non-activating primary-only execution to exact inputs, existing caller identities/restrictions, deadlines, safe evidence and owned cleanup before live review. | Prepared and authorized once; execution exited 1 at inspect.sh:60 before namespace/transient work. Expected version prefix was v2.11.4 with a space; actual output and version-command status were not retained. Release/boot exit checks passed, but capability remains untested. Approval consumed; W-194 owns local reconciliation. Successor W-197 completed the bounded target check; read-only capability passed. Owner integration remains W-191. |
+| W-193 | Clarify fixture stopping rule beyond capacity | Workspace harness; W-191 | Resolved | Aaron reviews the proposed wording; preserve the existing rule and distinguish a fixture limitation from a real safety defect. | Aaron approved the exact clarification; installed in workspace AGENTS.md under the existing fixture section. Exact wording verified; no live or publication authority added. |
+| W-194 | Reconcile capability-check version admission and missing observed evidence | W-192; W-191 | Resolved | Reconcile the expected version against retained evidence and preserve bounded observed version plus command status before reviewing any successor; do not infer target drift or bypass identity checks. | Local reconciliation: owner inventory records package 2.11.4, not the lost target CLI output. Pinned upstream Version() permits an absent build suffix. Old scalar gate rejects bare v2.11.4 and ignores nonzero command status with matching text. Minimal patch prepared, not applied to consumed inputs; 12 scalar cases and full-script syntax/static checks pass. Historical failure attribution remains unknown; any successor requires integration and separate review. |
+| W-195 | Integrate and seal corrected primary-only capability successor | W-192; W-194 | Blocked | Bind corrected admission to one unchanged primary-only capability scope, qualify exact inputs and obtain separate one-attempt authority before execution. | Approved and executed once; version command returned v2.11.9/status 0 against required v2.11.4. Admission stopped before namespace/transient/validation work. Release/boot exit checks passed; remaining checks not reached. Approval consumed; W-196 owns baseline reconciliation. |
+| W-196 | Reconcile observed primary Caddy version with owner baseline | W-195; W-191 | Resolved | Establish the applicable owner version/build baseline before preparing a successor; preserve exact identity checks and consumed receipts. | Aaron confirmed production-host upgrades and requested inventory update to 2.11.9. Owner inventory/current-state hash and future plan prerequisite reconciled; Node A CLI independently observed, Node B/package attribution operator-confirmed. Original package-set digest retained as historical; no fresh running-process or capability acceptance claimed. Consumed bundles unchanged. |
+| W-197 | Seal capability successor with reconciled production version | W-196; W-192 | Resolved | Bind current owner inventory and exact 2.11.9 admission to the unchanged primary-only capability scope; qualify locally before separate execution approval. | Fourteen-input validation-capability-review-upci2q6g sealed; twelve scalar cases and shell/static/integrity checks pass. No live contact. Awaiting one-attempt approval; prior bundles unchanged. Approved and executed once: all six phases passed on primary Caddy 2.11.9, cleanup/continuity passed; session 84010 exited 0. Authority consumed; no owner integration or timeout attribution claimed. |
+| W-198 | Integrate isolated validation at existing owner call sites | W-191; W-197 | Resolved | Preserve exact configuration/environment and caller failure behavior; qualify focused wiring without target contact or fixture expansion. | Publisher/finalizer/reconciler invoke the fixed helper path. Twelve extracted boundary cases and current-synchronization host profile pass; source identities refreshed, accepted installed identities unchanged. Helper remains undeployed; W-199 owns deployment bindings. |
+| W-199 | Bind isolated-helper delivery and recovery to the existing owner operation | W-191; W-147 | Resolved locally | Provide exact helper identity/path/mode before caller activation, explicit prior-state restoration and aggregate deadline/recovery before any separately reviewed comparison. | Existing payload/transaction implement a hash-bound primary-only opt-in, verified backups, helper-first install, caller-first restoration and explicit empty-ID recovery. Fifteen real-file cases and application-onboarding host profile pass, including partial install, interruption, drift, failed restore and absent prepared directory. Original installed identities, controls and 240/840-second limits preserved; no deployment or writable-host acceptance. |
+| W-200 | Prepare the validation-isolated primary/Pi diagnostic candidate | W-199; W-191; W-147 | In progress | Bind exact current parent/owner inputs and proportional execution coverage before sealing for separate review. | Private unsealed draft prepared with fresh token/paths, current candidate hashes and unchanged installed baselines/limits. Payload/parent syntax and three current primary-only whole-path tool-delivery cases pass; current graph/effect verification and four negative evidence checks pass. The missing-option gap and exact candidate authorization bindings are reconciled: a strict primary-only profile, fresh exact-candidate execution, actual authorization-gate rejection tests and parent bindings pass in a private projection. Main remains clean/inactive; sealing and live review remain. Prior receipts are unchanged. No target capacity/isolation fixture expansion or live authority. |
 
 ## Execution record
+
+| W-201 | Approved diagnostic lacks its controller evidence directory; clock and terminal receipt writes fail after backend preparation. | AC-013; W-200 | Resolved | Qualify required private output-directory admission before mutation and reliable failure/recovery receipt persistence in the existing path; reconcile the unexecuted child before another candidate. | One approved attempt exited 2 before Caddy launch. Native backend restoration and restored-state assertion passed in parent.log; final local receipt could not be written. No HTTP comparison or timeout attribution. Preserve exact consumed inputs and review source locally; no retry authority. Local correction: prepared mode-0700 controller-owned storage is admitted before target contact using the actual receipt writer/readback. Six path cases, write-error propagation, three primary parent cases and clock-before-failure recovery pass. Frozen consumed inputs and unexecuted child remain unchanged; future bindings require separate review. |
+
+| W-202 | Reconcile unexecuted Caddy child and prepare fresh parent after W-201. | AC-013; W-201 | Resolved | Preserve consumed parent, verify unchanged child graph and prepare fresh private inputs/storage with exact pre-contact qualification and separate approval. | Child never launched; same single definition retained. Exact graph and original qualification gate pass without relabeling evidence. New 263-input parent is sealed for review; actual pre-contact tasks pass. No live authority or target acceptance. |
+
+| W-203 | Reconcile delayed backend response in isolated-validation diagnostic. | W-147; AC-013 | Resolved | Review retained direct/proxy timing, headers, health overlap and resource evidence; distinguish measured delay from cause before any controlled successor. | Direct returned 200; proxied first bytes arrived about 7.5 seconds after request, beyond five-second client timeout. Correlation passed; no sampled high/max/OOM events. Both owners restored. No new live authority. |
+| W-204 | Preserve W-202 consumed Caddy operation in required terminal archive. | AC-013; Caddy lifecycle | Resolved | Publish exact reviewed archive and verify remote before cleanup. | November 17: approved W-207 command published the exact 32-file archive as 4986722 with annotated terminal tag; remote main/tag/peeled commit verified. Original failed attempts preserved; cleanup not run. |
+| W-205 | Reconcile archive commit-hook lifecycle failure. | W-204; Caddy lifecycle | Resolved | Exact corrected tree approval, normal hooks and remote verification. | November 17: approved W-207 command published the exact 32-file archive as 4986722 with annotated terminal tag; remote main/tag/peeled commit verified. Original failed attempts preserved; cleanup not run. |
+| W-206 | Remove Git repositories from evidence-only storage. | Workspace evidence policy | Resolved within accessible scan scope | Preserve evidence, relocate discovered Git metadata and prevent new evidence repositories. | Twelve discovered Git metadata entries reversibly relocated outside .local-evidence; former roots no longer recognized as repositories. Both consumed input manifests rehashed unchanged. Durable workspace rule added. Protected fixture subdirectories were not searched. |
+| W-207 | Correct publication launcher initial-index binding. | W-204/W-205 publication | Resolved | Review corrected command, publish exact unchanged tree and verify remote. | November 17: approved W-207 command published the exact 32-file archive as 4986722 with annotated terminal tag; remote main/tag/peeled commit verified. Original failed attempts preserved; cleanup not run. |
+| W-208 | Inspect and retire temporary Git metadata archive. | W-206; evidence-only workspace | Resolved | Preserve unique local history, remove stale registrations without deleting source, delete archive. | User authorized deletion after history review. All locally present objects preserved in verified inert packs; seven stale registrations retired, server refs/status unchanged and metadata archive deleted. |
+| W-209 | Audit Git retirement artifacts for deletion and reconcile source ownership. | W-208; evidence-only workspace | Resolved | Verify unique work has a repository home before deleting redundant recovery artifacts. | Webmin combined module trees exactly match three currently published fork branches; owner publication document records identities. Other artifacts are synthetic baselines, duplicated source, superseded preparation or committed worktree indexes. Retirement directory deleted; original evidence retained. |
+| W-210 | Reconcile published W-202 operation to neutral Caddy state. | Caddy lifecycle; W-204 | Resolved | Verify archive, clear consumed operation/recipe/result and qualify neutral bindings. | Archive commit/tag and retained remote receipt verified. Stream clean, inactive operation/current hashes, header-only recipe, no successor/coverage; terminal result preserved in tag. Focused state and current-tree docs checks pass. |
+| W-211 | Repository-policy documentation self-test omits Webmin onboarding dependency. | Repository validation | Resolved | Repair the existing temporary-copy dependency coverage when separately scoped; retain failed profile. | Current-tree documentation check passes; full profile stops at missing Webmin/docs/CADDY_ONBOARDING.md in its temporary fixture. No production defect or target-capacity claim; fixture work not expanded during cleanup. November 17: Aaron authorized repair. Added Webmin onboarding document to the self-test copy; removal must fail specifically with relative_link_broken, restoration must pass. Full host repository-policy profile, canonical formatting and readonly/local collision check pass. Local only; historical CI failure retained. |
+| W-212 | Review concurrent health/foreground request contract from retained evidence. | W-147; AC-013 | Resolved | Separate observed request equivalence/timing from causal hypotheses before proposing comparison. | Foreground header maps match; health maps differ and raw unexpected values are unavailable. Two overlapping health flows precede foreground by 177 ms; response payloads arrive after client deadlines. Proposed fixed-contract actual-backend concurrency comparison remains unapproved and undefined. |
+| W-213 | Review scope and interpretation of a backend-only concurrency comparison. | W-147; AC-013 | Resolved | Specify one-factor comparison, access/recovery boundary, stop conditions and conclusions before implementation. | Recommend one/three/conditional-one identical requests using native Webmin tasks, not the Caddy-bound combined parent. No executable bundle or live authority. Preparation must prove aggregate deadlines and workload cleanup without capacity fixtures. |
+| W-214 | Implement the narrow backend comparison using native Webmin components. | W-213; W-147; AC-013 | Resolved | Qualify aggregate deadlines, independent recovery/cleanup and terminal evidence before removing the execution gate or sealing. | Local integration complete: supervised 240-second forward and 840-second recovery invocations, client stop latch/lock, verified native restoration, observer exit and complete terminal coverage. Thirteen comparison tests (including five localhost Ansible recovery cases), fifteen native recovery tests and fifteen workload tests pass; host repository-policy profile and syntax pass. Exact candidate preparation and live acceptance remain separate. |
+| W-215 | Bind and seal the W-213 backend-only comparison candidate. | W-213/W-214; W-147; AC-013 | Resolved | Bind exact inventory, owner inputs, private paths, limits and supervisor; qualify locally before separate live review. | Sealed 33-input private candidate webmin-backend-review-2k86wh8y. Primary-only IPv4 profile and pre-exposure route admission are explicit. Frozen comparison tests, actual localhost route-expression checks, exact syntax, source/privacy/manifest checks and secret scan pass. No live authority or target acceptance; exact command/scope below. |
+| W-216 | Execute the approved W-215 backend comparison once. | W-213/W-215; W-147 | Resolved | Retain actual outcome and independent restoration evidence; consume approval without replay. | Failed before observation or comparison requests at backend_not_quiescent. Exact native restoration, timer disarm, primary stop latch/client cleanup and final boot continuity passed. Parent exit 1; terminal evidence rejected because observation never started. Sealed inputs unchanged. |
+| W-217 | Quiescence rejection omits observations and terminal analysis assumes observation started. | W-147; W-214/W-216; AC-013 | Open | Reconcile the conservative gate against retained owner behavior; qualify bounded expected/observed process/socket reporting and explicit not-started evidence classification before any successor. Do not weaken quiescence or infer host load from the bare code. | Gate failed after 10.645403 seconds with backend_not_quiescent; no sampled counts/PID identities/socket states were persisted. Observer and all comparison phases were skipped. Later terminal FileNotFoundError is an evidence-path rejection, separate from successful restoration. No live retry or inspection authorized. |
+| W-218 | Audit the diagnostic approach after repeated non-diagnostic failures. | W-147/W-217; AC-013 | Resolved | Separate application observations from tooling defects; identify concrete unsupported gates, missing evidence and a materially simpler next measurement. | Existing singleton gate rejects both a stable two-process idle state and that state's later settling to one process. Native 2.670 miniserv supports persistent log-clearing/authentication children. Original current-host process state was not retained, so exact W-216 trigger is unknown. Recommend bounded existing-loopback request measurement with CPU/throttling/process-wait evidence, no Caddy/ingress/restart. No new operation defined or approved. |
+| W-219 | Propose durable evidence-first/minimal-test instructions. | Workspace harness; W-218 | Resolved | Provide a concise addition to the existing fixture rule, without creating another workflow or weakening safety boundaries. | Approved and installed November 17 in workspace AGENTS.md; exact proposal preserved below. |
+| W-220 | Prepare a bounded Pi loopback measurement using the existing diagnostic. | W-218; W-147; AC-013 | Resolved | Bind one host, fixed requests, CPU/throttling/wait evidence, stop/cleanup, exact source and local correctness checks for separate live review. | Existing diagnose-http.py extended; six-input candidate sealed below, not authorized. Native curl/local control checks pass. No deployment playbook or target configuration change. Local tests use an ordinary HTTP endpoint solely for measurement/control correctness. |
+| W-221 | Execute approved Pi-only loopback measurement. | W-220; W-147 | Resolved | Preserve request/resource evidence, client cleanup and terminal disposition from the one attempt. | Single request HTTP 200 in 2.34s; three concurrent requests timed out at 5s. CPU throttling increased; no memory high/max/OOM events. Clients reaped, final activity settled, no service changes. Exit 1 is the recorded HTTP outcome, not a missing measurement. |
+| W-222 | Review backend concurrency and CPU policy using actual loopback evidence. | W-147; AC-013; Webmin/host owners | Resolved | Select a justified corrective design or single-factor comparison under owner review; do not assume historical causation or silently alter limits. | The backend alone reproduces delay under concurrent requests. One-CPU quota and 88 throttled periods out of 91 during overlap/settling support CPU contention; no CPU-policy intervention was performed. Serial/less costly health requests and quota policy require review, not automatic deployment. |
+| W-223 | Prepare the approved temporary 200% CPU comparison. | W-222; W-147; Webmin/foundation owners | Resolved | Reuse measurement, bind native lifetime/recovery, preserve original runtime override, qualify changed boundaries and seal for live review. | Nine-input candidate below. Four control/file tests and existing one/two-CPU measurement branches pass. Aaron approved preparation only. Native transient execution and restoration remain target checks. No live authority or permanent CPU-policy change. |
+| W-224 | Execute the approved temporary CPU comparison and verify restoration. | W-223; W-147 | Resolved | Retain actual request/resource receipts and independent restoration/cleanup from one attempt. | Exit 0. Single HTTP 200 in 2.327s; three concurrent HTTP 200 in 3.832-3.853s. No new memory high/max/OOM events. Original 100% quota/runtime override and unchanged main/unit identities verified; temporary files removed. Approval consumed. |
+| W-225 | Select host-specific CPU policy and compatible health contract for browser onboarding. | W-147; AC-013; Webmin/foundation/Caddy owners | Resolved | Explicit owner approval of policy before implementation. | Aaron approved local implementation/preparation: selected Pi 200%, explicit unauthenticated health headers and 5s health timeout; memory controls and foreground deadline unchanged. W-226 tracks implementation; deployment and sustained browser capacity are not accepted. |
+| W-226 | Implement selected-host CPU and explicit health policy in existing owners. | W-225; AC-013 | Resolved | Host-scoped selection, default preservation, native restore and adapted health contract locally checked. | CPU-only drop-in is explicitly selected in existing backend trial/recovery; 20 recovery tests pass. Offline Caddy 2.11.4 adaptation verifies proposed headers/thresholds. Production is 2.11.9; exact final owner candidate still requires its normal validation and paired/dual-stack/browser acceptance. No live authority. |
+| W-227 | Bind the paired/dual-stack browser candidate after W-225. | AC-013; W-226 | In progress | Exact owner/parent bindings and relevant qualification before a live review. | Fresh private draft selects the Pi CPU profile, four backend paths, six browser paths and existing observer/recovery. No executable seal or authority. Exact paired owner/parent qualification now passes: 19 whole-path cases, nine evidence rejections and actual authorization gate. Private definition and inputs are bound; final seal/launcher and separate live review remain. |
+| W-228 | Isolated-validator delivery is restricted to the earlier primary/IPv4 diagnostic. | W-191; W-227; Caddy owner | Resolved | Reconcile primary tool delivery with paired browser activation and pre-release-ID recovery in the existing owner path; retain secondary replication and unchanged installed secondary callers. | Primary-only tool delivery now accepts the paired recipe. Explicit empty-ID recovery restores A tools and cleans both payloads; post-ID recovery retains B-before-A restoration and monitor checks. Eighteen file/payload/recovery cases, focused paired dispatch checks and the host onboarding profile pass. Exact candidate qualification and writable target execution remain outside this local result; see checkpoint below. |
+| W-229 | Paired whole-path qualification omitted primary validation-tool delivery and seeded the secondary with the source finalizer. | W-227; W-228 | Resolved | Exercise the exact paired recipe option with hash-verified accepted secondary tools and independently verify restoration in existing owner cases. | Existing paired cases now select primary delivery, accepted finalizer/reconciler bytes and secondary preservation. All 19 current cases and exact authorization pass; no capacity or namespace qualification is added. |
+| W-230 | Private test-wrapper umask removed the deliberately public directory mode from the parent admission test. | W-227; controller evidence privacy | Resolved | Set the intended test mode explicitly and rerun only the admission test; preserve the failed run. | Existing paired and primary parent-flow tests passed. Public-mode case created 0700 under umask 077, so it never tested public input. Test setup now applies chmod; the admission-only rerun passed all six directory cases. Production admission is unchanged; failed receipt retained. |
+| W-231 | Publish all accumulated server and monitoring changes at Aaron's request. | Source publication only | In progress | Required hooks pass; both commits pushed and remote refs verified. | November 17: both Racerx323 destinations and visibility verified; 31 server paths and three monitoring records selected. Private evidence and unsealed candidate remain outside Git. |
 
 ### Current preparation
 
@@ -8960,3 +9009,2660 @@ non-secret hash exclusions. Final monitoring remote verification and GitHub CI
 receipts are retained in the private review at
 `/home/aaron/code/.local-evidence/uptime-kuma/publication-w186-h4166g95`.
 Publication does not resolve W-147/W-184 or AC-013 and does not install W-157.
+
+### November 17 W-187 retained evidence reconciliation
+
+This review used only the consumed W-183 bundle. All 71 entries in its
+`RECEIPTS.SHA256SUMS` still match. The current handoff checker matches the sealed
+copy and reproduces `backend_wire_headers_incomplete` on the original wire file.
+No receipt or consumed runtime input was rewritten. Local derived analysis is in
+`/home/aaron/code/.local-evidence/uptime-kuma/reconciliation-w187/retained-analysis.json`.
+It is an analysis record, not replacement acceptance.
+
+W-147 timeline, from the backend's retained timestamps:
+
+| Observation | Relation to the proxied request arriving at the Pi |
+| --- | --- |
+| Direct login request returns 200 in 2.475 seconds | Completed about 23 seconds earlier |
+| Eight marked health requests arrive in 1.624 seconds | Start 1.806 seconds before it; all arrive before it |
+| Proxied request arrives with matching foreground headers | Time zero; no response-first-byte or response-header event captured |
+| First positive memory.high sample | About 2.870 seconds later; counter increases from 0 to 9 |
+| Client-side FIN; Caddy logs marked request status 499 | About 4.951 seconds later; curl reports timeout, HTTP 000 |
+| First positive memory.max sample | About 25.005 seconds later |
+| First positive OOM/kill sample | About 26.008 seconds later; OOM 3, kill 1 |
+
+Counters are sampled, not exact event timestamps. The existing before/after
+clock-envelope calculation independently places the first high-event interval
+inside the client's request interval and the first OOM/kill interval after it,
+including clock uncertainty. Therefore an OOM kill is not established as the
+initiating event for this timeout. Pressure during the request is established;
+its contribution to response latency is not quantified. Peak sampled usage was
+191.82 MiB under the unchanged 192 MiB cap. The original cgroup, two unavailable
+samples and replacement cgroup remain separate; later zero counters do not
+clear the original OOM evidence.
+
+The eight health flows have no captured response bytes. Six client FINs occur
+almost immediately; two occur about three seconds after their request headers.
+Backend FINs appear later, clustered near the first positive OOM sample. These
+are network observations, not proof of eight concurrently executing CGI workers.
+The health requests also differ from the foreground header contract: retained
+User-Agent/Accept-Encoding values are classified as unexpected, with original
+values intentionally not stored. The two foreground header sets still match.
+Do not infer the health requests' exact values, authentication mode or outcome.
+
+The fragment specifies a 30-second health interval, yet eight requests arrived
+within 1.624 seconds during primary preparation/activation. This makes startup
+probe generation the next narrow owner-path question. Retained source contains
+validation/finalization/reconciliation steps, but these receipts do not identify
+which process generated each connection. A causal claim about validation,
+health-check concurrency, a Webmin worker or a leak would exceed this evidence.
+The sanitized journal retains two timeout categories and the marked 499 record;
+it has no worker attribution or upstream-duration value. No new fixture load
+can settle this target question. Do not increase caps/timeouts, serialize health
+checks or remove checks merely to obtain a pass.
+
+W-184 reconciliation and future correction boundary:
+
+- Flows 3 and 5 contain only request/response FIN records, with no first-byte or
+  header events in either direction. The collector creates these flows on a
+  captured inbound SYN and reports no issues or drops. They are connections with
+  no observed payload, not incomplete copies of either marked HTTP request.
+- Retain them explicitly in a separate connection classification. Do not invent
+  an HTTP request, health marker, successful response or CGI completion for them.
+- Preserve rejection for any first-byte event without complete request headers,
+  response data without an attributable request, unexpected events, duplicate or
+  missing required markers, capture issues/drops and failed clock/resource coverage.
+  An empty/headerless flow must not become a general bypass.
+- Qualify only this parsing contract using the retained close-only example and
+  minimal negative cases in the existing tests. No additional capacity fixture
+  or target attempt is needed to settle W-184. Source implementation is pending.
+
+The original aggregate receipt remains failed; manually established facts above
+do not certify its downstream gates. Both owner restorations and primary natural
+monitor acceptance remain as recorded in W-183. AC-013 and W-147 stay open;
+W-157 remains uninstalled. W-185's published archive remains intact and Caddy is
+still terminal-pending; neutral cleanup has not run. This local review provides
+no live, replay, promotion or publication authority.
+
+### November 17 W-188 neutral cleanup and W-184 correction
+
+Verified the annotated W-185 tag resolves to `bda63a4` and matches the retained
+remote publication receipt. Before cleanup, the current operation, recipe,
+terminal manifest and outer runner matched their archived bytes. Reset the
+operation to inactive, remove its consumed recipe/terminal data from the current
+branch, retain the archive tag, and refresh only the outer operation hash.
+Lifecycle rows now classify the neutral inputs as workstation-only. No successor
+is registered. Archive and private sealed copies remain unchanged.
+
+The existing Webmin handoff now retains valid close-only flows separately as
+`no-observed-payload`. It does not turn them into health checks or HTTP successes.
+Their event times must remain inside resource coverage. Partial request headers,
+response data without a request, unknown events, duplicate closes/markers,
+missing required markers and capture issues/drops still reject. This is a small
+parser correction in place, not a new observer or orchestration layer.
+
+Qualification:
+
+- All 14 existing workload tests pass, with added FIN/reset classification,
+  partial/unknown event, malformed close, duplicate-header and out-of-window-close
+  cases. Existing missing-marker, capture-loss and clock/resource cases remain.
+- The corrected full correlation path processes byte-identical copies of W-183's
+  captured wire/resource/clock data and hash-verified readback envelopes. Both
+  foreground requests and eight health requests remain; flows 3/5 are classified
+  separately. Derived coverage passes and explicitly retains `causal_attribution:
+  false`. All 71 original receipt hashes still match. The original failed receipt
+  is unchanged; this is local reanalysis, not retrospective live acceptance.
+- The current Caddy repository-policy host profile, neutral window/successor
+  policies, documentation policy, YAML/Markdown checks, ShellCheck, canonical
+  shell formatting and readonly/local collision policy pass. The vexp completion
+  helper remains unavailable from the parent workspace (`not a git repository`);
+  repository checks supply verification instead.
+
+Private qualification and source hashes are in
+`/home/aaron/code/.local-evidence/uptime-kuma/classification-w184/`.
+`verify-retained.py` exercises the actual corrected handoff against copies and
+writes a separate source-hash-named derived receipt. No live socket, target SSH,
+browser, scan or capacity fixture was used. All temporary analysis copies were
+removed. W-184/W-188 are resolved locally; source is uncommitted and uninstalled.
+
+### November 17 W-189 startup health-request source trace
+
+The actual primary path calls publisher preparation, the installed finalizer,
+then the installed reconciler before serving checks. Source trace:
+
+| Stage | Request-generating opportunity |
+| --- | --- |
+| Publisher `publish-release-v2.sh:190` | Validates the complete candidate before preparing it |
+| Finalizer `finalize-incoming-release-v2.sh:249,267` | Validates before and after setting completion/locked modes |
+| Installed reconciler `reconcile-release-v2.sh:498` | Validates candidate before selection |
+| Installed reconciler line 577 / Caddy service reload | Loads/provisions the selected configuration |
+
+The finalizer source matches its accepted installed hash. The current reconciler
+source differs from the installed identity; the installed hash instead matches
+Git commit `d131b9da63ad92abaa7c9901d2f76998ca6f2508`, and the validation/reload
+calls above were checked in that exact historical source. This is identity-based
+source reconstruction, not a new installed-state observation.
+
+Caddy's command documentation states that validation provisions modules. The
+pinned 2.11.4 upstream source confirms `Handler.Provision` launches the active
+health checker (`reverseproxy.go:421`); `activeHealthChecker` checks immediately
+before waiting for the interval (`healthchecks.go:283`). Thus a 30-second interval
+does not impose a 30-second delay on first probes or serialize separate validation
+processes. Repeated validation and reload provide a concrete mechanism for the
+observed startup burst. Upstream file identities and references are retained in
+`classification-w184/upstream-provenance.json`.
+
+This trace does not assign all eight captured health connections to specific
+processes, prove how many Webmin workers executed, or prove memory/timeout
+causation. Do not equate the validation call count with the packet count. Keep
+W-147 open. The next owner decision should address pre-activation validation
+probe traffic while preserving full configuration validation and the activated
+service's health checks, before selecting a single-factor target comparison.
+No validation removal, health-policy change, timeout/cap increase or new target
+comparison has been selected or authorized.
+
+Fleet Caddy and Webmin onboarding instructions now require startup validation/
+reload probe load to be considered, and document the close-only evidence boundary.
+No new live operation is sealed. AC-013 remains pending, W-157 uninstalled and
+restoration results unchanged. All local sessions are complete and retired.
+
+### November 17 W-190 Caddy owner review: validation probe containment
+
+The owner contract requires full candidate validation before activation and
+independent receiver validation. Preserve those checks. The correction should
+change the validation subprocess's network access, while keeping its exact
+configuration, module provisioning, TLS/key inputs, environment and result checks.
+It should leave runtime reload and the activated service's health checks in their
+normal network context. This separates validation side effects from serving
+health without weakening either validation or application acceptance.
+
+Proposed implementation boundary, pending W-191 qualification:
+
+- Reuse a small shared Caddy validation entrypoint at the publisher, finalizer
+  and reconciler validation calls. Keep finalizer validation both before and
+  after locking/completion; its integrity boundary is not redundant work to remove.
+- Use a short-lived native network namespace for the validator process only,
+  with no external interfaces/routes, namespace persistence, host firewall edits
+  or new service lifecycle. Existing root callers can create a network namespace;
+  the unprivileged `caddy-sync` finalizer needs a qualified unprivileged namespace
+  mechanism. `unshare` is a candidate mechanism, not an established host capability.
+- Preserve caller authority and required filesystem access. A current-user mapping
+  must not be assumed equivalent merely because its numeric UID/GID matches:
+  supplementary groups, TLS access and the reconciler's `NoNewPrivileges=true`
+  context need focused proof. Do not add sudo rights, setuid/capability helpers,
+  account/group changes or relax unit controls to make the proposal work.
+- If namespace creation, identity/access checks or validation fails, stop before
+  progression with bounded expected/observed diagnostics and original status.
+  Never fall back to networked validation. Preserve current request/parent deadlines
+  and direct signal handling; no persistent helper or new recovery orchestration.
+- Apply the same rule to any provisioning validation used in a recovery path;
+  keep actual reload, rollback, transport and serving-health checks outside the
+  validator's namespace. Bind changed helper/tool identities through the existing
+  owner inventory and separately reviewed deployment procedure.
+
+Changing only the controller or publisher would leave installed finalizer and
+reconciler validation unchanged. A production correction therefore needs an
+explicit owner-managed tool update and its recovery, beyond the earlier
+application-fragment-only trial. Qualifying a repository helper does not establish
+that any installed caller uses it. Account for that scope before a live review.
+
+This proposal targets IPv4/IPv6 backend traffic. A network namespace does not
+isolate filesystem Unix sockets or prove that every module is offline-compatible.
+The current release uses local TLS material and fixed backend addresses; any
+module that requires external access to provision must fail explicitly and return
+for owner review. Do not strip health configuration, substitute backend addresses,
+or waive validation failures. No assertion about either proxy's namespace support
+or current permissions follows from this local review.
+
+Alternatives rejected for this correction: replacing validation with adaptation,
+removing active checks during validation, lengthening intervals/timeouts, raising
+Webmin's cap, serializing only foreground address-family probes, or isolating the
+whole Caddy/reconciliation service. These either change the tested configuration,
+miss immediate startup probes, change the capacity question, or exceed the needed
+process boundary. A new privileged validation service would add machinery and
+privilege not justified by this review.
+
+Focused local qualification, using the existing test environment only:
+
+1. Exercise the actual pinned Caddy validator and proposed entrypoint under root
+   and the existing unprivileged-finalizer permission model, including the
+   reconciler's restrictions. Prove required TLS/config access remains and that
+   no new authority is granted. Unavailable host-equivalence remains a prerequisite
+   for separately authorized admission, not a reason to weaken local checks.
+2. Use an instrumented disposable HTTP endpoint to show validation sends no
+   external IPv4/IPv6 requests. The unchanged valid configuration must still
+   provision successfully; malformed configuration, unreadable/bad TLS inputs
+   and isolation failure must reject. This tests containment/configuration,
+   not the Pi's capacity. Do not add load-duration or memory benchmarks.
+3. Start the same configuration normally within that disposable test environment
+   and verify its configured active checks still reach the endpoint. Exercise
+   child failure, deadline and termination through existing entrypoints; retain
+   status and cleanup without adding an orchestration layer.
+
+Stop local testing when those decisions are settled. Only then prepare a
+separately reviewed primary/Pi comparison with this one changed factor, unchanged
+health policy/caps/deadlines and the already qualified request/resource capture
+and restoration. A pass would support this factor's relevance, not conclusively
+attribute every historical failure. No such operation is defined or authorized.
+
+Permanent Caddy instructions now explicitly place `validate` and `adapt --validate`
+examples inside network-disabled local qualification; a temporary directory alone
+never authorized backend contact. Vendor reference: Caddy CLI provisioning semantics
+and util-linux 2.38.1 `unshare(1)` namespace/mapping semantics were reviewed. The
+latter is a mechanism reference, not a claim about installed utility versions.
+No executable correction, namespace experiment, target inspection, live workload
+or publication occurred in this review. W-147/AC-013 stay open; W-191 owns the next
+local implementation and qualification.
+
+Review validation: focused Markdown, Caddy operator-documentation policy and
+Git whitespace checks pass. No behavioral test or target-capacity claim was added.
+
+### November 17 W-191 validation isolation implementation and qualification
+
+The shared preparation-only helper is
+`homelab-server-configs/Caddy/scripts/validate-caddy-isolated.sh`; its lifecycle is
+`future-task`, not node-installable. Root uses native `unshare --net`, retaining its
+original user namespace and receiver-file access authority. Unprivileged callers
+use `--user --map-current-user --net`. Both directly exec the exact Caddy validator
+with the supplied config and inherited environment. There is no fork, privilege
+helper, config rewriting or networked fallback. Publisher/finalizer/reconciler
+calls and installed inventories remain unchanged because qualification is partial.
+
+The focused `Caddy/tests/validation-network-isolation.py` runs actual Caddy 2.11.4
+in existing image `8ab253f9450c`, with `--pull never --network none`, a read-only
+source mount and unchanged default capabilities/security policy. Only disposable
+container accounts/files are created. This tests containment and permissions, not
+Pi capacity. The caddy-sync fixture has a supplementary caddy-tls group and reads
+a root-owned group-readable private key. With NoNewPrivileges enabled:
+
+- Full exact-config validation passes and sends zero requests to instrumented
+  IPv4/IPv6 endpoints outside the validation namespace.
+- An unknown proxy option, invalid TLS key and root-only unreadable key reject.
+- The unchanged config running normally reaches both health endpoints; its owned
+  runtime process group is terminated and the container is removed.
+- Root's network-only isolation fails closed with status 1 and Operation not
+  permitted. Mapping root into a new user namespace succeeds but cannot read a
+  receiver-owned 0640 input that the original root can read. This is a permission
+  regression, not an acceptable workaround.
+
+The final qualification exits **2 (partial)**, deliberately not success. Root
+namespace capability is unavailable in this unchanged local container; this is
+not evidence about either target's capability. No capabilities, privilege, kernel
+settings, permissions or service controls were added to get a pass.
+NoNewPrivileges is tested; the complete reconciler service sandbox, root success,
+full owner call paths, deadline/termination integration and real release/module
+inputs remain unqualified. W-191 is blocked pending a local qualification approach
+that preserves the approved authority constraints. Do not integrate this helper
+or prepare a target comparison from the partial result.
+
+Evidence is private under
+`/home/aaron/code/.local-evidence/uptime-kuma/validation-isolation-w191/`.
+The first test exposed an invalid negative test: a trailing Caddyfile token was
+accepted as another site. Its failed log is retained. The corrected test uses an
+unknown reverse-proxy subdirective; the final run also retains the root permission
+regression. This fixture correction establishes configuration rejection only.
+No live contact, workload, retry, promotion or publication occurred. All commands
+ended synchronously; all owned containers were removed. W-147/AC-013 remain open,
+W-157 is uninstalled, and consumed operation evidence remains untouched.
+
+Local structural validation passes: Bash syntax, ShellCheck, canonical shfmt,
+multifile-grep and readonly-local collision policy; Caddy deployment lifecycle,
+test inventory, neutral successor and operator documentation policies; focused
+Markdown and Git whitespace checks. The private `qualification.json` binds final
+helper/test hashes, exact offline command, log hash and exit 2. These checks do not
+clear the root-success or owner-integration blocker.
+
+### November 17 W-192 narrower preparation and W-193 harness review
+
+Aaron agreed to stop fixture expansion and prepare a small primary-host
+capability/validation check. This supersedes W-191's earlier requirement to
+resolve root isolation inside the local container before any target-check
+preparation. The retained failure remains valid evidence about that container;
+it neither proves nor disproves namespace support on the primary. Root's
+user-namespace permission regression remains a real reason to reject that
+workaround. The helper stays preparation-only and unintegrated.
+
+PLAN.md now owns the bounded scope: primary only, existing caller authority,
+namespace-first execution, full validation without activation, native service
+restrictions, explicit deadlines and owned temporary-process cleanup. Execution
+must first be bound to exact commands/inputs for separate authorization. This
+review does not define a Webmin comparison or authorize running the check.
+
+The existing workspace `AGENTS.md`, section "Fixture evidence and target
+capacity", already says to stop when the fixture cannot resolve the remaining
+uncertainty. The agent failed to apply that instruction; absence of a rule was
+not the cause. Its detailed examples emphasize capacity. Proposed addition
+within that existing section (not installed):
+
+> Apply this stopping rule to platform compatibility as well as capacity. A
+> fixture's different privileges, kernel capabilities, filesystem permissions or
+> service sandbox are evidence limits, not automatically deployment defects or
+> requirements to repair the fixture. Once applicable correctness and safety
+> questions are settled, move the remaining environment-specific question to the
+> smallest separately authorized check in the intended environment. Do not extend
+> fixture fidelity or add orchestration solely to make a substitute reproduce that
+> environment. Concrete correctness, security and recovery defects remain blockers.
+
+No executable, fixture, workspace instruction, production inventory or live state
+was changed in this reassessment. Existing results and consumed attempts are
+preserved. Only the change-record scope, next action and result were reconciled.
+
+### November 17 W-193 approved harness clarification installed
+
+Aaron approved the recorded wording. Added it unchanged to workspace
+`/home/aaron/code/AGENTS.md` within "Fixture evidence and target capacity". The
+rule now explicitly covers platform privilege, kernel, filesystem and service
+sandbox differences. Existing safety blockers and separate live authorization
+remain intact. W-193 is resolved; W-192 preparation and all deployment states
+are unchanged. No executable, fixture or live work occurred; nothing was published.
+
+Validation: installed paragraph matches the approved text exactly; whitespace
+checks pass.
+
+### W-192 exact primary-host capability/validation bundle for review
+
+Bundle:
+`/home/aaron/code/.local-evidence/uptime-kuma/validation-capability-review-2jben2ib`.
+Twelve inputs bind the runner, remote script and embedded namespace child,
+reviewed plan, scope, retained known-hosts file, accepted owner inventories,
+installed-file expectations and preparation-only helper reference.
+
+`INPUTS.SHA256SUMS` SHA-256:
+`c777734467943e0e2bef901e55b4ffbde6c9f18dc8432744ac1503694ee2dc89`.
+Runner SHA-256:
+`1737c3be2e6db5358f1011c0eb3ffffed71019e93fd3fc3239a4ea12d374e045`.
+
+Exact command, **only after separate one-attempt authorization**:
+
+```bash
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/validation-capability-review-2jben2ib/run.sh --run-approved-once
+```
+
+Scope: one SSH session as pi to primary `10.1.0.53`, expected native hostname
+`j1-svpihole0`, strict retained host-key verification and existing sudo authority.
+Fresh boot continuity, accepted release/payload, installed owner tools/environment
+and reconciler unit are checked before transient work. The accepted Caddy version
+is 2.11.4; executable hash is freshly admitted, matched to the running service
+executable and required unchanged. No historical binary hash is invented.
+
+The check creates one private `/run/caddy-validation-capability.<nonce>` directory
+and at most six sequential validation-only transient units named from that owned
+directory, context and phase. Root publisher, caddy-sync finalizer and root
+reconciler contexts each prove isolated networking and required file access
+first. No validation runs unless all three prechecks pass. Each then performs
+one full validation of the unchanged accepted release, in that order. Namespace
+creation failure, file-access failure, inventory drift or validation failure stops
+progression; there is no retry, networked fallback or privilege change.
+
+All transient processes make production files read-only and use private temporary
+logs. Reconciler NoNewPrivileges, PrivateTmp, ProtectHome, ProtectSystem and UMask
+are checked against installed effective values and preserved; its production
+write exceptions are intentionally withheld. Required configuration/TLS inputs
+are read in place, never copied into the bundle. Only fixed validator diagnostic
+classes and status are returned, not arbitrary configuration/key/error content.
+This establishes read-only mechanism compatibility only, not full owner-call-path
+qualification. Existing publisher/finalizer/reconciler and serving entrypoints
+are never executed.
+
+Bounds: 10-second prechecks and 30-second validation runtimes, eight-second
+transient startup limit and three-second stop limit; remote supervision is
+240 seconds plus 30 seconds for termination, with a 295-second controller limit
+and five-second kill margin. Native KillMode=control-group, no restart and
+automatic transient collection bound children independently of SSH. Cleanup
+stops only units claimed by this check, removes its owned directory, and checks
+release integrity, executable identity, serving PID and boot continuity. A cleanup
+failure is exit 125; missing final evidence is unknown, never acceptance. A lost
+connection may leave the owned directory or incomplete readback; do not replay
+the attempt to resolve that uncertainty.
+
+No secondary or Pi contact, backend HTTP requests, existing service transitions,
+release publication, replication changes, DNS, notifications, authentication,
+browser/scan load, permanent installation or source publication is included.
+Transient unit/process creation and temporary files are explicitly included, so
+this is a non-activating check, not a strictly read-only inspection. The Caddy
+release stream stays clean/inactive; no deployment successor is registered.
+
+Local qualification: Bash syntax for each script, ShellCheck and explicit
+canonical-style shfmt checks pass. Embedded child bytes match the sealed child;
+source review checks the primary-only transport and absence of existing service
+start/reload/restart commands. `run.sh --check` verifies all twelve inputs without
+SSH or creating an attempt. No fixture or container was run. The single-use
+`attempt` directory is absent; no execution session exists.
+
+Upon approval, the runner creates that directory before its sole SSH call and
+retains private stdout, stderr and exit status there. Authorization is consumed
+by that attempt, including an admission/connection failure. A successful result
+permits local owner-integration preparation only; any primary/Pi comparison
+requires a separately reviewed operation.
+
+### November 17 W-192 execution failed at admission; W-194 opened
+
+Aaron approved the exact bundle, command and scope at the review above for one
+primary-only capability check. The unchanged runner verified all twelve inputs,
+created its one-use attempt directory and made its sole SSH connection. The
+command completed synchronously with exit 1; no session remains active.
+
+Hostname, fresh boot capture, accepted release/payload and all five installed
+file identities passed. The assertion at sealed `inspect.sh:60` then failed:
+its expected version pattern is `v2.11.4` followed by a space and suffix. The
+actual version output and the `timeout 5 /usr/bin/caddy version` command status
+were not retained separately. The receipt proves failure of that compound
+assertion, not an installed-version change, command timeout or namespace failure.
+W-194 tracks this evidence gap and local prerequisite reconciliation.
+
+No temporary directory/unit creation, namespace check or full validation was
+reached. The exit trap reported cleanup/continuity status 0: boot, accepted
+release link, manifest identity and payload integrity remained valid. Binary
+hash and serving PID admission had not run, so their conditional exit checks
+were skipped; effective unit properties and service-active checks also were not
+reached. Do not describe these unperformed checks as passing. No existing
+service transition, secondary/Pi contact or configuration change was requested.
+
+Private evidence remains under the unchanged bundle's `attempt/` directory;
+`execution-summary.json` records the limited result, and `EXECUTION.SHA256SUMS`
+binds it and the three raw receipts. The sealed inputs and input manifest remain
+unchanged. Approval is consumed. W-191 remains partially qualified/unintegrated;
+no target isolation capability or Webmin acceptance is established. Reconcile
+locally before defining any separately authorized successor; no retry, further
+inspection, rollout or publication is authorized.
+
+### November 17 W-194 version-admission reconciliation and local correction
+
+The retained owner `Caddy/manifests/reproducibility-production.yaml` records the
+August 24 package inventory's Caddy version as 2.11.4. W-191's local container
+returned a version plus module checksum. Neither establishes the primary's
+November 17 CLI output. The failed receipt contains no output or independent
+version-command status; local analysis cannot recover either value.
+
+Pinned upstream `caddyserver/caddy` v2.11.4 `caddy.go`, function `Version()`,
+initializes the full version to the module version and adds a space/checksum
+only when the module sum is nonempty. A build suffix is optional. The prepared
+check incorrectly made that suffix mandatory. A separate scalar reproduction
+also shows that its command substitution discards a nonzero command status:
+matching stdout can pass even when the version command fails. These are proven
+admission defects, not proof of the historical target failure's cause.
+
+Private `version-admission-w194/version-admission.patch` changes only the version
+admission block of the consumed `inspect.sh` for future use. It preserves the
+five-second timeout and exact v2.11.4 requirement, accepts the bare version or
+existing space-delimited build suffix, requires successful command exit, and
+rejects empty, oversized, multiline or control-character output. The report
+retains expected version, command status, observed length and an escaped prefix
+bounded to 256 bytes under the C locale. It does not bypass binary/serving-process,
+configuration, host or service checks. No installed identity is changed.
+
+Twelve scalar cases passed: bare/suffixed exact version, wrong version, lookalike
+prefix, empty output, failed command with matching output, timeout, failed bare
+version, multiline/control output, oversized output and unknown version. The
+unchanged old gate reproduced rejection of a bare version and acceptance of a
+failed command with matching text. The patch was applied only to a disposable
+local copy for full-script Bash syntax, ShellCheck and canonical-style shfmt
+checks; that copy was removed. No Caddy process, namespace, container, systemd,
+SSH or homelab workload was invoked. This is admission-contract qualification,
+not target capability evidence or a substitute capacity test.
+
+Private evidence: `/home/aaron/code/.local-evidence/uptime-kuma/version-admission-w194/`
+contains the patch, scalar gate, qualification results, provenance and hashes.
+The consumed bundle's input and execution checksums still pass. W-194 local
+reconciliation is resolved; historical attribution remains unknown. No successor
+is defined or sealed, and no retry, fresh inspection, rollout or publication is
+authorized. All local commands ended; no execution session remains active.
+
+### W-195 exact primary-only capability successor for review
+
+Bundle:
+`/home/aaron/code/.local-evidence/uptime-kuma/validation-capability-review-26haozu7`.
+Fourteen inputs bind the corrected collector, unchanged runner/namespace child,
+current reviewed plan and owner inputs, scope, W-194 patch and qualification.
+
+`INPUTS.SHA256SUMS` SHA-256:
+`d7fc9c4454eea84f010b547ca8aef491dbcaeac2a9438890d189b0d91b633813`.
+Runner SHA-256:
+`1737c3be2e6db5358f1011c0eb3ffffed71019e93fd3fc3239a4ea12d374e045`.
+Collector SHA-256:
+`d736fb1e3e528ae32a200349ef5cbd824aab435b431d39768891a8311ba8478b`.
+
+Exact command, **only after separate one-attempt authorization**:
+
+```bash
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/validation-capability-review-26haozu7/run.sh --run-approved-once
+```
+
+This is a new, unexecuted successor to the consumed W-192 attempt, not a replay.
+Its sole executable change is W-194's version block: C locale, independent command
+status, bounded escaped observed output and exact v2.11.4 with optional build
+suffix. Failed commands and malformed output stop admission. Historical failure
+attribution remains unknown. Owner inventories and the proposed helper reference
+match current local source; no installed-state change is inferred from that match.
+
+Scope remains the [W-192 primary-host capability plan](PLAN.md#primary-host-validation-capability-check-w-192-prepared-scope)
+and its detailed earlier review. One SSH session as `pi` to `10.1.0.53`, native
+hostname `j1-svpihole0`, strict retained host keys and existing sudo authority.
+Admit fresh boot, exact accepted release/payload and installed owner identities,
+version, binary/serving-process identity, effective service controls and health.
+Then at most six sequential, temporary validation-only units: namespace/access
+checks for root publisher, caddy-sync finalizer and restricted root reconciler,
+followed by full validation in those contexts only if every precheck passes.
+No real publisher/finalizer/reconciler entrypoint executes. No privilege additions
+or networked fallback. Production inputs stay read-only; reconciler write
+exceptions are withheld, so a pass proves mechanism compatibility only.
+
+Bounds remain 10 seconds per namespace/access check, 30 seconds per validation,
+eight-second unit startup and three-second stop limits; 240-second remote
+supervision plus 30-second termination margin; 295-second controller supervision
+plus five-second kill margin. Owned transient names derive from the single private
+`/run/caddy-validation-capability.<nonce>` directory. Cleanup stops only owned
+units, removes that directory and checks admitted boot/release/binary/PID
+continuity. Cleanup failure is exit 125; missing evidence is unknown, not success.
+Admission failure still consumes this attempt. No retry or additional inspection
+is included, including after connection loss.
+
+No secondary/Pi contact, backend HTTP, replication or release changes, existing
+service transitions, DNS, notifications, authentication/browser/scan workloads,
+installation, deployment or source publication is authorized by this review.
+Temporary process/unit/file creation is part of the proposed scope; this is a
+non-activating capability check, not strictly read-only inspection. The Caddy
+release stream remains clean/inactive, with no deployment successor.
+
+Local qualification passed all twelve cases against the version block extracted
+from this exact collector, Bash syntax/ShellCheck/canonical-style shfmt for the
+four shell inputs, embedded-child equality, unchanged runner/transport/deadlines,
+current owner-input equality and `run.sh --check`. No fixture/container or target
+command ran. The attempt directory is absent. Both predecessor input and receipt
+manifests still verify; consumed bytes remain unchanged. All local checks ended;
+no execution session is active. No commit, push or live authority is requested
+beyond the exact one-attempt capability scope above.
+
+### November 17 W-195 execution stopped on observed version mismatch
+
+Aaron approved the exact fourteen-input successor for one primary-only capability
+check. Inputs verified unchanged; its single-use runner made one SSH connection
+and completed synchronously with exit 1. No execution session is active.
+
+Host, fresh boot capture, accepted release/payload and all five installed owner
+file identities passed. The corrected version report retained command status 0,
+55 bytes of output and version `v2.11.9`, with its module checksum in the private
+receipt. The exact `v2.11.4` requirement failed at sealed `inspect.sh:67`. This
+attempt's failure is an observed version mismatch, not a suffix/parser failure,
+timeout or namespace failure. It does not recover the earlier attempt's lost
+output, establish upgrade timing, or identify the running Caddy process version.
+
+No namespace, temporary directory/unit or validation phase started. The exit
+trap passed boot continuity, release-link/manifest identity and payload checks.
+Binary hash and serving PID admission had not run; their conditional exit checks
+were skipped. Effective service controls and active-state checks were also not
+reached. No existing service transition or configuration change was requested.
+
+Private `validation-capability-review-26haozu7/attempt/` retains raw stdout,
+stderr and status. `execution-summary.json` records the limited result and
+`EXECUTION.SHA256SUMS` binds all four receipts. Input hashes remain unchanged;
+the original consumed capability bundle is also preserved. W-196 requires local
+owner-baseline reconciliation before another candidate. The observed executable
+version is not an accepted inventory update or proof of capability compatibility.
+Do not replace the expected pin merely to obtain admission. W-191 remains partial
+and unintegrated; W-147/AC-013 remain open and W-157 is not installed. Approval
+is consumed; no further inspection, retry, rollout or publication is authorized.
+
+### November 17 W-196 operator-confirmed production version reconciliation
+
+Aaron confirmed Caddy was updated on production hosts and requested the current
+production version in inventory. Updated owner `reproducibility-production.yaml`
+to 2.11.9 with explicit provenance: Aaron's fleet confirmation plus W-195's Node A
+CLI/status evidence. Node B and package version are operator-confirmed; no fresh
+paired capture or running-process identity is claimed. The August 24 full-package
+digest/equality are retained as historical fields, with current complete-package
+hash/equality unknown. Other retained observations are not silently refreshed.
+
+Updated the dependent current-live-state manifest hash, owner history and
+reproducibility documentation, and the future capability prerequisite in PLAN.md.
+No runtime file, installed tool hash, accepted release identity or consumed bundle
+was changed. W-196 baseline reconciliation is resolved; capability/owner integration
+remain pending. A successor must bind the revised inputs and retain fresh binary,
+serving-process, configuration, health and continuity checks. No new operation,
+live inspection, retry, rollout or publication is authorized by this inventory edit.
+
+Validation: YAML, Markdown, whitespace, deployment lifecycle and accepted-live
+hash policies pass. The first neutral-successor check exposed the expected stale
+state hash after inventory edits; refreshed the inactive specification/registry
+state bindings and outer specification pin. The neutral-successor policy and
+outer Bash syntax then passed. No operation was activated or runtime behavior
+changed; the runner edit changes only its inactive-specification identity.
+
+### W-197 exact primary-only capability bundle for review
+
+Bundle:
+`/home/aaron/code/.local-evidence/uptime-kuma/validation-capability-review-upci2q6g`.
+Fourteen inputs bind current owner inventories and PLAN.md, runner, collector,
+namespace child, retained host keys, installed-file expectations, helper reference,
+scope, minimal version-baseline patch and local qualification.
+
+`INPUTS.SHA256SUMS` SHA-256:
+`68f2f8ec7282893dfa4adb0ee5cdf83b2126ee88b37293b4bbcc0aac4ce90c16`.
+Collector SHA-256:
+`3fc6375b396e255ef4fbd239bdbff10796b572782be2bda70c2079b465de4832`.
+Runner SHA-256:
+`1737c3be2e6db5358f1011c0eb3ffffed71019e93fd3fc3239a4ea12d374e045`.
+
+Exact command, **only after separate one-attempt authorization**:
+
+```bash
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/validation-capability-review-upci2q6g/run.sh --run-approved-once
+```
+
+The executable delta from consumed W-195 is exactly three version literals:
+2.11.4 becomes 2.11.9 in expected-output reporting and exact version admission.
+W-196 supplies owner confirmation and retained primary CLI evidence. Admission
+still requires command success, bounded safe output and the exact version token;
+build suffix remains optional. This does not pre-accept the running process,
+namespace capability or installed service controls. Current state/inventory hashes
+and plan are refreshed; accepted installed-tool/release identities are unchanged.
+
+Scope: one SSH session as `pi` to primary `10.1.0.53`, native hostname
+`j1-svpihole0`, using retained strict host keys and existing sudo authority.
+Fresh boot continuity, accepted release/payload, five installed owner-file hashes,
+version, executable/running-process identity, effective unit properties and service
+health gate progression. At most six sequential temporary units first check
+namespace isolation and file access for root publisher, caddy-sync finalizer and
+restricted root reconciler, then validate the exact accepted configuration once
+per context only after every precheck passes. No real owner entrypoint executes.
+No privilege addition, networked fallback or production write is allowed.
+Reconciler write exceptions remain withheld; success supports read-only mechanism
+compatibility and local owner-integration preparation only.
+
+Bounds and cleanup are unchanged: 10-second prechecks, 30-second validation,
+eight-second unit startup and three-second stop limits; remote supervision
+240 seconds plus 30 seconds for termination, controller 295 seconds plus five
+seconds for termination. One private `/run/caddy-validation-capability.<nonce>`
+directory owns transient-unit names. Cleanup stops only owned units, removes that
+directory and verifies admitted boot/release/binary/PID continuity. Cleanup failure
+exits 125. Missing or skipped checks are unknown, not success. The attempt directory
+is created before the sole SSH call; connection or admission failure consumes
+authority. There is no retry or follow-up inspection within this scope.
+
+Excluded: secondary/Pi contact, backend HTTP, release publication, replication
+changes, existing-service transitions, DNS, notifications, login/browser/scan
+workloads, installation, rollout and source publication. Temporary files/processes
+and validation units are included, so this is a non-activating check, not strictly
+read-only inspection. The Caddy deployment stream stays clean/inactive.
+
+Local checks pass on the exact candidate: twelve extracted version-gate cases
+(including rejection of the previous version, command failure, timeout and unsafe
+output), Bash syntax, ShellCheck and canonical-style shfmt for all shell inputs,
+embedded-child identity, exact executable-delta review and `run.sh --check`.
+Both consumed input and execution manifests still verify unchanged. No fixture,
+container or target workload ran; the new attempt directory is absent. No target
+capability result is claimed. All local commands completed; no session is active.
+
+### November 17 W-197 primary-host capability check passed
+
+Aaron approved the exact fourteen-input bundle for one primary-only capability
+check. Input integrity passed; one SSH session ran the sealed collector. Session
+84010 completed with exit 0 and is retired. No other execution session is active.
+
+Admission passed hostname, fresh boot capture, accepted release/payload and all
+five installed owner-file identities. Caddy reported v2.11.9 with status 0. Its
+on-disk binary hash matched the serving process executable. Effective reconciler
+properties, required node environment and serving/replication service state
+passed. The private receipt retains binary, namespace and account identities.
+
+All three namespace/access prechecks passed before validation: root publisher,
+caddy-sync finalizer with existing caddy-tls group access, and restricted root
+reconciler. Root retained its user namespace; finalizer used current-user mapping.
+Every child had a distinct network namespace, no external interface and no routes,
+and could read the required accepted configuration/TLS files with payload hashes
+intact. Each context then completed full validation with status 0. Fixed diagnostic
+classes included network-unreachable and valid-configuration messages. The retained
+report does not attribute individual unreachable requests; namespace isolation and
+successful validation establish the scoped result without external routing.
+
+All six temporary units completed and were collected. The owned scratch directory
+was removed; final cleanup and boot/release/binary/serving-PID continuity passed.
+No production files were written or existing services transitioned. No secondary,
+Pi, backend HTTP, DNS, replication mutation, browser or scan workload was included.
+
+This resolves W-192/W-197's bounded capability question on the actual primary.
+It does not qualify writable reconciler execution, complete owner-call-path or
+deadline integration, future builds, or Webmin capacity/timeout causation. The
+proposed helper remains uninstalled and unintegrated. W-191 continues with local
+integration preparation under the existing owner path, preserving validation,
+normal runtime health checks, privileges and fail-closed behavior.
+
+Private evidence remains in `validation-capability-review-upci2q6g/attempt/`;
+`execution-summary.json` and `EXECUTION.SHA256SUMS` bind the observed scope and
+raw receipts. Both earlier failed capability bundles remain unchanged. Approval
+is consumed. No additional inspection, retry, rollout, primary/Pi comparison or
+publication is authorized. W-147/AC-013 remain open; W-157 is not installed.
+
+### November 17 W-198 local caller integration qualified; W-199 remains
+
+The existing publisher, finalizer and reconciler each replace their one direct
+validation invocation with `/usr/local/libexec/validate-caddy-isolated.sh` and the
+same absolute Caddyfile path. Existing CADDY_CONFIG_ROOT/node environment, error
+handling and reload/runtime-health code remain unchanged. The helper uses the
+namespace flags qualified by W-197; only its preparation comment was reconciled.
+No new wrapper, transaction or test framework was added. Its future-task lifecycle
+remains explicit: the helper is not installed and callers must not be deployed
+without their separately governed helper delivery and prior-state recovery.
+
+The existing isolation test now has a host-only `--caller-contracts` mode, invoked
+by the existing receiver/finalization regression. It extracts the real three
+caller boundaries and uses a private stand-in only for the fixed helper executable.
+Twelve cases verify one exact path argument (including spaces), expected inherited
+configuration/node environment, success, validation failure, timeout exit status,
+missing-helper failure and finalizer temporary-error cleanup. Publisher/reconciler
+retain their existing normalized failure status; finalizer retains validator status.
+This does not execute complete release transactions or prove process termination.
+
+The current-synchronization host profile passed, including its registered host
+regressions/policies. Canonical formatting, ShellCheck/Bash syntax, readonly-local
+collision, lifecycle, accepted-hash, neutral-successor, documentation, YAML and
+whitespace checks passed. The container-only candidate-drain branch explicitly
+reported deferred; no container or native validation was launched. W-197 supplies
+actual-target mechanism evidence; root fixture repair was not reopened. vexp
+completion verification was unavailable from the parent non-Git workspace; it
+provided no verification claim. Repository checks are the local evidence.
+
+Production/runtime manifests refresh only repository-source hashes. Deployed
+hashes and accepted release identities remain unchanged. Neutral state/specification
+bindings are refreshed with the operation inactive. The shared onboarding guide
+records the fixed root:root:0755 helper requirement, util-linux dependency,
+installation-before-caller ordering and recovery prerequisite. No caller-only
+rollout is safe; W-199 owns exact delivery, restoration and deadline integration
+within the existing owner machinery before a controlled target comparison.
+
+Private `caller-integration-w198/qualification.json` binds source hashes and the
+host log. Session 53896 exited 0 and is retired. Changes are uncommitted; consumed
+bundles and receipts are untouched. W-191 remains in progress, W-147/AC-013 open
+and W-157 uninstalled. No live contact, retry, operation sealing or publication
+occurred or is authorized by this local work.
+
+### November 17 W-199 owner delivery/restoration bindings prepared
+
+Local source review identifies the minimum primary payload addition: the isolation
+helper, finalizer and reconciler. The publisher already runs from the primary
+payload; its installed copy does not need replacement. Finalizer and reconciler
+currently execute installed files. PLAN.md records the four exact source hashes,
+the two accepted installed hashes, helper path/mode, required prior-state capture
+and recovery ordering. Accepted inventories and all consumed inputs remain unchanged.
+
+The installed reconciler's retained source differs from the candidate in the
+validation invocation and a self-test directory label only; the label change is
+not production execution. The future trial must keep full validation and runtime
+health settings, installed unit restrictions and privileges. Tool payloads remain
+primary-only; no secondary delivery or release replication is added.
+
+A concrete integration gap was found: publisher validation requires the helper
+before it can produce a candidate ID, while the existing outer failure branch
+requires application-target.tsv to enter trial restoration. Installation cannot
+be inserted there without a tool-only recovery branch. The prepared contract
+requires verified backups and independently recorded file changes, restoration
+without a target ID, phase-specific candidate versus baseline identity checks,
+and restoration before service resume. It forbids synthesizing a target ID or
+claiming no mutation from absent output. Existing 240-second forward and
+840-second aggregate limits cover these steps; neither is extended.
+
+The shared onboarding guide records this reusable requirement. No new installer,
+operation specification, test framework or fixture was introduced. W-199 remains
+in progress until the existing payload/transaction/outer implement and qualify
+these prepared bindings. Source review is not execution qualification. W-197's
+read-only capability and W-198's caller tests remain scoped evidence; W-147's
+historical timeout and AC-013 remain unresolved. W-157 is not installed.
+
+Qualification for this preparation: all four source hashes and both accepted
+installed hashes match the current files/owner manifest. Markdown lint, owner
+documentation policy, neutral successor policy and whitespace checks pass. No
+executable source changed this turn, so no runtime/fixture test was added or
+repeated. Changes remain uncommitted; no live contact, retry, sealing, rollout or
+publication occurred. All commands completed synchronously; no session is active.
+
+### November 17 W-199 delivery and pre-release recovery locally qualified
+
+The existing outer payload builder now accepts a hash-bound primary-only validation
+trial option and verifies all three added tool sources. It includes the helper,
+finalizer and reconciler with the staged publisher on Node A. The secondary control
+archive still contains only the recipe; diagnostic dispatch never contacts Node B.
+The inactive recipe remains empty and no successor is registered.
+
+The existing transaction admits the original caller hashes and absent helper,
+rejecting symlinks, hard links, unsafe metadata and unsupported ACLs/xattrs. It
+retains checked originals and metadata under its protected payload before mutation,
+then stops sender/reconciler activity and waits for receiver inactivity. The helper
+is installed first at root:root:0755; caller replacements preserve their original
+permissions/ownership. Candidate hashes are verified. Python 3 is declared as an
+existing dependency; the trial does not install packages or alter service units.
+
+An explicit empty application-target.tsv is written before tool installation.
+On a failed primary phase, the outer accepts that empty receipt only for the bound
+primary diagnostic; missing/malformed receipts still stop. Recovery restores
+callers before removing the helper, then verifies the unchanged baseline release,
+prepared and sync inventories before resuming. A new unexplained prepared release
+or changed installed file prevents acceptance; backups remain retained. Absence
+and an empty prepared directory are equivalent. Failure before the backup-ready
+marker causes no service transition. Later release failure retains the existing
+release restoration before tool restoration. Failed restoration prevents resume.
+
+All transfer, installation and recovery calls remain inside the existing forward
+and aggregate deadlines and remote process-group bounds. No new timer, service,
+transaction framework or fixture-capacity test was introduced. Future live inputs
+must bind these sources and the metadata/dependency admission; local tests do not
+prove writable systemd execution, actual completion time or target capacity.
+
+The application-onboarding host profile passes. Its existing regression now runs
+fifteen real-filesystem cases through the extracted current payload/transaction
+functions: full install/restore, publisher failure before a release ID, each partial
+replacement, interruption, backup failure, unexpected helper, tampered payload,
+failed restore, foreign caller/prepared state, unsupported xattrs, later request
+failure and absent prepared directory. Privileged paths/ownership are mapped to a
+private local directory; service control/process lookup are stand-ins. Existing
+primary-only dispatch now also rejects an empty target without opt-in and recovers
+it with opt-in. Probe, monitor and aggregate budget contracts continue to pass.
+
+Bash syntax, ShellCheck, canonical formatting, readonly/local collision, accepted
+hash/neutral successor/test-lifecycle policies, owner documentation policy, YAML,
+Markdown and whitespace checks pass. A dependency-list indentation mistake was
+caught by YAML validation and corrected before completion. No target or container
+was contacted. Neutral transaction/specification hashes were refreshed; accepted
+production hashes, consumed bundles and the notifier installation state are unchanged.
+
+Private evidence: `validator-delivery-w199/host.log`, `host.status` and
+`qualification.json` under the existing private evidence root. Session 23150 exited
+0; static-check session 31934 exited 1 for the corrected YAML error. Earlier local
+sessions 54747, 57932, 32405 and 14983 completed and are retired. No session remains
+active. Changes are uncommitted; no publication or live authority follows.
+
+### November 17 W-200 primary/Pi candidate prepared; sealing withheld
+
+Prepared the private draft at
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-isolation-candidate-xbe0nu5s`.
+The proposed owner recipe binds current publisher, fragment, helper, finalizer and
+reconciler hashes, original installed caller hashes, and the accepted release.
+It explicitly selects `validation_tools_trial=primary` with primary/IPv4 scope.
+The parent inputs use a fresh workload token and operation paths. They retain the
+accepted Webmin controls, guarded profile, source address, owner restoration and
+240/840-second Caddy budgets. No old approval, agent socket or execution receipt
+was copied as current authority. W-197 remains capability evidence only; future
+live admission must independently revalidate the retained baselines.
+
+Current source functions constructed the exact proposed primary payload and checked
+its recipe/hash bindings locally. The secondary archive contains control metadata
+only; there is no secondary execution in the proposed scope. Parent profile/token/
+path checks and Ansible syntax passed without target contact. Session 96719 exited
+0 and is retired. The candidate has no operator launcher, live input manifest or
+execution command; its PREPARATION.SHA256SUMS identifies drafting artifacts only.
+`review.json` states prepared-unsealed and records the exclusions and blocker.
+
+Sealing review found a specific qualification gap. The current owner gate requires
+execution coverage tied to the exact current source graph. The retained W-182
+whole-path receipts correctly fail current verification with `stale or incomplete
+graph`; they were not modified. More importantly, the existing whole-path suite's
+recipe setup does not select W-199's validation-tool option. Running that unchanged
+suite would not exercise the new installation/recovery path. Fifteen W-199 file/
+recovery tests remain valid focused evidence, not complete owner execution coverage.
+
+Resolve this through the existing owner qualification for the actual primary-only
+branch, with expected/observed delivery, dispatch, pre-ID failure and restoration
+results. Do not reopen target-kernel capability or capacity fixtures: W-197 already
+settled the read-only mechanism on the primary, and target writable execution is
+an explicit trial question. No evidence hash rewrite, synthetic success receipt,
+coverage waiver or broad fixture rerun was used to obtain authorization readiness.
+
+Caddy remains clean/inactive and its neutral policy check passes. No operation was
+registered or sealed, no container or target was contacted, and no publication
+occurred. Consumed attempts and accepted hashes remain unchanged. W-200 stays in
+progress; W-191/W-147/AC-013 remain open and W-157 remains uninstalled.
+
+### November 17 W-200 primary-only owner coverage completed locally
+
+The existing application qualification now enables `validation_tools_trial=primary`
+for its primary-only cases and binds current helper/finalizer/reconciler hashes.
+Its focused launcher runs three cases through the real payload builder, serialized
+SSH substitute, complete owner transaction, readback and restoration: successful
+primary HTTPS, failed HTTP acceptance, and an injected finalizer-install rename
+failure after helper installation but before any release ID. All three pass.
+Independent checks require actual helper/caller identities at validation dispatch,
+the empty target receipt for the installation failure, restored caller/publisher
+bytes and modes, helper/stage removal, baseline release selection and no secondary
+command or exposure. The failure is injected at the actual fixed-PATH rename,
+not by pre-writing a transaction result.
+
+The disposable offline fixture substitutes transport, service scheduling and only
+the unavailable namespace primitive. Exact delivered helper/callers and native
+Caddy validation/HTTPS execute. This does not prove isolation, real writable service
+restrictions, runtime timing or Pi capacity; W-197's actual-host capability evidence
+remains separately scoped. No root-isolation or load fixture was repeated.
+
+Private retained evidence is `w200-primary-tools-qualified` beneath the existing
+Uptime Kuma evidence root: `result.json`, `primary-tools-summary.json`, raw case
+receipts, `host.log` and `verifier-negative-tests.json`. The current graph and raw
+effects verify again after preservation. Four private-copy mutations (stale graph,
+missing option, altered restored caller and missing dispatch) reject; the restored
+control passes. The application-onboarding host profile, neutral successor policy,
+test lifecycle and whitespace checks pass.
+
+Earlier runs remain at `/tmp/caddy-application-qualification-t4v_o6z2`,
+`/tmp/caddy-application-qualification-99lr4akt` and
+`/tmp/caddy-application-qualification-05x1aj23`. They exposed only test-adapter
+integration gaps: non-root finalizer dispatch and fixed-PATH fault injection.
+Those runs are not relabeled. Final run
+`/tmp/caddy-application-qualification-rvcuqk_z` passed and its container cleanup
+returned zero. Sessions 47561, 6211 and 92116 exited 1; 2515 and host-check session
+27272 exited 0. All are retired.
+
+The new focused summary deliberately cannot pass the full authorization gate;
+no old receipt was relabeled or gate waived. Exact candidate/authorization coverage
+bindings still need reconciliation before sealing. W-200 remains in progress for
+that boundary. No production executable changed in this step, no helper/caller
+was installed, and no target contact, successor registration, sealing or publication
+occurred. W-191/W-147/AC-013 remain open; W-157 is not installed.
+
+### November 17 W-200 exact candidate authorization bindings reconciled
+
+The existing owner gate had required paired onboarding evidence for a diagnostic
+that cannot expose or contact the secondary. It now selects the explicit
+`primary-validation-diagnostic` profile only when the definition binds the single
+primary, exact Webmin fragment/login request, validation-tool hashes and existing
+240/660-second recipe limits. Unknown profiles, broadened targets, missing tool
+delivery, changed family, budget or helper identity reject. Paired onboarding keeps
+its full case set. This is proportional coverage selection under the approved
+primary-only scope, not a waiver of recovery or identity checks.
+
+The private review at `webmin-isolation-candidate-xbe0nu5s` now retains an exact
+owner projection under `owner-workspace`, its graph in `OWNER-CANDIDATE.SHA256SUMS`,
+and fresh execution in `owner-authorization-evidence`. Three complete owner cases
+pass: successful request, failed HTTP acceptance and partial install before a
+release ID. The existing `--authorization-ready` gate passes against those exact
+bytes after private preservation. It rejects nine evidence mutations, including
+stale graph, changed status, missing option/dispatch/decision/readback, changed
+restored caller and symlinked evidence. Six separate profile/recipe mutations
+reject. Earlier focused and consumed receipts are unchanged; no summary was renamed
+or relabeled as current authorization evidence.
+
+The parent now points to the private owner projection and its accepted local
+qualification evidence. Its primary/Pi inventory, diagnostic-only flags, original
+limits, fresh token/paths, fixed recovery and exclusions are unchanged. The live
+input-manifest path remains uncreated, operator readiness remains false by default,
+and no live launcher is present. `owner-binding-review.json` records exact owner
+and parent hashes; `authorization-ready.log` records the owner gate. Local gate
+success is preparation evidence, not user authorization or writable target acceptance.
+
+The first private-projection run failed because the non-root fixture adapter could
+not read owner-private source. The adapter now forwards that caller's commands to
+the native validator/rename programs without opening private directories or adding
+privileges. That failed evidence remains at
+`/tmp/caddy-application-qualification-2sgsdz8v`; session 82676 exited 1. The corrected
+run `/tmp/caddy-application-qualification-uewq4fzd` exited 0 (session 88716), all
+owned-container cleanup passed, and its evidence was preserved. Copy session 31654
+exited 0. No namespace/capacity fixture was added or used to accept the target.
+
+Parent syntax, current host qualification, shell syntax/lint/formatting/collision,
+neutral owner policy, documentation and whitespace checks are recorded in the
+private review. The main stream and accepted installed identities remain unchanged.
+Only the review projection is defined; no main operation was registered and no
+live bundle was sealed. W-200 remains in progress for sealing and separate live
+review. W-191/W-147/AC-013 remain open; W-157 remains uninstalled.
+
+### November 17 W-200 sealed primary/Pi diagnostic — approval required
+
+The exact qualified owner definition is registered locally as
+`20261117-webmin-isolated-validation-diagnostic`. The main stream is now defined;
+accepted installed identities are unchanged. The frozen private owner projection,
+parent inputs and qualification receipts are the execution inputs. No live authority
+is implied by registration or a passing authorization-readiness gate.
+
+The final lifecycle check caught the predecessor archive tag in the new defined
+stream row. That field is now neutral in both main and the private projection;
+the published archive and historical record remain preserved. No executable or
+qualification graph changed. The final manifest was regenerated before review.
+
+**Exact bundle and command for one attempt:**
+
+- Private review: `/home/aaron/code/.local-evidence/uptime-kuma/webmin-isolation-candidate-xbe0nu5s`.
+- Manifest: `INPUTS.SHA256SUMS`, 260 regular inputs.
+- Manifest SHA-256: `1688b2b2cb8191151013debd757eb1ee3d4a29f69a1d725b54e6fc6d396fde7a`.
+- `scope.json`, `launch.json`, parent inputs, owner sources, raw qualification
+  evidence and non-secret execution dependencies are bound. `sealed-inputs-index.json`
+  and private copies retain the input bytes. Existing SSH-agent credentials remain
+  external; no password or key material is collected.
+
+```bash
+/usr/bin/python3 -I -B /home/aaron/code/.local-evidence/uptime-kuma/webmin-isolation-candidate-xbe0nu5s/operator.py --manifest-sha256 1688b2b2cb8191151013debd757eb1ee3d4a29f69a1d725b54e6fc6d396fde7a --run-approved-once
+```
+
+**Targets and temporary changes:** only `ama@10.1.3.75` and `pi@10.1.0.53`.
+Temporarily apply the guarded Webmin backend profile and primary route. Deliver the
+isolated validator helper before its finalizer/reconciler callers, after preserving
+verified originals; keep the publisher payload-local. Stop before replication.
+Compare marked direct/proxy IPv4 login-page requests using the neutral User-Agent
+and unchanged HTTP-200/login requirement. Retain received headers, boundary timing,
+health-probe overlap, clock uncertainty and bounded resource deltas. Boundary events
+do not establish internal CGI execution or full response-body completion.
+
+**Stop and recovery:** fail closed on identity/configuration drift, failed isolation
+or file access, request/evidence failure or deadline. Restore both owners regardless
+of request outcome, including failures before a release ID exists. Restore original
+callers before removing the helper, then verify release/selection, loopback backend
+and primary natural monitor acceptance. Preserve incomplete recovery as a failure;
+no automatic replay. Forward work remains 240 seconds; recovery/monitor/readback
+share the 840-second aggregate cutoff, within the 1200-second child bound. The
+sampler remains 300 seconds and independent backend recovery 1800 seconds. Resource
+limits, normal runtime health checks and existing privileges remain unchanged.
+
+**Excluded:** secondary contact/exposure, replication progression, DNS, private
+login/browser/WebSocket/graphs, scans, reboot/failover, privilege additions,
+networked validation fallback, notifier installation, permanent promotion and
+publication. No private operator password or timed browser check is required.
+
+**Local qualification:** final sealed `--verify-only` passes without target contact;
+exact owner authorization readiness, deployment-window and lifecycle checks pass.
+The unchanged launcher's local tests cover success/failure, non-consuming preflight,
+replay rejection and drift rejection. Existing fresh three-case owner execution,
+nine evidence negatives and six scope/recipe negatives remain bound; no fixture
+expansion or capacity/root-isolation repetition occurred. Private logs retain the
+checks. No attempt marker exists and all commands completed synchronously.
+
+W-200 preparation is complete for review. W-191 writable delivery, W-147 timeout
+attribution and AC-013 remain unaccepted. Approval must explicitly cover this bundle,
+command and scope for one attempt; no live contact or publication occurred.
+
+### November 17 W-200 approved attempt stopped before Caddy (W-201)
+
+Aaron approved the exact bundle and scope at the preceding review section for one
+primary/Pi diagnostic attempt. The launcher verified the sealed 260-input manifest
+and exact owner authorization gate, created its exclusive attempt marker and ran
+once. Session 94634 completed with parent exit 2; it is retired. The original
+manifest, inputs, attempt marker, parent.log and parent.exit remain unchanged in
+`webmin-isolation-candidate-xbe0nu5s`. Approval is consumed; do not replay.
+
+Pi host/service-control admission passed. The parent staged the guarded backend,
+saved the baseline, armed independent recovery and applied the temporary backend
+profile. Pre-operation clock capture then returned FileNotFoundError. The configured
+controller output directory `inputs/evidence` is absent. Later writes of the
+pre-restoration snapshot and final parent-owner outcomes explicitly failed because
+that directory does not exist. Source inspection confirms clock capture writes its
+receipt there; the historical remote clock values were not retained. Do not infer
+successful clock results from the error alone.
+
+The parent continued mandatory backend recovery: native restore returned success,
+private state read succeeded, the assertion requiring phase `restored` passed and
+only then was the recovery timer stopped. This is recovery evidence in the retained
+Ansible log, not a separately persisted recovery receipt. The final owner-outcomes
+write failed and later combined terminal/boot checks were not reached. No further
+inspection was performed to fill that evidence gap.
+
+Caddy's child was never launched. Its definition remains unexecuted; no primary
+tool installation, route publication, request comparison, sampler, browser or scan
+workload ran. Clock capture may have contacted the primary within approved scope;
+this is not a claim of zero primary contact. No Caddy restoration was needed and
+no monitor-cycle acceptance was performed in this attempt. W-191 remains pending,
+W-147 has no new request evidence, AC-013 remains pending and W-157 is not installed.
+
+W-201 owns the local output-directory admission and receipt-persistence correction.
+Reconcile the unexecuted child/parent lifecycle before any separately reviewed
+successor. Do not broaden fixtures, create the missing directory and replay, or
+change the consumed bundle. No publication or further live action is authorized.
+
+### November 17 W-201 controller evidence admission corrected locally
+
+The parent had no storage admission before native backend preparation. Its existing
+flow test supplied an already-created temporary directory and substituted clock
+capture, so it did not exercise the missing-output-directory boundary. The frozen
+attempt's missing directory explains the repeated receipt-persistence failures;
+its unretained remote clock results remain unknown.
+
+The existing handoff helper now admits a prepared absolute controller-owned
+mode-0700 directory, rejecting missing, file, symlinked and non-private paths.
+It exercises the existing exclusive JSON receipt writer and private readback in
+a disposable child, then removes only that probe. The parent calls admission after
+manifest verification and before its first target command. It neither creates nor
+repairs an operation directory at runtime. The fleet onboarding procedure now
+requires preparing that private output directory before sealing. Later disk or
+permission failure is still possible; the original parent log remains fallback
+evidence and mandatory native recovery is unchanged.
+
+The real localhost Ansible admission task passed six cases (missing, file,
+symlink, public mode, read-only mode and valid private storage). Negative cases
+stop before a simulated target step. The actual writer's injected error propagates
+and its disposable probe is cleaned up. Three existing primary-only parent cases
+and the original clock-before-failure scenario pass after including admission;
+recovery runs and terminal outcome receipts persist. These tests check controller
+storage/sequencing only, not target capacity, namespace capability or HTTPS.
+
+Private `w201-controller-storage` retains source hashes, test logs and qualification
+summary. Initial sandbox runs 39558/36071 exited 1 because Ansible's local RPC
+server could not start; they are not acceptance evidence. Localhost-only rerun
+23287 and clock-failure run 54516 exited 0 outside that restriction. The vexp
+completion helper was unavailable from the parent workspace; focused owner tests
+and whitespace checks were used. All sessions are retired.
+
+All 260 consumed input hashes still match their original manifest. The Caddy
+child never launched and its existing definition is preserved, not marked as an
+executed terminal operation or reused as new authority. Future source/binding
+reconciliation must precede a new seal and review; this change does not authorize
+replay. W-201 is locally resolved. W-147/AC-013 remain pending, W-157 remains
+uninstalled, and no live contact or publication occurred.
+
+### November 17 W-202 parent successor and unexecuted child reconciliation
+
+The failed parent never launched its Caddy child. Retain the same single
+`20261117-webmin-isolated-validation-diagnostic` definition; it is unexecuted,
+not a consumed Caddy terminal operation. No Caddy terminal tag or second stream
+is created. The failed parent, its exclusive attempt marker, original 260 inputs
+and recovery log remain unchanged. Its approval cannot authorize this successor.
+
+The Caddy recipe, operation, transaction, runner and complete qualification graph
+match the previously qualified bytes. The actual owner gate passes against the
+original `webmin-isolation-candidate-xbe0nu5s/owner-authorization-evidence` with its
+provenance intact. That evidence is hash-bound in the new manifest; it is not
+relabeled as fresh execution. W-201 changed the parent/handoff and their tests,
+not the child graph, so no owner fixture, capacity or root-isolation rerun was
+needed. Future target admission still revalidates current state independently.
+
+The new private parent has fresh paths/token and prepared controller-owned 0700
+`inputs/evidence`. Its frozen source includes W-201. The exact parent tasks before
+first target contact ran locally: seven passed, zero changes, one non-applicable
+browser task skipped. This exercised scope binding, actual Caddy authorization,
+manifest verification and real storage receipt writer/readback. Full parent syntax,
+owner window/lifecycle policies and sealed launcher preflight pass. Session 98073
+exited 0; no target task, SSH, container, browser or service operation ran.
+
+**Exact W-202 bundle, command and scope — separate live approval required:**
+
+- Private review: `/home/aaron/code/.local-evidence/uptime-kuma/webmin-storage-review-jbd4aw5t`.
+- Manifest: `INPUTS.SHA256SUMS`, 263 regular inputs.
+- SHA-256: `3c7a91105fcdb02f551dc15fd2b65c3227dd3592fe6b689c16a56d1667e2b88c`.
+- Exact frozen inputs, metadata, original owner evidence and W-201 qualification
+  are bound; private sealed copies retain their bytes. Credentials remain external
+  through the existing agent. No new password or browser attendance is required.
+
+```bash
+/usr/bin/python3 -I -B /home/aaron/code/.local-evidence/uptime-kuma/webmin-storage-review-jbd4aw5t/operator.py --manifest-sha256 3c7a91105fcdb02f551dc15fd2b65c3227dd3592fe6b689c16a56d1667e2b88c --run-approved-once
+```
+
+One attempt on `ama@10.1.3.75` and `pi@10.1.0.53` only. After controller storage
+admission and target identity/configuration checks, temporarily apply the guarded
+Webmin backend profile. Preserve original primary callers, install the isolated
+validator helper before finalizer/reconciler, and keep the publisher payload-local.
+Temporarily activate the primary route and compare equivalent marked direct/proxy
+IPv4 login-page requests with the neutral User-Agent and unchanged HTTP-200/login
+contract. Retain bounded received headers, network-boundary timing, health-probe
+overlap, clock uncertainty and resource deltas; do not infer CGI execution,
+full-body completion or timeout causation from boundary observations alone.
+
+Stop on drift, failed isolation/access, failed request/evidence or deadline.
+Restore both owners regardless of comparison outcome, including pre-release-ID
+failure. Restore callers before removing the helper; verify original selection,
+backend loopback and primary natural monitor acceptance. Report incomplete recovery
+without replay. Forward work remains 240 seconds; recovery/observation/readback
+share the aggregate 840-second cutoff, within the 1200-second child bound. Sampler
+300 seconds and independent backend recovery 1800 seconds remain unchanged, as do
+resource caps, existing privileges and normal runtime health checks.
+
+No secondary contact/exposure, replication progression, DNS, authentication,
+browser/WebSocket/graphs, scan, reboot/failover, privilege additions, networked
+validation fallback, notifier installation, permanent promotion or publication.
+The new attempt marker is absent, output directory empty and all original consumed
+hashes still match. W-191 writable execution, W-147 attribution and AC-013 remain
+unaccepted. This is a prepared review, not live authorization.
+
+### November 17 W-202 execution — timeout with retained timing (W-203/W-204)
+
+Aaron approved the exact 263-input bundle for one primary/Pi attempt. Launcher
+admission and W-201 storage admission passed. Session 51564 ended with parent exit
+2 and child exit 1; all execution sessions are retired. Approval is consumed.
+Evidence is retained in `webmin-storage-review-jbd4aw5t`: parent.log/exit,
+inputs/evidence, copied caddy-evidence and TERMINAL-EVIDENCE.SHA256SUMS.
+
+Backend preparation, clock captures, actual route/source and denial checks passed.
+The Caddy child installed its bound validation tools and activated its unexposed
+primary candidate. The marked HTTPS request completed TLS in 0.048183 seconds,
+then timed out after 5.001715 seconds with no client response (HTTP 000, curl 28).
+The direct request returned HTTP 200 with first bytes about 2.307 seconds after
+arrival. The proxied request reached the backend interface; its first response
+bytes were observed about 7.491 seconds after arrival, after client closure. No
+complete proxy response headers/status were captured. This narrows the observed
+stall to delayed backend response; it does not explain why Webmin responded late
+or establish CGI/full-body completion.
+
+Clock/resource/wire correlation passed. Two health connections were recorded.
+Webmin's sampled memory.current peak was 115.28125 MiB; its retained memory.events
+high/max/oom/oom_kill counters remained zero, as did Kuma's. These observations
+apply to this finite interval; they neither prove host capacity nor exclude all
+resource effects. The result does not support treating validation isolation alone
+as a demonstrated remedy for W-147. Detailed causal reconciliation remains W-203.
+
+Primary containment, release/tool restoration, resume, disposition and readback
+all returned zero. The validation-restored receipt is present. A natural monitor
+cycle started after resume and completed successfully (ExecMainStatus 0); sender
+PID/restart continuity passed. Native backend restore and the restored-phase
+assertion passed, then its recovery timer was stopped. Parent-owner-outcomes.json
+persisted successfully. Final parent acceptance rejected the nonzero Caddy result;
+it did not falsely accept application success. No browser or scan workload ran.
+
+The Caddy stream is now failed-consumed/terminal-pending with its exact executed
+operation retained and deployable/coverage registries cleared. Planned tag:
+`caddy-webmin-isolated-validation-terminal-2026-11-17`. W-204 owns separate archive
+preparation/publication review; no commit, tag, push or cleanup occurred. Prior
+consumed attempts remain preserved. W-147/AC-013 remain unresolved and W-157 is not
+installed. No fresh inspection, retry, permanent promotion or publication is
+authorized by this consumed approval.
+
+### November 17 W-203 retained timing reconciliation
+
+The two marked foreground requests have identical retained expected headers and
+the same login path. Direct first payload arrived after 2.306852 seconds and HTTP
+200 headers were captured. Two distinct health flows arrived about 0.177 seconds
+before the proxied foreground request. Their first backend payload arrived about
+7.513/7.517 seconds later; the proxied first payload arrived after 7.491 seconds.
+Health clients closed after about three seconds and the foreground connection
+closed after about five. These are same-interface kernel timestamps; controller
+clock uncertainty is not subtracted from these local intervals.
+
+The wire observer emits first-byte only for new TCP payload, not ACK/FIN alone.
+It reported no capture issues or kernel drops. Nevertheless no complete response
+headers/status or response-close was captured for the three delayed flows. Do not
+call them successful HTTP responses or proof of completed CGI work. The two health
+flows carry the diagnostic health marker but their process origins are not
+individually proven. Their User-Agent and Accept-Encoding differ from the foreground
+contract; the safe recorder retains only `unexpected`, not raw values. These fields
+must not be assumed equivalent when attributing latency.
+
+This single comparison demonstrates delayed backend-side payload after client
+cancellation with overlapping health requests. It does not establish serialization,
+CPU pressure, name lookup, Perl/CGI behavior or another internal cause. Memory event
+counters remained zero across the sampled interval; the earlier pressure/OOM attempt
+is preserved, not generalized to this attempt. W-191 isolation was exercised but
+is not a demonstrated timeout remedy. No timeout or cap is changed.
+
+`w203-reconciliation.json` retains derived intervals and limits beside original
+receipts. W-203 retained-evidence reconciliation is resolved; W-147 remains open.
+A next owner review should focus on simultaneous health/foreground request handling
+and the health request contract, rather than another broad deployment qualification.
+No new diagnostic is defined or authorized. W-204 archive preparation is separate.
+
+### November 17 W-204 terminal archive prepared for publication review
+
+The exact 32-file owner archive is prepared locally in
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-isolation-archive-review-si8xkvku`.
+It includes pending Caddy 2.11.9 inventory reconciliation, isolated validator/caller
+implementation and qualification, the executed recipe/operation, W-201 parent
+storage correction, owner documentation and terminal lifecycle metadata. The
+review's files.txt is the complete path list; archive.patch is the exact diff.
+Twenty-seven files match bound executed source bytes; the remaining five are
+history/reproducibility documentation or terminal registries/result. Raw evidence,
+monitoring change records and other repositories are excluded.
+
+**Exact W-204 archive command and scope — separate publication approval required:**
+
+```bash
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/webmin-isolation-archive-review-si8xkvku/review-command.sh
+```
+
+- Repository/destination: `Racerx323/homelab-server-configs`, origin main only.
+  The command verifies owner/repository/visibility and unchanged remote main before
+  committing; no remote was contacted during this preparation.
+- Base commit: `bda63a46f88620f177d01e527644625b5eb27ab2`.
+- Exact candidate tree: `fc61097b68e0899d92a55d5bcb752e75c9dbb646`.
+- Tag: `caddy-webmin-isolated-validation-terminal-2026-11-17` (annotated).
+- File manifest SHA-256: `4c605d4c7f483c5da90980c49394675cb83b66652d9fcb9b0da702c57766dea4`.
+- Patch SHA-256: `66404c6fab43b2ffeac5c21d18e8b4d5311f4165dd0bdab9f2095f83f80c2faf`.
+- Command SHA-256: `4127a9c6c2305ea9beed010c08b57c43933904125eb664e85beb2031319fd943`.
+- Commit/tag messages and their identities are retained in review.json; the
+  temporary candidate index leaves the repository's existing index unchanged.
+
+Authorize one commit, one annotated tag and one atomic push of those two refs.
+The command checks the original index/base, exact source file hashes and candidate
+tree, refuses existing local/remote tag or changed remote base, runs normal commit
+hooks, checks the resulting tree, and reads remote refs after the push. A changed
+input/hook-mutated tree stops for reconciliation; it does not silently rebind this
+review. Approval does not include any live host operation, terminal cleanup,
+private evidence publication, additional repository commit or retry.
+
+Local checks pass: terminal window/successor/lifecycle, Bash syntax, ShellCheck,
+whitespace and the repository-configured Gitleaks scan. The initial unconfigured
+scan flagged five historical integrity pins in HISTORY.md; the existing owner
+allowlist handles them. Both logs are preserved; no scanner policy was changed.
+Existing W-200 exact child qualification and W-201 parent tests retain their
+original scope/provenance. No broader fixture run was needed for this archive.
+
+No commit/tag/push was performed. W-204 remains in progress until separately
+approved publication and remote verification. Executed definitions/inputs remain
+present; cleanup must follow that archive boundary. W-147/AC-013 stay unresolved,
+W-157 remains uninstalled and no new live authority exists.
+
+### November 17 W-205 publication stop and corrected continuation
+
+Aaron approved the exact W-204 command. It ran once and stopped in the normal
+`accepted-live-hash-policy` commit hook: `lifecycle_complete=false`. The terminal
+result was missing from the lifecycle registry and the consumed operation still
+had its earlier defined-unexecuted classification. No commit, annotated tag or
+push occurred. Session 13640 exited 1 and is retired. The original review,
+publication log and stopped-before-commit receipt remain unchanged.
+
+The local correction changes only `Caddy/manifests/manifest-lifecycle.tsv` from
+the approved archive: classify the operation and terminal result as
+failed-consumed/non-deployable. No runtime input, executed operation or receipt
+was edited. The main index still holds the original candidate; the corrected
+candidate uses an explicit temporary index, not a repository in evidence storage.
+
+**Exact W-205 publication continuation — separate approval required:**
+
+```bash
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/webmin-archive-continuation-s06pi9x8/review-command.sh
+```
+
+- Same 32 paths, messages, repository and scope as W-204: one commit, one annotated
+  tag and one atomic push to `Racerx323/homelab-server-configs` main/tag.
+- Base: `bda63a46f88620f177d01e527644625b5eb27ab2`.
+- Expected initial index: `fc61097b68e0899d92a55d5bcb752e75c9dbb646`.
+- Corrected tree: `bec2abdf0d95e16648e6b22cc35e307b9e62b9db`.
+- Annotated tag: `caddy-webmin-isolated-validation-terminal-2026-11-17`.
+- File manifest SHA-256: `9f9d66b9e68cc59593c5ad88b735e79df29e37d9f9f4e23a148d1c644366c1ae`.
+- Patch SHA-256: `287b3e422d97ab04aa66522ff97587fb588ef0e919ab6b4935af17235340a386`.
+- Command SHA-256: `386874c9af6ab38312003eb2ca4e1f0e90c998a58bef5df312773e0618b94c46`.
+
+The review directory contains the exact snapshots, path list, diff, message hashes
+and command. It checks destination/base/tag absence, file identities and staged
+and committed trees, runs normal hooks, pushes atomically and reads remote refs.
+The original W-204 approval is consumed; this changed tree is not authorized.
+No private evidence, monitoring records or workspace instructions are included.
+No live action, terminal cleanup or replay is included.
+
+Qualification passed: accepted-live-hash, deployment-lifecycle and successor
+policies; command Bash syntax/ShellCheck; whitespace; repository-configured
+Gitleaks. No fixture expansion was needed. W-204 remains pending publication.
+
+### November 17 W-206 evidence storage Git discovery and correction
+
+The uptime-kuma evidence root itself is not a repository. VS Code discovered
+nested repositories: the W-200 qualification snapshot and its W-202 copy each
+contained an unborn Git index with 71 uncommitted entries and no remote. Earlier
+qualification/publication worktrees and upstream checkouts added more Git roots.
+These were preparation artifacts, not unsynced evidence intended for publication.
+Creating Git metadata there violated the intended evidence-only role.
+
+Twelve discovered `.git` directories/pointer files across `.local-evidence` were
+reversibly moved to
+`/home/aaron/code/.local-git-metadata-archive/2026-11-17-evidence-cleanup/`.
+`relocations.json` maps originals to retained metadata; `verification.json`
+records that all twelve former roots are no longer Git repositories. Source,
+logs and receipts remain in place. All 260/263 file hashes in both consumed
+input manifests still match. External worktree registrations were preserved;
+no prune or evidence deletion was performed. Historical Git-dependent checks
+are not rerunnable in place and must not be replayed as consumed operations.
+
+The scan could not enter 100 protected synthetic fixture directories; no
+permission changes or exhaustive privileged scan was performed. VS Code may
+retain cached entries until refresh/reload. Workspace AGENTS.md now prohibits
+Git initialization, cloning, worktree creation or copied Git metadata under
+`.local-evidence`, and directs Git-dependent qualification to outside workspaces
+or an explicit temporary index. This rule and ledger update remain local.
+
+### November 17 W-207 publication launcher correction
+
+Aaron approved W-205's exact continuation. Session 48594 ran once and exited 1
+before staging, commit, tag or push. The launcher mistakenly expected the final
+candidate tree at the initial-index gate; review.json and the approved scope
+correctly specified the original staged tree. Sequential string replacement
+during preparation caused this defect. The empty log is retained; local source
+inspection and unchanged index establish the mismatch. No hook or commit ran.
+
+The corrected launcher changes only its first index assertion. The archive's
+32 paths, source hashes, base, final tree, messages, tag and destination are
+unchanged. Original launcher/review and failed execution receipt are preserved.
+Local checks verify the actual initial index/base, all 32 source hashes, distinct
+pre/post-staging assertions, Bash syntax and ShellCheck. No Git repository was
+created in evidence storage.
+
+**Exact W-207 corrected command and unchanged W-205 publication scope — approval required:**
+
+```bash
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/webmin-archive-continuation-s06pi9x8/review-command-v2.sh
+```
+
+Command SHA-256: `367ebccb7a47872519d46fa3955082e65bd83a522b426ba282ab8339a33b678a`.
+Initial index: `fc61097b68e0899d92a55d5bcb752e75c9dbb646`.
+Final candidate tree: `bec2abdf0d95e16648e6b22cc35e307b9e62b9db`.
+All other identities and boundaries are those in W-205 above, retained in
+review.json and command-v2-review.json. Authorize one execution for one commit,
+one annotated tag and one atomic push to the same verified owner repository,
+with normal hooks and remote-ref readback. No live host work, cleanup, monitoring
+publication or private evidence publication is included. W-205 execution approval
+is consumed; the corrected command is not yet authorized.
+
+### November 17 W-207 publication completed; W-204/W-205 resolved
+
+Aaron approved the corrected command above. Its exact SHA-256 and review
+identities were verified before one execution. Normal commit hooks passed;
+commit `49867222c7a55957471d2a8a15038eeb649693f7` has the approved base parent and
+exact tree `bec2abdf0d95e16648e6b22cc35e307b9e62b9db`.
+Annotated tag `caddy-webmin-isolated-validation-terminal-2026-11-17` has object
+`5734d995a561b0102d0e7062211a7e8e5b553372` and peels to that commit. Atomic push
+completed; remote main, tag object and peeled commit match local identities.
+The server repository worktree/index are clean. Remote CI was not checked.
+
+The private review retains publication-v2.log, publication-v2-result.json and
+publication-v2-session.json. Session 37873 exited 0 and is retired. Both earlier
+publication failures are preserved. No monitoring change record or private
+evidence was included. This local ledger/result update remains uncommitted.
+
+W-204/W-205/W-207 are resolved. Terminal cleanup has not run; the consumed
+operation remains present and must not be replayed. W-147/AC-013 remain pending,
+W-157 is uninstalled, and publication grants no target/retry/promotion authority.
+
+### November 17 W-208 Git metadata archive retired
+
+Aaron authorized history inspection, worktree-registration reconciliation and
+removal of `.local-git-metadata-archive`. Three server worktree HEADs are ancestors
+of main. Two synthetic baseline commits and two Webmin review commits were absent
+from their recorded remote branches. Preserved all locally present objects,
+including unreachable objects, in inert packs with refs and staged patches at
+`/home/aaron/code/.local-evidence/git-metadata-retirement-2026-11-17`.
+Pack checksums/indexes and exact object sets verified before deletion. The Webmin
+clone was partial/promisor: missing upstream objects were not fetched, and this
+is preservation of local objects, not a claim of complete upstream history.
+
+Removed the three exact stale registrations from the server repository; four
+Webmin registrations disappeared with their retired metadata. Evidence/source
+worktrees remain untouched. Server refs and worktree/index status compare equal
+before/after. Deleted `/home/aaron/code/.local-git-metadata-archive` and verified
+its absence. Recovery artifacts contain no `.git` and are not a repository.
+`result.json`, relocation mapping and SHA256SUMS.json retain the audit. Local
+session 85779 exited 0; no session remains active. No publication or host work.
+
+### November 17 W-209 retirement directory audit and deletion
+
+Aaron requested an audit for deletion and reconciliation of anything needed into
+its repository home. Read-only remote verification confirms the three Webmin fork
+branch heads recorded in the owner publication document. Their fdisk, smart-status
+and system-status module trees exactly match the final combined review branch;
+combined changes touch no other modules. The two combined commits therefore add
+no implementation absent from the published branches. All locally present Webmin
+commits are reachable from the retained refs after reconstructing the partial
+clone's missing-parent boundaries for local analysis; no extra abandoned Webmin
+commit was found. No fetch, push, merge or production change occurred.
+
+The two Codebase Memory commits contain identical eight-line synthetic watcher
+fixtures. The two unborn qualification indexes contain identical blob sets: 68
+blobs remain in the retained source snapshots; the remaining three are an obsolete
+operation hash, a superseded regression-test version and generated Python bytecode.
+The three saved server worktree commits are already in main. Two indexes match
+retained worktree files; the third matches its original committed HEAD, while its
+later worktree edits remain in the original source snapshot. No staged-only work
+requires migration.
+
+Recorded source reconciliation in Webmin/docs/DISK_DISCOVERY_UPSTREAM_PUBLICATION.md.
+Deleted `.local-evidence/git-metadata-retirement-2026-11-17` and the task-owned
+`/tmp/webmin-reconcile-np4lqfpi` analysis repository. No replacement archive or
+repository was created in evidence storage. Original source snapshots, consumed
+bundles and diagnostic receipts remain untouched. These documentation updates
+are local/uncommitted; no publication authority was used.
+
+### November 17 W-210 local neutral cleanup; W-211 qualification limit
+
+Verified annotated archive tag and exact commit 4986722 against the retained
+remote-verification receipt, then compared consumed operation, recipe and terminal
+result bytes against that commit before cleanup. Reused the existing inactive
+operation format, rebound current transaction/state/production and outer-operation
+hashes, cleared the recipe, removed the archived terminal-result working file,
+updated lifecycle classification and set the stream clean while retaining its
+archive tag. Successor remains none and coverage remains header-only. No neutral
+implementation or accepted deployed identity was reverted. The unrelated Webmin
+publication documentation edit was preserved.
+
+Window, successor, accepted-live and lifecycle policies pass. Current-tree
+operator-documentation check passes. Outer-runner Bash syntax, ShellCheck,
+canonical formatting, readonly/local collision and whitespace checks pass.
+The current-repository-policies host profile passes its preceding regressions,
+then fails its documentation self-test: the temporary copy lacks the Webmin
+onboarding document linked from Caddy. W-211 tracks that fixture-only gap; no
+fixture repair or load test was undertaken. Initial local command/profile/schema
+errors were corrected and their logs retained, not reported as acceptance.
+
+Logs and result are in `.local-evidence/uptime-kuma/neutral-cleanup-w210/`.
+Sessions 70714 (profile exit 1) and 64355 (shell checks exit 0) are retired.
+Cleanup changes remain uncommitted. No live contact, replay, new candidate,
+installation or publication occurred. W-147 and AC-013 remain open; W-157 is
+not installed. The failed diagnostic archive and private consumed receipts remain.
+
+### November 17 W-212 retained request-contract review
+
+Sources: W-202 backend-wire.jsonl and backend-path-a-ipv4.json under the consumed
+webmin-storage-review-jbd4aw5t/inputs/evidence directory; its existing
+w203-reconciliation.json; archived 4986722 request implementation/proposal and
+unchanged corresponding current request code. No original receipt was modified.
+
+| Contract | Direct foreground | Proxied foreground | Marked health flows |
+| --- | --- | --- | --- |
+| Request | GET /session_login.cgi | Same | Same configured method/path |
+| Host | Approved Webmin name | Same retained value | Same retained value |
+| User-Agent | homelab-proxy-diagnostic | Same retained value | Recorded unexpected; raw value unavailable |
+| Accept-Encoding | identity | Same retained value | Recorded unexpected; raw value unavailable |
+| Forwarded/Accept headers | Explicit HTTPS, host, source and Accept */* | Retained map matches direct | Absent from retained health map |
+| Connection | close | close | close |
+| Client bound | Python socket timeout 5 seconds per blocking operation | curl max-time 5 seconds overall | Configured health timeout 3 seconds |
+| Acceptance | HTTP 200 plus bounded body containing login password field | HTTP 200; body discarded | Configured HTTP 200; no login-form assertion |
+
+Thus path and foreground headers match, but the three producers do not have
+identical deadline or response-body contracts. The direct Python timeout is not
+an overall five-second request deadline. The proxy transport's 60-second header
+timeout also does not extend the five-second curl deadline. These distinctions
+are not explanations of the failure and are not a proposal to increase limits.
+The health marker containing the word webmin is not its User-Agent; no retained
+raw health User-Agent establishes the earlier authentication-selection defect.
+
+Observed: direct first backend payload at 2.307 seconds, accepted HTTP 200/login;
+two health flows start about 177 ms before the proxied foreground. Their first
+payloads arrive at 7.517/7.513 seconds; foreground first payload at 7.491 seconds.
+Health clients close near three seconds and foreground near five. No complete
+HTTP response/status was captured for the delayed flows. These are network-boundary
+observations, not proof of internal CGI execution, serialization or completion.
+Zero sampled memory-high/max/OOM events do not establish absence of CPU, I/O,
+name-lookup or internal waits. Individual health process origins remain unassigned.
+
+The primary proposal already has one IPv4 upstream. Serializing IPv4/IPv6 probe
+loops would not remove the two health flows observed in this single-family run.
+Do not infer independent capacity from two addresses of the same Webmin process.
+Do not equate the configured 30-second health interval with request serialization.
+
+Owner review recommendation, not an execution definition: use the existing native
+backend path to compare one foreground-contract request with a bounded overlapping
+batch using the identical method/path/headers and response criteria. Vary only
+concurrency; do not simultaneously normalize health headers, increase deadlines,
+raise caps or change authentication. This tests whether equivalent concurrent
+requests can reproduce delay on the actual host; it would not prove the historical
+health-request cause or accept production proxy onboarding. No Caddy route
+publication, secondary, DNS, browser or scan is needed for that question. Existing
+backend exposure/guard, measurement and restoration still require explicit scope
+and live approval; no current backend reachability is assumed.
+
+If the owner instead chooses to investigate differing health headers, treat it
+as a separate factor with a fixed concurrency level. Do not fabricate the missing
+raw header values or collect cookies/credentials/bodies to recover them. Use a
+small allowlisted safe header contract. Stop after a decisive bounded result;
+no further capacity fixture or broad deployment rehearsal is justified by this
+review. No candidate, command, acceptance waiver or live authority was created.
+W-211 remains independently open. W-147/AC-013 remain unresolved.
+
+### November 17 W-213 backend concurrency comparison review
+
+The proposed question is narrow: does overlapping identical unauthenticated
+login-page work change this actual Webmin backend's response under its existing
+service controls? It does not test Caddy forwarding, original health-header
+behavior, browser acceptance or sustained capacity.
+
+Owner-path review: `Webmin/ansible/proxy-trial.yaml` and
+`proxy-trial-restore.yaml` already snapshot, temporarily apply and restore the
+native backend with an independent recovery timer. They are include tasks, not
+standalone execution authority. The existing `proxy-combined-trial.yaml` requires
+a Caddy argv, recipe, authorization-ready successor and Caddy recovery. Do not
+run it with a fake/no-op Caddy action or register a Caddy successor solely for
+this comparison. Preparation should reuse the native tasks and existing probe/
+observation components in a narrowly scoped Webmin entrypoint, without a new
+transaction framework. Existing 1800-second fallback recovery and its verified
+restoration/disarm ordering remain; this is not permission for 1800 seconds of
+load. Backend apply limits and all service caps remain unchanged.
+
+Proposed test boundaries for local preparation:
+
+- Only the primary as HTTP client and the Pi as backend, IPv4. Retained source
+  address is 10.1.0.53 and backend 10.1.3.75:10000; fresh admission must confirm
+  route-selected source, SSH/hostname identity, boot continuity, installed units,
+  limits, configuration and guard before temporary access. Historical captures
+  are not current readiness. Reuse owner-approved ingress restrictions; any
+  proposed narrowing must be explicit and qualified, never silently broadened.
+- Fixed GET /session_login.cgi, approved Host, neutral User-Agent,
+  Accept-Encoding identity, Accept */*, HTTPS forwarded contract and connection
+  close. Only correlation IDs and concurrency differ. No authentication,
+  cookies, login credentials or stored response bodies. Evaluate HTTP 200 and
+  the existing bounded login-form predicate in memory, recording only outcomes.
+- One baseline request; after completed/healthy settling, one batch of three
+  simultaneous requests. At most one final single-request control if the batch
+  finishes and resource/health/cleanup gates permit it. Five requests maximum;
+  no automatic retry. Record actual backend arrival overlap rather than infer
+  it from client thread launch. Three requests approximate the observed count,
+  not the historical header mixture or exact 177 ms lead.
+- Every request uses the same five-second total wall-clock deadline, including
+  body inspection. This must be implemented consistently: the existing direct
+  helper's five-second socket timeout is per blocking operation and is not a
+  total deadline. Do not extend limits to obtain HTTP 200. Record connection,
+  first-header/body timing, final status and timeout stage; distinguish slow
+  valid responses from client failures and failed login-form predicates.
+- Reuse bounded resource observation covering all phases, unchanged service
+  controls and the existing reserve/pressure stop rules. Abort on OOM, service
+  restart, resource/health stop conditions, loss of required evidence or lost
+  continuity. Do not launch a phase while earlier request work is outstanding.
+  Client socket closure alone does not prove CGI work stopped. Preparation must
+  provide a bounded, non-secret backend quiescence check; if it cannot establish
+  completion safely, stop and restore rather than launch the final control.
+- Use a short explicit aggregate forward deadline inside the previously accepted
+  240-second ceiling; reserve bounded recovery separately. No opportunistic
+  extension for settling. Prove cancellation/owned-client cleanup, exact backend
+  loopback/guard restoration and terminal readback before disarming recovery.
+  The final single control is optional evidence, never a reason to bypass a stop.
+- No Caddy publication, validation-tool installation, health-policy edit,
+  secondary contact, DNS, scan, browser/graphs, package change, cap change or
+  persistent access promotion. Existing background fleet work is not suppressed;
+  record relevant overlap and classify a confounded result honestly.
+
+Interpretation agreed within this review, not production acceptance:
+
+| Observation | Supported conclusion / next boundary |
+| --- | --- |
+| Baseline fails | Concurrency comparison not established; stop, retain failure and restore. |
+| Baseline succeeds; overlapping batch degrades or times out | Equivalent concurrent workload reproduces a backend symptom in this run; historical Caddy/health causation still unproven. |
+| Batch and eligible final single succeed | No reproduced symptom under this count/contract/run; concurrency is not ruled out generally. |
+| Final single degrades despite safe settling | Possible state/order effect; no simple concurrency attribution. |
+| Overlap, quiescence or resource evidence missing | Inconclusive, not a passing comparison; stop and restore as applicable. |
+
+Review is complete. Local implementation should test request/deadline/cancellation
+and restoration correctness only; no substitute-host capacity or elaborate
+fixture expansion. Any exposed correctness/recovery defect remains a blocker.
+No executable scope, command, successor or live authority is defined by this
+review. W-211 is independent; W-147 and AC-013 remain unresolved. No tools contacted
+either target, launched a workload or published changes.
+
+### November 17 W-211 published CI failure confirmed
+
+Repository validation run 44173741545 for exact commit 49867222c7a55957471d2a8a15038eeb649693f7
+failed in Caddy current-production contracts / Repository policies. Its log reports
+operator_documentation_policy_failure=relative_link_broken for the temporary
+self-test copy of APPLICATION_ONBOARDING.md linking to
+../../Webmin/docs/CADDY_ONBOARDING.md. This matches W-211's local failure.
+The self-test copies Caddy and the DNS dependency but omits this Webmin document;
+the real file exists and the current-tree check passes. This is a fixture-copy
+defect, not evidence of a deployed Caddy/Webmin outage. The accepted DNS pin is
+not the reported cause. The complete failed-job log is retained in
+neutral-cleanup-w210/ci-44173741545-failed.log. No test rerun, code edit, live
+contact or publication occurred. W-211 remains open for the small dependency-copy
+correction and focused positive/missing-dependency qualification.
+
+### November 17 W-214 backend-only implementation checkpoint
+
+Prepared `Webmin/ansible/backend-comparison.yaml` and its phase include using
+existing native apply/restore tasks, with `Webmin/scripts/compare-backend.py`
+reusing the current probe and observer. No Caddy operation is registered.
+The draft's unconditional first task refuses execution locally; it is not a
+live command or a deployable candidate.
+
+The helper limits each request to five seconds across blocking stages and
+reaps its owned worker processes. The fixed phase list is one, three, one;
+any failed phase prevents the next. Resource gates preserve explicit service
+limits, boot/cgroup/process identity, the 96 MiB reserve and zero increases in
+high/max/OOM events. Backend quiescence conservatively requires the original
+single Webmin process and no outstanding connections for two samples; socket
+closure alone is insufficient. Unexpected persistent child activity stops the
+comparison rather than being accepted as harmless. The sampler's optional
+callback leaves existing callers unchanged.
+
+Qualification: seven focused tests passed (actual local worker deadlines and
+cleanup; resource/continuity rejection; quiescence; observed overlap; fixed
+scope and execution refusal). Fifteen existing workload tests passed. Ansible
+syntax passed with a writable controller temporary directory; the initial
+sandbox-only home temporary-directory failure is retained. Syntax checking used
+localhost inventory and made no host connection. No fixture capacity tests or
+containers were used. vexp completion verification was unavailable from the
+parent workspace (not a repository); it is not a passing qualification.
+
+Remaining correctness work before sealing:
+
+- Bind an aggregate forward/recovery supervisor; the declared 240/840-second
+  values and per-command timeouts do not establish an aggregate bound.
+- Qualify independent recovery and client-directory cleanup on all failure paths,
+  including a snapshot cancelled before mutation and failed evidence retrieval.
+- Require terminal observer completion, resource interval coverage, header
+  equivalence and overlapping-traffic disposition. Current per-phase wire checks
+  demonstrate arrivals/overlap only and cannot accept the final capture.
+- Resolve stop propagation: a sampled resource stop blocks subsequent phases,
+  but an in-flight batch can continue to its five-second request deadline. Do not
+  describe this as immediate cancellation.
+
+These are implementation/control gaps, not Pi capacity findings. The parent
+remains disabled until resolved; no approval is requested for an incomplete
+operation. W-211 is separate and unchanged. Existing consumed evidence and Caddy
+neutral bindings remain untouched. Local sessions completed; no live execution.
+
+Private qualification logs and exact source hashes: `.local-evidence/uptime-kuma/backend-comparison-local-h1u9lgzd/`. This directory contains inert evidence only, no Git metadata.
+
+### November 17 W-211 documentation self-test correction
+
+The existing self-test now copies Webmin/docs/CADDY_ONBOARDING.md into its
+temporary repository. The negative case removes that file, requires the specific
+relative_link_broken failure, restores it and requires a passing check. This fixes
+the omitted fixture dependency without weakening current-tree link validation.
+
+The self-test, current-repository-policies host profile, canonical shell format,
+readonly/local collision policy and whitespace check passed. No container or
+live host was used. The failed published run remains historical evidence; remote
+CI has not rerun because this fix is uncommitted and unpublished.
+
+Source SHA-256: `a94a7ef40ada227b5002de619c9aa517e218e56438ca3c334472c35f79d24668`.
+Profile log: `.local-evidence/uptime-kuma/backend-comparison-local-h1u9lgzd/w211-repository-policies.log`.
+Local sessions 4700 and 24049 completed with exit 0 and are retired. W-214 and
+Webmin production acceptance are unchanged.
+
+### November 17 W-214 deadline, recovery and terminal evidence qualified
+
+The backend-only parent now uses `compare-backend.py run` to supervise two
+invocations of the same playbook: forward work, then recovery regardless of
+forward failure, timeout or controller interrupt. Forward has a 240-second
+aggregate controller budget; recovery, evidence retrieval and readback share
+840 seconds. Process-group termination is inside those budgets. Zero command
+statuses alone cannot accept a run: the controller also requires the terminal
+restoration, cleanup and evidence receipt. Fresh private output storage and an
+exclusive start marker prevent reuse of this entrypoint's consumed output.
+Direct playbook invocation omits supervision and is not the candidate launcher.
+
+The recovery play reads the persisted admission boot identities. Primary stop
+failure cannot prevent backend restoration when the backend's own identity is
+still valid. Restoration is attempted before fetching or interpreting evidence;
+failed restoration does not disarm the independent timer. The shared native
+restore path now verifies unchanged files, controls, absent ingress and loopback
+before accepting cancellation of a snapshot that never mutated the host. Both
+hosts' boot continuity is checked again after restoration. No historical boot
+identity is imposed on a new admission.
+
+Client stop latching plus an exclusive lock waits for owned workers and rejects
+late dispatch. The private primary directory remains with that latch; retained
+files are not running workload. The observer records its process identity and
+completion, and recovery verifies it has exited. Final evidence requires clean
+terminal records, no drops, matching request headers/markers, observed overlap,
+same-host clock/resource coverage, reserve/control/process continuity and final
+quiescence. Missing or confounded evidence fails acceptance after restoration.
+The observer covers the selected primary/backend interface; it does not prove
+absence of every possible background task or internal CGI completion. Native
+owner loopback readbacks are separate from the maximum five comparison requests.
+
+A resource stop blocks subsequent phases. Requests already launched remain
+bounded by five seconds; no instantaneous cross-host cancellation is claimed.
+Controller cutoff or loss of transport is a failed/unverified operation, not
+proof that remote recovery finished. Preserve the existing independent native
+fallback and require manual reconciliation if restoration cannot be verified.
+The 1800-second fallback remains a contingency, not an extension of the 840-second
+controller acceptance budget. Service caps and the 96 MiB reserve are unchanged.
+
+Qualification on the final implementation:
+
+- Thirteen comparison tests pass: real local worker deadlines and stop/late-start
+  handling; forward failure/timeout and independent recovery timeout; terminal
+  evidence rejection; fixed scope; five actual localhost Ansible recovery cases.
+- The Ansible cases cover success, client-stop failure, restore failure, invalid
+  evidence and verified pre-mutation cancellation. Their native service boundary
+  is explicitly substituted; the owner task graph and evidence/error handling
+  execute locally. This does not establish writable target recovery.
+- Fifteen native recovery tests and fifteen existing workload tests pass.
+- Ansible syntax, Python parsing, host current-repository-policies, hook
+  configuration and whitespace checks pass. The new focused pre-commit hook
+  selects these comparison checks for relevant changes. The existing Webmin
+  README records the diagnostic's launcher and limits, without making it a
+  mandatory fleet-onboarding gate.
+
+Earlier local failures are retained: the restricted sandbox prevented Ansible's
+RPC startup; the first native-control substitution did not intercept the fully
+qualified timer module and hit an absent local unit. No service changed. The
+corrected tests substitute that one task explicitly and passed. The old recovery
+test's expectation of zero commands was updated to require the new read-only
+baseline checks while still excluding a restart. No capacity fixtures or
+production hosts were used. vexp completion verification remained unavailable
+from the parent workspace and is not counted as a pass.
+
+Private final logs and exact source identities: `.local-evidence/uptime-kuma/backend-comparison-w214-jzp28qwm/`.
+
+All local sessions completed and are retired (final comparison 58683 and host
+policy 10305 exited 0). Previous consumed bundles remain unchanged. The Caddy
+stream is still clean/inactive; no successor or live bundle was registered or
+sealed. W-211 remains locally resolved. W-147/AC-013 still require actual target
+evidence under separately reviewed authority; W-157 remains uninstalled.
+
+### November 17 W-215 exact backend-only comparison review
+
+Prepared bundle: `/home/aaron/code/.local-evidence/uptime-kuma/webmin-backend-review-2k86wh8y/`.
+`INPUTS.SHA256SUMS` binds 33 frozen inputs, including the launcher, supervisor,
+native owner tasks/helpers, inventory, host keys, installed baseline, limits,
+rendered profile, runtime references and operation scope. Its SHA-256 is:
+
+`f366744efeccddf5886e27956b1f6cd2cf7944d7a5c105fe633fb6191c98dd29`
+
+This candidate uses the existing backend-only supervisor. It defines no Caddy
+operation and does not invoke the combined Caddy parent. Retained W-202 inputs
+supply the accepted installed Webmin file/control identities and service limits;
+current owner sources are frozen separately. Historical boot IDs are not reused.
+Live admission must revalidate the baseline and capture fresh continuity IDs.
+Primary native hostname comes from the Caddy owner's deployment inventory;
+Pi native hostname is `j2-svpi3bmf`, matching the retained installed binding.
+SSH uses the retained host keys with strict checking and disables ambient SSH
+configuration. Authentication uses existing external SSH credentials; none are
+copied or hashed into this bundle.
+
+Explicit narrowing from the previous profile: only 10.1.0.53 can reach the Pi's
+IPv4 backend. IPv4/IPv6 loopback remain; the non-loopback IPv6 listener and all
+other proxy allow rules are absent. Remaining managed Webmin settings are
+unchanged. Source comparison proves only listener/allow-list/rule removal;
+this is local configuration qualification, not target firewall acceptance.
+A read-only `ip route get` assertion now runs before temporary exposure and
+requires the reviewed primary source; each request also checks selected route
+and connected endpoints. The exact installed unit/drop-ins, configuration hashes
+and controls are checked by the native snapshot before apply.
+
+**Exact command for separate one-attempt authorization:**
+
+```sh
+/usr/bin/python3 -I -B /home/aaron/code/.local-evidence/uptime-kuma/webmin-backend-review-2k86wh8y/operator.py --manifest-sha256 f366744efeccddf5886e27956b1f6cd2cf7944d7a5c105fe633fb6191c98dd29 --run-approved-once
+```
+
+Targets and permitted mutations if approved:
+
+- `pi@10.1.0.53` / `j1-svpihole0`: identity/route/boot reads, private client-file
+  staging and bounded unauthenticated HTTP requests. No primary service change.
+- `ama@10.1.3.75` / `j2-svpi3bmf`: existing privileged native owner snapshot,
+  independent recovery timer, temporary restricted Webmin profile/guard and
+  service restart, bounded resource/wire observation, exact loopback restoration
+  and readback before timer disarm. No package or service-limit changes.
+- Comparison: one request, three concurrent identical requests, then at most one
+  conditional single control. Maximum five, no retries; each has a five-second
+  total deadline. Fixed GET `/session_login.cgi`, approved Host and neutral
+  User-Agent; no authentication, cookies or retained response bodies. Native
+  owner loopback readbacks are additional, separately bounded recovery checks.
+
+Forward work has a 240-second aggregate controller budget; recovery and final
+retrieval/readback share 840 seconds. The independent native fallback stays at
+1800 seconds with its existing bounded service timeout; it is a contingency,
+not permission to extend workload or claim controller acceptance. Resource
+controls remain Webmin high/max 128/192 MiB, Kuma 256/320 MiB, zero swap and
+96 MiB available reserve. Stop on limit drift, new high/max/OOM events, lost
+process/boot identity, missing evidence or failed quiescence. Already dispatched
+requests may run to their five-second deadline; no instantaneous cancellation
+claim. The final single control runs only if prior request, health and quiescence
+checks succeed.
+
+Recovery runs independently after forward failure. Primary stop failure or
+observer failure cannot skip Pi restoration when its own continuity is valid.
+Verify client stop latch/worker cleanup, observer exit, original files/controls,
+loopback and guard restoration, then disarm the timer. Retain the primary private
+client directory and stop latch to reject delayed dispatch; it is evidence, not
+running workload. A controller cutoff, transport loss or changed boot leaves
+restoration unverified and requires owner reconciliation; no retry or assumed
+rollback. Terminal evidence cannot override a failed restoration.
+
+Qualification: all 13 frozen comparison tests pass, including existing local
+worker/deadline tests and five localhost Ansible recovery cases. Four actual
+localhost assertions exercise the pre-exposure route expression with accepted
+`prefsrc`/`src`, wrong source and missing source. Exact-inventory syntax, Python
+parsing, frozen/current source equality, unchanged-profile/narrowing checks,
+wrong-manifest rejection, private modes and secret scan pass. W-214 native
+recovery/workload results remain applicable to unchanged source identities.
+Logs are under the bundle's `qualification/`; no substitute capacity fixture
+was run. The launcher was run only with local verification; its one-attempt
+marker is absent and prepared output is empty. The evidence directory contains
+no Git metadata. Local sessions 60340 and 63572 exited 0 and are retired.
+
+Acceptance is limited to this request comparison, complete resource/wire coverage,
+cleanup and restoration. A reproduced symptom is not historical Caddy causation;
+a pass is not sustained Pi capacity or AC-013 browser acceptance. No Caddy
+publication/validation/reload, secondary contact, DNS, login/browser/graphs, scan
+launch, notifier installation, permanent promotion or Git publication is included.
+Existing fleet background work is not suppressed; confounding evidence fails
+comparison acceptance. W-147/AC-013 remain open; W-157 remains uninstalled.
+
+Authorization: **not granted**. Repository policy requires explicit approval of
+this exact bundle, command and scope before any target contact. Prepared local
+checks do not consume live authority. All prior bundles and receipts remain intact.
+
+W-215 final scan disposition: the sealed candidate and monitoring working-tree
+scans found no leaks. The broad server working-tree scan exited 1 on 18 entries
+in untracked `.vexp/manifest.json`; every match is a hexadecimal file-index
+identity keyed by an existing source path, not a credential value. Those entries
+are outside the frozen bundle. The redacted report and classification are retained
+under `qualification/`; no scanner exclusion or production control was changed.
+Both scans and the diagnostic report scan completed; sessions 47986 and 50120
+are retired. Final local verification still finds the bundle unconsumed and
+Caddy clean/inactive. No live operation or publication occurred.
+
+### November 17 W-216 approved backend-only execution
+
+Aaron approved W-215’s exact bundle, command and scope for one attempt. Frozen
+input verification passed immediately before launch. Authority covers only the
+reviewed primary/Pi comparison and its recovery; no Caddy or publication action.
+The execution receipt is retained beside the unchanged sealed inputs.
+
+### November 17 W-216 terminal outcome and W-217 follow-up
+
+The approved command ran once and exited 1. Session 3274 is complete and retired.
+Its sealed 33-input manifest and every input still match the approved hashes.
+Private evidence remains in `webmin-backend-review-2k86wh8y/`; the terminal summary
+and `TERMINAL-EVIDENCE.SHA256SUMS` bind the retained logs and receipts. Approval
+is consumed. No replay, new live inspection or publication is authorized.
+
+Primary hostname/source-route and both admission boot reads passed. The native
+owner checked the accepted installed baseline, armed recovery and applied the
+temporary primary-only backend profile. The initial quiescence gate then exited
+1 after 10.645403 seconds with `backend_not_quiescent`. Observation and comparison
+requests never started; this is not another measured HTTP timeout or evidence
+of concurrency causation. Native owner loopback checks did run within their scope.
+
+The gate requires an original singleton Webmin process, an unchanged process
+set and no active port-10000 connections for two samples. Its failure path does
+not preserve the observed values, so retained evidence cannot distinguish an
+initial child process, subsequent process activity or connected sockets. Do not
+attribute this rejection to host capacity or a particular background service.
+
+Recovery independently checked boot continuity, latched primary client stop,
+restored the exact original native configuration and controls, verified loopback
+and guard restoration, then stopped the recovery timer. The fetched native state
+is `restored`; recovery-result records restoration_verified=true,
+restoration_failed=false and client cleanup rc=0. The observer never started;
+there was no observer workload to join. Final boot continuity assertions passed.
+
+The final evidence analyzer returned FileNotFoundError because resource/wire
+and phase records were never produced. This made the recovery play exit 2 at
+its comparison-evidence assertion, not at restoration. Forward also exited 2;
+neither aggregate controller budget expired. Overall acceptance remains false.
+Preserve this distinction rather than report recovery failure or a successful
+comparison. W-217 tracks the missing gate detail and explicit not-started outcome.
+
+No Caddy action, secondary contact, DNS, browser/login, scan, package/cap change
+or publication occurred. Caddy remains clean/inactive without an operation.
+W-147 and AC-013 remain unresolved; W-157 remains uninstalled. Further work is
+local reconciliation only until another separately reviewed scope is approved.
+
+### November 17 W-218 diagnostic reset after Aaron's review
+
+Aaron rejected the repeated cycle of complex tests that fail without useful
+observations. The audit reviewed the current comparison/gate/client code, W-202
+request evidence, accepted service controls and extracted native Webmin 2.670
+source. It made no live contact and did not launch another server/load fixture.
+
+**What is established:**
+
+- The last attempt did not reproduce an HTTP problem. Its gate stopped before
+  observation or comparison requests. Restoration was verified.
+- `compare-backend.py` requires the initial Webmin process list to contain exactly
+  one member. That baseline never changes. A stable two-process idle state fails;
+  even settling to one process cannot satisfy this predicate. The health check
+  also treats disappearance of any initial child as failure. This is not a valid
+  general Webmin-idleness contract.
+- Native 2.670 `miniserv.pl` lines 573–606 starts a persistent log-clearing child
+  when logclear is enabled; lines 335–348 supports an external-authentication
+  child. `--nofork` does not prohibit those children or request handlers. The
+  current target's logclear setting/process roles were not captured in W-216;
+  do not claim this particular child caused its rejection.
+- The gate saves its baseline only on success, throws a bare code on failure,
+  and starts observation afterward. Therefore its own rejection removes the
+  evidence needed to explain it. Terminal evaluation then assumes samples exist,
+  producing the secondary FileNotFoundError. The tests used a singleton process
+  model and did not establish validity of that model for Webmin.
+- Worker exceptions can also collapse detail to an exception class. Adding more
+  acceptance gates cannot repair missing measurement at the failing boundary.
+
+Pure local calls to the existing predicate reproduced both false cases, without
+starting processes or contacting a host. Exact source hash/results are retained
+in `webmin-diagnostic-audit-z_e3a94h/findings.json`. Consumed inputs are unchanged.
+
+**What the actual HTTP evidence says:** W-202's direct request returned HTTP 200
+with the login predicate and first payload at about 2.307 seconds. Two overlapping
+health flows and the foreground request produced first payloads at about
+7.517/7.513/7.491 seconds. The five-second foreground deadline expired first.
+No sampled memory high/max/OOM events occurred in that run. Earlier pressure/OOM
+observations belong to a different run and do not establish this run's cause.
+The retained Webmin control is CPUQuotaPerSecUSec=1s, a one-CPU aggregate ceiling.
+Approximately threefold elapsed time under three requests makes shared CPU work
+or contention a concrete leading hypothesis. CPU usage/throttling, I/O waits and
+handler attribution were not collected; it remains unproven. Serialisation,
+lookup or other waits remain alternatives. Do not increase timeouts/caps or
+change health policy merely to make acceptance pass.
+
+Vendor documentation review via Context7 confirmed the dedicated-hostname recipe
+uses referers, redirect_ssl and redirect_host. The prepared settings supply those
+keys, with the approved name and redirect_port=443. The vendor nginx example uses
+an HTTPS backend; the local owner contract deliberately uses guarded LAN HTTP.
+That transport distinction is explicit and is not evidence of the observed delay.
+Configuration review cannot establish current live browser acceptance.
+
+**Replace the default next step:** use the Pi's existing loopback listener to
+measure native server work. No Caddy release/replication, temporary LAN exposure,
+profile change, restart or restoration transaction is needed merely to ask whether
+concurrent login-page rendering is slow. Prepare a transparent bounded native
+request/sampling command, with one single request and only an eligible controlled
+concurrent batch. Preserve deadlines, caps, reserve and explicit stop conditions;
+no authentication, bodies, cookies or command-line/environment collection.
+Collect request outcomes alongside numeric CPU usage/throttling, memory events,
+process identities/roles and waits before, during and after requests, including
+failure. Distinguish an expected persistent helper from owned request activity;
+do not require one process or claim that socket closure proves CGI completion.
+Do not launch another phase when earlier request work is unresolved.
+
+This is a materially narrower proposed measurement, not yet an executable scope
+or authorization. Loopback changes the peer/network path: reproducing delay there
+supports a backend workload problem; a pass does not exonerate Caddy, remote-peer
+handling or health-request headers. If it fails to reproduce, select the next
+measurement from those results rather than rebuild the full deployment trial.
+No fixture may settle actual Pi capacity. Test only a concrete measurement defect,
+not an ever-growing simulated production system.
+
+Every diagnostic failure must retain bounded expected/observed values and phase
+status before exit; unavailable data must say why. Keep request outcome, evidence
+completeness and restoration as separate outcomes. This audit changes the planned
+preparation approach, not resource policy or live authority. W-217 remains open
+but repairing its entire superseded comparison path is not a prerequisite to a
+smaller diagnostic. W-147/AC-013 remain unresolved. No source deployment,
+publication, new test bundle or live retry occurred.
+
+### November 17 W-219 proposed durable instruction
+
+Aaron asked how to prevent fixture engineering and assumption-driven gates while
+keeping tests minimal. The workspace already limits fixture capacity/platform
+claims, but does not explicitly require the gate's premise to be established.
+Proposed addition beside that existing rule in `/home/aaron/code/AGENTS.md`:
+
+> **Evidence before gates; smallest sufficient tests**
+>
+> Before adding a diagnostic gate or test, state its question, the documented,
+> observed or user-approved contract it relies on, and the result that changes
+> the next action. Use the existing work record; create no new checklist.
+> An unverified premise is something to measure, not a blocking assertion.
+>
+> Prefer an existing native command and the smallest path that can distinguish
+> the plausible causes. Add a helper only for a missing measurement or safety
+> boundary; do not recreate a deployment to diagnose one request.
+>
+> Start with one representative success and the relevant failure. Add cases only
+> for distinct safety boundaries, a demonstrated defect or changed behavior.
+> Preserve required repository checks. A test that agrees with its own mock
+> proves implementation behavior, not the mock's fidelity to the target.
+>
+> Before live use, verify that failure retains bounded safe expected/observed
+> values, phase, timing and command status. Emit observations before assertions.
+> Distinguish not-run, failed measurement and failed cleanup. Do not replay an
+> unexplained failure with the same measurement blind spot.
+>
+> Stop when the stated question is answered. Remaining target uncertainty belongs
+> in the smallest authorized target observation, not expanded fixtures. Keep
+> established safety controls and authority boundaries; minimal tests do not mean
+> weaker acceptance or an arbitrary test-count cap.
+
+This is a reviewable proposal, not an installed instruction. No AGENTS.md change
+or personal-memory update was made. Existing fixture/authorization rules remain.
+
+### November 17 W-220 exact Pi loopback measurement for review
+
+Prepared private bundle:
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-loopback-review-zyhou1lc/`.
+Six frozen inputs: current diagnostic source, its test source/provenance, retained
+SSH host keys, selected scope and the direct SSH launcher. No Git metadata.
+`INPUTS.SHA256SUMS` SHA-256:
+
+`5187d43c89ffb4f82ebc4025da4d9b4b26be96e0a075cca076e761e1f9677de8`
+
+**Exact command for separate one-attempt approval:**
+
+```sh
+/bin/bash /home/aaron/code/.local-evidence/uptime-kuma/webmin-loopback-review-zyhou1lc/operator.sh 5187d43c89ffb4f82ebc4025da4d9b4b26be96e0a075cca076e761e1f9677de8 --run-approved-once
+```
+
+One SSH connection to `ama@10.1.3.75`, strict retained host keys, expected native
+hostname `j2-svpi3bmf`. Source is streamed to privileged Python stdin through
+noninteractive sudo. No host file installation, Ansible, service restart, profile
+change, firewall change, Caddy/primary/secondary contact, DNS, browser/login,
+scan, package operation, cap change, publication or retry is included. SSH/sudo
+and Webmin may produce their normal access logs. Credentials remain external.
+
+Request contract: GET `http://127.0.0.1:10000/session_login.cgi`, approved browser
+Host and forwarded headers, neutral User-Agent, connection close, no credentials,
+cookies, redirects or retries. Native curl discards the body and reports HTTP
+status, connection, first-byte and total-transfer timing. It does not assert the
+login form. One request, then only if healthy/settled and successful, three
+concurrently launched clients: four maximum, each five seconds total. No final
+recovery-control request. Loopback peer differs from prior remote traffic;
+concurrent client launch is not packet-level proof of backend arrival overlap.
+
+The script takes a baseline and emits samples before checking prerequisites.
+It checks exact hostname, existing Webmin/Kuma memory limits, one-CPU Webmin
+quota, boot and main-process continuity, 96 MiB reserve and zero new memory
+high/max/OOM events. It observes process PID/parent/state/start ticks/CPU ticks,
+wait channels, cgroup CPU usage/throttling/pressure, memory/I/O pressure and
+counters, available memory and sampler CPU. It skips expensive PSS rollups for
+this capture. No process command lines/environments, raw configuration, response
+headers, bodies or credentials are captured. Process roles are observed
+attributes, not guessed labels.
+
+There is no singleton requirement: established helper processes are allowed,
+normal child exit is allowed, and a process that disappears during sampling is
+explicit rather than automatically a service failure. Only the original main
+process must survive. Before another batch, require no connected port-10000
+sockets or newly observed processes for two samples within ten seconds. This
+conservative observation is not proof of absence of all background work or
+internal CGI completion; new background activity may stop further work, but its
+observed PID/socket differences are retained. No existing work is suppressed.
+
+Sampling is nominally half-second while clients run and one second during
+settling. The stream includes phase and elapsed time, actual sampling gaps and
+observer CPU so overhead remains visible. Missing CPU counters, relevant process
+evidence or controls stop progression; all collected observations remain. Final
+readback and terminal output are independent of HTTP success. A failed single
+request prevents the three-client batch. Resource stops kill/reap only owned
+curl clients; Webmin itself is never killed or restarted by this diagnostic.
+Client closure does not prove server-side work ended. Outstanding activity is
+recorded as unresolved and prevents success; it needs owner review, not an
+unapproved recovery action.
+
+Bounds: Python alarm 45 seconds, remote timeout 50 seconds plus two-second kill
+grace, controller SSH timeout 65 seconds plus three-second kill grace. Each curl
+has a five-second deadline and a six-second supervisor check. These bounds apply
+to diagnostic/client lifetime, not Webmin handler lifetime. No automatic retry or
+fallback. Controller output records the SSH/timeout exit and separate stderr;
+missing terminal output/transport loss remains unverified. Nothing in this scope
+authorizes raising caps, extending request acceptance, or restarting a service.
+
+Qualification is limited to measurement and safety behavior. Six focused tests
+passed: actual local HTTP/curl timeout and output privacy; the coordinator with
+a two-process baseline, normal child exit and resource-stop/no-next-batch;
+existing sampler privacy/disappeared-process cases; existing HTTP status and
+slow-header reporting. Proc/cgroup readings in the coordinator case are explicitly
+substituted. The endpoint is not Webmin and cannot qualify Pi capacity or predict
+its result. The final source and test hashes match the frozen copies. Shell syntax,
+ShellCheck, explicit shell formatting, Python parsing, local manifest verification,
+wrong-hash/invalid-argument rejection and whitespace checks pass. No target was
+contacted. The existing superseded comparison and all consumed bundles are intact.
+Local sessions 73540, 23717 and 91029 completed with exit 0 and are retired.
+
+Private logs: `qualification/` within the bundle. Earlier local format checking
+reported only shell whitespace; it was corrected before the final seal. An
+inapplicable shell-format invocation on Python failed without editing the file
+and is not a qualification result. No new host/capacity fixture was built.
+
+Interpretation: observed CPU usage/throttling and process waits can support or
+weaken the backend-contention hypothesis; they cannot alone assign every wait's
+cause. A slow loopback request reproduces a backend symptom in this run. A pass
+leaves remote-peer handling, proxy behavior and health-header differences open.
+Neither outcome is sustained-capacity or AC-013 browser acceptance. W-147 remains
+unresolved. W-157 is uninstalled; Caddy is clean/inactive. W-217's old comparison
+path is preserved, not repaired/resealed as a prerequisite to this measurement.
+
+Authorization: **not granted**. This request approved local preparation and the
+loopback direction, not execution. Repository policy requires approval of this
+exact bundle, command and scope before the one attempt. Output remains empty;
+no attempt marker exists. No publication is authorized.
+
+Final privacy scans found no leaks in the six-input bundle or Webmin owner tree.
+The full change-record scan flagged two unchanged historical Caddy outer
+authorization identities (lines 8621 and 8853, both present in HEAD); it is not
+a clean whole-ledger scan. No historical evidence was altered or suppressed.
+
+### November 17 W-220 authorization and execution
+
+Aaron explicitly approved the exact W-220 Pi-only bundle, command and scope for
+one attempt, and installation of W-219. The approved instruction is now installed
+in workspace AGENTS.md verbatim from the proposal. No publication is authorized.
+Execution will consume the existing one-attempt marker; no replay is permitted.
+
+### November 17 W-221 actual Pi loopback result
+
+Aaron's annotation approved the exact W-220 scope and W-219 installation.
+Automatic review initially rejected process creation using the older preparation-only
+boundary. The same unchanged command was resubmitted with the latest explicit
+approval reference and permitted. There was one actual attempt, session 8728,
+exit 1; it is retired. No retry occurred. All six sealed inputs remain unchanged.
+
+Evidence: private W-220 bundle `output/observation.jsonl`, `ssh.stderr` (empty),
+`exit.status` and derived `derived-summary.json`. Thirty-five records include
+27 samples and a terminal result. One request returned HTTP 200: first byte
+2.282220s, total 2.338846s. Three concurrently launched curl clients each exited
+28 at 5.0027s with no response headers. Settling completed before the explicit
+request-outcome rejection; final readback recorded clients reaped, no unresolved
+backend activity, no service change and no recovery attempt. Boot/main-process
+and accepted controls passed the scoped readback. No additional target contact
+was used to analyze these receipts.
+
+The accepted CPU quota was 100000/100000 microseconds (one CPU). From the first
+overlap sample through final settling, Webmin used 8.879368 CPU seconds over
+about 10.27 elapsed seconds; 88 of 91 accounting periods were throttled and the
+throttled-time counter rose by 17.352628 seconds. This counter is not equivalent
+to request wall-clock delay. Workers were sampled running, with other processes
+waiting in do_wait, poll or sleep. No new memory-high/max/OOM events occurred.
+The observer used about 0.407 CPU seconds between baseline and final sample;
+its contribution is measured, not presumed absent.
+
+This reproduces a backend-only concurrency symptom without Caddy or ingress
+changes and supports CPU-quota contention as a contributor. It does not prove
+causation for historical proxy failures or quantify the effect of changing quota.
+W-222 owns the next local policy/design decision; no repeated test, limit change,
+service restart or broader workload is authorized. AC-013 remains pending.
+
+### November 17 W-222 owner review and proposed decision
+
+Source ownership: `homelab-server-configs/foundation/ansible/prepare.yaml:37`
+sets Webmin CPUQuota=100% alongside MemoryHigh=128M, MemoryMax=192M and swap=0.
+The accepted W-221 capture independently observed cpu.max=100000 100000. This
+is an installed fleet control, not evidence of a vendor-required ceiling.
+Systemd's resource-control manual defines quota relative to one CPU, with values
+above 100% permitting more CPU time; this is a ceiling, not reserved capacity.
+Reference: <https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html#CPUQuota=>
+
+The current Webmin Caddy proposal uses one IPv4 upstream and active GETs to
+/session_login.cgi every 30 seconds, with a three-second deadline. It is a
+proposal, not accepted Webmin production configuration. W-221's single request
+used 2.34 seconds and the three-client batch exceeded five seconds without
+Caddy. The three-second probe deadline has little margin against this one solo
+sample; it is not a latency distribution or proof that health requests have
+identical cost/headers. Serial address-family checks cannot prevent overlap with
+foreground traffic or another proxy. Removing duplicate validation probes alone
+also cannot explain away this measured backend-only symptom.
+
+Recommended decision for Aaron's review: permit preparation of one temporary,
+single-factor actual-Pi comparison at CPUQuota=200%, returning to the admitted
+100% ceiling at the end. Two CPU equivalents is a bounded experimental setting,
+not an accepted permanent budget or a guarantee of five-second responses.
+Do not remove CPU limits, substitute CPUWeight, raise memory caps, lengthen
+request deadlines or alter the health contract in the same comparison. Preserve
+the existing listener, request headers/path, one-plus-three request pattern,
+resource stop conditions and co-resident Kuma observation. Reuse W-221's native
+measurement; do not build another Caddy/ingress transaction or capacity fixture.
+
+Preparation must bind the effective unit and ancestor CPU restrictions, exact
+runtime-property restoration and independent cleanup on controller loss. A changed
+quota must be verified before workload, and original effective quota restored and
+verified even on failure. Native runtime controls are preferred; no persistent
+fleet-default change or restart is proposed. These are preparation requirements,
+not a new executable or authority. Local checks should cover only the changed
+quota/restoration boundary; existing measurement checks need no expansion.
+
+Decision after the comparison: lower throttling plus successful unchanged requests
+would support a host-specific CPU-policy correction, still subject to combined
+workload/browser acceptance. Continued delay despite effective extra CPU would
+leave the hypothesis insufficient; inspect the retained process/wait evidence,
+not another identical retry. A memory/resource stop rejects that candidate and
+requires owner review. If temporary CPU-policy relaxation is declined, explicitly
+revisit responsiveness/concurrency requirements rather than silently weakening
+acceptance or claiming that serialized probes make browser capacity adequate.
+
+The shared health-check design also needs a lower-cost readiness contract before
+fleet promotion. No replacement URI/status is selected without native evidence;
+a static response alone must not be presented as authenticated application health.
+Keep that design decision separate from this causal comparison so only one factor
+changes. No production definition, script, limit, Caddy fragment or installed
+instruction changed in this review. W-222 remains In progress pending Aaron's
+policy decision; W-147/AC-013 remain unresolved. No live contact or publication.
+
+### November 17 W-223 exact temporary CPU comparison for review
+
+Aaron approved local preparation of W-222's proposal. W-222 is resolved as a
+preparation decision, not acceptance of a permanent two-CPU budget. The original
+W-220 bundle, observations and all earlier consumed inputs remain unchanged.
+
+Private bundle:
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-quota-review-fmxfd6af`.
+Nine inputs: two owner scripts, their two test sources for provenance, retained
+SSH keys, native staging/collection commands, controller launcher and scope.
+`INPUTS.json` SHA-256:
+`bef1667075f5673a8fb9e7362a9b1840db394cfdd439f188c8109f31e9c9835a`.
+
+**Exact command for separate one-attempt authorization:**
+
+```sh
+/usr/bin/python3 -I -B /home/aaron/code/.local-evidence/uptime-kuma/webmin-quota-review-fmxfd6af/operator.py bef1667075f5673a8fb9e7362a9b1840db394cfdd439f188c8109f31e9c9835a --run-approved-once
+```
+
+Targets: only `ama@10.1.3.75`, strict retained SSH host keys, native hostname
+`j2-svpi3bmf`, noninteractive existing sudo. At most two SSH commands: one stages
+and runs the single comparison; one collects retained receipts and cleans up
+owned temporary files if restoration and unit inactivity are verified. No
+Caddy/proxy/secondary/DNS contact or configuration, browser/login, needrestart
+scan, package change, service restart, permanent budget change or publication.
+
+Temporary mutation: root-private `/run/webmin-quota-7917ee636b1a8df5` holds two
+scripts and receipts. A native transient service of that name runs the workload.
+Admission retains boot, main PID, cgroup identity, unit/drop-in hashes and current
+CPU/memory limits, ancestor CPU ceilings and effective CPUs. It requires the
+accepted 100000/100000 quota, unchanged Webmin memory limits, at least two usable
+CPUs and no observed ancestor ceiling below two CPUs. These last checks establish
+that the proposed change can actually permit two CPU equivalents; failure emits
+observed values and makes no quota change. Existing runtime CPUQuota drop-in
+bytes and owner/group/mode (or absence) are saved privately before native launch.
+
+The worker rechecks admission, applies only `CPUQuota=200%` through
+`systemctl set-property --runtime webmin.service`, and calls the existing
+loopback measurement with an expected two-CPU ceiling. The fixed request path,
+headers, single-plus-conditional-three workload, five-second client deadlines,
+45-second observer alarm, memory limits, 96 MiB reserve, resource-event stops,
+process checks and client cleanup are unchanged. Only expected CPU ratio varies.
+No new performance fixture was built.
+
+Recovery: the transient unit has a 60-second runtime limit, control-group process
+cleanup and a 20-second stop budget. Its ExecStopPost runs independently of SSH,
+including worker failure/termination. Restoration is separately bounded to 18
+seconds plus two-second kill grace. It first lowers the effective quota to 100%,
+then restores the saved runtime CPUQuota drop-in bytes/uid/gid/mode or removes the
+new file and newly created empty directory. `systemctl daemon-reload` reconciles
+that restored configuration; no restart is requested. Final readback requires
+original boot, cgroup, main PID, unit-file hashes and resource controls. A restore
+failure is retained as `restored:false`; HTTP failure is not confused with it.
+Do not call worker/restore phases directly or reset a failed operation.
+
+The first controller SSH command is bounded to 120 seconds. On a nonzero result,
+collection waits until at least 115 seconds from launch before its one bounded
+20-second read/cleanup command; no workload retry. Receipts and bounded native
+stderr are collected privately. Cleanup removes only the reviewed root-owned
+regular files after restoration and an inactive/failed unit with MainPID=0 are
+verified. Unexpected files or unverified recovery keep the directory for review.
+Transport loss or host failure never implies restoration passed. A reboot loses
+runtime overrides; this is not permission to reboot or a substitute for readback.
+The operation may run daemon-reload and leave evidence under /run on failure;
+these are explicit scope, not hidden cleanup side effects.
+
+Qualification: four focused cases cover the native recovery/deadline argument
+binding, exact file restoration for prior-present/prior-absent override, retained
+restore failure, and worker admission-before-change. The existing localhost HTTP
+measurement test passes one-CPU success, resource stop/no-next-batch and the new
+two-CPU expected-limit branch. A first launch hit the filesystem sandbox's socket
+restriction before serving; the unchanged localhost-only test passed outside it
+(session 71845, exit 0, retired). Source/frozen-copy equality, Python parsing,
+manifest admission/wrong-hash rejection and whitespace checks pass. Private
+bundle and Webmin working-tree secret scans pass. No actual systemd activation,
+Pi quota write or target restoration is claimed by these local checks. Existing
+vexp completion was unavailable at the parent non-repository workspace; it was
+not replayed unchanged. `qualification/results.json` binds these limited results.
+
+Interpretation remains W-222's: success with lower throttling supports a targeted
+CPU-policy correction but is not fleet capacity or browser acceptance. Continued
+latency or resource stops require review of the actual retained measurements,
+not another identical run or an extended timeout. Caddy health-contract redesign
+is separate. W-147/AC-013 remain open; W-157 is not installed.
+
+Authorization: **not granted**. The current approval covers preparation only.
+No attempt marker exists; output is empty. No live contact, mutation, retry or
+publication occurred. Source changes are uncommitted; all local sessions retired.
+
+### November 17 W-224 approved quota comparison execution
+
+Aaron explicitly approved the exact W-223 bundle, command and scope linked at
+line 11295 for one attempt. Manifest verification passed locally; this approval
+covers the single Pi comparison and its bounded recovery/receipt collection.
+No other live operation or publication is authorized.
+
+W-224 terminal outcome: **Passed comparison; original policy restored.** The
+approved command executed once, session 49206, exit 0. Bootstrap and collection
+both exited 0; their stderr files are empty. Approval is consumed. The exact
+nine sealed inputs remain unchanged. No other target was contacted.
+
+Private evidence is W-223 bundle `output/bootstrap.stdout`, `collect.stdout`,
+`exit-status.json` and `derived-summary.json`. The controller retained the native
+measurement and restoration receipts before removing the owned target directory.
+The transient unit was inactive with MainPID=0; remote cleanup was confirmed.
+
+Observed request results (same path/headers and five-second bounds as W-221):
+
+- Single: HTTP 200, first byte 2.290212s, total 2.327324s.
+- Concurrent three: HTTP 200, first bytes 3.763899-3.787239s, total
+  3.831959-3.852697s. Each client exited 0.
+- Measurement completed; clients reaped and backend activity settled.
+
+All samples showed cpu.max=200000 100000. During overlap through final settling,
+Webmin used 7.891471 CPU seconds in about 5.183 elapsed seconds; 38 of 41 periods
+were throttled and throttled_usec increased 3.671466s. W-221's corresponding
+interval was about 10.27s with 8.879368 CPU seconds and 17.352628s throttled time.
+These are differently sized phase intervals, not normalized throttle rates or
+request-wall-time decomposition. Throttling was reduced in cumulative duration,
+not eliminated. Sampled memory peaked at 120909824 bytes; new memory high/max/OOM
+events were zero, minimum available memory was 454684 KiB. Observer CPU increased
+about 0.327s. These observations do not accept sustained or authenticated-browser
+capacity.
+
+Native ExecStopPost restoration passed: cpu.max=100000 100000, original Webmin
+memory controls, same boot/cgroup/main PID, same installed unit/drop-in hashes
+and original runtime CPUQuota override state. No Webmin restart occurred.
+`daemon-reload` reconciled the restored runtime configuration within the approved
+scope. The inner observer's `service_changed:false` describes that read-only
+observer only; the enclosing operation did temporarily change and then restore
+the quota. No permanent CPU-policy or Caddy configuration change remains.
+
+Interpretation: the deliberate quota change preserved the request contract and
+changed the concurrent outcome from three timeouts to three HTTP-200 responses,
+while solo timing stayed about 2.33s. This is strong actual-host evidence that
+the one-CPU ceiling contributed to the tested concurrency delay. Background load
+was not controlled in a randomized experiment; it does not prove every historical
+proxy failure had the same cause. W-147 retains that distinction. W-225 now owns
+the corrective policy/health-contract decision; repeating this diagnostic or
+expanding fixtures is not the next step. AC-013 still requires browser acceptance.
+No permanent promotion, retry, further inspection or publication is authorized.
+
+### November 17 W-225 concrete CPU and health-contract proposal
+
+This is a local owner review, not approval to implement permanent policy or run
+another workload. W-224's original 100% baseline remains restored. The selected
+correction below requires Aaron's agreement before implementation/preparation.
+
+| Owner | Proposed correction | Preserved boundary |
+| --- | --- | --- |
+| Foundation/Webmin | Explicit selected-host CPUQuota=200% for j2-svpi3bmf, owned by the existing foundation profile/host selection. | Do not replace the fleet-wide 100% default or edit installed controls outside the owner path. MemoryHigh=128M, MemoryMax=192M, swap=0, tasks, stop/start controls and reserve stay unchanged. |
+| Caddy/Webmin | Keep GET /session_login.cgi and exact HTTP 200; make the health headers explicit: Host and X-Forwarded-Host = webmin-j2-svpi3bmf.local.theama.co, X-Forwarded-Proto=https, User-Agent=homelab-proxy-diagnostic, Accept=*/*, Accept-Encoding=identity, Connection=close. | No credentials, cookies, fabricated X-Forwarded-For identity, redirect-following, authentication bypass or new synthetic health endpoint. Preserve a safe health marker; it is not an auth identity. |
+| Caddy | Change this selected route's health_timeout from 3s to 5s. | Keep health_interval=30s, health_fails=3, health_passes=1 and active checks. Foreground five-second acceptance stays fixed; transport timeouts are not changed. |
+| Acceptance | Use actual paired-proxy/browser acceptance with existing memory/scan/resource protections after local configuration checks. | No repeated identical loopback experiment, capacity fixture, new orchestration layer, permanent promotion before acceptance, or inferred acceptance from the short CPU comparison. |
+
+Why five seconds: it aligns health responsiveness with the existing unchanged
+foreground criterion, which the 200% comparison actually met. It is an explicitly
+proposed health-policy revision, not a retrospective pass for any failed run or
+permission to lengthen client deadlines. The 3.83-3.85s measurements are not a
+percentile or proof that every health/browser request fits five seconds.
+
+Contract audit: the current proposed Caddy fragment has a health Host and marker,
+but no explicit neutral User-Agent or forwarded-protocol headers. The successful
+loopback client supplied those headers plus X-Forwarded-For, and contacted a
+loopback peer. Caddy's active checks have their own health_headers configuration;
+do not assume foreground header_up settings make these requests identical.
+W-180's retained native test established a User-Agent-sensitive Webmin session
+branch. Reuse its neutral User-Agent, rather than repeating that experiment.
+Do not fabricate a client source header to force equality; preserve and document
+the health request's intentional no-user context.
+
+The earlier top-of-ledger wording calling the three-second health deadline
+'incompatible' overstated what was measured. It is shorter than the observed
+concurrent foreground timings; the existing health request's exact behavior was
+not measured by W-224. That is a design concern, not a newly proven health failure.
+The header proposal removes avoidable request ambiguity without claiming every
+request has equal cost. Vendor reference consulted: Caddy reverse_proxy active
+health-check documentation, particularly health_headers, health_timeout and
+health_follow_redirects:
+<https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#active-health-checks>
+
+Topology/load: the current fragment is explicitly a primary/IPv4 diagnostic,
+not the final dual-stack candidate. Preserve the accepted paired-proxy and
+backend-family acceptance requirement. Two address families reach one Webmin
+process; do not count them as independent application capacity. Paired health
+checks and browser traffic may create more overlap than W-224's three clients.
+Do not promise serial checks merely by listing addresses in order, and do not
+add a health-check scheduler to manufacture that promise. Retain normal runtime
+health checks; the approved validation-isolation work remains a separate owner
+installation boundary and is not assumed deployed by this review.
+
+Smallest implementation qualification: check selected-host scoping/default
+preservation and adapted health header/timeout values in existing owner tests.
+Use retained W-180 contract evidence; no new Webmin load fixture. Reconcile exact
+owner inputs and recovery before a single actual browser/onboarding operation.
+That operation must observe the combined real workload and stop on existing
+resource/acceptance failures; it must not silently remove a family, disable
+health checks or raise limits again. No implementation, candidate seal, live
+contact, retry, permanent promotion or publication occurred in this review.
+W-225 stays In progress pending Aaron's policy decision; AC-013 remains pending.
+
+### November 17 W-225 approval and W-226 local implementation
+
+Aaron approved the proposed policy for local implementation and preparation.
+The existing Webmin owner now provides the explicit selected-host CPU profile,
+staging and recovery described in its CADDY_ONBOARDING.md. Foundation's 100%
+default is unchanged. The proposed route has explicit health headers and a
+five-second health timeout; foreground and memory limits are unchanged.
+
+Focused checks: all 20 tests in Webmin/tests/test_proxy_recovery.py pass,
+including selected-host/default boundaries, payload/preexisting-file rejection,
+apply/restore ordering and changed-file containment. These use temporary files
+and injected native-command responses; they do not accept target execution.
+The existing offline Caddy image (v2.11.4, network disabled) adapted the proposal;
+JSON assertions verified the exact headers, GET/login path, HTTP 200, 5s timeout,
+30s interval and 3/1 thresholds. This is configuration syntax/contract evidence,
+not full production 2.11.9 validation or capacity evidence. Local adaptation
+artifacts: /tmp/webmin-policy-jbdtux49. No Webmin workload was run. Ansible
+syntax validation of the changed trial include, both repository diff whitespace
+checks and a redacted Webmin working-tree secret scan also passed.
+
+Preparation boundary: the current Caddy fragment is still primary/IPv4 diagnostic
+scope. A final browser candidate must bind paired/dual-stack behavior, the new
+profile and changed helper inputs, current predecessor identities and existing
+combined workload/recovery before sealing. No operation was registered or sealed.
+Consumed bundles remain unchanged; W-224 is still the latest actual-host result.
+W-147 historical attribution and AC-013 remain unresolved. No live action,
+publication or permanent promotion occurred.
+
+### November 17 W-227 paired browser bindings; W-228 owner-path gap
+
+Local draft: `/home/aaron/code/.local-evidence/uptime-kuma/webmin-browser-candidate-fgkrltok`.
+It has fresh workload tokens, private controller/target paths, four backend source
+paths, six browser endpoints, selected CPU profile and exact prior Webmin control
+identities. The predecessor binding comes from the retained restored W-202 inputs;
+old captures are not a fresh observation of the hosts. Readiness/operator flags
+remain false. No old receipt, launcher or attempt marker was copied. The proposed
+recipe binds current publisher/helper/caller/fragment hashes and the accepted
+release predecessor. SOURCE-INPUTS.SHA256SUMS is a preparation snapshot, not a
+closed authorization graph; it must be refreshed for subsequent source changes.
+
+The Webmin owner proposal now includes both IPv4 and IPv6 upstreams with W-225's
+explicit health contract. Local checks passed: four-path/six-path and common-token
+bindings, unchanged observation/scan windows, browser source/module preflight
+without launching a browser, and combined parent Ansible syntax. Offline Caddy
+2.11.4 adaptation checked both upstream addresses and exact health headers,
+5s/30s timeout/interval, 200 status and 3/1 failure/pass thresholds. This does not
+claim production 2.11.9 validation, UI acceptance or capacity. No Webmin load
+fixture or target measurement was run.
+
+W-228 is executable, not hypothetical: the current publisher unconditionally
+calls `/usr/local/libexec/validate-caddy-isolated.sh`. The outer payload guard
+requires application_diagnostic_scope=primary-ipv4 and diagnostic_seconds=240;
+the transaction also requires node-a for validation tools, while the paired
+secondary receives the same control recipe. Empty release-ID restoration is
+likewise restricted to the primary diagnostic. The actual local payload guard
+was invoked alone against the proposed paired recipe and returned 1 at that
+scope requirement. No outer transaction or transport was executed.
+
+This draft cannot be sealed merely by updating hashes. PLAN.md records the
+bounded correction needed in the existing owner path: primary-only tools,
+secondary replication with unchanged installed callers, and explicit pre-ID
+versus post-exposure recovery. Do not bypass the guard, omit the helper, infer
+secondary isolation capability or rebuild capacity fixtures. W-227 remains
+In progress and W-228 Open. The main Caddy stream remains clean/inactive; window
+and successor checks pass. The vexp completion helper is unavailable from the
+parent workspace (not a Git repository); it supplied no acceptance evidence.
+No live operation, DNS change, publication or permanent promotion is authorized.
+
+Final local checks: both repository whitespace checks and the Webmin working-tree
+secret scan passed. The private draft scan reported four instances of its freshly
+generated workload coordination token; all were verified against that same field,
+not an account credential. They remain private; no scanner exception was added.
+The draft has no Git metadata. No execution sessions remain active.
+
+### November 17 W-228 paired delivery/recovery contract reconciled locally
+
+The existing owner payload and transaction now accept a paired 660-second browser
+trial with `validation_tools_trial=primary` and no diagnostic fields. Diagnostic
+scope/seconds must still occur together and retain their prior limits. Only Node A
+receives validation tools. Node B accepts control metadata, rejects tool/application
+payload directories and retains its installed callers; replication delivers the
+application. This does not qualify isolated validation on Node B.
+
+An independently read explicit empty target receipt permits primary tool recovery
+before a release ID exists, followed by cleanup of both staged payloads. Secondary
+admission has not changed services or releases. Missing/unreadable receipts still
+fail closed. After an ID exists, paired B-before-A restoration and natural monitor
+acceptance remain in force. No browser, memory, CPU or recovery deadlines changed.
+
+Qualification is retained at
+`/home/aaron/code/.local-evidence/uptime-kuma/w228-owner-contract-ebm_uead`:
+
+- Existing validation-tools tests: 18 local file/payload/recovery cases pass,
+  including paired success, pre-ID publisher failure and post-ID request failure.
+  Secondary control-only acceptance rejects unexpected tool directories and an
+  incomplete diagnostic binding.
+- Existing outer dispatch tests cover paired pre-ID cleanup without secondary
+  restoration/exposure, and post-ID B-before-A restoration with both monitor checks.
+- Full host-only application-onboarding profile passed (session 47013, exit 0).
+  Canonical shell formatting, readonly/local collisions, multi-file grep policy
+  and current-tree operator documentation checks pass.
+
+These checks exercise local source boundaries with substituted service/transport
+results. They do not establish target recovery, secondary capability, browser
+capacity or a complete current candidate authorization graph. W-227 retains that
+exact candidate qualification before sealing. Neutral operation/outer source hashes
+are reconciled; action remains none and status inactive. Permanent owner procedures
+now describe this distinction. Earlier draft rejection and consumed evidence remain
+unchanged; a separate W-228 source snapshot records the new preparation revision.
+No live target, browser, container workload or publication was performed.
+
+### November 17 W-227 exact paired candidate qualified; sealing remains
+
+Private review remains
+`/home/aaron/code/.local-evidence/uptime-kuma/webmin-browser-candidate-fgkrltok`.
+Its `owner-workspace` is a plain-file review projection, not a Git checkout. The
+main Caddy stream remains clean/inactive. The private paired operation binds both
+proxies, current recipe/source hashes and primary-only temporary validation tools.
+The parent binds that owner path/evidence, four proxy-to-backend paths, six browser
+paths and the selected Pi CPU profile. Readiness/operator flags remain false; no
+INPUTS.SHA256SUMS or live launcher exists.
+
+W-229 reconciles a concrete qualification mismatch: existing paired cases omitted
+tool delivery and seeded a source finalizer on the secondary. They now select the
+paired recipe without diagnostic-only fields, deliver candidate tools only to A,
+and independently verify both restored tool identities and the secondary's lack
+of tool mutation. Accepted finalizer bytes came from local Git commit d048013;
+accepted reconciler bytes came from d131b9d. Both match the accepted owner hashes.
+Generic non-trial cases model an installed validator; they do not prove the trial
+installation. Namespace substitution remains explicit and adds no capacity or
+isolation claim. No substitute Webmin browser/load fixture was run.
+
+Fresh execution of all 19 required owner cases passed in the existing offline
+container, retained at `owner-authorization-evidence` (source run
+`/tmp/caddy-application-qualification-c1i5s_iz`, session 52887 exit 0).
+Owned-container cleanup passed. The actual authorization gate accepts the current
+private graph and rejects nine altered-evidence cases. Initial gate checks exposed
+missing private lifecycle metadata and absent Git context; both were reconciled
+without changing tested runtime inputs or creating Git metadata in evidence.
+The gate reads executable-mode metadata from the real owner's index through
+explicit GIT_DIR/GIT_WORK_TREE; content identities still come from the private
+graph. Parent environment retains those bindings. Earlier failed gate logs remain.
+
+The actual payload builder accepts the exact candidate recipe; secondary archive
+contains only the recipe. `exact-payload-check/receipt.json` records that result
+and parent/browser/resource bindings: 600-second observation, scan after 400,
+660-second owner exposure, original 1800-second native recovery and unchanged
+memory limits. Syntax passed with the actual candidate vars/inventory, without
+connecting to hosts. Parent paired/primary recovery-flow tests passed. The one
+admission-test failure (session 76734) was W-230: umask 077 changed its intended
+0755 test input to 0700. Explicit chmod fixes the test input; admission-only
+session 28710 passed. Production privacy checks were not weakened.
+
+The current host onboarding profile passed (session 34776); neutral stream,
+owner policy, current documentation and whitespace checks pass. Webmin's working
+scan passed. Caddy's scan reports five existing published authorization digests
+in HISTORY.md; private inputs report four occurrences of the same fresh workload
+coordination token. These findings were inspected, remain recorded, and add no
+scanner exceptions or account credentials. The vexp helper remains unavailable
+from the parent workspace and supplied no acceptance evidence.
+
+`owner-binding-review.json` records exact owner and parent identities;
+`authorization-ready-final.log` and `authorization-evidence-rejections.log` retain
+the gate results. Earlier source snapshots and consumed attempts are preserved.
+W-227 is qualified for sealing, not live-authorized or accepted on the Pi. AC-013,
+actual browser/permission/resource acceptance and W-147 attribution remain open.
+All execution sessions are retired; no live contact or publication occurred.
+
+### November 17 W-231 source publication
+
+Aaron authorized committing and pushing all changes. The reviewed scope is 31
+server-repository paths and the three monitoring change records. Both destinations
+are verified Racerx323 repositories. Private candidate inputs, tokens, receipts
+and raw logs remain outside Git. Publication does not seal W-227 or authorize
+installation, browser workloads or target contact. Required commit-hook results
+and remote receipts are retained in
+`/home/aaron/code/.local-evidence/uptime-kuma/publication-w231`.
+
+Server commit `2a19a36bbaf5ed2f24a25a687cf3c11954fe0ab8` is pushed and
+remote-verified on main. All required hooks passed after removing two duplicate
+blank lines in Webmin documentation; no behavioral checks were weakened. The
+initial failed-hook logs remain retained. Hosted validation run 44208718982 and
+Push on main run 44208717459 are in progress. The monitoring records are next.

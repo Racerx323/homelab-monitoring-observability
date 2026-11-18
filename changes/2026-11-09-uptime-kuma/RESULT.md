@@ -465,3 +465,335 @@ record and narrow verified-hash exclusions. Current-production CI profiles and
 publication hooks pass locally; the separate terminal coverage-profile failure
 remains recorded. Private evidence is excluded. Neutral cleanup and further live
 work have not run; Webmin acceptance remains pending.
+
+November 17 W-187: local reconciliation verifies all 71 retained receipt hashes
+and reproduces W-184 with the unchanged checker. Eight marked health requests
+arrived within 1.624 seconds before the foreground proxy request. Clock envelopes
+place memory.high events during that request and OOM/kill events afterward;
+backend delivery and pressure are established, but process-level causation is not.
+Two close-only flows explain the checker rejection; its corrective classification
+is specified but not implemented. Original aggregate acceptance remains failed.
+Restoration results are unchanged, AC-013 remains pending and W-157 is uninstalled.
+No live contact, neutral cleanup, retry or publication occurred. Result: Partial.
+
+November 17 W-188/W-184/W-189: Caddy is clean/inactive after local archive cleanup.
+The corrected parser passes 14 workload tests and full reanalysis of retained
+request/clock/resource data; the failed operation receipt remains unchanged.
+Source tracing establishes immediate health probes during Caddy provisioning,
+including validation and reload opportunities, but does not attribute individual
+captured connections or the timeout. Fleet procedures record this distinction.
+No target contact, retry, publication or browser acceptance occurred. Changes
+remain uncommitted; W-147/AC-013 remain open and W-157 is not installed.
+
+November 17 W-190: owner review proposes process-only network isolation for full
+Caddy validation, preserving runtime health checks. Unprivileged-finalizer support
+and permission equivalence require W-191 qualification; no executable change or
+new target result is claimed. Local validation instructions now require an isolated
+network environment. Caddy remains clean/inactive; W-147/AC-013 remain open,
+W-157 uninstalled and the result Partial. No live contact or publication occurred.
+
+November 17 W-191: preparation-only validation isolation is partially tested with
+actual Caddy 2.11.4. Under caddy-sync/NoNewPrivileges, exact-config validation and
+group TLS access pass, invalid/unreadable inputs reject, validation emits no
+external IPv4/IPv6 health requests, and normal runtime health checks reach both
+families. Root network-only isolation is denied in the unchanged local container;
+root user mapping loses receiver-file access and is rejected as a workaround.
+Final qualification exits 2 (partial). Caller integration, root success and full
+service/deadline qualification remain pending. No privilege expansion, deployment
+or target contact occurred. W-191 is blocked; AC-013 and the overall result remain
+Partial. No successor is defined.
+
+November 17 W-192/W-193 reassessment: Aaron approved preparing a bounded
+primary-host capability/validation scope instead of repairing the root fixture.
+PLAN.md records that scope; exact execution bindings and live authorization are
+still absent. The earlier root fixture failure is retained but no longer gates
+preparation. W-191 remains partially qualified/unintegrated. The existing harness
+stopping rule was applicable; an explicit platform-compatibility clarification is
+proposed in WORK.md, not installed. No executable or live change occurred. Result
+remains Partial; W-147/AC-013 remain open and W-157 remains uninstalled.
+
+November 17 W-193 completion: Aaron approved and the agent installed the exact
+platform-compatibility clarification in workspace AGENTS.md. W-193 is resolved.
+No live or executable change occurred; W-192 preparation remains pending and the
+deployment result remains Partial.
+
+November 17 W-192 candidate prepared: the twelve-input primary-only capability
+bundle is sealed and local syntax/integrity checks pass. It is unexecuted and
+awaits separate authorization. No fixture expansion, target contact or owner
+integration occurred. Read-only transient validation is narrower than writable
+owner execution; no production compatibility result is claimed. W-191 remains
+partial, W-147/AC-013 remain open and W-157 remains uninstalled.
+
+November 17 W-192 execution: the authorized primary-only check exited 1 at the
+Caddy version assertion before namespace, transient-unit or validation work.
+Host, release/payload and installed-file admission passed; expected version was
+`v2.11.4` with a following space, but observed output and command status were not
+retained separately (W-194). Exit checks passed for boot and release integrity;
+binary/PID and service checks were not reached. Capability remains untested,
+W-191 remains partial/unintegrated and AC-013 remains pending. The unchanged
+bundle and failed receipts are preserved; approval is consumed. No retry,
+further inspection, rollout or publication is authorized. The synchronous
+command ended; no execution session remains active. Result remains Partial.
+
+November 17 W-194: local reconciliation confirms two version-gate defects:
+mandatory build suffix and lost command status. A minimal future-input patch
+passes twelve scalar cases and full-script syntax/static checks. The consumed
+bundle and receipt remain unchanged; the actual failed target output and command
+status remain unknown. W-194 is locally resolved, but no successor is integrated
+or sealed and W-192 target capability remains untested. No live work or fixture
+expansion occurred. W-191 remains partial, AC-013 pending and result Partial.
+
+November 17 W-195: W-194's correction is integrated into a new fourteen-input
+primary-only capability review bundle. Exact collector scalar cases, static
+checks, owner-input comparison and no-contact integrity verification pass.
+The predecessor inputs/receipts are preserved and verify unchanged. No execution
+or target compatibility result is claimed; separate one-attempt authorization
+is pending. W-191 remains partial/unintegrated, W-147/AC-013 remain open and
+W-157 remains uninstalled. No live contact or publication occurred; result Partial.
+
+November 17 W-195 execution: the approved successor exited 1 at exact version
+admission. The command succeeded and reported v2.11.9; the sealed requirement was
+v2.11.4. Namespace, temporary-unit and validation work never started. Release and
+boot exit checks passed; binary/PID, effective unit and service-active checks
+were not reached. W-196 owns reconciliation of observed executable version and
+owner baseline; no accepted inventory change or historical cause is inferred.
+Both consumed bundles remain preserved. Approval is consumed; no retry or further
+live work is authorized. All execution ended synchronously. Capability and AC-013
+remain untested/pending respectively; overall result remains Partial.
+
+November 17 W-196: Aaron confirmed production Caddy upgrades; owner inventory now
+records 2.11.9. Node A CLI evidence corroborates that version; Node B/package
+attribution is operator-confirmed. Complete-package hashes/equality remain
+historical, and running-process identity/capability remain unverified. Current
+inventory linkage and future plan prerequisite are reconciled locally. Consumed
+attempts are unchanged; no live action or publication occurred. Result Partial.
+
+November 17 W-197 preparation: the reconciled 2.11.9 owner baseline is bound into
+a new fourteen-input capability candidate. Only three executable version literals
+change from W-195; transport, privileges, checks, deadlines and cleanup remain
+unchanged. Twelve scalar cases and static/integrity checks pass. Both consumed
+attempts remain preserved. No live contact or capability acceptance occurred;
+separate one-attempt approval is pending. Result remains Partial.
+
+November 17 W-197 execution: the approved primary-only capability check passed
+on Caddy 2.11.9. Root publisher, caddy-sync finalizer and restricted root reconciler
+contexts all passed isolated namespace/file-access checks and full validation of
+the accepted configuration. Serving-binary identity, installed controls and final
+boot/release/binary/PID continuity passed. Six owned transient units were collected
+and scratch cleanup passed; session 84010 exited 0 and is retired. W-192/W-197 are
+resolved for read-only mechanism compatibility. W-191 owner integration remains
+pending; no writable owner execution, Webmin causation or AC-013 acceptance is
+claimed. All consumed bundles are preserved; further live work/publication is
+unauthorized. Overall result remains Partial.
+
+November 17 W-198: publisher/finalizer/reconciler sources now invoke the shared
+validation-isolation helper. Twelve extracted caller-boundary cases and the
+current-synchronization host profile pass. Accepted installed identities are
+unchanged; helper/caller deployment has not occurred. W-199 retains delivery,
+installation order, restoration and deadline integration before any target
+comparison. Complete writable transactions and container-only drain execution
+are not claimed by these tests. W-191 remains in progress, AC-013 pending and
+result Partial. Session 53896 exited 0; no live contact or publication occurred.
+
+November 17 W-199: local delivery/restoration preparation binds primary-only tool
+payloads, exact source versus installed identities, helper-first installation and
+caller-first restoration within unchanged 240/840-second budgets. The current
+owner recovery requires a release ID; it must handle tool changes made before
+that ID exists before a comparison can be sealed. Executable delivery/recovery
+integration remains pending. No installed identity, live acceptance or timeout
+attribution changes; AC-013 remains pending.
+
+November 17 W-199 implementation: owner payload delivery and temporary tool
+restoration now execute in the existing primary diagnostic path, including failure
+before a release ID exists. Fifteen focused file/recovery cases and the
+application-onboarding host profile pass with unchanged deadlines. These checks
+map privileged paths and substitute service control; writable host execution is
+not accepted. Helper/callers remain undeployed, no successor is defined, and
+W-147/AC-013 remain unresolved. No production acceptance or timeout attribution
+changes. Changes are uncommitted; no live work or publication occurred.
+
+November 17 W-200: a new primary/Pi diagnostic draft binds current sources and
+fresh parent inputs. Exact payload checks and parent syntax pass. It remains
+unsealed because the existing whole-path qualification does not exercise the new
+validation-tool option and earlier graph receipts are stale. No operation was
+registered, target contacted or production state accepted. W-147/AC-013 remain
+pending; W-197 capability and W-199 focused local results retain their limits.
+
+November 17 W-200 coverage update: three current primary-only owner cases pass
+with validation-tool delivery enabled, including pre-release-ID restoration.
+The current source/effect verifier passes and rejects four evidence mutations;
+the host profile and neutral owner policies pass. Native validation and HTTPS ran
+in the offline fixture, with explicit namespace/transport/service substitutes.
+This accepts local orchestration coverage only. Candidate authorization bindings
+remain pending; nothing is registered, sealed or deployed. W-147/AC-013 and the
+production timeout cause remain unresolved.
+
+November 17 W-200 authorization update: fresh exact-candidate primary-only execution
+passes all three cases and the existing authorization gate. Nine evidence mutations
+and six profile/recipe mutations reject. Parent paths now bind the retained private
+candidate and its evidence. This is local preparation only: main remains
+clean/inactive, no live bundle is sealed, and target writable execution, W-147 and
+AC-013 remain unaccepted. Earlier focused/consumed receipts are preserved.
+
+November 17 W-200 sealing update: the exact private primary/Pi diagnostic is sealed
+and its definition registered locally. Final non-contact preflight, owner gate and
+lifecycle checks pass. WORK.md records the approval boundary and immutable command.
+No diagnostic execution, installation, target acceptance or publication occurred;
+W-191/W-147/AC-013 remain pending and W-157 remains uninstalled.
+
+November 17 W-200 execution: Failed before Caddy launch (W-201). The approved
+one-attempt parent exited 2 after its clock receipt could not be written; the
+configured local evidence directory was absent. Native backend restore and its
+restored-state assertion passed in the retained parent log, then the recovery
+timer was stopped. Final local outcome persistence also failed; subsequent combined
+terminal/boot checks were not reached. Caddy tools/routes and HTTP comparison did
+not run. No new timeout attribution or AC-013 acceptance; no retry is authorized.
+
+November 17 W-201 local correction: controller evidence admission now precedes
+all target contact and exercises private receipt writing/readback. Six storage
+cases, write-failure propagation, three primary parent cases and clock-failure
+recovery passed locally. Consumed inputs and failure evidence remain unchanged;
+no live retry or new acceptance. W-147/AC-013 remain pending.
+
+November 17 W-202: the fresh parent successor is sealed for separate review.
+Seven actual controller pre-contact tasks passed, including storage admission;
+syntax, original exact-graph owner authorization and lifecycle gates pass. No
+live target was contacted. The old parent remains failed-consumed; its Caddy
+child remains unexecuted. W-147/AC-013 and writable delivery remain unaccepted.
+
+November 17 W-202: Failed diagnostic, restored. Direct HTTP 200 passed; primary
+HTTPS timed out at five seconds. Backend capture saw proxied response bytes only
+after about 7.5 seconds. Correlation and evidence persistence passed, with zero
+sampled high/max/OOM events. Primary tools/release restoration, natural monitor
+acceptance and backend loopback restoration passed. Cause and AC-013 remain
+unresolved. W-203 owns retained-evidence reconciliation; W-204 owns the required
+terminal archive. Approval consumed; no retry or publication authorized.
+
+W-203 local reconciliation: matching retained foreground headers; two health
+requests preceded the proxied request by about 177 ms. All three delayed flows
+showed first backend payload after roughly 7.5 seconds, after client closure;
+complete responses/internal CGI execution remain unobserved. Concurrency is a
+candidate explanation, not attribution. W-147/AC-013 remain unresolved.
+
+W-204 terminal archive: exact 32-file server candidate prepared and locally checked,
+with commit/tag/push command recorded in WORK.md for separate approval. No archive
+publication, cleanup or target work occurred. Caddy remains terminal-pending.
+
+November 17 W-205/W-206: Aaron approved W-204 publication, but its commit hook
+stopped before commit/tag/push on missing terminal lifecycle classification.
+The metadata-only correction passes focused checks; the exact 32-file publication
+continuation awaits separate approval. Caddy remains terminal-pending; W-147 and
+AC-013 remain unresolved. Twelve discovered Git metadata entries were relocated
+outside evidence storage, with source files and both consumed input manifests
+verified unchanged. Workspace instructions now prohibit evidence repositories;
+protected fixture subdirectories remain outside the scan's coverage.
+
+November 17 W-207: approved W-205 publication stopped before staging because the
+launcher used the final-tree hash for its initial-index assertion. No commit/tag/
+push occurred. Corrected command changes one assertion; archive content and final
+tree remain unchanged and local identity/syntax checks pass. Publication awaits
+review of that command; Caddy remains terminal-pending. Session 48594 is retired.
+
+November 17 W-207 publication accepted: exact terminal archive commit
+`49867222c7a55957471d2a8a15038eeb649693f7` and annotated tag
+`caddy-webmin-isolated-validation-terminal-2026-11-17` were atomically pushed and
+remote-verified. Normal hooks passed; the approved tree and parent match, and
+the server repository is clean. Remote CI was not checked. W-204/W-205/W-207 are
+resolved; both previous failures remain retained. Cleanup has not run, and
+W-147/AC-013 remain unresolved. Session 37873 exited 0 and is retired. This
+monitoring record update remains local and uncommitted.
+
+November 17 W-210: archived operation reconciled locally to clean/inactive Caddy
+state with no successor. Published terminal archive and private inputs preserved;
+cleanup is uncommitted. Neutral-state and current-tree documentation checks pass.
+The full repository-policy profile fails a temporary documentation-copy gap
+(W-211); no production acceptance is inferred. W-147/AC-013 remain unresolved.
+No live work or publication occurred; all local sessions are retired.
+
+November 17 W-212 review: retained foreground headers match; overlapping health
+requests differ in headers and have shorter client deadlines. Late backend bytes
+do not prove successful HTTP/CGI completion or concurrency causation. The proposed
+fixed-contract actual-backend concurrency comparison remains undefined and
+unapproved. No new acceptance or live work; W-147/AC-013 remain pending.
+
+November 17 W-213 scope review complete: backend-only concurrency comparison
+recommended using native Webmin recovery, fixed requests and bounded workload
+cleanup. Existing combined parent is Caddy-bound and cannot execute that scope
+unchanged. No implementation, target observation or new acceptance is claimed;
+W-147/AC-013 remain unresolved. No live operation is defined or authorized.
+
+November 17 W-214: backend-only comparison components are locally tested; the
+draft parent is execution-disabled pending aggregate recovery and final observer
+evidence qualification. No target comparison, capacity conclusion or new
+acceptance. W-147/AC-013 remain unresolved; Caddy stays clean/inactive.
+
+November 17 W-214 local integration is qualified: bounded forward/recovery,
+client cleanup, verified cancellation/restoration and final observer evidence
+checks pass local tests. No target operation is sealed or authorized. This does
+not accept Webmin browser access, target capacity or timeout attribution;
+W-147/AC-013 remain pending. W-211 is locally resolved and Caddy remains neutral.
+
+W-215 preparation (November 17): the backend-only comparison is sealed for
+separate review in `webmin-backend-review-2k86wh8y`; WORK.md owns its exact hash,
+command and scope. Frozen local comparison and route-admission checks passed.
+No live attempt occurred. Existing Kuma acceptance is unchanged; W-147 and
+Webmin AC-013 remain unresolved, W-157 remains uninstalled. This is not target
+recovery, capacity or browser acceptance.
+
+W-216 actual backend comparison (November 17): **Failed; restored.** The approved
+W-215 attempt stopped at initial backend quiescence before its observer or any
+comparison request. HTTP/concurrency acceptance was not tested. Native loopback
+restoration, timer disarm, primary client cleanup and boot continuity passed.
+The later missing-file evidence rejection is separate from restoration success.
+W-217 tracks omitted process/socket detail and not-started evidence handling.
+The exact consumed inputs and receipts remain preserved. No target-capacity or
+W-147 attribution follows; AC-013 stays pending. Approval is consumed; no retry
+or further live action is authorized. WORK.md owns the terminal evidence links.
+
+W-218 audit (November 17): the latest failure is a non-diagnostic gate rejection,
+not a reproduced HTTP timeout. The singleton-process assumption is incompatible
+with supported Webmin background-child behavior; failure observations were not
+retained. Native handler/source review and a pure predicate counterexample confirm
+the tooling defect, not the original target process state. Historical backend
+response delay remains established; CPU contention remains an unproven hypothesis.
+No further live test ran. A smaller existing-loopback measurement is proposed;
+Webmin AC-013 remains pending and accepted Kuma state is unchanged.
+
+W-220 preparation (November 17): the six-input loopback-only capture is prepared
+for exact-scope review. Local measurement/deadline/privacy/stop checks passed;
+no actual-Pi requests occurred. Loopback timing is not proxy/browser acceptance
+or sustained capacity. W-147/AC-013 remain pending and consumed attempts are
+unchanged. W-219 supplies a proposed durable harness rule; AGENTS.md is unchanged.
+
+November 17 checkpoint: W-221 loopback measurement: diagnostic completed with a failed concurrent-request outcome (exit 1). Single HTTP 200 took 2.34s; all three concurrent requests timed out at 5s. CPU throttling increased without memory-high/max/OOM events. Clients were reaped and final activity settled; no service changes or restoration were needed. Backend concurrency delay is reproduced; historical causation and browser acceptance remain unresolved. W-219 is installed. Approval is consumed; W-222 tracks the owner decision, with no further live authority.
+
+November 17 owner review: W-222 local owner review identifies the fleet foundation CPU ceiling and proposes a single-factor temporary quota comparison. No new target observations or policy changes occurred; W-221 remains the latest measurement. CPU contention is supported, historical causation and AC-013 remain unaccepted. Owner agreement and a separately reviewed exact operation are still required.
+
+November 17 W-223 checkpoint: W-223 local preparation is complete and sealed for separate review. The existing observer gained only a one/two-CPU expected-quota parameter; native quota delivery/restoration uses a separate selected-host helper. Changed control/file boundaries pass focused tests; target application, restoration, CPU improvement and AC-013 remain untested. No live action or publication occurred.
+
+November 17 W-224 result: W-224 actual Pi comparison passed: single HTTP 200 in 2.327s and three concurrent HTTP 200 responses in 3.832-3.853s at temporary 200% CPU. The original 100% ceiling, runtime override and main/unit identities were restored; temporary files were removed. No new memory-high/max/OOM events. This supports a CPU-ceiling contribution to the tested concurrency delay, not universal historical attribution or AC-013 browser acceptance. W-225 tracks the permanent policy/health-contract decision. The one-attempt authority is consumed; session 49206 exited 0 and is retired.
+
+November 17 W-225 review: W-225 local contract review is complete as a proposal awaiting decision. The current health request is not identical to the measured foreground request, so no health failure is newly proven. Host-specific CPU and explicit five-second health-contract changes are proposed, not implemented. W-224 remains the latest actual-host evidence; original 100% controls are restored and AC-013 remains pending.
+
+November 17 W-225/W-226 checkpoint: Aaron approved local implementation/preparation. The selected Pi 200% CPU profile and explicit 5s unauthenticated health policy are implemented in the existing owner sources and locally checked; fleet default and memory/foreground limits remain unchanged. Native recovery restores the prior CPU baseline. No target change or acceptance follows. Final paired/dual-stack browser candidate and exact parent/owner binding remain preparation work; no bundle is sealed. W-147/AC-013 remain open.
+
+November 17 W-227 checkpoint: a fresh paired/dual-stack browser draft is bound
+locally, with the selected CPU profile and unchanged browser/resource criteria.
+Syntax, browser preflight (no launch) and offline adapted-contract checks pass.
+W-228 prevents sealing: the current isolated-validator delivery/pre-ID recovery
+contract is diagnostic-only and rejects the paired recipe. No new target outcome,
+route promotion or browser acceptance is claimed; AC-013 remains pending.
+
+November 17 W-228 checkpoint: the paired delivery/pre-ID recovery gap is resolved
+locally in the existing Caddy owner path. Eighteen focused file/payload/recovery
+cases, paired dispatch checks and the host onboarding profile pass. Primary tools
+remain primary-only; secondary configuration uses replication. W-227 exact candidate
+qualification remains pending and no operation is sealed. AC-013 remains pending;
+no tools, CPU profile or route were deployed and no live browser result is claimed.
+
+November 17 W-227 qualification checkpoint: 19 current owner cases and nine
+altered-evidence rejections pass; the exact private owner graph is authorization-
+ready locally. Actual payload, parent bindings, recovery flow and syntax checks
+pass. W-229/W-230 are resolved within local qualification. No live bundle or
+launcher is sealed; no target was contacted. AC-013 remains Not tested for the
+final paired browser candidate, and existing accepted Kuma scope is unchanged.

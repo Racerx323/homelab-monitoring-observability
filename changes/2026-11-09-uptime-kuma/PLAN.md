@@ -954,3 +954,433 @@ cutoffs, independent backend restoration and all workload exclusions remain.
 Admission must revalidate current host/configuration/health and capture fresh
 boot continuity; retained readiness does not establish current target health.
 No live authority follows from definition, local qualification or sealing.
+
+W-187 retained-evidence reconciliation, November 17: before any successor,
+reconcile the published terminal archive to neutral and qualify W-184's explicit
+no-observed-payload connection classification. Preserve rejection of partial HTTP,
+missing markers, capture loss and incomplete clock/resource coverage. Trace the
+observed eight-request startup health burst before choosing a single-factor target
+comparison. Retained evidence establishes pressure during the request and a later
+OOM kill, not causation or fleet capacity. Keep existing caps, request deadlines
+and recovery; no new inspection or live comparison is authorized by this analysis.
+
+W-188/W-184 completion, November 17: the published archive is reconciled to clean,
+inactive owner bindings. Close-only classification and full retained-data
+correlation are locally qualified without replacing original receipts. W-189
+traces immediate health checks during repeated validation/provisioning; startup
+probe traffic requires an owner-reviewed disposition before a new controlled
+comparison. Keep full validation, normal health checks, resource limits and
+recovery. No revised live operation or policy is defined by this source trace.
+
+W-190 owner review proposes validation-process network isolation, retaining full
+exact-config/module/TLS validation and normal runtime health checks. W-191 must
+qualify both root and unprivileged finalizer contexts without changing privilege,
+file access, deadlines or recovery. Isolation failure stops progression; there is
+no networked fallback. This is a preparation proposal, not an approved runtime
+policy, qualified implementation or live operation. Any target comparison remains
+separately reviewed after the local mechanism and owner bindings are complete.
+
+W-191 qualification now combines W-197's passed actual-primary read-only
+capability check on 2.11.9 with W-198's focused local caller integration. Root
+retains its user namespace; caddy-sync uses current-user mapping and existing
+groups. The publisher/finalizer/reconciler sources invoke the fixed isolation
+helper without changing runtime health or reload behavior. No helper or caller
+was deployed. W-199 must bind helper delivery before caller activation, exact
+identities, prior-state recovery and aggregate deadlines in the existing owner
+path before any target comparison. Host boundary tests do not qualify complete
+writable transactions or prove the historical timeout cause; no further fixture
+capacity or root-container capability work is required. Live boundaries remain.
+
+### Primary-host validation capability check (W-192; prepared scope)
+
+Aaron approved preparation on November 17. This replaces the earlier requirement
+to make root isolation pass inside the local container. It does not authorize
+execution, helper installation or the later primary/Pi comparison.
+
+**Decision:** Can the primary's existing root and caddy-sync callers perform full
+Caddy validation inside the proposed isolated network context, with required file
+access and applicable installed service restrictions preserved? A pass supports
+owner integration preparation only; it does not explain the Webmin timeout.
+
+**Target and admission:** One session to `pi@10.1.0.53`, native hostname
+`j1-svpihole0`, using retained strict SSH host-key verification and existing sudo
+authority. Capture a fresh boot ID and require continuity within this check.
+Resolve and bind the accepted current release and installed Caddy executable,
+caller UID/GID/groups, relevant unit/drop-in restrictions and non-secret node
+environment. Compare configuration and installed identities against the reviewed
+owner inventory; stop on drift. Historical boot IDs are not admission inputs.
+Read only the files needed for these decisions; do not dump private keys.
+For a future W-192 successor, require successful version-command status and the
+exact v2.11.9 version token, with an optional build suffix. Retain bounded escaped
+observed output and status separately before stopping on failure. The historical
+package inventory is version provenance, not proof of current CLI output or
+binary identity; preserve fresh binary/serving-process identity checks. W-194's
+prepared correction does not modify the consumed attempt or authorize execution.
+
+**Sequence:** First prove namespace creation and required file access without
+running Caddy. Root retains its original user namespace; caddy-sync uses only
+its existing UID/GID mapping and groups. Any failed isolation or access check
+stops the operation before validation, with status and expected/observed evidence.
+Then validate the exact accepted release once per applicable caller context,
+sequentially: root publisher context, unprivileged finalizer context, and root
+reconciler sandbox. Preserve full module/TLS validation and relevant environment.
+The root reconciler check must reproduce its actual installed restrictions; a
+plain sudo shell must not be reported as service-context qualification. Never
+start the real reconciler, publisher, finalizer or serving Caddy entrypoints.
+
+**Temporary execution:** If reproducing the reconciler sandbox needs a transient
+validation unit, bind its exact properties/name/lifetime in the execution bundle.
+It may run only the validator and its bounded identity/isolation checks, with no
+production OnFailure hook. This is temporary process execution, not a claim of
+strictly read-only inspection. Do not copy TLS secrets, modify production files,
+relax controls or grant capabilities/sudo rights. Any required temporary writable
+output must be named, private and owned by this check; if the exact configuration
+requires an unreviewed write, stop rather than grant access.
+
+**Bounds and evidence:** Maximum 30 seconds per validation process and five minutes
+for the complete check including cleanup; no automatic retries. Retain caller and
+namespace identities, config/executable hashes, required-file access outcomes,
+command status and bounded sanitized validator diagnostics. Prove the validator
+uses a distinct network namespace without external interfaces/routes before its
+execution. Do not collect secret contents or claim fixture timing is host evidence.
+Failure to represent the installed restrictions is an explicit unresolved result.
+
+**Cleanup and stop:** Terminate only this check's owned processes/transient unit,
+remove only its private temporary files and confirm no owned process remains.
+Check boot continuity and unchanged accepted release/configuration identities.
+There is no release rollback because the check never activates a release. Record
+cleanup failure explicitly; do not restart or reset any existing service.
+
+**Excluded:** Secondary or Pi contact, backend requests, release publication,
+replication changes, existing service start/reload/restart, DNS, notifications,
+authentication/browser/scan workloads, capacity acceptance and permanent changes.
+If compatibility passes, prepare owner integration and then a separately reviewed
+single-factor primary/Pi comparison with unchanged runtime health policy, caps,
+request deadlines and recovery. A failed check returns for local review, not a
+networked validation fallback or a privilege increase.
+
+W-192 execution binding: one private SSH bundle runs namespace/file-access
+prechecks in all three contexts before any full validation. It uses temporary
+validation-only units with native process-group cleanup and collection. Each
+precheck has a 10-second runtime cap; each validator has 30 seconds, plus a
+three-second termination limit. The remote supervisor stops work at 240 seconds
+and allows 30 seconds for termination; the controller stops at 295 seconds with
+a five-second kill margin. Any timeout is failure, not permission to resume.
+
+All temporary contexts make production files read-only and use private temporary
+logs; the reconciler additionally preserves its NoNewPrivileges/ProtectHome
+restrictions. Its installed ReadWritePaths are admitted unchanged but deliberately
+not granted to this validation-only process. A pass proves read-only validation
+compatibility, not writable reconciliation or end-to-end owner integration.
+Unexpected need for a production write stops the check. A transient unit is not
+the real reconciler and has no production OnFailure hook.
+
+The exact accepted release and owner-installed tool/environment/unit hashes are
+bound from owner inventories. Caddy's owner-confirmed production version is 2.11.9 (W-196); its executable
+hash is captured at admission, compared with the running service executable and
+required unchanged afterward. This does not invent an absent historical binary
+hash. A fresh boot ID is admitted; no old boot ID is carried forward.
+
+The private child uses the proposed helper's namespace flags and exact validation
+argv, adding namespace/file-access evidence before Caddy runs. The proposed helper
+is retained as an input reference; it is not installed or invoked by existing
+owner callers. This qualifies the mechanism only, not owner integration.
+
+WORK.md records the sealed bundle, command and authorization boundary. Preparation
+and local static/integrity checks do not authorize live execution.
+
+### Isolated-validator delivery and restoration bindings (W-199)
+
+This is local implementation preparation for the primary/IPv4 diagnostic, not
+an operation definition or authorization. The existing Caddy outer runner and
+transaction now implement these bindings; no separate installer was introduced.
+W-197 proves read-only capability and W-198 proves caller wiring. W-199's focused
+local tests exercise payload/filesystem/recovery decisions with mapped privileged
+paths and service/process stand-ins. Writable owner execution remains unaccepted;
+only a separately authorized target operation can establish it.
+
+**Delivery:** The primary application payload already carries the staged publisher
+and fragment. Add the helper, finalizer and reconciler to that same payload, with
+exact hashes checked before transfer and again before installation. Do not upload
+them to Node B or put executable tools into replicated configuration releases.
+The publisher remains staged; its installed production copy is not replaced.
+
+These are the current source bindings, relative to `homelab-server-configs/Caddy/scripts/`:
+
+| Source | SHA-256 | Execution destination |
+| --- | --- | --- |
+| `validate-caddy-isolated.sh` | `6932013a928108d2a08cfdc5b6de5d87975c4753474350f13d000f1264ae9004` | `/usr/local/libexec/validate-caddy-isolated.sh` |
+| `publish-release-v2.sh` | `af5117fa16e46d516e33a5b82ff4c728c4935652955ead28c021b2c01f222feb` | Existing primary payload; execute with Bash |
+| `finalize-incoming-release-v2.sh` | `70e54ac2187ebd982eff27fda078353c111e79ca6fa5b81b3d87c9aa4e3a619e` | `/usr/local/libexec/finalize-incoming-release-v2.sh` |
+| `reconcile-release-v2.sh` | `5a12d4b87e2484f15493b364e4eb3decc661aaa6a2be09bf4d1a253da86dc962` | `/usr/local/libexec/reconcile-release.sh` |
+
+Admission must match the installed finalizer hash
+`fcff15db5b4ea971846a798028f40d2dce86db9cc331825d046dd5321d5f33bd`
+and reconciler hash
+`e777c2fe6932090d717b5ac9e50ef706d6b90c753293ad7eec4e396f2f6ea073`.
+These remain accepted deployed identities, separate from candidate hashes. Require
+the helper path to be absent, including absence of a dangling symlink; unexpected
+presence stops admission for review. Do not assume that absence was observed by
+W-197. Capture and bind existing file type, owner/group, permissions and any ACLs
+or extended attributes needed for exact restoration; reject unsupported metadata
+instead of silently dropping it. Preserve the installed publisher and unit files.
+
+**Installation boundary:** First admit the unchanged release, tools, services,
+fresh boot and executable identities. Quiesce sender/reconciler activity using
+the existing owner service controls and require receiver/finalizer inactivity
+before replacing files; do not kill unrelated processes. Keep the sender and
+reconcile path stopped during the trial, but allow the explicit reconciler service
+start after candidate preparation. Do not use the recovery cancellation marker
+to enter this forward phase. Record prior service state and verified private
+backups before the first file mutation. Bind the exact backup location beneath
+the existing protected operation root when preparing the executable candidate.
+
+Install the helper first as root:root:0755, then replace finalizer and reconciler
+using atomic same-directory rename after hash/metadata checks, preserving the
+original callers' ownership and permissions. Record each
+replacement independently; a partial install must remain recoverable. Use the
+existing privileges and restrictions, without unit/drop-in edits, privilege
+additions or networked validation fallback. Before publisher preparation, verify
+all three installed candidate identities. Subsequent candidate-phase checks must
+expect those identities; admission and post-restoration checks must expect the
+original identities. Do not rewrite the accepted inventory to satisfy trial checks.
+
+**Restoration boundary:** Tool recovery must not require `application-target.tsv`.
+Publisher validation can fail after tool installation but before producing a
+release ID. The outer failure branch now accepts an explicit empty target receipt
+only for this bound primary diagnostic. It dispatches tool-only restoration and
+independent baseline/prepared-state checks before service resume. A missing or
+malformed receipt still stops. Never invent a target ID or infer no mutation from
+missing output.
+
+For tool-only failure, prove the selected release and sync inventories remain at
+the admitted baseline, restore any replaced callers and remove only the exact
+owned helper. For a verified release mutation, keep the existing containment,
+quiescence and release restoration, then restore callers and helper before resume.
+Restore callers first while the helper remains available; remove the helper last.
+Verify original hashes/metadata, helper absence, baseline release and sync inventory
+before resuming admitted services and observing W-166's natural monitor cycle.
+No restoration receipt means incomplete/manual intervention, not success. Preserve
+backups and evidence on incomplete recovery; do not delete them in payload cleanup.
+The Pi parent still owns its separate backend restoration.
+
+**Deadlines:** Installation, validation and the request comparison share the
+existing 240-second forward budget. Failure switches to recovery without resetting
+the monotonic origin. Tool restoration, release restoration, service resume,
+W-166 observation, readback and owned cleanup share the existing 840-second total.
+Keep the existing 20-second margin, 60-second transfer cap, 90-second remote cap,
+170-second monitor-command cap and remote process-group termination. The parent's
+1200-second child limit and terminal-wait controls remain unchanged. Installation
+must enter recovery on failure or cancellation even when no release ID exists;
+an exhausted recovery budget reports incomplete state and retains evidence.
+
+**Focused qualification before sealing:** Exercise the actual existing payload
+builder and transaction branches for helper-before-caller ordering, source versus
+installed identities, rejection before mutation, partial installation, publisher
+failure before a release ID, later request failure and successful restoration.
+Include interruption/aggregate-deadline handling and a restoration failure that
+prevents service resume and backup removal. Reuse existing owner tests; do not
+build a platform emulator or repeat root-isolation/capacity fixtures. These tests
+prove code ordering and recovery decisions only. Writable owner execution and the
+primary/Pi request comparison still need separately scoped actual-target authority.
+
+Implementation binding: the inactive recipe remains empty. A future candidate must
+explicitly set `validation_tools_trial` to `primary` and bind
+`validation_helper_sha256`, `validation_finalizer_sha256` and
+`validation_reconciler_sha256` to the table above. Existing
+`publisher_candidate_sha256`, `finalizer_sha256` and
+`reconciler_installed_sha256` retain their distinct candidate/baseline roles.
+Only primary/IPv4, 240-second diagnostic/660-second trial recipes accept this
+option. The helper and callers use the existing primary payload; the secondary
+control archive contains no tools. Source identities are verified during payload
+construction and remote dispatch. No operation is populated or sealed here.
+
+Verified caller backups and their metadata live beneath the operation's protected
+payload root in `validation-tools/`, with a `ready` marker written before service
+or file mutation. Restore ordering uses that marker and observed file hashes,
+including partially written staging files. Failed recovery preserves this directory.
+Python 3 must already be available for metadata checks; no dependency installation
+or metadata relaxation is permitted. Absent and empty prepared directories are
+valid; unexpected prepared entries require manual reconciliation. The existing
+remote process-group timeout, lock, boot continuity and recovery budget remain.
+
+W-200 preparation uses a new private parent input set and an exact proposed owner
+recipe, with no registered operation or live launcher. Before sealing, the owner
+qualification must exercise the `validation_tools_trial=primary` path through the
+existing execution/transport/recovery boundaries. Existing whole-path scenarios
+omit this option; prior source-graph evidence cannot be relabeled for the changed
+implementation. Keep the scope primary-only and reuse W-197 mechanism evidence.
+Do not expand fixtures to requalify target kernel isolation or capacity. Focused
+W-199 filesystem tests remain partial evidence; actual writable host execution
+remains part of a separately authorized, bounded trial.
+
+W-200's primary-only tool-delivery branch is now covered by three current-source
+whole-path cases: successful request, failed HTTP acceptance and partial install
+failure before a release ID. Use the existing launcher's
+`--primary-validation-tools` mode and its separate effect/source verifier. Namespace
+creation is explicitly substituted here; W-197 remains actual-host capability
+evidence. This focused summary does not satisfy the full authorization gate.
+Reconcile exact candidate/coverage bindings before sealing; do not relabel earlier
+receipts or infer writable target acceptance from this result.
+
+W-200 authorization uses the explicit `primary-validation-diagnostic` profile in
+the existing owner gate. Selection requires the exact single-primary Webmin recipe,
+validation tools, request contract and 240/660-second bounds; paired onboarding
+retains complete coverage. Fresh evidence must bind the private candidate's complete
+source graph and pass the ordinary authorization gate. Earlier focused summaries
+remain non-authorizing. The parent binds this same private owner projection and
+evidence; sealing must include those exact sources, parent inputs and recovery
+controls. Main registration and live approval have not occurred.
+
+W-200 sealing update (November 17): exact qualified owner registration and the
+private parent bundle are now sealed for separate one-attempt review. WORK.md owns
+the final manifest, command, targets, deadlines and recovery/exclusions. The main
+stream is defined; no live authority or writable-host acceptance follows. Earlier
+preparation-status paragraphs above describe their respective checkpoints.
+
+Controller evidence admission (W-201): prepare the private mode-0700 output
+directory before sealing. The parent must reject absent/unsafe/unwritable storage
+before any target command, using the existing receipt writer/readback. Do not
+repair the output path of a consumed attempt and replay it. Later storage failure
+must not suppress owner recovery; retain the controller log and distinguish
+observed recovery from unavailable terminal receipts.
+
+W-202 preparation retains the unchanged unexecuted Caddy child under the single
+existing definition. Original qualification is reusable only while its complete
+graph matches and the actual authorization gate passes. The fresh parent binds
+W-201 storage admission, new paths/token and prepared private output storage.
+WORK.md owns the sealed command/scope; this grants no live authority.
+
+W-212 review boundary (November 17): the retained primary-only run has matching
+foreground request headers but overlapping health requests with a different,
+partly redacted header contract. Concurrency is a hypothesis, not attribution.
+Before defining another comparison, select one factor. The recommended question
+is actual-backend response to identical requests alone versus bounded overlap,
+using existing native backend controls and recovery without Caddy publication.
+This is an unapproved proposal, not a replacement acceptance criterion or live
+scope. Preserve deadlines/caps, safe evidence and all consumed attempts; no
+fixture can accept the Pi's capacity. WORK.md owns the evidence and limitations.
+
+W-213 preparation design (November 17): review recommends a backend-only,
+primary/IPv4 single-versus-three-identical-request comparison with at most one
+conditional single-request control, five requests total. Reuse native Webmin
+apply/restore and observation; the Caddy-bound combined parent cannot serve as a
+no-op wrapper. Apply one five-second total request deadline uniformly and preserve
+all service controls, recovery and resource stop rules. Do not advance without
+bounded workload quiescence. WORK.md records scope, stop conditions and limited
+interpretations. This is a local preparation design, not an executable or
+live-approved operation, and does not change AC-013 acceptance.
+
+W-214 preparation checkpoint (November 17): the backend-only implementation
+reuses native apply/restore and the existing probe/observer. Its execution gate
+must remain closed until aggregate forward/recovery supervision, independent
+cleanup and final observer coverage are qualified. Per-request deadlines and
+local component tests do not establish complete parent recovery. WORK.md records
+the exact gaps and local evidence; no live scope or acceptance changes follow.
+
+W-214 qualified preparation (November 17): the backend-only candidate must invoke
+the supervisor in `Webmin/scripts/compare-backend.py`, not the raw playbook.
+Separate forward/recovery invocations enforce aggregate controller budgets of
+240/840 seconds. Recovery preserves independent native fallback if readback fails;
+a controller cutoff is not proof of remote completion. At most five comparison
+requests retain the five-second total deadline; native owner readbacks remain.
+Require client stop/worker cleanup, observer exit, terminal resource/wire coverage
+and post-recovery boot continuity. Existing limits and 96 MiB reserve remain.
+Local control-flow qualification is complete; exact inventory/input/path bindings,
+sealing and live approval remain required. This does not change AC-013 or establish
+target capacity or historical timeout causation. WORK.md owns qualification logs.
+
+W-215 sealed preparation (November 17): WORK.md owns the exact 33-input
+backend-only candidate and one-attempt command. Retained installed identities
+are distinct from frozen current owner sources. Restrict temporary ingress to
+primary IPv4 with loopback retained; recheck the primary route before exposure.
+Keep W-213/W-214 workload, caps, reserve, aggregate deadlines, native fallback
+and restoration requirements. No Caddy operation is defined. Local qualification
+is complete; execution needs separate exact-scope approval. No historical boot
+pin, sustained-capacity acceptance or AC-013 change follows.
+
+W-216/W-217 checkpoint (November 17): the backend-only attempt stopped before
+observation or comparison requests; native restoration was verified. Before any
+successor, locally reconcile the quiescence gate's missing expected/observed
+process/socket evidence and explicitly classify observation-not-started in the
+terminal path. Keep existing stop conditions, limits, deadlines and acceptance;
+no repeat inspection or workload is authorized by this reconciliation.
+
+W-218 diagnostic reset (November 17): Aaron requested a consolidated audit after
+repeated non-diagnostic failures. Preparation should now target a bounded native
+loopback measurement on the existing Pi listener, with CPU/throttling/process-wait
+and request timing evidence. Do not default to another ingress-changing/Caddy
+transaction or a singleton-process assumption. Loopback can test backend workload
+but cannot reproduce all remote-peer/proxy behavior. Preserve service limits,
+request bounds, stop conditions and separate live review; no operation is defined.
+The earlier comparison remains consumed and restored. WORK.md records the evidence,
+confirmed tooling defects and unproven hypotheses.
+
+W-220 prepared loopback scope (November 17): WORK.md owns a six-input one-Pi
+capture through the existing HTTP diagnostic, with no deployment/service change.
+At most four fixed-contract unauthenticated requests (one, then conditional three)
+use five-second curl bounds. Stream numeric CPU/throttling/process-wait/resource
+and request evidence before checks; keep accepted caps and reserve. Permit
+standing helpers and ordinary process exit, require main-process continuity,
+and stop additional work when activity/evidence is unresolved. Kill only owned
+clients; no Webmin restart or assumed server-side cancellation. No live authority
+follows from local tests or Aaron's agreement with the loopback direction.
+W-219's durable-instruction addition is proposed separately, not installed.
+
+November 17 checkpoint: W-219 is now approved and installed. W-220 was approved and consumed once; W-221 supplies actual loopback evidence. W-222 requires owner review of concurrency/CPU policy before any new comparison or correction. Existing caps and AC-013 remain unchanged.
+
+November 17 owner review: W-222 proposes local preparation of a temporary 100% to 200% Webmin CPU-quota comparison only after owner agreement. Retain the existing loopback workload, deadlines, memory controls and explicit original-quota restoration. No permanent budget or execution authority is selected. Keep health-contract changes separate.
+
+November 17 W-223 checkpoint: Aaron approved W-222 local preparation. W-223 binds the temporary CPU-only change to a native transient service with independent ExecStopPost restoration, including the prior runtime override and manager reload. The unchanged measurement remains one-plus-three requests with five-second deadlines. WORK.md owns exact input identities, command and bounded staging/collection scope. No live or permanent-budget authority follows.
+
+November 17 W-224 result: W-224 completed the approved temporary quota comparison successfully and restored the admitted baseline. W-225 now governs review of a host-specific 200% CPU candidate and compatible health contract before browser onboarding. Do not promote the temporary limit to fleet defaults or infer authenticated/sustained capacity. No new operation or live authority follows.
+
+November 17 W-225 review: W-225 proposes, but does not approve, a selected-host 200% Webmin CPU ceiling and an explicit unauthenticated health request with health_timeout=5s. The foreground deadline and memory controls stay unchanged. Preserve paired/dual-stack browser acceptance and account for combined health/browser load. The existing health request differs from W-224; its failure at 3s is not established. Policy agreement precedes local implementation; exact live approval remains separate.
+
+November 17 W-225/W-226 checkpoint: Aaron approved local implementation/preparation. The selected Pi 200% CPU profile and explicit 5s unauthenticated health policy are implemented in the existing owner sources and locally checked; fleet default and memory/foreground limits remain unchanged. Native recovery restores the prior CPU baseline. No target change or acceptance follows. Final paired/dual-stack browser candidate and exact parent/owner binding remain preparation work; no bundle is sealed. W-147/AC-013 remain open.
+
+### W-227 paired browser candidate binding and W-228 owner dependency
+
+Prepare the browser trial on the existing three targets: Pi ama@10.1.3.75,
+primary pi@10.1.0.53 and secondary pi@10.1.0.54. The proposal now includes both
+Pi backend families. Bind all four proxy-to-backend paths and six browser paths
+(A, B and VIP over IPv4/IPv6), the existing ama statistics-only method, prior
+session denial, 600-second resource observation and guarded scan overlap.
+Select j2-svpi3bmf-cpu200 explicitly, preserve memory/foreground criteria, and
+restore both owners and the original CPU baseline on either success or failure.
+This temporary trial does not promote the route or make DNS changes.
+
+The fresh private draft uses current source hashes and predecessor bindings,
+not old operation authority or old qualification receipts. Current target state
+still requires live admission under a future exact approval. WORK.md records
+its path and local checks. No launcher, authorization hash or operation is sealed.
+
+W-228 is a concrete owner integration prerequisite. The current publisher calls
+the isolated validator; existing delivery only permits a primary/IPv4 diagnostic.
+Do not remove the helper dependency, ship application files to the secondary,
+reuse diagnostic qualification as paired evidence, or reset the work to another
+capacity test. Reconcile primary-only tool installation/restoration with the
+paired trial in the existing owner path. The secondary must receive configuration
+through replication and retain its accepted installed callers. Cover failure
+before a release ID separately from recovery after paired exposure, including
+natural monitor acceptance, before defining a live operation. Do not silently
+carry the diagnostic's 240-second forward cutoff into the longer browser workload;
+retain and verify the existing browser parent/recovery deadlines.
+
+November 17 W-228 checkpoint: the existing owner path now implements paired-trial
+primary-only tool delivery, explicit pre-ID primary restoration with paired payload
+cleanup, and unchanged post-ID paired restoration/monitor acceptance. Focused local
+boundary tests and the host onboarding profile pass. The secondary retains its
+installed callers and receives the route through replication; no secondary isolation
+claim follows. W-227 must qualify and bind the exact current paired owner/parent
+candidate before sealing. Browser, resource and recovery deadlines are unchanged;
+no live approval or target acceptance follows.
+
+November 17 W-227 qualification checkpoint: the exact private paired owner and
+parent bindings pass local qualification, including current tool delivery,
+accepted secondary callers, paired recovery, real payload construction and the
+owner authorization gate. The six browser paths, four backend paths, selected
+CPU profile and existing limits remain the planned live scope. Readiness flags
+remain false; final immutable parent manifest/launcher and separate live review
+are still required. No target browser/capacity or writable recovery acceptance
+follows from these tests.
