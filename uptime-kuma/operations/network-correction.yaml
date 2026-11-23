@@ -10,7 +10,6 @@ diagnostic:
   netavark_version: 1.14.0-2
   image_id: sha256:315dfadc88ca9be7ba59515578363871bda93f7989a8e406f162acf36c9b0037
   image_architecture: arm64
-  require_webmin_contained: true
   files:
     - path: /etc/containers/systemd/uptime-kuma.container
       mode: '0644'
@@ -48,7 +47,6 @@ diagnostic:
         gateway: fd1e:eecd:b4a1:44b::1
   absent_paths:
     - /etc/systemd/system/uptime-kuma-network.service
-    - /etc/webmin/.installation-accepted
     - /usr/sbin/policy-rc.d
     - /etc/cron.d/needrestart_check
     - /run/uptime-kuma-network-diagnostic/permit
@@ -62,6 +60,6 @@ diagnostic:
     - /etc/systemd/system/uptime-kuma-loopback.service
     - /etc/systemd/system/uptime-kuma-loopback.service.d
   work_directory: /var/lib/uptime-kuma-maintenance/network-correction
-  evidence_directory: /home/aaron/code/.local-evidence/uptime-kuma/kuma-network-correction-20261110-1qyk9qhi/execution
+  evidence_directory: '{{ kuma_run_evidence_directory }}'
   correction: true
   minimum_available_kib: 540672

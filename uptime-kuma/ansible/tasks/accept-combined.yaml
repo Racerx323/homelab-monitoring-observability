@@ -6,7 +6,7 @@
       - -c
       - |
         import json,pathlib,subprocess,time
-        expected={'uptime-kuma.service':(268435456,335544320),'webmin.service':(134217728,201326592),'uptime-kuma-loopback.service':(None,16777216)}
+        expected={'uptime-kuma.service':(268435456,335544320),'uptime-kuma-loopback.service':(None,16777216)}
         result={}
         for unit,(high,maximum) in expected.items():
             props=dict(x.split('=',1) for x in subprocess.check_output(['systemctl','show',unit,'--property=ActiveState,NRestarts,ControlGroup'],text=True).splitlines())

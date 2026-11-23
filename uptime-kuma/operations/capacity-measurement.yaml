@@ -7,7 +7,7 @@ controller:
 foundation:
   qualification_status: qualified
 fleet_server_root: '{{ playbook_dir }}/../../../homelab-server-configs'
-operation_evidence_directory: /home/aaron/code/.local-evidence/uptime-kuma/capacity-measurement-hbvxmkz9/execution
+operation_evidence_directory: '{{ kuma_run_evidence_directory }}'
 capacity:
   hostname: j2-svpi3bmf
   address: 10.1.3.75

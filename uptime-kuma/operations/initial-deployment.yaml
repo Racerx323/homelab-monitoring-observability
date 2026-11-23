@@ -1,7 +1,7 @@
 operation:
   id: uptime-kuma-initial-deployment-20261109
   status: locally_qualified_not_authorized
-  scope: 'Pi foundation: host prerequisites, fleet needrestart/Webmin/msmtp, unchanged systemd watchdog adoption,
+  scope: 'Pi foundation: host prerequisites, fleet needrestart/msmtp, unchanged systemd watchdog adoption,
     offline Kuma, private administration, backup/restore, guarded backend and daily operational notifications'
   later_stages_not_authorized:
     - DNS deployment
@@ -171,22 +171,17 @@ payload:
       filename: podman_5.4.2+ds1-2+b2_arm64.deb
       sha256: 3df3cd889c6d04b8090894cb32dd54911fe774b15373d750fc8c53821d8b7b2a
       size: 21156436
-    - package: webmin
-      version: '2.670'
-      filename: webmin_2.670_all.deb
-      sha256: 67ddbbeb415daa44643b91c2b4c7ce65c29f3170bd88cf37c6b2b516542c9839
-      size: 28094890
   image_archive: uptime-kuma-arm64.oci.tar
   image_archive_sha256: dfaa3a465cd88f277515a3b376a5a98124d6750c5a47f6962f7920fe84f7c732
   image_archive_bytes: 189986816
   local_image_id: sha256:315dfadc88ca9be7ba59515578363871bda93f7989a8e406f162acf36c9b0037
 backup:
-  node_directory: /var/backups/uptime-kuma/initial-20261109
+  node_directory: '/var/backups/uptime-kuma/{{ operation.id }}'
   restore_work_root: /var/lib/uptime-kuma-maintenance/restore
-  controller_directory: /home/aaron/.local/state/uptime-kuma/backups/initial-20261109
+  controller_directory: '/home/aaron/.local/state/uptime-kuma/backups/{{ operation.id }}'
 memory_payload_directory: '{{ playbook_dir }}/../payload/memory-controller'
 runtime_payload_directory: '{{ playbook_dir }}/../payload/runtime'
-operation_evidence_directory: /home/aaron/code/.local-evidence/uptime-kuma/foundation-prepare-20261110-bcvgim9k/execution
+operation_evidence_directory: '{{ kuma_run_evidence_directory }}'
 memory_evidence_directory: '{{ operation_evidence_directory }}'
 proxy_probe_targets:
   - pi@10.1.0.53
@@ -199,7 +194,6 @@ foundation:
   qualification_status: qualified
   host_components:
     - needrestart
-    - webmin
     - msmtp
     - watchdog
   mail_default_account: apprise
@@ -213,7 +207,6 @@ foundation:
   package_baseline_sha256: 8d0ed832c61e32f10c37bfe1d93ad096cd63cc8093ea8d937f7c0f22492fde33
   watchdog_vendor_sha256: dad1960f1b097c080722e718f56bcdfa900b1617d7d846078486cd4ef337958a
   needrestart_vendor_sha256: a0ff6f13987c8216f52a2de64fea08073463ac02df8db3a28e5ad858bc6a371b
-  webmin_profile: ssh-loopback
   needrestart_profile: rpi-v8-list-only
   notification_job_memory_max: 96M
   watchdog_backend: adopt_existing_vendor_systemd
@@ -247,7 +240,5 @@ installation:
     - netavark=1.14.0-2
     - perl-openssl-defaults=7+b2
     - podman=5.4.2+ds1-2+b2
-    - webmin=2.670
-  new_package_count: 29
 fleet_server_root: '{{ playbook_dir }}/../../../homelab-server-configs'
 fleet_mail_root: '{{ playbook_dir }}/../../../homelab-dns'

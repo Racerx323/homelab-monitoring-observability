@@ -54,7 +54,7 @@
     owner: root
     group: root
     mode: '0644'
-  loop: [uptime-kuma.service, uptime-kuma-network.service, uptime-kuma-loopback.socket, uptime-kuma-loopback.service, webmin.service]
+  loop: [uptime-kuma.service, uptime-kuma-network.service, uptime-kuma-loopback.socket, uptime-kuma-loopback.service]
 - name: Reload the full native dependency graph
   ansible.builtin.systemd_service:
     daemon_reload: true
@@ -70,7 +70,6 @@
       - /etc/systemd/system/uptime-kuma-startup-permit.service
       - /etc/systemd/system/uptime-kuma-deployment-containment.service
       - /etc/systemd/system/uptime-kuma-deployment-containment.timer
-      - webmin.service
   changed_when: false
 - name: Enable persistent containment before any application permit
   ansible.builtin.systemd_service:

@@ -159,9 +159,9 @@
                 that:
                   - (kuma_runtime_offline_simulation.stdout | regex_findall('(?m)^Inst (\S+) \((\S+)') | map('list')
                     | list | sort) == (installation.packages | map('split', '=') | list | sort)
-                  - ('0 upgraded, ' + installation.new_package_count | string + ' newly installed, 0 to remove') in
+                  - ('0 upgraded, ' + installation.packages | length | string + ' newly installed, 0 to remove') in
                     kuma_runtime_offline_simulation.stdout
-            - name: Prepare fleet package controls and the Webmin first-start guard
+            - name: Prepare selected fleet package controls
               ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/prepare.yaml'
             - name: Install the complete offline package closure without downloads or removals
               ansible.builtin.command:
@@ -186,10 +186,10 @@
                 that: kuma_runtime_installed_packages.stdout_lines | sort == installation.packages | sort
             - name: Configure fleet host services before creating the application
               ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/configure.yaml'
-        - name: Correct the verified installed Webmin foundation without package actions
+        - name: Correct the verified installed foundation without package actions
           when: preserve_installed_foundation | default(false)
           block:
-            - name: Correct and accept Webmin with independent startup containment
+            - name: Accept the installed foundation through its owner
               ansible.builtin.import_tasks: '{{ fleet_server_root }}/foundation/ansible/resume.yaml'
             - name: Verify the previously transferred image before import
               ansible.builtin.stat:
@@ -344,7 +344,7 @@
           changed_when: kuma_runtime_network_stop.rc == 0
         - name: Preserve a failed installation for manual review
           ansible.builtin.fail:
-            msg: Runtime/foundation installation failed. Webmin permit removed and stop requests are retained; their
+            msg: Runtime/foundation installation failed. Stop requests are retained; their
               status does not prove cleanup. Keep the ingress guard; packages, image, data and definitions may remain,
               including startup on a future reboot. A temporary policy-rc.d may remain after package/configuration
               failure; inspect and restore it only through reviewed recovery. Observe actual service/network/firewall

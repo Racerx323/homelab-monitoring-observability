@@ -301,7 +301,7 @@
                     assert path.read_bytes()==b'[Unit]\nConditionPathExists=/run/uptime-kuma-network-diagnostic/permit\n'
                     units[name]=row
                 for flag in ['-lnt','-lnu']:
-                    assert not subprocess.check_output(['ss','-H',flag,'( sport = :3001 or sport = :10000 )'],text=True).strip(), 'listener remains'
+                    assert not subprocess.check_output(['ss','-H',flag,'sport = :3001'],text=True).strip(), 'listener remains'
                 assert not pathlib.Path('/run/uptime-kuma-network-diagnostic/permit').exists(), 'permit remains'
                 assert json.loads(subprocess.check_output(['podman','ps','-a','--format','json'],text=True))==[], 'container remains'
                 print(json.dumps({'units':units,'permit_absent':True,'listeners_absent':True,'persistent_guards_verified':True,'containers_absent':True}))

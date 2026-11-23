@@ -74,8 +74,6 @@
     - name: Complete one bounded continuation with native failure containment
       block:
         - ansible.builtin.import_tasks: tasks/arm-remaining-deployment.yaml
-        - name: Apply and start the accepted fleet Webmin profiles through their owner
-          ansible.builtin.import_tasks: '{{ fleet_server_root }}/Webmin/ansible/configure.yaml'
         - name: Start the installed corrected application
           ansible.builtin.systemd_service:
             name: uptime-kuma.service

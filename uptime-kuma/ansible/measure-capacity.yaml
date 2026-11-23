@@ -16,7 +16,7 @@
   vars_files: [../operations/capacity-measurement.yaml]
   vars:
     capacity_units: [uptime-kuma.service, uptime-kuma-network.service, uptime-kuma-loopback.socket,
-                     uptime-kuma-loopback.service, webmin.service]
+                     uptime-kuma-loopback.service]
   tasks:
     - name: Read exact target and installed scanner identity
       ansible.builtin.command:

@@ -1,7 +1,7 @@
 ---
 schema_version: 1
 service: uptime-kuma
-status: proposed_not_deployed
+status: accepted
 host:
   hostname: j2-svpi3bmf
   management_fqdn: j2-svpi3bmf.local.theama.co

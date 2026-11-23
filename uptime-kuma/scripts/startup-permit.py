@@ -13,7 +13,7 @@ import time
 ROOT = Path('/var/lib/uptime-kuma-maintenance/remaining-deployment')
 PERMIT = Path('/run/uptime-kuma-network-diagnostic/permit')
 UNITS = ['uptime-kuma.service', 'uptime-kuma-network.service',
-         'uptime-kuma-loopback.socket', 'uptime-kuma-loopback.service', 'webmin.service']
+         'uptime-kuma-loopback.socket', 'uptime-kuma-loopback.service']
 TIMER = 'uptime-kuma-deployment-containment.timer'
 
 
@@ -135,7 +135,7 @@ def action(mode, predecessor_sha256=None, original_predecessor_sha256=None):
                 (ROOT / 'accepted').unlink(missing_ok=True)
                 state.update(status='contained', contained_at=now)
                 save(state)
-                for p in (PERMIT, Path('/etc/webmin/.installation-accepted'),
+                for p in (PERMIT,
                           Path('/etc/cron.d/needrestart_check')):
                     p.unlink(missing_ok=True)
             elif mode == 'check':
@@ -145,7 +145,6 @@ def action(mode, predecessor_sha256=None, original_predecessor_sha256=None):
     # Never hold the lock while waiting for units whose startup acquires it.
     if mode in ('contain', 'expire'):
         subprocess.run(['systemctl', 'stop', *UNITS], check=True, timeout=100)
-        subprocess.run(['systemctl', 'disable', 'webmin.service'], check=True, timeout=10)
         # Stop only task-labelled temporary probes from this otherwise empty baseline.
         for label in ['homelab.uptime-kuma.restore', 'homelab.uptime-kuma.ingress']:
             rows = json.loads(subprocess.check_output(

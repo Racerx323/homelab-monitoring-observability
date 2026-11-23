@@ -1,24 +1,8 @@
 # Uptime Kuma operations
 
-The service foundation, guarded backend, Caddy application acceptance and DNS
-with ordinary-name dual-stack HTTPS are accepted through November 12, 2026.
-Kuma deployment is accepted; standard-browser Webmin access is pending (W-128).
-See the [result](../../changes/2026-11-09-uptime-kuma/RESULT.md).
-Deployment attempts recorded in the ledger
-are consumed and must not be replayed. The
-[work ledger](../../changes/2026-11-09-uptime-kuma/WORK.md) owns actual status and
-approval. [Architecture](ARCHITECTURE.md) owns enduring design;
-[deployment.yaml](../manifests/deployment.yaml) owns release and resource inputs.
-
 ## Normal administration
 
-Aaron has required direct browser access for Webmin. The SSH tunnel documented
-below describes the currently installed fallback, not the requested final access
-policy. Do not expose port 10000 or change listeners outside the reviewed change.
-
-Use `https://uptime.local.theama.co` for the existing Kuma administrator. Monitors
-and alerts remain unconfigured. Use the workstation SSH tunnel below for Webmin;
-its loopback management endpoint is not published through the Kuma route.
+Use the existing administrator at `https://uptime.local.theama.co`. Monitors and alerts remain unconfigured.
 
 Accepted startup state permits ordinary systemd startup through the existing
 permit dependency. Keep the firewall and permit guards; the deployment deadline
@@ -33,28 +17,18 @@ service-only resource and backup limits before adding monitors or alerts.
 
 ## Initial installation
 
-This section applies to a new installation. The existing host is installed and
-has an administrator; do not repeat bootstrap, boot correction or setup on it.
+1. Start with the [deployment manifest](../manifests/deployment.yaml) and [installation inputs](../operations/initial-deployment.yaml). Bind the intended host, verified SSH host key, addresses, NetworkManager connection, storage, boot configuration, service limits and release digests. Check for existing data and administrator accounts before choosing bootstrap. The accepted Pi already has both.
+2. Prepare a private bundle. Place the reviewed monitoring, server foundation, network and DNS owner files under `repositories/<repository>/`, preserving their relative paths. Include the server owner’s `foundation/` and `Needrestart/` trees and its statically imported `Webmin/ansible/{configure,accept}.yaml` files. The shared foundation skips those optional tasks on this host. Include the network owner’s `host-network/uptime-kuma/` and DNS owner’s `msmtp/` trees. Under the Kuma directory include `payload/known_hosts`, the reviewed `payload/memory-controller/{original,proposed}-cmdline.txt` files, and `payload/runtime/` with the hash-verified ARM64 OCI archive and offline Debian packages. The verified offline inputs for the accepted baseline are in `.local-evidence/uptime-kuma/installation-inputs/runtime/` on the workstation. Re-simulate package installation for the target OS and bind the exact new package/version list. Use fresh node and controller backup destinations. Record a fresh operation ID and a new mode-0700 evidence directory. Set `kuma_run_evidence_directory` in the frozen inputs to that absolute private path under the workspace’s `.local-evidence/uptime-kuma/`. Set the `operation`, `preserve_accepted_prerequisites` and `preserve_installed_foundation` keys in `bundle.json` to the reviewed values. Generate `INPUTS.sha256` for every other regular file relative to the bundle root. The controller rejects links and extra files.
+   Use the exact native hostname and verified SSH host key at admission. For a staged continuation, bind fresh runtime observations and the actual preserved backup. Historical boot IDs and previous backup paths in the Pi examples are specific to their original operation.
 
-The previous Pi-only bundle is withdrawn following the repository move and
-expanded host foundation scope. Do not execute its historical command. Prepare
-and qualify all requested foundation components, then use the replacement exact
-approved offline bundle and command from the work ledger. The
-[native coordinator](../ansible/initial-deployment.yaml) includes platform and
-resource preflight, saved boot-file correction, a planned reboot, the network
-owner's checkpoint-protected ULA addition, offline runtime installation and
-loopback bootstrap. A second planned reboot verifies application startup.
-Operator account setup, stopped-data backup/restore and guarded backend promotion
-follow in the same operation. Boot recovery can require another reboot.
-
-DNS/Caddy deployment, failover, Uptime Kuma monitors/alerts, synthetic notification
-tests and publication remain
-separately governed. Pi acceptance does not accept the final HTTPS deployment.
+3. From the frozen Kuma directory, run `ansible-playbook -i localhost, -c local ansible/initial-deployment.yaml --limit localhost --tags controller-preflight` with the controller version in the installation inputs. Review the exact bundled execution and recovery before target contact. Confirm physical boot recovery and an independent administrative path before a reboot or network change.
+4. The [installation playbook](../ansible/initial-deployment.yaml) verifies memory control and network prerequisites, installs the fleet foundation and pinned runtime, then starts Kuma on loopback. Complete private administrator setup, a stopped-data backup, isolated restore and startup verification before promoting the guarded backend. Check service health and headroom with the intended workload. On failure preserve the data and startup guard. Follow the [installation recovery boundary](../../changes/2026-11-09-uptime-kuma/PLAN.md#recovery).
+5. Submit the guarded backend to the [Caddy owner](../../../homelab-server-configs/Caddy/docs/APPLICATION_ONBOARDING.md). Verify primary activation, secondary replication, private login and WebSocket behavior. Use the [fleet DNS procedure](../../../homelab-dns/Unbound/docs/host-record-deployment.md) for the paired DNS update, verify A and AAAA answers and open the normal HTTPS name over both families. Record observed acceptance in the new change.
 
 ## Host foundation and notification configuration
 
 Follow the [architecture ownership table](ARCHITECTURE.md#fleet-host-foundation-and-notifications)
-and the owners' procedures. Needrestart, Webmin and msmtp are host packages;
+and the owners' procedures. Needrestart and msmtp are host packages;
 watchdog coverage uses the qualified fleet backend and must not introduce a
 second device owner. The coordinator imports the [foundation owner tasks](../../../homelab-server-configs/foundation/README.md);
 combined runtime/resource and operator authentication acceptance are required.
@@ -74,23 +48,6 @@ side effects as part of revised operation scope. Do not run a test message or
 an alert-producing scan to verify configuration. Review exact content and
 recipient separately if an actual delivery test is required. Keep Uptime Kuma
 monitors and notification settings empty during service-foundation acceptance.
-
-### Webmin: browser access and optional recovery
-
-Normal fleet Webmin access must use a browser HTTPS URL without a tunnel.
-Aaron approved `https://webmin-j2-svpi3bmf.local.theama.co`; its Caddy/DNS/backend
-onboarding is pending, so do not yet treat it as a working endpoint. Use the
-[shared Webmin operations guide](../../../homelab-server-configs/Webmin/docs/OPERATIONS.md)
-for normal access and its clearly labeled
-[optional SSH recovery](../../../homelab-server-configs/Webmin/docs/OPERATIONS.md#optional-recovery-access-ssh-tunnel)
-procedure. That guide owns the exact workstation command, local URL, account
-selection and tunnel shutdown; avoid maintaining competing instructions here.
-
-The currently installed profile remains loopback-only until the browser change
-is accepted. It is a fallback, not the requested final policy. Kuma's hostname
-on port 10000 addresses the Proxy VIP rather than this Pi's Webmin. Neither
-that endpoint nor a successful recovery tunnel substitutes for ordinary-browser
-acceptance at the dedicated Webmin hostname.
 
 ## First administrator
 
@@ -185,26 +142,6 @@ template/unit, packet and isolated image/restore qualification are retained in
 the work ledger with their tested inputs. These checks do not contact the Pi
 or substitute for target acceptance.
 
-## Installed-foundation continuation
-
-The continuation and diagnostic sections below are recovery procedures. They do
-not describe the accepted running baseline or authorize replay of earlier attempts.
-
-After a failed installation, verify observed residue before choosing a continuation.
-The installed-foundation mode verifies accepted package pins and contained Webmin,
-then applies the owner small-host dashboard collection profile without running
-APT or repeating boot/address mutations. Native startup containment remains armed
-until foundation acceptance. Keep the 128/192 MiB Webmin and 320 MiB Kuma caps,
-96 MiB scan cap and 96 MiB host reserve; do not solve startup pressure by silently
-increasing service limits or acceptance timeouts.
-
-Use the exact sealed command recorded in the current change ledger, once approved.
-Never replay a consumed command. On failure, preserve configuration/package/data
-residue and prove actual stopped/disabled/no-listener/no-permit containment before
-cancelling fallback. The disabled dashboard package summary does not replace the
-fleet package-maintenance process. Manual package actions need their own reviewed
-resource and maintenance scope.
-
 ## Diagnose container and published network paths
 
 Use the current change ledger's exact sealed diagnostic after scoped authorization.
@@ -265,83 +202,6 @@ this is stopped corrective acceptance, not deployment completion or automatic
 rollback. Any source restoration, new permit/start, guard release, administrator
 setup, reboot or backend/DNS/Caddy work needs a new reviewed continuation.
 
-## Complete an already installed, contained deployment
-
-Use [remaining-deployment.yaml](../ansible/remaining-deployment.yaml) only through
-the exact sealed command authorized in the current ledger. Its installed-state
-preflight verifies accepted prerequisites, package pins, corrected source hashes,
-the selected unclaimed or administrator-bearing data state, four guards and at
-least 624 MiB available. The working
-preflight retains exact memory/storage readings in controller-private
-`admission-resources.json` before its assertion; the failure message also includes
-the raw readings and thresholds. This does not recover measurements omitted by
-older consumed bundles. See the architecture's
-[stage budget](ARCHITECTURE.md#meaning-and-limits-of-the-admission-budget) before
-interpreting a failed admission as application capacity failure. A failed gate
-stops before service changes; do not drop caches, lower the floor, reinstall or
-replay an earlier operation to force admission.
-
-The continuation preserves guard files and stages a native startup dependency
-plus a persistent forty-minute containment deadline. It starts the existing
-services, checks the combined foundation, performs one startup reboot, and waits
-at most fifteen minutes for private login verification. Controller loss does not
-extend the deadline. An expired or second pending reboot cannot obtain a permit.
-The live physical reboot and ARM64 admission remain separate from local tests.
-
-When the controller reports the post-reboot setup window, use SSH forwarding
-from a terminal on the workstation running your browser, forwarding Pi loopback
-ports 3001 and 10000. Open the forwarded localhost addresses in that workstation
-browser; the headless Pi does not need a browser. Create the Kuma
-administrator, log out and back in, and verify Webmin login as `ama`. Leave all
-monitors and notifications empty. Never provide passwords, cookies or tokens to
-the agent. A root-owned mode-0600 acknowledgement at
-`/run/uptime-kuma-network-diagnostic/operator-ready` containing exactly
-`Kuma and Webmin login verified; monitors and alerts empty` releases the bounded
-wait. The application observer separately verifies active users and authentication.
-
-For a separately reviewed completion after that reboot and login, the sealed
-`resume_contained` mode checks the existing acknowledgement during preflight.
-A late acknowledgement never restarts a failed attempt. This mode requires the
-retained boot identity and administrator data, skips reboot/account setup/the
-operator wait, and renews forty-minute authority once. It archives the exact old
-state as `previous-state.json`; that file prevents another renewal or replay.
-The old timer is stopped only after preflight, before renewing its deadline.
-A later old-timer firing may have advanced `contained_at`; other predecessor
-fields must match exactly. Fresh preflight hashes the actual state and renewal
-refuses any intervening change. Normal runtime and combined acceptance still run.
-
-The separately reviewed `resume_successor` mode handles the contained result of
-that one-time renewal. It requires both the freshly observed state hash and the
-known original predecessor hash. It keeps `previous-state.json` unchanged and
-exclusively creates `completion-state.json` from the failed completion's exact
-state bytes. An existing completion archive or a previously consumed successor
-refuses renewal. Both archives are checked again during final acceptance or
-containment. This mode preserves the accepted boot count and does not authorize
-another reboot, account setup, counter reset or replay.
-
-Before target contact, the successor verifies the existing protected off-node
-backup's hash and size without extracting it; host preflight checks the matching
-on-node archive. A fresh backup/restore uses separate, unused destinations. Keep
-both the previously accepted archive and the new attempt's archive, including
-when a later gate fails.
-
-The coordinator then verifies an administrator-bearing consistent backup and
-isolated restore, promotes only the guarded backend bindings, checks both proxy
-sources and unapproved-source denial, and enables the owner daily needrestart
-schedule. Normal scheduled notifications use fleet Mailrise. No synthetic send,
-Kuma monitor/alert activation, DNS/Caddy deployment or publication is included.
-
-Only after these checks pass does the startup state become accepted and the
-temporary containment timer get disabled. A failure retains data and backups,
-stops the owned services/probes, removes permits and the cron schedule, and
-leaves guards intact. Temporary restore and ingress containers also have native
-300-second and 45-second lifetime bounds. The containment unit has a native
-stop-post path that removes permits and stops services even if its helper fails.
-If the host is unreachable, keep the independent fallback
-armed and use the agreed physical recovery path; do not claim verified recovery.
-The operation is consumed on an attempt, including a failed preflight. Any retry
-requires a newly reconciled candidate, not a replay of a failed command.
-
 ## Measure observer overhead and scan-time headroom
 
 Use `ansible/measure-capacity.yaml` only under its own exact-bundle authorization.
@@ -351,7 +211,7 @@ module; all probes still include SSH/sudo and concurrent host activity. Paired
 differences are observations, not a causal allocation measurement or permission
 to subtract assumed overhead from any admission reading.
 
-With all four Kuma units and Webmin stopped, the coordinator verifies the pinned
+With all four Kuma units stopped, the coordinator verifies the pinned
 scanner and reviewed owner policy, then runs one list-only scan through the
 [foundation observer](../../../homelab-server-configs/foundation/README.md#measure-scan-time-headroom).
 The isolated measurement needs 224 MiB available: scan 96, observer 32 and reserve

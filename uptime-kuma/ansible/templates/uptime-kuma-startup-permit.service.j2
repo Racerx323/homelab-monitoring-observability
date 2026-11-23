@@ -1,8 +1,8 @@
 [Unit]
-Description=Owner authority for guarded Kuma and Webmin startup
+Description=Owner authority for guarded Kuma startup
 Wants=uptime-kuma-deployment-containment.timer
 After=uptime-kuma-deployment-containment.timer time-sync.target
-Before=uptime-kuma.service uptime-kuma-network.service uptime-kuma-loopback.socket uptime-kuma-loopback.service webmin.service
+Before=uptime-kuma.service uptime-kuma-network.service uptime-kuma-loopback.socket uptime-kuma-loopback.service
 
 [Service]
 Type=oneshot

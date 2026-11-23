@@ -18,14 +18,13 @@
                 assert hashlib.sha256(p.read_bytes()).hexdigest()==state[key]
         assert (root/'accepted').is_file() and not (root/'contained').exists()
         result={'state':state,'units':{}}
-        for unit in ['uptime-kuma.service','uptime-kuma-network.service','uptime-kuma-loopback.socket','uptime-kuma-loopback.service','webmin.service']:
+        for unit in ['uptime-kuma.service','uptime-kuma-network.service','uptime-kuma-loopback.socket','uptime-kuma-loopback.service']:
             props=dict(x.split('=',1) for x in subprocess.check_output(['systemctl','show',unit,'--property=ActiveState,Requires,After'],text=True).splitlines())
             assert props['ActiveState']=='active',unit
             assert 'uptime-kuma-startup-permit.service' in props['Requires'].split(),unit
             assert 'uptime-kuma-startup-permit.service' in props['After'].split(),unit
-            if unit!='webmin.service':
-                guard=pathlib.Path('/etc/systemd/system')/(unit+'.d/50-network-diagnostic-guard.conf')
-                assert guard.read_bytes()==b'[Unit]\nConditionPathExists=/run/uptime-kuma-network-diagnostic/permit\n'
+            guard=pathlib.Path('/etc/systemd/system')/(unit+'.d/50-network-diagnostic-guard.conf')
+            assert guard.read_bytes()==b'[Unit]\nConditionPathExists=/run/uptime-kuma-network-diagnostic/permit\n'
             result['units'][unit]=props
         timer=dict(x.split('=',1) for x in subprocess.check_output(['systemctl','show','uptime-kuma-deployment-containment.timer','--property=ActiveState,UnitFileState'],text=True).splitlines())
         assert timer=={'ActiveState':'inactive','UnitFileState':'disabled'},timer

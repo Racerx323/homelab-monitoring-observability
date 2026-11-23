@@ -116,7 +116,7 @@ def contained_predecessor(expected):
             or not baseline['contained_at'] <= state['contained_at'] <= int(time.time())):
         raise ValueError('contained predecessor drift')
     ack = paths[-1][0].read_text().strip()
-    if ack != 'Kuma and Webmin login verified; monitors and alerts empty':
+    if ack != 'Kuma login verified; monitors and alerts empty':
         raise ValueError('operator acknowledgement differs')
     result = {'state': state, 'state_sha256': hashlib.sha256(raw).hexdigest(), 'operator_acknowledgement': True}
     if expected.get('resume_successor', False):
@@ -182,7 +182,7 @@ def preflight(expected):
     if 'ActiveState=active' not in firewall.splitlines() or 'UnitFileState=enabled' not in firewall.splitlines():
         raise ValueError('guard is not active/enabled')
     for flag in ('-lnt', '-lnu'):
-        if successful(['ss', '-H', flag, '( sport = :3001 or sport = :10000 )']).strip():
+        if successful(['ss', '-H', flag, 'sport = :3001']).strip():
             raise ValueError('unexpected application listener')
     if json.loads(successful(['podman', 'ps', '-a', '--format', 'json'])):
         raise ValueError('existing container state')
@@ -197,11 +197,6 @@ def preflight(expected):
     db = database(Path('/var/lib/uptime-kuma/data/kuma.db'), administrator=resume)
     if not resume and db != {'counts': {'user': 0, 'monitor': 0, 'notification': 0}, 'quick_check': 'ok'}:
         raise ValueError('unexpected application data')
-    if expected['require_webmin_contained']:
-        webmin = successful(['systemctl', 'show', 'webmin.service', '--property=ActiveState,MainPID,UnitFileState'])
-        if not ('MainPID=0' in webmin.splitlines() and 'UnitFileState=disabled' in webmin.splitlines()
-                and any('ActiveState=' + value in webmin.splitlines() for value in ('inactive', 'failed'))):
-            raise ValueError('Webmin containment drift')
     timing = {unit: dict(line.split('=', 1) for line in successful(
         ['systemctl', 'show', unit, '--property=Restart,RuntimeMaxUSec,TimeoutStartUSec,TimeoutStopUSec']).splitlines())
         for unit in (UNIT, NETWORK_UNIT)}

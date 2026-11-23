@@ -2,9 +2,7 @@
 
 Status: service foundation and guarded backend accepted November 11, 2026.
 Caddy application acceptance and DNS/ordinary-name dual-stack HTTPS are accepted
-through November 12, 2026. W-020 is explicitly deferred and W-076 resolved by its approved no-change
-disposition. The added Webmin browser-access requirement keeps expanded
-project closeout pending (W-128). Current findings and
+through November 12, 2026. Current findings and
 execution status belong in the
 [work ledger](../../changes/2026-11-09-uptime-kuma/WORK.md).
 
@@ -13,7 +11,7 @@ execution status belong in the
 Provide a self-hosted availability-monitoring service with an internal dashboard
 at **`https://uptime.local.theama.co`**, through the existing Caddy service.
 Initial deployment establishes the service, persistent state and operating
-procedures. The host also requires fleet-managed needrestart, Webmin, msmtp and watchdog
+procedures. The host also requires fleet-managed needrestart, msmtp and watchdog
 coverage. Monitor selection and Uptime Kuma notification activation are later work.
 
 This service complements existing monitoring; it does not replace Munin or
@@ -82,7 +80,6 @@ copies of fleet configuration. Installing Kuma does not establish host readiness
 | Requirement | Configuration authority | Required disposition |
 | --- | --- | --- |
 | needrestart | [Needrestart](../../../homelab-server-configs/Needrestart/README.md) | Install package and owner script/cron policy; qualify Debian 13 and Pi 3B+ kernel reporting before enabling daily 05:30 execution. No Pi 5 kernel filter by inference. |
-| Webmin | [Webmin](../../../homelab-server-configs/Webmin/README.md) | Install and configure host administration through an owner-reviewed Debian 13 ARM64 package and management-access policy. Use the accepted SSH-loopback profile and existing sudo/PAM account; the USB drive-polling trial is not selected. |
 | msmtp | [Fleet mail owner](../../../homelab-dns/msmtp/docs/FLEET_AUDIT_STANDARDIZATION_PROMPT.md) | Install msmtp and the sendmail-compatible frontend. Resolve consumer account selection explicitly; preserve unrelated accounts and aliases. |
 | watchdog | [Fleet watchdog policy](../../../homelab-server-configs/watchdog/docs/FLEET-POLICY.md) | Discover hardware and current device owner; prefer qualified systemd manager coverage. A Debian watchdog daemon is an exception requiring exclusive ownership, not an automatic additional package. |
 | Notification transport | [Apprise API and Mailrise](../../../homelab-notification/apprise-api/README.md) | Consume the existing shared services; do not deploy duplicate notification servers on this Pi. |
@@ -111,7 +108,7 @@ probe, and do not introduce load/ping/temperature reset triggers. Configuration
 adoption and real watchdog-expiry recovery proof remain separate claims.
 
 Include all resident foundation processes in the Pi's measured resource budget.
-The combined initial budget caps Kuma at 320 MiB, Webmin at 192 MiB and the
+The combined initial budget caps Kuma at 320 MiB and the
 needrestart scan at 96 MiB, plus a 16 MiB native loopback proxy. Require at least
 624 MiB available before starting the stopped services; admit each scan separately
 using the staged policy below, preserving the 96 MiB observed reserve. This is an initial service-only
@@ -170,24 +167,16 @@ same ephemeral-permit guards. Accepted startup state
 allows the startup dependency to recreate the permit on ordinary boots; the
 deployment containment timer is disabled. Recovery can return the service to
 contained state and requires its own reviewed operation. ARM64 foundation,
-startup, guarded backend and HTTPS acceptance are recorded in the work ledger.
+startup, guarded backend and HTTPS acceptance are recorded in the [installation result](../../changes/2026-11-09-uptime-kuma/RESULT.md).
 
 ## Network and radio evidence limits
 
 NetworkManager retains automatic IPv4/IPv6 methods, the permanent ULA and an
 RA-protocol IPv6 default route with runtime forwarding enabled. Accepted runtime
 and reboot snapshots show global IPv6 and the required routes. They do not prove
-renewal throughout a timed RA lifetime. W-020 is an explicit network-owner
-follow-up before the next host networking/runtime migration or earlier reported
-IPv6 loss; that unmeasured-renewal risk is accepted for initial deployment. Do not
-change `accept_ra` or network ownership based only on these snapshots.
+renewal throughout a timed RA lifetime. The [network owner follow-up](../../../homelab-network/host-network/uptime-kuma/README.md#router-advertisement-renewal) records when and how to check renewal.
 
-Wi-Fi and Bluetooth were soft-blocked before and after the accepted reboot and
-at backend promotion. Radio-related daemons being resident does not contradict
-those observations. Keep the existing services and block policy: no target-specific
-service-removal policy is selected. W-076 is resolved by accepting the observed
-softblocks and keeping services unchanged. A future removal proposal needs a
-dependency review; neither memory savings nor hardware-level disablement is claimed. These retained observations are not a fresh host inspection.
+Wi-Fi and Bluetooth remained soft-blocked through reboot and backend promotion. Preserve the radio services and existing block policy.
 
 ## Initial administration
 
@@ -246,11 +235,10 @@ belong in component records and change results, not in this architecture.
 Keep the four existing Kuma permit guards. A shared native startup dependency
 creates their ephemeral permit from protected owner state. While deployment is
 pending, that state permits at most one changed boot ID within forty minutes.
-Expired, missing, contained or backward-clock state denies startup. Webmin keeps
-its own persistent configuration guard and also depends on this startup check.
+Expired, missing, contained or backward-clock state denies startup.
 
 A persistent systemd deadline timer provides controller-loss containment across
-reboot. Failure stops Kuma, its network/socket/proxy, Webmin and owned temporary
+reboot. Failure stops Kuma, its network/socket/proxy and owned temporary
 restore/ingress containers; it removes startup permits and the notification
 schedule while retaining application data, backups and configuration. After all
 remaining service checks pass, accepted owner state permits ordinary future
@@ -268,7 +256,7 @@ acceptance requirements; it never creates an administrator or edits application
 data to satisfy a precondition.
 
 The approved staged admission policy starts the stopped services only with at
-least 624 MiB available. Service caps remain Kuma 320 MiB, Webmin 192 MiB and
+least 624 MiB available. Service caps remain Kuma 320 MiB and
 loopback proxy 16 MiB; the remaining allowance is a 96 MiB host reserve. Preserve
 cumulative pressure counters, healthy requests, no max/OOM/OOM-kill events and no
 increasing pressure counters during settled acceptance. Actual Pi acceptance is
@@ -283,7 +271,7 @@ average readings into a pass, or retry admission until a passing sample appears.
 
 | Stage | Fresh available-memory requirement | Accounting |
 | --- | --- | --- |
-| Start stopped services; no scan | 624 MiB | 320 + 192 + 16 service caps + 96 reserve. |
+| Start stopped services; no scan | 624 MiB | Retained deployment admission threshold with a 96 MiB host reserve. |
 | Launch scan observer alongside services | 224 MiB | 96 scan + 32 observer + 96 reserve; resident services are already included in the reading. |
 | Start scan with observer resident | 192 MiB | Fresh additional check for 96 scan + 96 reserve; do not add observer usage back. |
 | During scan | 96 MiB sampled reserve | Host and every visible finite ancestor allowance; missing required evidence fails. |
@@ -337,13 +325,3 @@ transport remains outside the producer cgroup as in the existing owner schedule;
 it is host activity, not a separately reserved allocation. Owner qualification
 uses local mail substitutes; live notification authority remains separately scoped.
 Deployment records own observed outcomes and the current authorization state.
-
-## Webmin browser-access extension
-
-Fleet Webmin administration must use a dedicated browser HTTPS URL through
-Caddy, not a required workstation tunnel. The approved URL for this host is
-`https://webmin-j2-svpi3bmf.local.theama.co`; deployment remains pending. Webmin's
-[shared operations](../../../homelab-server-configs/Webmin/docs/OPERATIONS.md)
-and [Caddy onboarding](../../../homelab-server-configs/Webmin/docs/CADDY_ONBOARDING.md)
-own the reusable fleet process and optional SSH recovery path. The [fleet TLS design](../../../homelab-server-configs/Webmin/docs/WEBMIN_ARCHITECTURE.md#tls-on-both-connections) requires verified HTTPS from Caddy to Webmin. The installed
-loopback profile remains unchanged until owner-reviewed browser onboarding.

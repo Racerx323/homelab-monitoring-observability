@@ -31,10 +31,10 @@ memory_controller:
   physical_recovery: Device, microSD and console KVM available; operator confirmed November 9, 2026.
   expected_kernel: 6.18.60+rpt-rpi-v8
 backup:
-  node_directory: /var/backups/uptime-kuma/backend-completion-20261111
+  node_directory: '/var/backups/uptime-kuma/{{ operation.id }}'
   restore_work_root: /var/lib/uptime-kuma-maintenance/remaining-deployment/restore
-  controller_directory: /home/aaron/.local/state/uptime-kuma/backups/backend-completion-20261111
-operation_evidence_directory: /home/aaron/code/.local-evidence/uptime-kuma/backend-completion-20261111-nin6u10h/execution
+  controller_directory: '/home/aaron/.local/state/uptime-kuma/backups/{{ operation.id }}'
+operation_evidence_directory: '{{ kuma_run_evidence_directory }}'
 memory_evidence_directory: '{{ operation_evidence_directory }}'
 proxy_probe_targets:
   - pi@10.1.0.53
@@ -47,7 +47,6 @@ foundation:
   qualification_status: qualified
   host_components:
     - needrestart
-    - webmin
     - msmtp
     - watchdog
   mail_default_account: apprise
@@ -61,7 +60,6 @@ foundation:
   package_baseline_sha256: 8d0ed832c61e32f10c37bfe1d93ad096cd63cc8093ea8d937f7c0f22492fde33
   watchdog_vendor_sha256: dad1960f1b097c080722e718f56bcdfa900b1617d7d846078486cd4ef337958a
   needrestart_vendor_sha256: a0ff6f13987c8216f52a2de64fea08073463ac02df8db3a28e5ad858bc6a371b
-  webmin_profile: ssh-loopback
   needrestart_profile: rpi-v8-list-only
   notification_job_memory_max: 96M
   watchdog_backend: adopt_existing_vendor_systemd
@@ -95,14 +93,11 @@ installation:
     - netavark=1.14.0-2
     - perl-openssl-defaults=7+b2
     - podman=5.4.2+ds1-2+b2
-    - webmin=2.670
-  new_package_count: 29
 fleet_server_root: '{{ playbook_dir }}/../../../homelab-server-configs'
 fleet_mail_root: '{{ playbook_dir }}/../../../homelab-dns'
 preserve_accepted_prerequisites: true
 preserve_installed_foundation: true
 continuation:
-  webmin_guard_sha256: 2cf5ef73617a668b7f39bd8f75da0694735c9dfefa763661de3bd08a61c9071b
   diagnostic_bundle_sha256: acb5903be2e86410ea99299b61be78900681498c16cceaffbabafc4199cb5119
   predecessor_bundle_sha256: 7c64d7047d55b5aeade840412a3595a7f91ca775bd14ff584a8b68e8dd28b28b
   predecessor_outcome: administrator_and_restore_accepted_proxy_gate_failed_recovery_rate_limited_independently_contained
@@ -120,7 +115,6 @@ diagnostic:
   netavark_version: 1.14.0-2
   image_id: sha256:315dfadc88ca9be7ba59515578363871bda93f7989a8e406f162acf36c9b0037
   image_architecture: arm64
-  require_webmin_contained: true
   files:
     - path: /etc/containers/systemd/uptime-kuma.network
       mode: '0644'
@@ -185,9 +179,6 @@ diagnostic:
     - path: /etc/systemd/system/uptime-kuma-loopback.service.d/60-startup-authority.conf
       mode: '0644'
       sha256: 365cf8b8af7e55f2e22a78a7ba1bc5b234fb167c9832992b69808f49c5c16b7d
-    - path: /etc/systemd/system/webmin.service.d/60-startup-authority.conf
-      mode: '0644'
-      sha256: 365cf8b8af7e55f2e22a78a7ba1bc5b234fb167c9832992b69808f49c5c16b7d
     - path: /var/backups/uptime-kuma/administrator-completion-20261110/data.tar
       mode: '0600'
       sha256: e8d953730b3a5bbaa6fc1c3d4b7efee1d841b3cac8a660b219375e6aca275ead
@@ -203,7 +194,6 @@ diagnostic:
         gateway: fd1e:eecd:b4a1:44b::1
   absent_paths:
     - /etc/systemd/system/uptime-kuma-network.service
-    - /etc/webmin/.installation-accepted
     - /usr/sbin/policy-rc.d
     - /etc/cron.d/needrestart_check
     - /run/uptime-kuma-network-diagnostic/permit
@@ -215,7 +205,7 @@ diagnostic:
     - /var/lib/uptime-kuma-maintenance/remaining-deployment/state.new
     - /var/lib/uptime-kuma-maintenance/remaining-deployment/completion-state.json
   work_directory: /var/lib/uptime-kuma-maintenance/remaining-deployment
-  evidence_directory: /home/aaron/code/.local-evidence/uptime-kuma/backend-completion-20261111-nin6u10h/execution
+  evidence_directory: '{{ kuma_run_evidence_directory }}'
   correction: false
   minimum_available_kib: 638976
   resume_contained: true
