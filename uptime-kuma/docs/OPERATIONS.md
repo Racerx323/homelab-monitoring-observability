@@ -2,7 +2,7 @@
 
 ## Normal administration
 
-Use the existing administrator at `https://uptime.local.theama.co`. Monitors and alerts remain unconfigured.
+Use the existing administrator at `https://uptime.local.theama.co`. The [status page](https://uptime.local.theama.co/status/one) currently publishes service availability, host reachability and the external heartbeat. They use management TCP/22 from Kuma, so an SSH listener or network-path failure can trigger a host alert. To suspend a check for maintenance, select that monitor in the dashboard and pause it. Resume it afterward and verify a successful heartbeat. The [active monitoring ledger](../../changes/2026-11-23-uptime-kuma-active-monitoring/WORK.md) tracks alert delivery and workload acceptance.
 
 Accepted startup state permits ordinary systemd startup through the existing
 permit dependency. Keep the firewall and permit guards; the deployment deadline
@@ -11,9 +11,27 @@ continuations below as routine restart or maintenance commands. Their preconditi
 and consumed operation definitions describe recovery states, not current startup.
 Future maintenance needs a newly scoped operation and a verified data backup.
 
-The daily 05:30 needrestart schedule and Mailrise default are accepted. No recurring
-Kuma backup job or downstream notification delivery proof is claimed. Review the
-service-only resource and backup limits before adding monitors or alerts.
+The daily 05:30 needrestart schedule and Mailrise default are accepted. Aaron verified delivery through Apprise to Discord, email and Pushover. The two installation backups predate the active monitors. Recurring backup coverage is tracked under AC-004 in the active monitoring ledger.
+
+### Monitor ownership and coverage
+
+Aaron operates Kuma, the status page and alert assignments. The component owners below maintain the targets and investigate failures. Service and host monitors send alerts through Apprise Alert. Healthchecks emails Aaron directly when Kuma misses its outbound heartbeat.
+
+| Monitors | What an UP result establishes | Component owner |
+| --- | --- | --- |
+| DNS Cluster IPv4 and IPv6 | The resolver VIP answers for `pihole.local.theama.co`. The A answer equals `10.1.0.55` over IPv4 and the AAAA answer equals `fd36:5aa8:6971:1::55` over IPv6. | `homelab-dns` |
+| Proxy Cluster | Trusted HTTPS to `proxy.local.theama.co/` returns 204. | `homelab-server-configs/Caddy` |
+| Munin Master | HTTPS to `munin.local.theama.co/` returns 2xx and contains `munin`. | `homelab-monitoring-observability/Munin` |
+| NTP and NTP1 | Each named client endpoint (`ntp` and `ntp1` under `local.theama.co`) replies on UDP/123. | `homelab-ntp` |
+| Apprise-API and SMTP Relay | On `10.1.3.83`, HTTP port 8000 returns 2xx for `/status` and TCP port 8025 accepts a connection. | `homelab-notification` |
+| Six host checks | Management TCP/22 answers on pihole0 (.53), pihole00 (.54), j1-svntp (.50) and j2-svntp1 (.51) on 10.1.0.0/24, plus svmf (10.1.3.83) and j2-svpi4mf (10.1.2.170). | Host operator via the server inventory, with j1-svntp in the NTP inventory |
+| Healthchecks.IO Heartbeat | The Kuma Pi can run an outbound HTTP check and reach Healthchecks. Loss of power, the process or the WAN can interrupt it. | Aaron, monitoring |
+
+## External heartbeat
+
+Kuma’s **Healthchecks.IO Heartbeat** monitor (ID 16) calls Healthchecks.io every five minutes. The **Uptime Kuma heartbeat** check emails the operator directly after ten additional minutes of silence. Keep the ping URL private.
+
+On a missed-heartbeat email, check the dashboard from the LAN. If available, inspect the heartbeat monitor’s latest result and the Pi’s outbound DNS and HTTPS connectivity. If the Pi is unreachable, check host power and the LAN path. When pings resume, confirm the external check returns to UP. To test this path deliberately, pause only the Kuma heartbeat monitor and resume it after Healthchecks reports DOWN.
 
 ## Initial installation
 
@@ -372,3 +390,35 @@ the private receipt before SSH and runs `--verify-combined SPEC EVIDENCE RECEIPT
 afterward. Combined verification checks both nodes, exact command/source/spec
 bindings and the private receipt. A combined pass leaves DNS pending. Neither
 command can start a deployment or renew the DNS approval.
+
+## Nightly populated backup
+
+The [backup files](../operations/nightly-backup/) are for the Pi at 10.1.3.75 and the receiver svmf at 10.1.3.83. The enabled systemd timer on svmf schedules the backup at 02:30 America/Chicago and catches up after a missed run. Archives are stored under `/var/backups/uptime-kuma/YYYY-MM-DD.tar` on svmf. The attended backup passed an isolated restore. The [active monitoring ledger](../../changes/2026-11-23-uptime-kuma-active-monitoring/WORK.md) tracks verification of the first scheduled run. The Pi briefly stops Kuma while archiving its entire data directory, including SQLite sidecars. Monitoring resumes before transfer. Allow for the gap when reviewing availability.
+
+1. On svmf create a dedicated local system user and group named `kuma-backup` with no interactive login. Create `/var/backups/uptime-kuma` owned by that identity with mode 0700. Install `receive.py` root-owned under `/usr/local/libexec/uptime-kuma-backup/`. Install the supplied SSH configuration under `/etc/uptime-kuma-backup/`. Generate a dedicated Ed25519 key there on svmf, restrict the private key to the writer (0600), and install the Pi’s previously verified host key for 10.1.3.75. Keep configuration, host keys, and executable directories root-controlled and readable/traversable by the writer.
+2. On the Pi install the root-owned executable `export` at `/usr/local/libexec/uptime-kuma-backup/export`. Create a dedicated `kuma-export` system account with a shell capable of running the forced command. Disable password and interactive SSH access for this identity. In a root-controlled authorized-keys file enroll only the receiver’s public key, prefixed with `from="10.1.3.83",restrict,command="/usr/bin/sudo -n /usr/local/libexec/uptime-kuma-backup/export"`. Allow sudo only for that executable with no arguments using the sudoers command specification `/usr/local/libexec/uptime-kuma-backup/export ""`. Validate sudoers and effective sshd restrictions before enrollment.
+3. Install the supplied service and timer on svmf. Leave the timer disabled for the first attended service run. Verify Pi dashboard recovery, matching source and received hashes, one private daily archive, and the service’s isolated restore counts. Compare them to the active configuration, including all 15 monitors and the status-page and alert assignments. The receiver extracts into private temporary storage and opens the restored SQLite database locally. It checks integrity and relationships without launching a second polling or notification process. This verifies data recovery; the earlier installation restore separately tested application startup.
+4. Enable the timer after the attended run passes. Check its next scheduled time and verify the first scheduled result in the service journal. The receiver keeps the seven most recent successful daily archives. Multiple runs on the same date reuse the completed copy. On failure inspect the service exit and journal, confirm the Pi dashboard is available, and investigate before retrying. If the source failed to restart, recover it through the existing Kuma startup procedure. To withdraw scheduling, disable and stop the timer, let any active transfer finish, and preserve completed archives. Revoke the dedicated source key and sudo rule when retiring the job.
+
+### Attended first transfer
+
+Keep the timer disabled throughout the first transfer. Before changing either host, confirm the service is healthy, the proposed accounts, unit names, install paths and archive name are unused or already match the reviewed installation, and the receiver has space for the archive plus an extracted copy. Confirm space for the full uncompressed data tree on the Pi’s staging filesystem as well. If admission fails, stop before interrupting Kuma.
+
+With monitor edits paused for the visit, capture the following four ordered query results from the source database in read-only mode. Compare the same queries against a private scratch extraction of the **received daily archive** on svmf. These columns identify the monitors, status-page groups, memberships and alert assignments without reading provider settings or monitor URLs. A count alone cannot detect a monitor assigned to the wrong group or notification.
+
+```sql
+SELECT id, name, type, active FROM monitor ORDER BY id;
+SELECT s.slug, g.id, g.name FROM status_page s JOIN "group" g ON g.status_page_id = s.id ORDER BY s.slug, g.id;
+SELECT group_id, monitor_id FROM monitor_group ORDER BY group_id, monitor_id;
+SELECT monitor_id, notification_id FROM monitor_notification ORDER BY monitor_id, notification_id;
+```
+
+Run the receiver service once. From the workstation, sample the normal HTTPS dashboard immediately before, during and after the transfer, recording UTC timestamps and HTTP status. Use a bounded request timeout. Report the interval between the last successful response before an observed failure and the first success afterward; if sampling sees no failure, report its resolution. Confirm the Pi unit is active and the dashboard returns 200. Check that a fresh archive exists for this run, is owned by the dedicated writer with mode 0600, and that the journal contains the new restore result. The receiver also exits successfully when today’s archive already exists, so unit exit status alone cannot qualify a first transfer. Remove the scratch extraction after comparison and retain only the archive and non-secret outcome. If recovery or comparison fails, leave scheduling disabled, restore Kuma through its existing startup procedure if necessary, and preserve the failure for review.
+
+For an attended transfer, run the receiver start through the workstation's [dashboard observer](../operations/nightly-backup/observe-transfer.py) after the host, timer and archive admission checks. Supply a fresh private receipt path followed by the single approved SSH command. For example, with the current admission checks complete:
+
+```sh
+python3 -I -B observe-transfer.py "$receipt" -- ssh -o BatchMode=yes -o StrictHostKeyChecking=yes pi@10.1.3.83 sudo -n systemctl start uptime-kuma-backup.service
+```
+
+Run this from the observer script's directory. It records UTC, HTTP status and curl exit status for each sample. After the receiver exits, it continues until the normal HTTPS dashboard returns 200 or the three-minute recovery observation expires. Read the receiver exit and dashboard result separately. A recovered dashboard after a failed transfer still requires investigation of the receiver journal. If recovery remains unverified, use the existing Kuma startup procedure. The Pi exporter allows an initial loopback probe and 60 retries three seconds apart, with a three-second timeout per request, before handing the archive to the receiver.

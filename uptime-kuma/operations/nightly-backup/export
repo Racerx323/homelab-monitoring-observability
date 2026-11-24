@@ -1,0 +1,39 @@
+#!/bin/bash
+# Root-owned, argument-free forced command on the Kuma Pi.
+set -euo pipefail
+umask 077
+export PATH=/usr/sbin:/usr/bin:/sbin:/bin
+[[ $# == 0 ]]
+exec 9>/run/lock/uptime-kuma-backup.lock
+flock -n 9
+work=$(mktemp -d /var/tmp/kuma-export.XXXXXXXX)
+restart=0
+cleanup() {
+    if ((restart)); then systemctl start uptime-kuma.service || exit 1; fi
+    rm -rf -- "$work"
+}
+trap cleanup EXIT
+trap 'exit 1' HUP INT TERM
+systemctl is-active --quiet uptime-kuma.service
+restart=1
+systemctl stop uptime-kuma.service
+[[ $(systemctl show -p ActiveState --value uptime-kuma.service) == inactive ]]
+tar --numeric-owner --acls --xattrs -C /var/lib/uptime-kuma -cf "$work/data.tar" data
+systemctl start uptime-kuma.service
+restart=0
+# Match the startup allowance in ansible/tasks/accept-runtime.yaml.
+for ((attempt = 0; attempt <= 60; attempt++)); do
+    rc=0
+    status=$(curl --noproxy '*' --max-time 3 -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3001/dashboard) || rc=$?
+    if [[ $rc == 0 && $status == 200 ]]; then
+        break
+    fi
+    if ((attempt == 60)); then
+        printf 'startup readiness: expected HTTP 200, observed %s, curl exit %d after %d probes\n' "$status" "$rc" "$((attempt + 1))" >&2
+        exit 1
+    fi
+    sleep 3
+done
+cd "$work"
+sha256sum data.tar
+cat data.tar

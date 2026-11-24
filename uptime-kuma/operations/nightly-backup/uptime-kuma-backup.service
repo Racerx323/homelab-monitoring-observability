@@ -1,0 +1,17 @@
+[Unit]
+Description=Pull and verify the nightly Uptime Kuma backup
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=kuma-backup
+Group=kuma-backup
+UMask=0077
+ExecStart=/usr/bin/python3 -I -B /usr/local/libexec/uptime-kuma-backup/receive.py
+TimeoutStartSec=15min
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/backups/uptime-kuma

@@ -1,0 +1,435 @@
+/* ========================================
+   ONE LIGHT UPTIME KUMA STATUS PAGE THEME
+   Clean light theme for daytime use
+   Based on: https://github.com/akamud/vscode-theme-onelight
+   Github Link: https://github.com/pacholoamit/uptime-kuma-themes/blob/main/themes/one-light/index.css
+   ======================================== */
+
+:root {
+  /* One Light palette */
+  --bg-base: #fafafa;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f0f0f0;
+  --bg-highlight: #e5e5e6;
+
+  --fg: #383a42;
+  --fg-dim: #696c77;
+  --fg-muted: #a0a1a7;
+
+  /* Syntax colors */
+  --red: #e45649;
+  --orange: #986801;
+  --yellow: #c18401;
+  --green: #50a14f;
+  --cyan: #0184bc;
+  --blue: #4078f2;
+  --purple: #a626a4;
+
+  /* Theme mappings */
+  --primary: var(--blue);
+  --success: var(--green);
+  --warning: var(--yellow);
+  --danger: var(--red);
+  --maintenance: var(--purple);
+
+  --fg-primary: var(--fg);
+  --fg-secondary: var(--fg-dim);
+  --fg-tertiary: var(--fg-muted);
+
+  --border-subtle: rgba(56, 58, 66, 0.08);
+  --border-default: rgba(56, 58, 66, 0.15);
+  --border-accent: rgba(64, 120, 242, 0.4);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ============ BASE STYLES ============ */
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+  background: var(--bg-base) !important;
+  color: var(--fg-primary) !important;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  position: relative;
+  max-width: 98% !important;
+  padding: 1.5rem !important;
+}
+
+/* ============ HEADER ============ */
+
+h1.title-flex {
+  font-weight: 700 !important;
+  font-size: 2.5rem !important;
+  letter-spacing: -0.02em;
+  color: var(--fg-primary) !important;
+  text-align: center;
+  margin-bottom: 2rem !important;
+  padding: 1rem 0 !important;
+}
+
+.main .description {
+  color: var(--fg-secondary) !important;
+  font-size: 1.1rem !important;
+  max-width: 600px;
+  margin: 0 auto 1rem;
+}
+
+/* ============ OVERALL STATUS ============ */
+
+.overall-status {
+  padding: 1rem 1.5rem !important;
+  font-size: 1.1rem !important;
+  text-align: center;
+  max-width: 600px;
+  margin-inline: auto;
+  border-radius: var(--radius-lg) !important;
+  font-weight: 600 !important;
+  border: 1px solid var(--border-default) !important;
+  color: var(--fg-primary) !important;
+}
+
+.overall-status.ok {
+  background: linear-gradient(135deg, rgba(80, 161, 79, 0.1), rgba(80, 161, 79, 0.03)) !important;
+  border-color: rgba(80, 161, 79, 0.4) !important;
+}
+
+.overall-status.warn {
+  background: linear-gradient(135deg, rgba(193, 132, 1, 0.1), rgba(193, 132, 1, 0.03)) !important;
+  border-color: rgba(193, 132, 1, 0.4) !important;
+}
+
+.overall-status.danger {
+  background: linear-gradient(135deg, rgba(228, 86, 73, 0.1), rgba(228, 86, 73, 0.03)) !important;
+  border-color: rgba(228, 86, 73, 0.4) !important;
+}
+
+/* ============ MONITOR CARDS ============ */
+
+.shadow-box {
+  background: var(--bg-surface) !important;
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--border-subtle) !important;
+  box-shadow: var(--shadow-card) !important;
+  margin-bottom: 1.5rem !important;
+  overflow: hidden;
+}
+
+h2.group-title {
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-tertiary) !important;
+  padding: 0.75rem 0 !important;
+  text-align: center;
+  margin-bottom: 1rem !important;
+  background: var(--bg-elevated) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+/* ============ MONITOR LIST ============ */
+
+.monitor-list .item {
+  border-bottom: 1px solid var(--border-subtle) !important;
+  transition: background 0.2s ease;
+  max-width: 900px !important;
+  justify-self: center;
+  width: 100% !important;
+  padding: var(--cards-padding) !important;
+}
+
+.monitor-list .item:last-child {
+  border-bottom: none !important;
+}
+
+.monitor-list .item:hover {
+  background: rgba(64, 120, 242, 0.04) !important;
+}
+
+/* ============ BADGES ============ */
+
+.badge {
+  border-radius: 6px !important;
+  padding: 0.35rem 0.75rem !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badge.bg-success {
+  background: rgba(80, 161, 79, 0.12) !important;
+  color: var(--green) !important;
+}
+
+.monitor-list .item .badge.bg-primary {
+  background: rgba(80, 161, 79, 0.12) !important;
+  color: #326c32 !important;
+}
+
+.badge.bg-warning {
+  background: rgba(193, 132, 1, 0.12) !important;
+  color: var(--yellow) !important;
+}
+
+.badge.bg-danger {
+  background: rgba(228, 86, 73, 0.12) !important;
+  color: var(--red) !important;
+}
+
+.badge.bg-secondary,
+.badge.bg-maintenance {
+  background: rgba(166, 38, 164, 0.12) !important;
+  color: var(--purple) !important;
+}
+
+/* ============ HEARTBEAT BAR ============ */
+
+.hp-bar-big {
+  background: var(--bg-elevated) !important;
+  border-radius: var(--radius-sm) !important;
+  height: 24px !important;
+  width: 100% !important;
+}
+
+.uptime {
+  font-weight: 600 !important;
+  color: var(--fg-secondary) !important;
+}
+
+/* ============ INCIDENTS ============ */
+
+.incident {
+  padding: 1.25rem !important;
+  margin-bottom: 0.75rem !important;
+  background: var(--bg-surface) !important;
+  border-radius: var(--radius-md) !important;
+  border: 1px solid var(--border-subtle) !important;
+}
+
+.incident:hover {
+  border-color: var(--border-accent) !important;
+  box-shadow: 0 2px 8px rgba(64, 120, 242, 0.1) !important;
+}
+
+.incident-title {
+  font-size: 1rem !important;
+  margin-bottom: 0.5rem !important;
+  font-weight: 600 !important;
+  color: var(--fg-primary) !important;
+}
+
+.incident .content {
+  font-size: 0.9rem !important;
+  color: var(--fg-secondary) !important;
+}
+
+.incident .date {
+  color: var(--fg-tertiary) !important;
+  margin-top: 0.75rem !important;
+  font-size: 0.75rem !important;
+}
+
+/* ============ BUTTONS ============ */
+
+.btn {
+  border-radius: var(--radius-md) !important;
+  font-weight: 600 !important;
+  padding: 0.6rem 1.25rem !important;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease !important;
+}
+
+.btn-primary {
+  background: var(--blue) !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(64, 120, 242, 0.3) !important;
+}
+
+/* ============ FOOTER ============ */
+
+footer,
+.footer {
+  padding: 1.5rem 0 !important;
+  margin-top: 2rem !important;
+  text-align: center;
+  color: var(--fg-tertiary) !important;
+  border-top: 1px solid var(--border-subtle);
+}
+
+footer a,
+.footer a {
+  color: var(--fg-secondary) !important;
+}
+
+footer a:hover,
+.footer a:hover {
+  color: var(--blue) !important;
+}
+
+/* ============ FORMS ============ */
+
+input, select, textarea {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--fg-primary) !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--blue) !important;
+  box-shadow: 0 0 0 3px rgba(64, 120, 242, 0.15) !important;
+  outline: none !important;
+}
+
+/* ============ TOOLTIPS ============ */
+
+.tooltip-inner {
+  background: var(--fg-primary) !important;
+  color: var(--bg-surface) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+/* ============ SCROLLBAR ============ */
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--bg-highlight); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--fg-muted); }
+
+/* ============ MISC ============ */
+
+.spinner-border { color: var(--blue) !important; }
+::selection { background: var(--blue); color: #ffffff; }
+
+/* ========================================
+   CARDS GRID LAYOUT
+   Individual monitor cards in a responsive grid
+   Github link: https://github.com/pacholoamit/uptime-kuma-themes/blob/main/layouts/cards-grid/index.css
+   ======================================== */
+
+:root {
+  --cards-min-width: 280px;
+  --cards-max-width: 1fr;
+  --cards-gap: 1rem;
+  --cards-padding: 0.75rem;
+}
+
+/* Let items expand on small screens */
+@media (max-width: 600px) {
+  :root {
+    --cards-min-width: 100%;
+  }
+}
+
+/* Cap item width for better appearance on large screens */
+@media (min-width: 2560px) {
+  :root {
+    --cards-max-width: 350px;
+  }
+}
+
+/* ============ HEADER ============ */
+
+h1.title-flex .logo {
+  max-height: 70px !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* Key selector: .monitor-list > .monitor-list targets the actual item container */
+.monitor-list > .monitor-list {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(var(--cards-min-width), var(--cards-max-width))) !important;
+  gap: var(--cards-gap) !important;
+}
+
+/* Stack item content vertically */
+.monitor-list .item > .row {
+  position: relative;
+  flex-direction: column !important;
+}
+
+.monitor-list .item > .row > div {
+  width: 100% !important;
+}
+
+/* Monitor name styling */
+.item-name {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.5rem !important;
+  text-align: center;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+}
+
+/* Position the uptime badge at bottom center on desktop. */
+body:not(.mobile) .monitor-list .item .badge {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+/* Uptime percentage and time labels */
+.wrap > .d-flex {
+  font-size: 0.8rem !important;
+  text-align: center;
+}
+
+/* ============ MARGIN COMPACTING ============ */
+
+.monitor-list .mb-4, .monitor-list .mb-5 {
+  margin-bottom: 1rem !important;
+}
+
+.monitor-list.mt-4 {
+  margin-top: 1rem !important;
+}
+
+.monitor-list .mt-5 {
+  margin-top: 0.5rem !important;
+}
+
+/* ============ FOOTER ============ */
+
+footer .alert-heading {
+  padding: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding: 1rem !important;
+  }
+
+  h1.title-flex {
+    font-size: 2rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0.75rem !important;
+  }
+
+  h1.title-flex {
+    font-size: 1.75rem !important;
+  }
+
+  .overall-status {
+    padding: 0.75rem 1rem !important;
+  }
+}

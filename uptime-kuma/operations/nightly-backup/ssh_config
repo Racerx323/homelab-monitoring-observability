@@ -1,0 +1,12 @@
+Host kuma-backup-source
+    HostName 10.1.3.75
+    User kuma-export
+    IdentityFile /etc/uptime-kuma-backup/id_ed25519
+    UserKnownHostsFile /etc/uptime-kuma-backup/known_hosts
+    StrictHostKeyChecking yes
+    BatchMode yes
+    IdentitiesOnly yes
+    RequestTTY no
+    ConnectTimeout 10
+    ServerAliveInterval 15
+    ServerAliveCountMax 3
