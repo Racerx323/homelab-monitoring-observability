@@ -1,0 +1,164 @@
+---
+- name: Configure native unattended APT on the Kuma Pi
+  hosts: j2-svpi3bmf
+  gather_facts: false
+  become: true
+  environment:
+    LC_ALL: C
+    DEBIAN_FRONTEND: noninteractive
+  vars:
+    policy: /etc/apt/apt.conf.d/90kuma-updates
+    state: /var/backups/kuma-apt-before
+    timers:
+      - {name: apt-daily.timer, clock: '03:15'}
+      - {name: apt-daily-upgrade.timer, clock: '03:30'}
+  tasks:
+    - name: Check host, sources, prior timer and policy state, and active dashboard
+      ansible.builtin.shell: |
+        set -eu
+        test "$(hostname)" = j2-svpi3bmf
+        test "$(timedatectl show --value -p Timezone)" = America/Chicago
+        test -x /usr/sbin/sendmail
+        test "$(readlink -f /usr/sbin/sendmail)" = /usr/bin/msmtp
+        test "$(find /etc/apt/sources.list.d -maxdepth 1 \( -name '*.list' -o -name '*.sources' \) | wc -l)" -eq 2
+        sha256sum --check --strict <<'SUMS'
+        e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /etc/apt/sources.list
+        cd9384975dec7576394558a0d8ca3a62d880cbb3926577cdb4f32ac690273662  /etc/apt/sources.list.d/debian.sources
+        cd35efa63b2d00325996a86383c49bb0e03e914427b5568bcbdbc453605b512c  /etc/apt/sources.list.d/raspi.sources
+        SUMS
+        for path in {{ state }} {{ policy }} /etc/apt/apt.conf.d/20auto-upgrades; do
+          test ! -e "$path" && test ! -L "$path" || exit 1
+        done
+        for unit in apt-daily apt-daily-upgrade; do
+          systemctl is-enabled --quiet "$unit.timer"
+          systemctl is-active --quiet "$unit.timer"
+          test -z "$(systemctl show -p DropInPaths --value "$unit.timer")"
+          test ! -e "/etc/systemd/system/$unit.timer.d/90-kuma.conf"
+          test ! -L "/etc/systemd/system/$unit.timer.d/90-kuma.conf"
+          test "$(systemctl show -p ActiveState --value "$unit.service")" = inactive
+        done
+        test "$(dpkg-query -W -f='${db:Status-Status}' unattended-upgrades 2>/dev/null || true)" != installed
+        test -z "$(dpkg --audit)"
+        # Preserve room for package downloads, unpacking and a replacement Pi kernel.
+        df -h / /boot/firmware
+        test "$(df -Pk / | awk 'END{print $4}')" -ge 1048576
+        test "$(df -Pk /boot/firmware | awk 'END{print $4}')" -ge 131072
+        systemctl is-active --quiet uptime-kuma.service
+        test "$(curl -sS --max-time 10 -o /dev/null -w '%{http_code}' http://127.0.0.1:3001/dashboard)" = 200
+      changed_when: false
+
+    - name: Retain private admission and recovery evidence
+      ansible.builtin.shell: |
+        set -eu
+        umask 077
+        mkdir {{ state }}
+        cat /proc/sys/kernel/random/boot_id > {{ state }}/boot
+        systemctl cat apt-daily.timer apt-daily-upgrade.timer > {{ state }}/timers.before
+        apt-config dump > {{ state }}/apt.before
+        dpkg --get-selections > {{ state }}/packages.before
+        apt-mark showhold > {{ state }}/holds.before
+
+    - name: Install and verify before resuming the timers
+      block:
+        - name: Stop both timers and verify no scheduled job is in progress
+          ansible.builtin.shell: |
+            set -eu
+            systemctl stop apt-daily.timer apt-daily-upgrade.timer
+            for unit in apt-daily.service apt-daily-upgrade.service; do
+              test "$(systemctl show -p ActiveState --value "$unit")" = inactive
+            done
+
+        - name: Refresh signed indexes and confirm the reviewed installation set
+          ansible.builtin.shell: |
+            set -eu
+            apt-get -o APT::Update::Error-Mode=any update > {{ state }}/refresh.log 2>&1
+            apt-get -s --no-install-recommends install unattended-upgrades > {{ state }}/install.simulation
+            if ! grep -Eq '^0 upgraded, 3 newly installed, 0 to remove and [0-9]+ not upgraded[.]$' {{ state }}/install.simulation; then
+              grep -E '^[0-9]+ upgraded,' {{ state }}/install.simulation >&2 || true
+              exit 1
+            fi
+            test "$(awk '/^Inst /{print $2}' {{ state }}/install.simulation | sort | xargs)" = 'python3-dbus python3-distro-info unattended-upgrades'
+            apt-get -y --no-remove --no-install-recommends install unattended-upgrades > {{ state }}/install.log 2>&1
+
+        - name: Set allowed signed releases, daily updates and operator notification
+          ansible.builtin.copy:
+            src: ../operations/apt-updates/90kuma-updates
+            dest: '{{ policy }}'
+            owner: root
+            group: root
+            mode: '0644'
+
+        - name: Create timer drop-in directories
+          ansible.builtin.file:
+            path: '/etc/systemd/system/{{ item.name }}.d'
+            state: directory
+          loop: '{{ timers }}'
+
+        - name: Schedule the refresh and upgrade
+          ansible.builtin.copy:
+            dest: '/etc/systemd/system/{{ item.name }}.d/90-kuma.conf'
+            content: |
+              [Timer]
+              OnCalendar=
+              OnCalendar=*-*-* {{ item.clock }}:00 America/Chicago
+              RandomizedDelaySec=0
+              Persistent=true
+            mode: '0644'
+          loop: '{{ timers }}'
+
+        - name: Verify the effective policy and simulate upgrades
+          ansible.builtin.shell: |
+            set -eu
+            apt-config dump > {{ state }}/apt.after
+            /usr/bin/python3 - <<'PY'
+            import apt_pkg
+            apt_pkg.init()
+            c = apt_pkg.config
+            for line in open('{{ policy }}'):
+                line = line.strip()
+                if line.startswith(('APT::', 'Unattended-Upgrade::')) and line.endswith('";'):
+                    key, wanted = line[:-1].split(' ', 1)
+                    assert c.find(key) == wanted.strip('"'), key
+            expected = [s.strip()[1:-2] for s in open('{{ policy }}') if s.lstrip().startswith('"site=')]
+            assert sorted(c.value_list('Unattended-Upgrade::Origins-Pattern')) == sorted(expected)
+            assert not c.value_list('Unattended-Upgrade::Allowed-Origins')
+            PY
+            unattended-upgrade --dry-run --debug > {{ state }}/upgrade.dry-run 2>&1
+            apt-mark showhold > {{ state }}/holds.after
+            cmp {{ state }}/holds.before {{ state }}/holds.after
+            systemctl daemon-reload
+            systemd-analyze verify apt-daily.timer apt-daily-upgrade.timer
+
+        - name: Resume and read back the daily schedule
+          ansible.builtin.shell: |
+            set -eu
+            cmp {{ state }}/boot /proc/sys/kernel/random/boot_id
+            systemctl start apt-daily.timer apt-daily-upgrade.timer
+            for pair in 'apt-daily.timer 03:15' 'apt-daily-upgrade.timer 03:30'; do
+              set -- $pair
+              systemctl is-active --quiet "$1"
+              systemctl is-enabled --quiet "$1"
+              systemctl show "$1" -p TimersCalendar --value | grep -F "$2:00 America/Chicago"
+              systemctl show "$1" -p NextElapseUSecRealtime -p LastTriggerUSec
+            done
+            systemctl is-active --quiet uptime-kuma.service
+            test "$(curl -sS --max-time 10 -o /dev/null -w '%{http_code}' http://127.0.0.1:3001/dashboard)" = 200
+          register: schedule
+        - ansible.builtin.debug:
+            var: schedule.stdout_lines
+
+      rescue:
+        - name: Stop scheduling and withdraw only this change's settings
+          ansible.builtin.shell: |
+            set -eu
+            systemctl stop apt-daily.timer apt-daily-upgrade.timer
+            rm -f {{ policy }} /etc/apt/apt.conf.d/20auto-upgrades
+            for unit in apt-daily.timer apt-daily-upgrade.timer; do
+              rm -f "/etc/systemd/system/$unit.d/90-kuma.conf"
+            done
+            systemctl daemon-reload
+            eval "$(apt-config shell periodic APT::Periodic::Unattended-Upgrade)"
+            test "${periodic:-0}" = 0
+            systemctl start apt-daily.timer apt-daily-upgrade.timer
+        - ansible.builtin.fail:
+            msg: Installation failed. Inspect the first failed task and private logs in {{ state }}. Review installed packages separately.

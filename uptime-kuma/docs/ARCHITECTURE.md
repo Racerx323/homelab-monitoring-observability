@@ -188,6 +188,14 @@ complete. Do not publish an unclaimed setup page to the LAN or public internet.
 
 ## Lifecycle, backup and recovery
 
+The Pi uses Debian’s native APT timers for unattended host updates. The
+[APT policy](../operations/apt-updates/90kuma-updates) admits four signed
+releases: Debian `trixie`, `trixie-updates`, `trixie-security`, and Raspberry
+Pi Foundation `trixie`. APT retains the configured components, architectures
+and package holds. Review the policy when changing repositories or Debian
+releases. Host reboots are manual. The pinned Kuma container image follows
+its own reviewed upgrade procedure. See [unattended APT operations](OPERATIONS.md#unattended-apt-updates).
+
 Systemd owns startup, bounded restart and shutdown. Require the firewall and
 network dependencies to be ready; prevent unlimited restart loops. Reboot
 persistence and resource enforcement require target acceptance. Preserve

@@ -11,6 +11,8 @@ continuations below as routine restart or maintenance commands. Their preconditi
 and consumed operation definitions describe recovery states, not current startup.
 Future maintenance needs a newly scoped operation and a verified data backup.
 
+For host patching and update reports, see [Unattended APT updates](#unattended-apt-updates).
+
 The daily 05:30 needrestart schedule and Mailrise default are accepted. Aaron verified delivery through Apprise to Discord, email and Pushover. The two installation backups predate the active monitors. The [nightly populated backup](#nightly-populated-backup) covers the active monitors.
 
 ### Monitor ownership and coverage
@@ -424,3 +426,20 @@ python3 -I -B observe-transfer.py "$receipt" -- ssh -o BatchMode=yes -o StrictHo
 ```
 
 Run this from the observer script's directory. It records UTC, HTTP status and curl exit status for each sample. After the receiver exits, it continues until the normal HTTPS dashboard returns 200 or the three-minute recovery observation expires. Read the receiver exit and dashboard result separately. A recovered dashboard after a failed transfer still requires investigation of the receiver journal. If recovery remains unverified, use the existing Kuma startup procedure. The Pi exporter allows an initial loopback probe and 60 retries three seconds apart, with a three-second timeout per request, before handing the archive to the receiver.
+
+## Unattended APT updates
+
+On `j2-svpi3bmf`, `apt-daily.timer` refreshes package indexes at 03:15 and `apt-daily-upgrade.timer` installs eligible packages at 03:30 America/Chicago, after the 02:30 off-node backup. Persistent timers can catch up on boot. The [installed policy](../operations/apt-updates/90kuma-updates) sends change and error reports to `notify@mailrise.xyz` through msmtp. The [host maintenance record](../../changes/2026-11-25-kuma-apt-updates/WORK.md) tracks first scheduled run verification.
+
+Run these read-only checks on the Pi after a maintenance window:
+
+```bash
+systemctl list-timers --all 'apt-daily*'
+systemctl show apt-daily-upgrade.service -p Result -p ExecMainStatus -p ExecMainStartTimestamp
+sudo journalctl --since today -u apt-daily.service -u apt-daily-upgrade.service --no-pager
+sudo tail -n 60 /var/log/unattended-upgrades/unattended-upgrades.log
+```
+
+Match the service start time to the timer trigger. Use the updater log to distinguish installed packages, kept-back packages and a successful run with nothing eligible. Check `/run/reboot-required` when provided and review the existing 05:30 needrestart kernel/service report. Arrange a manual reboot for a pending kernel. Confirm the dashboard and fresh status-page heartbeats after maintenance. A package maintainer script can restart a service during an upgrade.
+
+The [installation playbook](../ansible/apt-updates.yaml) is for first adoption on this Pi. It retains admission state, simulations and failure logs in the root-only directory selected for each attempt. The accepted W-004 installation used `/var/backups/kuma-apt-before-w004/`. To suspend automatic installation, stop the upgrade timer and disable periodic unattended upgrading in the managed policy. Let running dpkg work finish. For withdrawal, restore the recorded pre-install policy and vendor calendars using the playbook's recovery steps. Verify the effective periodic value before resuming the original timers.
