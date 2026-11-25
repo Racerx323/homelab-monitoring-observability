@@ -14,13 +14,13 @@ The deployment manifest pins the image index. On the accepted host the ARM64 reg
 | AC-004 Internal dual-stack dashboard | Pass | Private authentication/WebSocket and passive acceptance plus DNS and normal-name IPv4/IPv6 HTTPS 200. |
 | AC-005 Safe administration | Pass | One active administrator, authentication enabled, protected bootstrap and private login checks accepted; no credentials in this record. |
 | AC-006 Startup/recovery and budget | Pass | Accepted reboot checkpoint, permanent startup state, native limits, combined scan sampling and source recovery. Final sampled minima 554968/566808 KiB; no observed OOM events. Empty-monitor workload only. |
-| AC-007 Backup/restore | Pass | Consistent administrator-bearing archive, protected on/off-node copies and isolated pinned ARM64 restore accepted. No recurring backup schedule is installed. |
+| AC-007 Backup/restore | Pass | Consistent administrator-bearing archive, protected on/off-node copies and isolated pinned ARM64 restore accepted. Recurring scheduling was outside this installation. |
 | AC-008 Preserve services/network policy | Pass | Scoped service/configuration preservation, required addresses/routes and radio softblocks passed through reboot/promotion. Retain radio services and defer timed RA renewal to the network owner. Renewal remains untested; its residual risk is accepted for this initial deployment. |
-| AC-009 Excluded workload/actions | Pass | Runtime counts are zero monitors and zero notifications; no synthetic messages or unattended application upgrade activation in accepted operations. |
+| AC-009 Excluded workload/actions | Pass | Counts at installation acceptance were zero monitors and zero notifications; no synthetic messages or unattended application upgrade activation in accepted operations. |
 | AC-010 Operability | Pass | Initial-scope closeout accepted. |
 | AC-011 Fleet foundation | Pass | Retained needrestart, mail and watchdog foundation accepted. |
 | AC-012 Fleet notification transport | Pass | Mailrise default and owner consumer configuration accepted; greeting/QUIT only. No downstream message-delivery claim or provisioned Mailgun secret. |
 
 ## Operating boundary
 
-The measured workload had zero monitors and zero notifications. The administrator-bearing backup and isolated restore passed. Recurring backups and downstream alert delivery remain unconfigured. The [network owner](../../../homelab-network/host-network/uptime-kuma/README.md#router-advertisement-renewal) tracks timed RA renewal. The [operations guide](../../uptime-kuma/docs/OPERATIONS.md) covers ongoing administration.
+The measured workload had zero monitors and zero notifications. The administrator-bearing backup and isolated restore passed. The [active-monitoring result](../2026-11-23-uptime-kuma-active-monitoring/RESULT.md) records the subsequent acceptance of populated backups, monitoring and downstream alert delivery. The [network owner](../../../homelab-network/host-network/uptime-kuma/README.md#router-advertisement-renewal) tracks timed RA renewal. The [operations guide](../../uptime-kuma/docs/OPERATIONS.md) covers ongoing administration.

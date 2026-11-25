@@ -2,7 +2,7 @@
 
 ## Normal administration
 
-Use the existing administrator at `https://uptime.local.theama.co`. The [status page](https://uptime.local.theama.co/status/one) currently publishes service availability, host reachability and the external heartbeat. They use management TCP/22 from Kuma, so an SSH listener or network-path failure can trigger a host alert. To suspend a check for maintenance, select that monitor in the dashboard and pause it. Resume it afterward and verify a successful heartbeat. The [active monitoring ledger](../../changes/2026-11-23-uptime-kuma-active-monitoring/WORK.md) tracks alert delivery and workload acceptance.
+Use the existing administrator at `https://uptime.local.theama.co`. The [status page](https://uptime.local.theama.co/status/one) currently publishes service availability, host reachability and the external heartbeat. The six host checks use management TCP/22 from Kuma, so an SSH listener or network-path failure can trigger a host alert. To suspend a check for maintenance, select that monitor in the dashboard and pause it. Resume it afterward and verify a successful heartbeat. The [active monitoring ledger](../../changes/2026-11-23-uptime-kuma-active-monitoring/WORK.md) tracks alert delivery and workload acceptance.
 
 Accepted startup state permits ordinary systemd startup through the existing
 permit dependency. Keep the firewall and permit guards; the deployment deadline
@@ -11,11 +11,11 @@ continuations below as routine restart or maintenance commands. Their preconditi
 and consumed operation definitions describe recovery states, not current startup.
 Future maintenance needs a newly scoped operation and a verified data backup.
 
-The daily 05:30 needrestart schedule and Mailrise default are accepted. Aaron verified delivery through Apprise to Discord, email and Pushover. The two installation backups predate the active monitors. Recurring backup coverage is tracked under AC-004 in the active monitoring ledger.
+The daily 05:30 needrestart schedule and Mailrise default are accepted. Aaron verified delivery through Apprise to Discord, email and Pushover. The two installation backups predate the active monitors. The [nightly populated backup](#nightly-populated-backup) covers the active monitors.
 
 ### Monitor ownership and coverage
 
-Aaron operates Kuma, the status page and alert assignments. The component owners below maintain the targets and investigate failures. Service and host monitors send alerts through Apprise Alert. Healthchecks emails Aaron directly when Kuma misses its outbound heartbeat.
+Aaron operates Kuma, the status page and alert assignments. The component owners below maintain the targets and investigate failures. Service and host monitors send alerts through Apprise Alert. Healthchecks emails Aaron directly when Kuma misses its outbound heartbeat. After changing alert routing, Aaron repeats the controlled DOWN/UP test and confirms both messages at the intended destinations.
 
 | Monitors | What an UP result establishes | Component owner |
 | --- | --- | --- |
@@ -104,6 +104,8 @@ OOM events, guard changes, published addresses or management-routing changes in
 the ledger before dependent maintenance.
 
 ## Backup and restore
+
+For routine backups of the populated service, use the [nightly backup procedure](#nightly-populated-backup). The steps below cover initial installation.
 
 Stop the source and archive its complete data tree; do not copy open SQLite
 files. Use a new mode-0700 snapshot directory and mode-0600 archive. Retain the
@@ -393,7 +395,7 @@ command can start a deployment or renew the DNS approval.
 
 ## Nightly populated backup
 
-The [backup files](../operations/nightly-backup/) are for the Pi at 10.1.3.75 and the receiver svmf at 10.1.3.83. The enabled systemd timer on svmf schedules the backup at 02:30 America/Chicago and catches up after a missed run. Archives are stored under `/var/backups/uptime-kuma/YYYY-MM-DD.tar` on svmf. The attended backup passed an isolated restore. The [active monitoring ledger](../../changes/2026-11-23-uptime-kuma-active-monitoring/WORK.md) tracks verification of the first scheduled run. The Pi briefly stops Kuma while archiving its entire data directory, including SQLite sidecars. Monitoring resumes before transfer. Allow for the gap when reviewing availability.
+The [backup files](../operations/nightly-backup/) are for the Pi at 10.1.3.75 and the receiver svmf at 10.1.3.83. The enabled systemd timer on svmf schedules the backup at 02:30 America/Chicago and catches up after a missed run. Archives are stored under `/var/backups/uptime-kuma/YYYY-MM-DD.tar` on svmf. The attended backup passed an isolated restore. The [first scheduled run](../../changes/2026-11-23-uptime-kuma-active-monitoring/WORK.md#first-scheduled-backup-accepted) also passed isolated restore verification. The Pi briefly stops Kuma while archiving its entire data directory, including SQLite sidecars. Monitoring resumes before transfer. Allow for the gap when reviewing availability.
 
 1. On svmf create a dedicated local system user and group named `kuma-backup` with no interactive login. Create `/var/backups/uptime-kuma` owned by that identity with mode 0700. Install `receive.py` root-owned under `/usr/local/libexec/uptime-kuma-backup/`. Install the supplied SSH configuration under `/etc/uptime-kuma-backup/`. Generate a dedicated Ed25519 key there on svmf, restrict the private key to the writer (0600), and install the Pi’s previously verified host key for 10.1.3.75. Keep configuration, host keys, and executable directories root-controlled and readable/traversable by the writer.
 2. On the Pi install the root-owned executable `export` at `/usr/local/libexec/uptime-kuma-backup/export`. Create a dedicated `kuma-export` system account with a shell capable of running the forced command. Disable password and interactive SSH access for this identity. In a root-controlled authorized-keys file enroll only the receiver’s public key, prefixed with `from="10.1.3.83",restrict,command="/usr/bin/sudo -n /usr/local/libexec/uptime-kuma-backup/export"`. Allow sudo only for that executable with no arguments using the sudoers command specification `/usr/local/libexec/uptime-kuma-backup/export ""`. Validate sudoers and effective sshd restrictions before enrollment.

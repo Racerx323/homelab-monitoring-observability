@@ -1,10 +1,6 @@
 # Uptime Kuma architecture
 
-Status: service foundation and guarded backend accepted November 11, 2026.
-Caddy application acceptance and DNS/ordinary-name dual-stack HTTPS are accepted
-through November 12, 2026. Current findings and
-execution status belong in the
-[work ledger](../../changes/2026-11-09-uptime-kuma/WORK.md).
+The [installation result](../../changes/2026-11-09-uptime-kuma/RESULT.md) records acceptance of the Pi and dual-stack dashboard. The [active-monitoring result](../../changes/2026-11-23-uptime-kuma-active-monitoring/RESULT.md) records acceptance of the populated service on November 25, 2026.
 
 ## Purpose and boundaries
 
@@ -12,7 +8,7 @@ Provide a self-hosted availability-monitoring service with an internal dashboard
 at **`https://uptime.local.theama.co`**, through the existing Caddy service.
 Initial deployment establishes the service, persistent state and operating
 procedures. The host also requires fleet-managed needrestart, msmtp and watchdog
-coverage. Monitor selection and Uptime Kuma notification activation are later work.
+coverage. Kuma checks services and host reachability from the Pi. An outbound heartbeat lets Healthchecks.io alert the operator independently if check-ins stop.
 
 This service complements existing monitoring; it does not replace Munin or
 change another component's health, HA, alerting or update policy. It does not
@@ -202,6 +198,8 @@ service stop and protected off-node copy. Restart and verify the source service,
 then prove restore with the pinned image in an isolated environment. Retain
 actual pre-upgrade data before any future version migration. Upstream v2 JSON
 export/import is not a database backup or recovery method.
+
+The [nightly backup on svmf](OPERATIONS.md#nightly-populated-backup) keeps seven successful daily copies and verifies the restored database before rotation.
 
 Rollback restores only reviewed component changes and the saved original state.
 Do not delete persistent data as routine rollback. A failure before mutation

@@ -30,10 +30,10 @@ Repeat the private DOWN/UP delivery test after changing the alert route. Confirm
 | AC-003 | An actionable failure and its recovery reach the selected destination. | Agree on the recipient and a safe test method with the notification owner. Correlate Kuma’s state changes with receipt at the destination. |
 | AC-004 | Operators can maintain or withdraw the monitor. | Record its owner, alert route, backup coverage and how to pause it in the [operations guide](../../uptime-kuma/docs/OPERATIONS.md). |
 
-## Recurring backup policy for review
+## Recurring backup policy
 
 Prepare one nightly off-node copy of the Pi’s complete Kuma data on svmf. Use a consistent SQLite snapshot and include the other application data. Provision a dedicated writer for `/var/backups/uptime-kuma/` on svmf’s local NVMe filesystem. Use mode 0700 for the directory and 0600 for archives. Verify a transfer under the writer identity before scheduling. Keep the latest seven successful daily copies. Rotate only after a new archive has been received and verified. Before accepting coverage, restore one copy in isolation and verify the populated monitor inventory, status-page groups and notification assignments with outbound notifications disabled.
 
 ## Execution and recovery
 
-Local planning is open. Once the target and destination are selected, prepare a bounded activation with the proposed observation window, resource thresholds, test messages and recovery for review. Preserve the manually configured monitors and status-page groups. Before applying a change, verify current settings and the recovery copy. If checks target the wrong service, alerts misroute, or the workload breaches the agreed limits, pause the new monitor, detach its notification route and verify dashboard health and prior configuration. A test must preserve service availability.
+The [accepted result](RESULT.md) records completion of this plan. For subsequent changes, review the affected checks, observation window, resource thresholds, alert destinations and recovery before activation. Preserve the manually configured monitors and status-page groups. Before applying a change, verify current settings and the recovery copy. If checks target the wrong service, alerts misroute, or the workload breaches the agreed limits, pause the new monitor, detach its notification route and verify dashboard health and prior configuration. A test must preserve service availability.

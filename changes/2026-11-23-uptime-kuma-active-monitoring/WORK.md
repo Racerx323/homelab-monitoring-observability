@@ -2,7 +2,9 @@
 
 ## Current position
 
-**Next action:** Reconcile the first scheduled backup receipt after the November 25 02:30 CST run. Scheduling is active; AC-004 awaits that result.
+**Accepted November 25, 2026.** All four acceptance criteria passed. [Result](RESULT.md). The monitoring owner repeats the delivery test after alert-route changes (W-005).
+
+## Activation and review history
 
 November 23 activation used the authenticated dashboard. Eight public service checks and six private host checks were UP. All fourteen use Apprise Alert. DNS now matches the expected record on the IPv4 and IPv6 VIP paths, proxy HTTPS requires 204, and the five existing fast checks use two retries 30 seconds apart. The NTP checks retain their five-minute schedules. The Apprise check already used /status. ICMP from Kuma failed with spawn EPERM. All six hosts answered management TCP/22, including the primary NTP host at .50 confirmed from the NTP owner. Host notifications were enabled after successful TCP checks. The status page contains only the eight service checks.
 
@@ -31,7 +33,7 @@ DNS Cluster requests the A record for `pihole.local.theama.co` from `10.1.0.55:5
 | W-001 | Resolved | AC-001 passed. Aaron accepted the observed public membership of all 15 monitors. |
 | W-002 | Resolved | AC-003 passed on November 23. Aaron confirmed both transitions through Apprise Alert on all three destinations. |
 | W-003 | Resolved | AC-002 passed for the normal polling window recorded below. |
-| W-004 | Open | Monitoring owner and pause, resume and restore procedures are documented. An attended populated backup and restore passed on svmf. The timer is enabled. Verify the first naturally scheduled archive and dashboard recovery to close AC-004. |
+| W-004 | Resolved | AC-004 passed. The first scheduled archive on svmf passed isolated restore verification and the dashboard returned HTTP 200. |
 | W-005 | Deferred | Aaron deferred recurring end-to-end notification tests. The monitoring owner repeats the verified DOWN/UP test after an alert-route change. Revisit scheduled delivery checks here if automatic detection of silent delivery failures becomes necessary. |
 
 The private Kuma monitor `External heartbeat` (ID 16) sent an accepted first ping to the Healthchecks.io check `Uptime Kuma heartbeat`. Its period is five minutes with ten minutes of grace and a direct email integration. The attended test paused the sender at 18:02 CST on November 23. Healthchecks reported DOWN at 18:17:20 CST and Aaron confirmed the direct DOWN email. After resuming the monitor, Kuma recorded a successful check and Healthchecks returned to UP. The public status page still lists eight service checks. Aaron received the direct recovery email showing UP at 18:17:43 CST and 22 seconds of reported downtime. This completes the external heartbeat test.
@@ -52,7 +54,7 @@ Both the stored membership and anonymous status-page response included all 15 mo
 
 The administrator and backend completion backups on the workstation cover installation. Neither contains the current monitors or alert assignments. No verified recurring copy covers the active workload. Proposed policy for owner decision: nightly off-node backup, seven daily copies, with an isolated restore of the populated data before claiming coverage.
 
-Aaron selected svmf (10.1.3.83) for recurring backups. Its host inventory identifies the Munin and notification roles and supplies no Kuma backup directory. The proposed policy is in [PLAN.md](PLAN.md#recurring-backup-policy-for-review).
+Aaron selected svmf (10.1.3.83) for recurring backups. Its host inventory identifies the Munin and notification roles and supplies no Kuma backup directory. The proposed policy is in [PLAN.md](PLAN.md#recurring-backup-policy).
 
 The read-only destination check reached J1-SVMF at 10.1.3.83 via host-key-verified SSH as pi. The local NVMe ext4 root filesystem reported 1.7 TiB available. The existing parent `/var/backups` is root:root mode 0755. The pi account could inspect metadata through noninteractive sudo and had no direct write access to the parent. No Kuma destination was found in the inspected storage roots. Use `/var/backups/uptime-kuma/` for implementation, with a dedicated writer, directory mode 0700 and archive mode 0600. Provisioning, a transfer under the actual writer identity and populated restore verification remain pending.
 
@@ -91,3 +93,7 @@ The attended run verified the installed receiver and populated archive. The revi
 On approval, recheck the installed timer and service against their reviewed hashes on svmf, enable and start only the timer, then read back its enabled, waiting state and next elapse. After the first natural firing, correlate the timer’s last trigger with the new service invocation, successful exit, dated archive and populated restore receipt. Verify writer ownership, mode 0600 and dashboard recovery. If the invocation fails, preserve its journal and prior archives, disable scheduling pending review, and check Kuma availability. Record AC-004 as passed only after a fresh scheduled archive meets these checks.
 
 Aaron approved activation on November 24. The installed service, timer and receiver matched the reviewed hashes. On svmf the timer is enabled, active and waiting for November 25 at 02:30 CST. Its last-trigger field was empty at activation. The workstation scheduled a one-time verification at 02:47 CST, after the receiver’s 15-minute timeout; SSH from the verification service context passed. The verifier checks the natural trigger, receiver result, dated archive, restore receipt, owner/mode and dashboard. It records the outcome in `.local-evidence/uptime-kuma/operational-receipts/nightly-activation-l5EgpUrl/first-scheduled.json`. The workstation session and SSH agent must remain available for that scheduled verification. If interrupted, reconcile the retained svmf journal and archive directly.
+
+## First scheduled backup accepted
+
+On November 25 at 02:30:18 CST the timer on svmf triggered the receiver. The service exited 0 and its invocation ID matched the restore journal entry for `2026-11-25.tar`. The archive was a 5,488,640-byte regular file owned by `kuma-backup`, mode 0600. The isolated restore counted 15 monitors, one status page, four groups, 15 memberships and 14 notification assignments, matching the attended baseline. At 02:47 CST the verifier recorded dashboard HTTP 200 and an enabled, active timer. Private receipt: `operational-receipts/nightly-activation-l5EgpUrl/first-scheduled.json`.
