@@ -1,6 +1,6 @@
 # Kuma Pi APT maintenance ledger
 
-**Next action:** Under W-003, reconcile the November 26 scheduled refresh and upgrade with the service results, updater log, package disposition, reboot requirement, dashboard and fresh monitor heartbeats. Confirm receipt if a report is generated.
+**Accepted November 26.** All four criteria passed. The four camera packages remain at their installed versions pending separate package review. See [result](RESULT.md).
 
 [Plan and acceptance](PLAN.md) · [Operating procedure](../../uptime-kuma/docs/OPERATIONS.md#unattended-apt-updates)
 
@@ -8,8 +8,9 @@
 | --- | --- | --- |
 | W-001 | Resolved | November 25 read-only inspection verified both signed source files, four release identities, armhf foreign architecture, enabled stock timers, no installed updater, no reported holds, and list-only needrestart. The installed sendmail interface uses msmtp. |
 | W-002 | Resolved | W-004 completed the installation after the first attempt stopped. Original scope: Install the three-package transaction, verify effective policy, dry run, schedules and HTTPS dashboard. The November 25 svmf backup passed its isolated restore. |
-| W-003 | Open | Reconcile the first scheduled upgrade with AC-004. |
+| W-003 | Resolved | November 26 natural refresh/upgrade succeeded; report receipt, dashboard and fresh heartbeats confirmed. W-005 records restart and package disposition. AC-004 passed. |
 | W-004 | Resolved | Approved continuation completed once. AC-001 through AC-003 passed. |
+| W-005 | Resolved | The four camera updates require a library replacement and remain deferred for separate review. The post-reboot scan found no outstanding restarts. |
 
 The reviewed simulation installed unattended-upgrades, python3-dbus and python3-distro-info with zero removals or upgrades. The host reported 24 GiB free on root and 438 MiB on the boot filesystem. Admission conservatively requires 1 GiB and 128 MiB respectively. The two existing timer calendars have randomized delays; local drop-ins set the selected times with persistent catch-up. The approved maintenance scope includes normal change/error reports through the existing Mailrise route.
 
@@ -50,3 +51,50 @@ The original manifest still verifies. The new manifest binds the corrected playb
 ## W-004 installation accepted, November 25
 
 The manifest verified and the launcher exited 0. The backup and dashboard admission checks passed. The signed refresh, reviewed package installation, effective four-origin policy readback, unattended-upgrade dry run and hold comparison passed. Both timers were enabled and active. Their next elapses were November 26 at 03:15 CST for refresh and 03:30 CST for upgrades. Both loopback and workstation HTTPS dashboard checks returned 200. Conditional recovery was unused. The workstation receipt is `apt-updates-w004-532eSfJ8/run/install.log` under the private Kuma evidence root; the Pi retains the dry-run log in `/var/backups/kuma-apt-before-w004/`. AC-004 awaits natural execution.
+
+## First scheduled transaction checked, November 26
+
+Aaron supplied the successful upgrade notification and confirmed its host as
+j2-svpi3bmf. Read-only checks at approximately 11:49 CST matched the refresh
+trigger at 03:15:09 to service execution at 03:15:10–03:19:03, and the upgrade
+trigger at 03:30:18 to execution at 03:30:19–03:43:43. Both services returned
+success/status 0. The updater log confirms installation and the four kept-back
+camera packages. `apt-mark showhold` and `dpkg --audit` returned no entries.
+
+Kuma remained active, with its service start preceding the transaction and zero
+reported automatic restarts. All 22 active monitors had recent UP heartbeats;
+the workstation HTTPS dashboard returned 200. Aaron's supplied notification
+establishes report receipt. The reboot-required flag was absent. The 05:30
+needrestart measurement service completed successfully, but its detailed report
+was not captured; the upgrade notification lists outstanding/deferred restarts.
+Do not interpret either observation as proof that all updated libraries are in
+use. The rpi-eeprom package advanced from 28.36-1 to 28.38-1; this does not
+establish that EEPROM firmware was flashed or whether a future boot will update it.
+
+Private native evidence: `apt-followup-native-TR5cdBLU` under the Kuma evidence
+root. An earlier SSH attempt used a missing repository known-hosts path and
+failed host-key verification before remote execution; its evidence is preserved
+in `apt-followup-20261126T174732Z`. The successful check used the accepted W-004
+bundle's pinned keys. Automatic approval review rejected a proposed output path
+that could overwrite evidence; the actual check used a new unique directory with
+noclobber outputs. No packages, service state, timers or firmware were changed.
+
+## November 26 restart notification
+
+Aaron supplied the needrestart notification for the Kuma Pi. It identified Bluetooth, NetworkManager, SSH, journald, logind, timesyncd, udevd, unattended-upgrades and wpa_supplicant, plus the system and user systemd managers and the `ama` user-manager session. The supplied notification gives no kernel verdict.
+
+A single planned reboot would refresh the listed processes together. Allow for loss of SSH and monitoring during the window. Before approval, check the backup, boot readiness and any staged EEPROM update. After boot, verify network and SSH access, Kuma dashboard and fresh monitor heartbeats, both APT timers, and a list-only needrestart check. The camera-package disposition remains open independently.
+
+## November 26 read-only pre-reboot review
+
+The four kept-back arm64/architecture-independent camera updates are libcamera-ipa, librpicam-app1, rpicam-apps-core and rpicam-apps-lite. Each candidate is from the allowed Raspberry Pi Foundation repository at priority 500. No explicit holds or dpkg audit findings were reported. The simulated transaction upgrades all four, installs libcamera0.8 and removes libcamera0.7. Keep the existing packages until that library replacement is separately reviewed. It is independent of rebooting.
+
+The 02:30 CST svmf backup service exited 0. Its November 26 archive is a 7,444,480-byte file owned by kuma-backup, mode 0600. The restore receipt recorded 22 monitors, six groups, one status page, 22 memberships and 21 notification assignments.
+
+On the Pi 3 Model B Plus Rev 1.3, the native EEPROM updater reported that this model has no bootloader EEPROM. No staged update files matched. The boot filesystem was mounted read-write with 438 MiB available. The configured root PARTUUID matched the mounted root partition. The v8 kernel image, initramfs8, model DTB, firmware files and running kernel module directory were present. Kuma was active and both APT timers were enabled. systemd listed a failed not-found unit for retired Webmin; this is separate from the Kuma service.
+
+One separately approved reboot would interrupt monitoring. Capture the current boot ID at execution, confirm SSH returns on the pinned key with a new boot ID, check the fleet dashboard for HTTP 200, verify fresh post-boot heartbeats across the configured intervals and both APT timers enabled and waiting. Run list-only needrestart and report any remaining service, session or kernel finding. No reboot or package change occurred during this review.
+
+## Maintenance reboot verified
+
+Aaron approved one reboot. The Pi accepted the command at 12:07 CST on November 26 and returned on its pinned SSH key with a new boot ID. Kuma was active and the fleet HTTPS dashboard returned 200. The two five-minute NTP monitors initially reported DOWN; the subsequent read-only database check found fresh post-boot UP results for all 22 active monitors. Both APT timers were enabled and waiting for November 27 at 03:15 and 03:30 CST. The list-only needrestart scan exited 0, listed no affected services or sessions and reported matching running and expected kernels (6.18.60+rpt-rpi-v8). No camera packages were changed.
