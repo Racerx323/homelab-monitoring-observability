@@ -35,6 +35,8 @@ jobs:
           persist-credentials: false
       - name: Validate candidate profile and plugins
         run: bash Munin/tests/validate-scaffold.sh
+      - name: Kuma application upgrade and rollback
+        run: python3 -I -B uptime-kuma/tests/test_application_upgrade.py
       - name: Apache ACL transaction offline contracts
         run: python3 -I -B Apache2/tests/test_deploy_acl.py
 

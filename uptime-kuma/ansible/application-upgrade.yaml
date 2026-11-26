@@ -1,0 +1,26 @@
+---
+- name: Prepare or apply a pinned Uptime Kuma release from the workstation
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Require explicit inputs
+      ansible.builtin.assert:
+        that:
+          - mode in ['prepare', 'apply']
+          - candidate_file is match('^/')
+          - selection is defined
+    - name: Run the release operation
+      ansible.builtin.command:
+        argv:
+          - /usr/bin/python3
+          - -B
+          - '{{ playbook_dir }}/../operations/application-upgrade/controller.py'
+          - '{{ mode }}'
+          - '{{ candidate_file }}'
+          - '{{ selection }}'
+      register: operation
+      changed_when: true
+    - name: Show the reviewed candidate or acceptance receipt
+      ansible.builtin.debug:
+        var: operation.stdout_lines

@@ -127,6 +127,55 @@ bounds match the service foundation. Review backup capacity and expectations whe
 introducing workloads. This is not a recurring-backup service. Preserve failed
 receipts; never delete active data to make a restore pass.
 
+## Application release checks and upgrades
+
+The Pi checks for stable upstream releases on Mondays at 09:00 America/Chicago with up to one hour of jitter. The timer takes effect after installation. Discovery reads registry metadata for the Linux ARM64 slim-rootless image and reports available updates to the saved fleet Apprise configuration on svmf. Aaron reviews each release before installation. Host APT maintenance follows its own schedule.
+
+### Enable release notifications
+
+From the monitoring repository, use the verified Pi SSH host key and an existing reviewed inventory for the Pi. The repository inventory expects a bundled known-hosts file. With a trusted workstation SSH configuration, the following invocation selects strict workstation host-key checking explicitly. First activation includes one labeled delivery confirmation through the real fleet route and requires authorization for that send and the installation.
+
+```bash
+ansible-playbook -i uptime-kuma/ansible/inventory.yaml uptime-kuma/ansible/application-release-check.yaml \
+  -e activate_check=true \
+  -e '{"ansible_ssh_common_args":"-o BatchMode=yes -o StrictHostKeyChecking=yes"}'
+```
+
+Confirm the labeled message at a destination, then inspect the next scheduled trigger with `systemctl list-timers kuma-release-check.timer`. On the Pi, run `sudo python3 -IB /usr/local/libexec/kuma-release-check.py --dry-run` for notification-free discovery. Read `journalctl -u kuma-release-check.service` for the last outcome. A sent alert records an Apprise HTTP 200; the recipient confirms downstream delivery. Repeated checks suppress the same alert for six days. Service failures retry at 15-minute intervals. To suspend checks, disable and stop the timer and stop the checker service.
+
+### Prepare an application upgrade
+
+1. Review the [upstream release and migration notes](https://github.com/louislam/uptime-kuma/releases). Select a stable version with a published Linux ARM64 slim-rootless image. If it requires an intermediate upgrade or manual migration, handle that instruction as a separate release change. Check monitor types in the dashboard before scheduling. Push monitors and derived group monitors require an explicit freshness criterion before using this polling workflow.
+2. From the repository root on WSL, create a private operation directory. Set `release` to the reviewed version. Preparation contacts the public registry and writes the candidate to the workstation. The JSON includes the accepted and proposed release, immutable platform image digest, local image ID and tool hashes.
+
+```bash
+umask 077
+install -d -m 0700 /home/aaron/code/.local-evidence/uptime-kuma
+work=$(mktemp -d /home/aaron/code/.local-evidence/uptime-kuma/application-upgrade.XXXXXXXX)
+candidate=$work/candidate.json
+ansible-playbook -i localhost, uptime-kuma/ansible/application-upgrade.yaml \
+  -e mode=prepare -e "candidate_file=$candidate" -e "selection=${release:?set the reviewed version}"
+sha256sum "$candidate"
+```
+
+3. Review the printed pins against `application.release`, `application.image` and `application.local_image_id` in the [deployment manifest](../manifests/deployment.yaml). Schedule outside the 02:30 backup and host maintenance. Freeze monitor and status-page edits through acceptance. Confirm noninteractive administrative SSH from the workstation to the Pi and svmf with verified host keys. Obtain one approval for the exact candidate SHA-256, the temporary outage, the backup on svmf, the image switch and conditional data restoration.
+4. Set `approved_sha256` to the **reviewed** SHA-256. Run this command once and keep the workstation connected. The Pi worker continues independently if the workstation disconnects. It waits up to ten minutes for backup confirmation and two minutes for final workstation HTTPS confirmation, then starts recovery if needed.
+
+```bash
+ansible-playbook -i localhost, uptime-kuma/ansible/application-upgrade.yaml \
+  -e mode=apply -e "candidate_file=$candidate" -e "selection=${approved_sha256:?set the approved digest}"
+```
+
+### Acceptance and recovery
+
+The worker locks out the nightly exporter, verifies the running predecessor and stages the candidate before stopping Kuma. It saves the installed Quadlet and archives the entire stopped data directory under `/var/backups/kuma-upgrade-<run>/`. The controller streams the archive to the existing svmf writer. The receiver verifies its checksum, restores in private scratch and checks SQLite integrity, monitors, status pages (including empty pages), group order, memberships and notification assignments. The resulting `/var/backups/uptime-kuma/upgrade-<run>.tar` is independent of daily rotation and contains secrets.
+
+After off-node verification, the worker changes the installed Quadlet's image pin and restarts Kuma. It checks the running image and application version, loopback dashboard, page identities and post-start completed heartbeats for each enabled polling monitor. Paused monitors remain paused. A fresh DOWN heartbeat is recorded separately so an existing target outage can be investigated. The workstation verifies trusted HTTPS and published page identities through the normal fleet URL before acknowledging acceptance.
+
+An accepted run updates the three pins locally in the deployment manifest. The server inventory already references this manifest. Review the private candidate receipt and the manifest diff before publication. Review removal of the upgrade backups after a subsequent successful nightly restore and the end of the rollback window.
+
+A failed off-node check restarts the previous service before the image switch. After a switch, recovery stops the candidate, verifies and extracts the original archive, preserves the candidate data beside the data directory as `kuma-upgrade-<run>-failed-data`, and restores the old Quadlet and matching data. It verifies the predecessor and fresh heartbeats. The snapshot time is the end of the recovered history; later writes remain in the preserved candidate tree. For a disconnected run, inspect the Pi's private `result` file and `journalctl -u kuma-upgrade-<run>` before taking further action. A missing receipt or failed recovery requires inspection of the actual service, image and data state before another attempt.
+
 ## Updates and recovery
 
 Use `change-control` for substantial updates. Inspect accepted live state,

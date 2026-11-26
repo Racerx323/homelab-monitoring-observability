@@ -15,9 +15,9 @@ host:
   os_major: '13'
 application:
   fqdn: uptime.local.theama.co
-  release: 2.5.9
+  release: 2.5.12
   image_variant: slim-rootless
-  image: docker.io/louislam/uptime-kuma@sha256:18f903cf1fd9dd87c70442355e9cca2837aab0cdcb99c3baac4bf326273e6653
+  image: docker.io/louislam/uptime-kuma@sha256:b603eb107cadb0c3fd0e38d57ea5601c2208d951a80a39f76c5b49e4de9daa4e
   data_directory: /var/lib/uptime-kuma/data
   uid: 1000
   gid: 1000
@@ -27,7 +27,7 @@ application:
   monitors: []
   notifications: []
   automatic_updates: false
-  local_image_id: sha256:315dfadc88ca9be7ba59515578363871bda93f7989a8e406f162acf36c9b0037
+  local_image_id: sha256:ff64011e58bba0e9161ff315358980174241ccc4c4ccbfad84eb066f52e7890e
 runtime:
   firewall_driver: nftables
   packages:

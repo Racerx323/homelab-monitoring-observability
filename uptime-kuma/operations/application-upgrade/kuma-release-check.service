@@ -1,0 +1,15 @@
+[Unit]
+Description=Check for a stable Uptime Kuma ARM64 release
+StartLimitIntervalSec=1h
+StartLimitBurst=4
+After=network-online.target uptime-kuma.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -IB /usr/local/libexec/kuma-release-check.py
+Restart=on-failure
+RestartSec=15min
+StateDirectory=kuma-release-check
+StateDirectoryMode=0700
+UMask=0077
+TimeoutStartSec=3min
