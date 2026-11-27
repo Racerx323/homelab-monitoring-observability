@@ -1,6 +1,6 @@
 # Application upgrade work ledger
 
-**Next action:** Retain the upgrade backup through the rollback window. Review cleanup after a later successful nightly restore. See [result](RESULT.md).
+**Closed.** The first post-upgrade nightly restore passed and Aaron approved retirement of the 2.5.9 rollback copies. See [result](RESULT.md).
 
 [PLAN.md](PLAN.md) owns acceptance and recovery. This ledger owns status and next actions. Record live outcomes in RESULT.md when available.
 
@@ -10,6 +10,7 @@
 | W-002 | Resolved | November 26 approved installation completed once. All three installed files matched reviewed hashes. Discovery passed and Apprise returned HTTP 200 for the labeled confirmation. Timer enabled and active; next trigger November 30 at 09:25:53 CST. Aaron confirmed receipt on email, Discord and Pushover. Private receipt directory `release-check-jCeN9U2m`. |
 | W-003 | Resolved | Aaron approved one attempt. The playbook accepted 2.5.12 and reconciled the manifest. |
 | W-004 | Resolved | Discord showed the original confirmation as a dense block. The local revision uses fleet plain-text sections and bullets, keeps the digest in the journal and places the release URL on a separate line for Discord previews, including delivery tests. November 26: six tests passed, the approved revision was installed and its hash verified, and Apprise accepted one labeled confirmation. Timer active and enabled. Aaron confirmed delivery to email, Discord and Pushover. The supplied Discord receipt shows the section headings, version bullets and GitHub release preview. Private receipt: `check-format-dlM8tipq`. |
+| W-005 | Resolved | November 27 scheduled archive and isolated restore verified on svmf. The 2.5.9 rollback archive was present during verification. Aaron subsequently approved removal; both hosts passed cleanup readback. Private receipt: `post-upgrade-backup-tmxPr7cF/receipt`. |
 
 ## W-003 release review and candidate
 
